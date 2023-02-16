@@ -1,9 +1,9 @@
 import './App.css';
 import Todo from './components/Todo';
-import Layout from './Layout';
-import Welcome from './Welcome';
-import Login from './Login';
-import Signup from './Signup';
+import Layout from './components/Layout';
+import Welcome from './components/Welcome';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
