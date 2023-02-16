@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
+    // Used to route thorugh pages add any adition pages here
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
