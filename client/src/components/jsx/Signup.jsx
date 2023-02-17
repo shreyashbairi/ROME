@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import '../css/Login.css';
 
-export default function (props) {
+export default function SignUp (props) {
   const [userFullname,setUserFullname] = useState('');
   const [userEmail,setUserEmail] = useState('');
   const [userUserName,setUserUserName] = useState('');

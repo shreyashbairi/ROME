@@ -3,6 +3,7 @@ import Layout from './components/jsx/Layout';
 import Welcome from './components/jsx/Welcome';
 import Login from './components/jsx/Login';
 import Signup from './components/jsx/Signup';
+import Calendar from './components/jsx/Calendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 //components
@@ -22,6 +23,7 @@ function App() {
             <Route index element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Route>
        </Routes>
       </BrowserRouter>
