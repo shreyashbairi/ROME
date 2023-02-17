@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import TodoForm from './TodoForm'
-import '../css/Todo.css'
+import '../../css/Todo.css'
 
 function TodoList() {
     const [todos,setTodos] = useState([]);
