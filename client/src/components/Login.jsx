@@ -1,18 +1,27 @@
 import React from "react"
+import { useState } from "react";
 import './Login.css';
 
 export default function (props) {
+  const [userUserName,setUserUserName] = useState("");
+  const [userPassword,setPassword] = useState("");
+  function HandleSubmit (e) { 
+    e.preventDefualt();
+    /* send user input to backend */
+  }
   return (
     <div className="Auth-form-container">
       <form className="Auth-form">
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+          <h3 className="Auth-form-title">Login</h3>
           <div className="form-group mt-3">
             <label>Username</label>
             <input
               type="username"
               className="form-control mt-1"
               placeholder="username"
+              value={userUserName}
+              onChange={e => setUserUserName(e.target.value)}
             />
           </div>
           <div className="form-group mt-3">

@@ -9,7 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      <Todo />
+      {/* <Todo /> */}
       
       { /* Used to route thorugh pages add any adition pages here} */ }
       <BrowserRouter>
