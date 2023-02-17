@@ -1,0 +1,32 @@
+* {
+    margin-right: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+#container {
+    margin-left: 75vw;
+    height: 100vh;
+    margin-top: 0%;
+    background-color: #E0B0FF
+}
+
+#header{
+    background-color: rgb(127, 0, 255);
+    text-align: center;
+    padding: 2.5%;
+}
+
+#task_box {
+    padding-left: 1cm;
+}
+
+.Description {
+    padding-left: .5cm;
+    color: rgb(78, 70, 70);
+}
+
+.New_Task {
+    border: solid;
+    width: 25vw;
+}
