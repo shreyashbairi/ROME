@@ -1,8 +1,8 @@
 import './App.css';
-import Layout from './components/jsx/Layout';
-import Welcome from './components/jsx/Welcome';
-import Login from './components/jsx/Login';
-import Signup from './components/jsx/Signup';
+import Layout from './Layout';
+import Welcome from './Welcome';
+import Login from './Login';
+import Signup from './Signup';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 //components
