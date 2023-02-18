@@ -1,8 +1,12 @@
-import '../css/Todo.css';
-import React, { useState } from 'react';
+import '../../css/Todo.css';
+import React, { useState,useEffect,useRef } from 'react';
 
-export function Todo(props) {
+export function TodoForm(props) {
     const [text,setText] = useState("");
+    const inputRef = useRef(null);
+    useEffect(()=>{
+        inputRef.current.focus()
+    })
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -30,10 +34,11 @@ export function Todo(props) {
                     placeholder = "Enter new task"
                     className = "New_Task"
                     value={text}
+                    ref={inputRef}
                 />
                 <button className='todo-button'>Add</button>
             </form>
     );
 }
 
-export default Todo
+export default TodoForm

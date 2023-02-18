@@ -30,3 +30,8 @@
     border: solid;
     width: 25vw;
 }
+
+.todo-button {
+    width: 5vw;
+    margin-left: 20vw;
+}
