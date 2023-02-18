@@ -11,7 +11,8 @@ import TodoList from './components/jsx/Todo/TodoList';
 function App() {
   return (
     <div className="App">
-      
+      {/* <Todo /> */}
+
       
       { /* Used to route thorugh pages add any adition pages here} */ }
         <BrowserRouter>
@@ -24,7 +25,7 @@ function App() {
        </Routes>
       </BrowserRouter>
 
-      <TodoList />
+      {/* <TodoList /> */}
     </div>
   );
 }
