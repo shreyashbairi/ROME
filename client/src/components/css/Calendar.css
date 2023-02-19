@@ -8,3 +8,44 @@
 @import "../../../node_modules/@syncfusion/ej2-popups/styles/material.css";
 @import "../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
 @import "../../../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
+
+.Calendar-container {
+    margin-left: 20vw;
+    margin-right: 25vw;
+    height: 100vh;
+    margin-top: 0%;
+    background-color: #E0B0FF
+}
+
+.Calendar-header{
+    background-color: rgb(147, 86, 207);
+    padding: 2.5%;
+    text-align: center;
+}
+
+.header-left{
+    text-align: left;
+    width: 10vw;
+    display: inline-block;
+}
+
+.header-right{
+    text-align: right;
+    width: 10vw;
+    display: inline-block;
+}
+
+.Calendar-header-content{
+    padding: 0.3%;
+    margin:0;
+    display: inline-block;
+    width: 31vw;
+}
+
+.Calendar-Content{
+    margin-left: 2vw;
+}
+
+.Event-container{
+    text-align: left;
+}
