@@ -1,26 +1,15 @@
 import React, {Component} from 'react';
-import {DayPilot, DayPilotCalendar} from "@daypilot/daypilot-lite-react";
+import '../css/Calendar.css';
+import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject } from '@syncfusion/ej2-react-schedule';
 
 class Calendar extends Component {
-constructor(props) {
-    super(props);
-    this.calendarRef = React.createRef();
-}
-
-get calendar() {
-    return this.calendarRef.current.control;
-}
-
-
 render() {
     return (
-      <div>
-        <DayPilotCalendar
-            viewType = "Week"
-            ref={this.calendarRef}
-        />
-      </div>
+        <ScheduleComponent>
+            <Inject services={[Day, Week, WorkWeek, Month, Agenda]}/>
+        </ScheduleComponent>
     );
+    
   }
 }
 
