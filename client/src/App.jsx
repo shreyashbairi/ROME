@@ -8,7 +8,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 //components
 import TodoList from './components/jsx/Todo/TodoList';
-import TodoForm from './components/jsx/Todo/TodoForm';
 
 function App() {
   return (

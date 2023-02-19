@@ -1,19 +1,24 @@
 import React, {useState} from 'react'
-import TodoForm from './TodoForm'
+import TodoForm from './TodoFormTest'
 import Todo from './Todo'
 
 
 function TodoList() {
-    const [todos,setTodos] = useState([]);
+    const [todos,setTodos] = useState([{
+        task: '',
+        description: '',
+    }]);
 
-    const addTask = todo => {
+    const addTask = (task,description) => {
         // console.log("test1")
-        if (!todo.text || /^\s*$/.test(todo.test)) {
+        if (!task.text || /^\s*$/.test(task.test)) {
             return;
         }
 
-        const newTasks = [todo, ...todos]
+        const newTasks = [{task,description}, ...todos]
+        // const newDescriptions = [description,...descriptions]
         setTodos(newTasks)
+        // setDescriptions(newDescriptions)
         // console.log(...todos)
     }
 
@@ -53,6 +58,7 @@ function TodoList() {
             onSubmit={addTask}
         />
         <Todo 
+            // descriptions={descriptions}
             todos={todos}
             completeTodo={completeTodo}
             removeTodo={removeTodo}
