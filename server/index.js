@@ -4,12 +4,20 @@ const mongoose = require('mongoose');
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
+const MONGO_URI= "mongodb+srv://admin:J4U9FdQ50axtrGSl@cluster0.lopfsoc.mongodb.net/?retryWrites=true&w=majority"
 
 //app
 const app = express();
 
 //database
+mongoose.set("strictQuery", false);
+mongoose.connect(MONGO_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('DB CONNECTED'))
+.catch(err => console.log('DB CONNECTION ERROR', err));
 
 
 //middleware
