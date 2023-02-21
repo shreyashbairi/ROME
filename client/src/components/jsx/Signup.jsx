@@ -8,7 +8,7 @@ export default function SignUp (props) {
   const [userUserName,setUserUserName] = useState('');
   const [userPassword,setPassword] = useState('');
   function HandleSignUpSubmit (e) { 
-    e.preventDefualt();
+    e.preventDefault();
     alert("Submitted")
   }
   return (

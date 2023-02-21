@@ -18,6 +18,7 @@
 }
 
 .Calendar-header{
+   
     background-color: rgb(147, 86, 207);
     padding: 2.5%;
     text-align: center;
@@ -25,13 +26,13 @@
 
 .header-left{
     text-align: left;
-    width: 10vw;
+    width: 9vw;
     display: inline-block;
 }
 
 .header-right{
     text-align: right;
-    width: 10vw;
+    width: 9vw;
     display: inline-block;
 }
 
@@ -44,8 +45,70 @@
 
 .Calendar-Content{
     margin-left: 2vw;
+    height: 88%;
+    outline: 1px solid red;
+}
+
+.time-sidebar{
+  outline: 1px solid green;
 }
 
 .Event-container{
     text-align: left;
 }
+
+.calendar-body {
+    padding: 0;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .table-header {
+    height: 6vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .weekday {
+    width: 100vw;
+    text-align: center;
+  }
+  
+  .table-content {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .calendar-day {
+    width: 14%;
+    height: 5.1vh;
+    position: relative;
+    border: 1px solid #000000;
+  }
+  
+  .calendar-day:hover {
+    background-color: rgba(0,0,0,.10);
+  }
+  
+  .calendar-day p {
+    text-align: center;
+    color: #020202;
+  }
+  
+  .current p {
+    color: #000000;
+  }
+  
+  .selected p {
+    color: #ea0be7;
+    font-weight: bold;
+  }

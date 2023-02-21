@@ -6,7 +6,7 @@ export default function (props) {
   const [userUserName,setUserUserName] = useState("");
   const [userPassword,setPassword] = useState("");
   function HandleSubmit (e) { 
-    e.preventDefualt();
+    e.preventDefault();
     alert(`Hi ${userUserName}!`);
     /* send user input to backend */
   }
