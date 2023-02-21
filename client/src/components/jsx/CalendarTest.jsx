@@ -10,7 +10,7 @@ class CalendarTest extends Component {
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 
                        'July', 'August', 'September', 'October', 'November', 'December'];
         this.hours =['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', 
-                     '12pm','1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am']
+                     '12pm','1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
     
         this.state = {
           currentDay: new Date() // Get from time of week grabed from backend
@@ -35,19 +35,25 @@ class CalendarTest extends Component {
                     <button type="button" class="btn btn-secondary">Week</button>
                     </div>
                 </div>
-                <div calss="time-sidebar">
-
-                </div>
-                <div class="Calendar-Content">
-                    <div className="calendar-body">
-                        <div className="table-header">
+                <div class="Calendar-content-body">
+                    <div class="time-sidebar">
                         {
-                            this.weekdays.map((weekday) => {
-                            return <div className="weekday"><p>{weekday}</p></div>
+                            this.hours.map((hour) => {
+                                return <div className="hour"><p>{hour}</p></div>
                             })
                         }
+                    </div>
+                    <div class="Calendar-Content">
+                        <div className="calendar-body">
+                            <div className="table-header">
+                            {
+                                this.weekdays.map((weekday) => {
+                                return <div className="weekday"><p>{weekday}</p></div>
+                                })
+                            }
+                            </div>
+                            <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
                         </div>
-                        <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
                     </div>
                 </div>
             </div>

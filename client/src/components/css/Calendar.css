@@ -43,14 +43,26 @@
     width: 31vw;
 }
 
+.Calendar-content-body {
+  padding: 0;
+  margin: 0;
+  height: 88%;
+}
+
 .Calendar-Content{
     margin-left: 2vw;
-    height: 88%;
-    outline: 1px solid red;
 }
 
 .time-sidebar{
-  outline: 1px solid green;
+  width: 1.5vw;
+  float: left;
+  margin-top: 10vh;
+}
+
+
+.hour {
+  font-size: smaller;
+  height: 5.1vh;
 }
 
 .Event-container{
