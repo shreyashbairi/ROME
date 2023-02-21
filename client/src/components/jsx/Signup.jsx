@@ -1,13 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import '../css/Login.css';
-
+import axios from 'axios';
 export default function SignUp (props) {
   const [userFullname,setUserFullname] = useState('');
   const [userEmail,setUserEmail] = useState('');
   const [userUserName,setUserUserName] = useState('');
   const [userPassword,setPassword] = useState('');
   function HandleSignUpSubmit (e) { 
+   // axios.get("http://localhost:3000/signup?");
     e.preventDefualt();
     alert("Submitted")
   }
