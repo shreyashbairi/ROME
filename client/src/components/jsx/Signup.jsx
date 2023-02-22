@@ -8,15 +8,20 @@ export default function SignUp (props) {
   const [userEmail,setUserEmail] = useState('');
   const [userUserName,setUserUserName] = useState('');
   const [userPassword,setPassword] = useState('');
-  function HandleSignUpSubmit (e) { 
+  async function HandleSignUpSubmit (e) { 
     e.preventDefault();
-    axios.post('/Submit', {
-      userFullname, 
-      userEmail,
-      userUserName,
-      userPassword,
-    });
-    alert("Submitted");
+    try{
+      await axios.post('/Submit', {
+        userFullname, 
+        userEmail,
+        userUserName,
+        userPassword,
+      });
+      alert("Registration Successful. You can now login.");
+    } catch (e){
+      alert('Registration Failed. Please try again later.')
+    }
+
   
   }
   return (

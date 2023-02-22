@@ -3,13 +3,16 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
-const(User) = require('./models/User.js');
+const User = require('./models/User.js');
 require('dotenv').config();
 
 const port = process.env.PORT || 8000;
 
 //app
 const app = express();
+
+const bcryptSalt = bcrypt.genSaltSync(10); 
+
 app.use(express.json());
  app.use(cors({credentials: true, 
      origin: 'http://localhost:3000',
@@ -31,16 +34,27 @@ app.get('/test', (req, res) =>{
 });
 
 //mQ9RV3bH6gdeV29w
-app.post('/Submit', (req, res) =>{
+
+//User is user schema/type defined in models
+//userDoc is new user created 
+//SHREY do not confuse the two
+app.post('/Submit', async (req, res) =>{
     const {userFullname, userEmail, userUserName, userPassword} = req.body;
-    User.create({
-        userFullname,
-        userEmail,
-        userUserName, 
-        userPassword
-    })
-    res.json({userFullname, userEmail, userUserName, userPassword});
-})
+    try {
+        const userDoc = await User.create({
+            userFullname,
+            userEmail,
+            userUserName, 
+            userPassword:bcrypt.hashSync(userPassword, bcryptSalt),
+        });
+        res.json(userDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+
+
+    
+});
 
 
 //middleware
