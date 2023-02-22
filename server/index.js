@@ -56,6 +56,23 @@ app.post('/Submit', async (req, res) =>{
     
 });
 
+app.post('/Submit', async (req, res) =>{
+    const {userUserName, userPassword} = req.body;
+    const userDoc = await User.findOne({userUserName});
+    if(userDoc){
+        const passOk = bcrypt.compareSync(userPassword, userDoc.userPassword);
+        if(passOk) {
+            res.json('password ok');
+        } else{
+            res.status(422).json('password not ok');
+        }
+        res.json('User found');
+    }
+    else{
+        res.json('User not found');
+    }
+});
+
 
 //middleware
 
