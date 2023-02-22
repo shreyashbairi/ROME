@@ -1,6 +1,7 @@
 import React from "react";
 import Todo from "./Todo/Todo";
 import '../css/MainPage.css'
+import Calendar from "./Calendar";
 
 
 function MainPage (){
@@ -26,7 +27,7 @@ function MainPage (){
 
         <div class="calendar">
             <div class="align-center">
-            <p>This will be calendar</p>
+             <Calendar />
             </div>
         </div>
 
