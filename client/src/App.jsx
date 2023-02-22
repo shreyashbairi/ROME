@@ -15,6 +15,9 @@ import Calendar from './components/jsx/Calendar';
 import CalendarTest from './components/jsx/CalendarTest';
 import Profile from './components/jsx/Profile';
 import EditProfile from './components/jsx/EditProfile';
+import MainPage from './components/jsx/MainPage';
+import DefaultLayout from './components/jsx/DefaultLayout';
+
 
 
 function App() {
@@ -30,14 +33,22 @@ function App() {
             <Route index element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/editprofile" element={<EditProfile />} />
-            <Route path="/calendar" element={<CalendarTest />} />
-            <Route path="/todo" element={<TodoList />} />
+
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
+
           </Route>
+          <Route path="/" element={<DefaultLayout />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/editprofile" element={<EditProfile />} />
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/calendar" element={<CalendarTest />} />
+            <Route path="/todo" element={<TodoList />} />
+          </Route>
+
+
+
         </Routes>
       </BrowserRouter>
 

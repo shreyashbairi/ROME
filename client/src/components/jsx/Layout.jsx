@@ -8,7 +8,7 @@ function Layout () {
     }
     return (
         <>
-            <nav class="navbar bg-primary">
+            <nav class="navbar bg-primary mt-1 rounded">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="/">
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top" />
@@ -16,6 +16,7 @@ function Layout () {
                     </a>
                 </div>
             </nav> 
+            
             <Outlet />
         </>
     );

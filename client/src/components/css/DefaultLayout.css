@@ -1,0 +1,17 @@
+
+
+
+.navbar{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 970px;
+    }
+}
+
+.pic{
+    margin-left: 10px;
+}

@@ -8,7 +8,6 @@
     height: 90%;
     overflow: auto;
     border-radius: .25rem;
-
   }
 
   .calendar{
@@ -20,7 +19,6 @@
     background-color: #f1f1f1;
     border-radius: .25rem;
     text-align: center;
-
   }
   .todo{
     margin-top: 10px;

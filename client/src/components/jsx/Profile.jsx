@@ -112,108 +112,108 @@ function Profile (){
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Full Name</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      Chiho Song
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
                   <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Birthday</h>
+                      <div class="col-sm-3">
+                        <h class="mb-0">Full Name</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        Chiho Song
+                      </div>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      2000.12.16
+                    <ColoredLine color="grey" />
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h class="mb-0">Birthday</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        2000.12.16
+                      </div>
                     </div>
-                  </div>
-                  <ColoredLine color="grey" />
+                    <ColoredLine color="grey" />
 
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Email</h>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h class="mb-0">Email</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        song593@purdue.edu
+                      </div>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      song593@purdue.edu
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
-
-
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Phone</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      7657672136
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
-
-  
-
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Address</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      purdue
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
+                    <ColoredLine color="grey" />
 
 
                     <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Notification</h>
-                     
+                      <div class="col-sm-3">
+                        <h class="mb-0">Phone</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        7657672136
+                      </div>
                     </div>
-                    
-                    <div class="col-sm-9">
-                    <label>
-                        <input type="checkbox" />
-                      </label>
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Email Notification</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Theme</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
+                    <ColoredLine color="grey" />
+
+    
+
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h class="mb-0">Address</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        purdue
+                      </div>
                       
                     </div>
-                  </div>
-                  <ColoredLine color="grey" />
-                  <div class="row">
+                    <ColoredLine color="grey" />
 
-                    <div class="col-sm-12">
-                    <a class="edit" href="/profile/editprofile"  target="__blank">Edit</a>                
+
+                      <div class="row">
+                      <div class="col-sm-3">
+                        <h class="mb-0">Notification</h>
+                      
+                      </div>
+                      
+                      <div class="col-sm-9">
+                      <label>
+                          <input type="checkbox" />
+                        </label>
+                      </div>
                     </div>
-                </div>
+                    <ColoredLine color="grey" />                  
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h class="mb-0">Email Notification</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                      </div>
+                    </div>
+                    <ColoredLine color="grey" />                  
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h class="mb-0">Theme</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        
+                      </div>
+                    </div>
+                    <ColoredLine color="grey" />
+                    <div class="row ">
+
+                      <div class="col-sm-12 ">
+                        <a class="edit " href="/profile/editprofile" data-inline="true" target="__blank">Edit</a>  
+       
+                      </div>
+
+                    </div>
                 </div>
               </div>
             </div>
-
-
- 
             
           </div>
-
-
-
- 
-            
-
+          <div class="col-sm-12 mt-1">
+                        <a class="changepassword " href="/resetpassword" data-inline="true" >Reset Password</a>         
+                      </div>
         </div> 
+        
       </div>
     </div>
   )
