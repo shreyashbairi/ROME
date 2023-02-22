@@ -1,0 +1,94 @@
+.sidebar {
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 1;
+    width: 80px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 90%;
+    overflow: auto;
+    border-radius: .25rem;
+
+  }
+
+  .calendar{
+    margin-top: 10px;
+    margin-left: 100px;
+    position: fixed;
+    width: 68%;
+    height: 90%;
+    background-color: #f1f1f1;
+    border-radius: .25rem;
+    text-align: center;
+
+  }
+  .todo{
+    margin-top: 10px;
+    margin-left: 80%;
+    position: fixed;
+    width: 18%;
+    height: 90%;
+    background-color: #f1f1f1;
+    border-radius: .25rem;
+    text-align: center;
+
+  }
+  
+  /* Sidebar links */
+  .sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+  
+  /* Active/current link */
+  .sidebar a.active {
+    background-color: #292cb4;
+    color: white;
+  }
+  
+  /* Links on mouse-over */
+  .sidebar a:hover:not(.active) {
+    background-color: #544fec;
+    color: white;
+  }
+  
+  /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+  div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+  }
+  
+  /* On screens that are less than 700px wide, make the sidebar into a topbar */
+  @media screen and (max-width: 840px) {
+    .sidebar {
+      width: 97%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+
+    .todo{
+        margin-left: 10px;
+        position: relative;
+        width: 97%;
+    }
+    .calendar{
+        margin-left: 10px;
+        height: 90%;
+        position: relative;
+        width: 97%;
+    }
+  }
+
+  
+  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
