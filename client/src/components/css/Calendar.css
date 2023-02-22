@@ -1,0 +1,126 @@
+@import "../../../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
+
+.Calendar-container {
+    margin-left: 20vw;
+    margin-right: 25vw;
+    height: 100vh;
+    margin-top: 0%;
+    background-color: #b995d2
+}
+
+.Calendar-header{
+   
+    background-color: rgb(147, 86, 207);
+    padding: 2.5%;
+    text-align: center;
+}
+
+.header-left{
+    text-align: left;
+    width: 9vw;
+    display: inline-block;
+}
+
+.header-right{
+    text-align: right;
+    width: 9vw;
+    display: inline-block;
+}
+
+.Calendar-header-content{
+    padding: 0.3%;
+    margin:0;
+    display: inline-block;
+    width: 31vw;
+}
+
+.Calendar-content-body {
+  padding: 0;
+  margin: 0;
+  height: 88%;
+}
+
+.Calendar-Content{
+    margin-left: 2vw;
+}
+
+.time-sidebar{
+  width: 1.5vw;
+  float: left;
+  margin-top: 10vh;
+}
+
+
+.hour {
+  font-size: smaller;
+  height: 5.1vh;
+}
+
+.Event-container{
+    text-align: left;
+}
+
+.calendar-body {
+    padding: 0;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .table-header {
+    height: 6vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .weekday {
+    width: 100vw;
+    text-align: center;
+  }
+  
+  .table-content {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .calendar-day {
+    width: 14%;
+    height: 5.1vh;
+    position: relative;
+    border: 1px solid #000000;
+  }
+  
+  .calendar-day:hover {
+    background-color: rgba(0,0,0,.10);
+  }
+  
+  .calendar-day p {
+    text-align: center;
+    color: #020202;
+  }
+  
+  .current p {
+    color: #000000;
+  }
+  
+  .selected p {
+    color: #ea0be7;
+    font-weight: bold;
+  }

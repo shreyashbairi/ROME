@@ -1,19 +1,22 @@
 import React, {useState} from "react";
 import '../css/Profile.css';
-import EditProfile from "./EditProfile";
 
-
-function Profile (){
+function EditProfile (){
   const [message, setMessage] = useState('');
   const [updated, setUpdated] = useState(message);
+
+
   const handleChange = (event) => {
     setMessage(event.target.value);
   };
+  
   const handleClick = () => {
     // 👇 "message" stores input field value
-    
-    setUpdated(message);
+    <img src="https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw" alt="Logo" width="100" height="100" class="rounded mx-auto d-block center" />      
+
   };
+  const [count, setCount] = useState(0);
+
   const ColoredLine = ({ color }) => (
     <hr
         style={{
@@ -28,40 +31,7 @@ function Profile (){
     <div >
 
 
-      {/*< div class="card mt-1 ml-1 mr-1">
-      <nav className=" navbar navbar-expand-lg navbar-light bg-light ">
-        
-        <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="20" height="20" class="d-inline-block" />
-          <a className="navbar-brand" href="#">
-            ROME
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-  </button> *
-            <ul className="navbar-nav">
-              <li className="nav-item active">
-                <a className="nav-link" href="#" >
-                  Homepage 
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  settings
-                </a>
-              </li>
-            </ul>
-        </nav>
-        </div>
-  */}
+      
       <div class="container">
 
       
@@ -116,9 +86,12 @@ function Profile (){
                     <div class="col-sm-3">
                       <h class="mb-0">Full Name</h>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      Chiho Song
-                    </div>
+
+                      <div class="col-sm-9 text-secondary">
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" />
+
+                      </div>
+
                   </div>
                   <ColoredLine color="grey" />
                   <div class="row">
@@ -126,7 +99,8 @@ function Profile (){
                       <h class="mb-0">Birthday</h>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      2000.12.16
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Birthday" />
+            
                     </div>
                   </div>
                   <ColoredLine color="grey" />
@@ -136,7 +110,8 @@ function Profile (){
                       <h class="mb-0">Email</h>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      song593@purdue.edu
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+     
                     </div>
                   </div>
                   <ColoredLine color="grey" />
@@ -147,8 +122,9 @@ function Profile (){
                       <h class="mb-0">Phone</h>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      7657672136
-                    </div>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone number" />
+
+                  </div>
                   </div>
                   <ColoredLine color="grey" />
 
@@ -159,7 +135,8 @@ function Profile (){
                       <h class="mb-0">Address</h>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      purdue
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Address" />
+            
                     </div>
                   </div>
                   <ColoredLine color="grey" />
@@ -196,9 +173,10 @@ function Profile (){
                   <div class="row">
 
                     <div class="col-sm-12">
-                    <a class="edit" href="/profile/editprofile"  target="__blank">Edit</a>                
+                    <a class="submit" href="/profile" onClick={handleClick} target="__blank">Submit</a>                
                     </div>
                 </div>
+
                 </div>
               </div>
             </div>
@@ -220,7 +198,9 @@ function Profile (){
 
 }
 
-export default Profile;
+export default EditProfile;
 
 
-{/*https://retool.com/blog/building-a-react-navbar/ */}
+
+{/*https://retool.com/blog/building-a-react-navbar/ 
+https://codingbeautydev.com/blog/react-get-input-value-on-button-click/*/}

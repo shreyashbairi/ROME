@@ -3,30 +3,19 @@ import { useState } from "react";
 import '../css/Login.css';
 
 export default function (props) {
-  const [userUserName,setUserUserName] = useState("");
   const [userPassword,setPassword] = useState("");
+  const [userPasswordConfirm,setPasswordConfirm] = useState("");
   function HandleSubmit (e) { 
     e.preventDefault();
-    alert(`Hi ${userUserName}!`);
     /* send user input to backend */
   }
   return (
-    <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={HandleSubmit}>
+    <div className="Auth-form-container" onSubmit={HandleSubmit}>
+      <form className="Auth-form">
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Login</h3>
+          <h3 className="Auth-form-title">Reset Password</h3>
           <div className="form-group mt-3">
-            <label>Username</label>
-            <input
-              type="username"
-              className="form-control mt-1"
-              placeholder="username"
-              value={userUserName}
-              onChange={e => setUserUserName(e.target.value)}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
+            <label>New Password</label>
             <input
               type="password"
               className="form-control mt-1"
@@ -35,14 +24,21 @@ export default function (props) {
               onChange={e => setPassword(e.target.value)}
             />
           </div>
+          <div className="form-group mt-3">
+            <label>Confirm New Password</label>
+            <input
+              type="password"
+              className="form-control mt-1"
+              placeholder="Enter password"
+              value={userPasswordConfirm}
+              onChange={e => setPasswordConfirm(e.target.value)}
+            />
+          </div>
           <div className="d-grid gap-2 mt-3">
-            <button type="button" className="btn btn-primary">
-              Submit
+            <button type="submit" className="btn btn-primary">
+              Send Email
             </button>
           </div>
-          <p className="forgot-password text-right mt-2">
-            Forgot <a href="/forgotpassword">password?</a>
-          </p>
         </div>
       </form>
     </div>

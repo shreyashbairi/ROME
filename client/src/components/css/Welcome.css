@@ -1,7 +1,13 @@
 .Welcome-page {
     text-align: center;
     height: 100vh;
-    
+    display: flex;
+   
+}
+
+.Welcome-img {
+    display: flex;
+    justify-content: center;
 }
 
 .Welcome-header {

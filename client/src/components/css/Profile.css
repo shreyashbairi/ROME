@@ -12,6 +12,7 @@ temp{
 }
 .card {
     box-shadow: 0 1px 3px 0 rgba(188, 32, 32, 0.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    
 }
 
 .card {
@@ -37,10 +38,29 @@ temp{
     color: white;
     padding: 8px 15px;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    display: flex;
+    min-width: 0;
+    border-radius: .25rem;
+    width: 55px;
 }
+
+.submit {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    display: flex;
+    min-width: 0;
+    border-radius: .25rem;
+    width: 80px;
+}
+
+
 
 pic:hover{
     outline: #d278b6;    

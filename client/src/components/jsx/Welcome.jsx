@@ -3,7 +3,9 @@ import '../css/Welcome.css';
 function Welcome () {
   return (
     <div calss="Welcome-page">
-        <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="150" height="120" class="d-inline-block align-text-top" />
+        <div class="Welcome-img">
+        <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="150" height="120"/>
+        </div>
         <h1 class="Welcome-header">Welcome to Rome</h1>
         <div class="Welcome-buttons">
             <a href="/login">

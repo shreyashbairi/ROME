@@ -2,13 +2,13 @@ import React from "react";
 import { useState } from "react";
 import '../css/Login.css';
 
-export default function (props) {
+export default function SignUp (props) {
   const [userFullname,setUserFullname] = useState('');
   const [userEmail,setUserEmail] = useState('');
   const [userUserName,setUserUserName] = useState('');
   const [userPassword,setPassword] = useState('');
   function HandleSignUpSubmit (e) { 
-    e.preventDefualt();
+    e.preventDefault();
     alert("Submitted")
   }
   return (
@@ -61,9 +61,6 @@ export default function (props) {
               Submit
             </button>
           </div>
-          <p className="forgot-password text-right mt-2">
-            Forgot <a href="/forgetpassword">password?</a>
-          </p>
         </div>
       </form>
     </div>

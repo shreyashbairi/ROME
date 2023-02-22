@@ -29,17 +29,4 @@
 .New_Task {
     border: solid;
     width: 25vw;
-    border-bottom-color: white;
-}
-
-.todo-button {
-    width: 5vw;
-    margin-left: 20vw;
-}
-
-.Task_Description {
-    border: solid;
-    width: 25vw;
-    outline: none;
-    border-top-color: black;
 }
