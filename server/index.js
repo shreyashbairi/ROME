@@ -1,15 +1,26 @@
 //import modules like express and mongoose
 const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require("morgan");
-const cors = require("cors");
-require("dotenv").config();
+const cors = require('cors');
+const mongoose = require("mongoose");
+require('dotenv').config();
+
 const port = process.env.PORT || 8000;
 const MONGO_URI= "mongodb+srv://admin:J4U9FdQ50axtrGSl@cluster0.lopfsoc.mongodb.net/?retryWrites=true&w=majority"
 
 //app
 const app = express();
+app.use(express.json());
+ app.use(cors({credentials: true, 
+     origin: 'http://localhost:3000',
+}));
 
+app.get('/test', (req, res) =>{
+    res.json('test ok');
+});
+app.post('/Submit', (req, res) =>{
+    const {userFullname, userEmail, userUserName, userPassword} = req.body;
+    res.json({userFullname, userEmail, userUserName, userPassword});
+})
 //database
 mongoose.set("strictQuery", false);
 mongoose.connect(MONGO_URI,{
@@ -21,8 +32,8 @@ mongoose.connect(MONGO_URI,{
 
 
 //middleware
-app.use(morgan("dev"))
-app.use(cors({origin: true, credentials: true}))
+
+
 
 //listener
 const server = app.listen(port, ()=>console.log(`Server is running on ${port}`))

@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import '../css/Login.css';
 import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:8000';
 export default function SignUp (props) {
   const [userFullname,setUserFullname] = useState('');
   const [userEmail,setUserEmail] = useState('');
@@ -9,7 +10,14 @@ export default function SignUp (props) {
   const [userPassword,setPassword] = useState('');
   function HandleSignUpSubmit (e) { 
     e.preventDefault();
-    alert("Submitted")
+    axios.post('/Submit', {
+      userFullname, 
+      userEmail,
+      userUserName,
+      userPassword,
+    });
+    alert("Submitted");
+  
   }
   return (
     <div className="Auth-form-container">
@@ -65,4 +73,5 @@ export default function SignUp (props) {
       </form>
     </div>
   );
+  
 }
