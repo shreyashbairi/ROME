@@ -1,0 +1,36 @@
+=== Weekly Team Report (Team 28: Rome) === 
+Week 1 (Summary)(Scrum Master: William Quinn)
+02/14  1.5 d00d3cc Created initial Frontend and Backend Environment 
+02/15  7   0b00a39 Login and Signup Page UI Created
+02/16  6.5 4dfbaa4 Todo List UI and Task adding
+02/18  10  130a224 Profile Page UI creation
+02/19  4   2a778e4 Profile Page editing UI
+02/19  4  e2d7296  Forget Password Pages and UI implementation and   Beginnings of Calendar UI
+02/19  3  f2e2f3 Started Backend and Database
+
+
+Week 2 Planning
+
+[Meetings]
+02/19 Reflect on week 1
+02/21 Discuss different popup UIs for calendar and tasks
+02/23 Discuss connection between client-server-database
+[Individual Goals]
+Erin Joy: Finish filter UI for Task List and make new teams
+Chiho: Finish UI for mainpage
+Shreyash: Set up database 
+William: Finish Calendar UI and make UI for events. As well as connect Login/Signup to Backend
+
+
+Week 3 Planning
+
+[Meetings]
+02/26 Discuss what still needs to be done for user stories
+02/28 Discuss integration of components for home and team page
+03/02 Clean UI and UX for prototyped product
+
+[Individual Goals]
+Erin Joy: Add calendar events and details UI
+Chiho: Create a pop up UI to update status of task and adding event details
+Shreyash: Integrate database with events and save to database
+William: Integrate all of the UI into a cohesive page. Create UI for adding events

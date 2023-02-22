@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export default function (props) {
   const [userEmail,setUserEmail] = useState("");
   function HandleSubmit (e) { 
-    e.preventDefualt();
+    e.preventDefault();
     alert("Hello?") 
     /* send user input to backend */
   }

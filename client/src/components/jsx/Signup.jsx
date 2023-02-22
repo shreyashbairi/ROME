@@ -8,8 +8,7 @@ export default function SignUp (props) {
   const [userUserName,setUserUserName] = useState('');
   const [userPassword,setPassword] = useState('');
   function HandleSignUpSubmit (e) { 
-   // axios.get("http://localhost:3000/signup?");
-    e.preventDefualt();
+    e.preventDefault();
     alert("Submitted")
   }
   return (
