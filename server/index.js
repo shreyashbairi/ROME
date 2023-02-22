@@ -2,10 +2,11 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
+const(User) = require('./models/User.js');
 require('dotenv').config();
 
 const port = process.env.PORT || 8000;
-const MONGO_URI= "mongodb+srv://admin:J4U9FdQ50axtrGSl@cluster0.lopfsoc.mongodb.net/?retryWrites=true&w=majority"
 
 //app
 const app = express();
@@ -14,21 +15,32 @@ app.use(express.json());
      origin: 'http://localhost:3000',
 }));
 
-app.get('/test', (req, res) =>{
-    res.json('test ok');
-});
-app.post('/Submit', (req, res) =>{
-    const {userFullname, userEmail, userUserName, userPassword} = req.body;
-    res.json({userFullname, userEmail, userUserName, userPassword});
-})
 //database
-mongoose.set("strictQuery", false);
-mongoose.connect(MONGO_URI,{
+
+mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
 .then(() => console.log('DB CONNECTED'))
 .catch(err => console.log('DB CONNECTION ERROR', err));
+
+
+
+app.get('/test', (req, res) =>{
+    res.json('test ok');
+});
+
+//mQ9RV3bH6gdeV29w
+app.post('/Submit', (req, res) =>{
+    const {userFullname, userEmail, userUserName, userPassword} = req.body;
+    User.create({
+        userFullname,
+        userEmail,
+        userUserName, 
+        userPassword
+    })
+    res.json({userFullname, userEmail, userUserName, userPassword});
+})
 
 
 //middleware
