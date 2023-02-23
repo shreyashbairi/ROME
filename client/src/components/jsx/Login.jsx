@@ -44,7 +44,7 @@ export default function () {
             />
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button type="button" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Submit
             </button>
           </div>

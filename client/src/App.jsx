@@ -42,7 +42,6 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/editprofile" element={<EditProfile />} />
             <Route path="/main" element={<MainPage />} />
-            <Route path="/calendar" element={<Calendar />} />
             <Route path="/calendar" element={<CalendarTest />} />
             <Route path="/todo" element={<TodoList />} />
           </Route>
