@@ -27,7 +27,6 @@ function MainPage (){
 
         <div class="calendar">
             <div class="align-center">
-             <Calendar />
             </div>
         </div>
 

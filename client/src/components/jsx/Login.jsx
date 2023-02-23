@@ -1,13 +1,21 @@
 import React from "react"
 import { useState } from "react";
+import axios from "axios";
 import '../css/Login.css';
 
-export default function (props) {
+export default function () {
   const [userUserName,setUserUserName] = useState("");
   const [userPassword,setPassword] = useState("");
-  function HandleSubmit (e) { 
+  async function HandleSubmit (e) { 
     e.preventDefault();
-    alert(`Hi ${userUserName}!`);
+    try{
+      await axios.post('/Submit', {userUserName, userPassword});
+      alert(`Hi ${userUserName}!`);
+    } catch (e){
+      alert("Login Failed");
+    }
+
+
     /* send user input to backend */
   }
   return (

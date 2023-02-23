@@ -27,13 +27,33 @@ temp{
     border-radius: .25rem;
 }
 
+.col-sm-12{
+    width: 100px;
+}
+
 .pic {
     outline: none;
     border: none;
 }
 
+.changepassword{
+    background-color: #1100fe; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    display: flex;
+    min-width: 0;
+    border-radius: .25rem;
+    width: 100px;
+    text-decoration: none;
+}
+
 .edit {
     background-color: #4CAF50; /* Green */
+    text-decoration: none;
     border: none;
     color: white;
     padding: 8px 15px;
