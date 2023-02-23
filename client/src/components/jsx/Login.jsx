@@ -11,6 +11,7 @@ export default function () {
     try{
       await axios.post('/Submit', {userUserName, userPassword});
       alert(`Hi ${userUserName}!`);
+      window.open("/main");
     } catch (e){
       alert("Login Failed");
     }
