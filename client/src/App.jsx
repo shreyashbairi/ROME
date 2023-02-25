@@ -57,6 +57,7 @@ function App() {
       <Todo />
 
       {/* <MainPage /> */}
+      {/* <TodoList /> */}
     </div>
   );
 }
