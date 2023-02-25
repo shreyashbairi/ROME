@@ -2,19 +2,25 @@ import React, {useState} from 'react'
 import TodoForm from './TodoForm'
 import Todo from './Todo'
 
+// TODO
+// Comment everything
+// create a button that makes a pop up interface with 2 text boxes (description and name), drop down for personal and team
+// have each task have down arrow that allows view of details
+// create button to add team
+// create UI pop up for team name
+// have submit direct to a different page
+// have team added to DB under user
 
 function TodoList() {
     const [todos,setTodos] = useState([]);
 
     const addTask = todo => {
-        // console.log("test1")
         if (!todo.text || /^\s*$/.test(todo.test)) {
             return;
         }
 
         const newTasks = [todo, ...todos]
         setTodos(newTasks)
-        // console.log(...todos)
     }
 
     const removeTodo = id => {
@@ -49,16 +55,16 @@ function TodoList() {
             Your Tasks
         </h1>
 
-        <TodoForm 
-            onSubmit={addTask}
-        />
+        
         <Todo 
             todos={todos}
             completeTodo={completeTodo}
             removeTodo={removeTodo}
             editTask={editTask}
         />
-        
+        <TodoForm 
+            onSubmit={addTask}
+        />
     </div>
   )
 }

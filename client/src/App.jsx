@@ -18,6 +18,9 @@ import EditProfile from './components/jsx/EditProfile';
 import MainPage from './components/jsx/MainPage';
 import DefaultLayout from './components/jsx/DefaultLayout';
 
+//TODO delete below
+import Todo from "./components/jsx/Todo/TodoTest"
+
 
 
 function App() {
@@ -27,7 +30,7 @@ function App() {
 
       
       { /* Used to route thorugh pages add any adition pages here} */ }
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Welcome />} />
@@ -49,9 +52,11 @@ function App() {
 
 
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
 
-      <TodoList />
+      <Todo />
+
+      {/* <MainPage /> */}
     </div>
   );
 }

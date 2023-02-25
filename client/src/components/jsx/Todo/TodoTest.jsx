@@ -1,50 +1,31 @@
-import React, { useState } from 'react'
-import  { AiFillCloseCircle } from 'react-icons/ai'
-import { TiEdit } from 'react-icons/ti'
-import TodoForm from './TodoFormTest'
+import React from "react";
+import "../../css/Todo.css";
+import { useState } from "react";
+import TodoForm from "./TodoFormTest";
+import TeamPop from "../newTeamPop";
 
-function Todo({todos,completeTodo,removeTodo,editTask}) {
-    const [change, setChange] = useState({
-        id: null,
-        value:''
-    })
 
-    const submitUpdate = value => {
-        editTask(change.id, value)
-        setChange ({
-            id:null,
-            value: ''
-        })
+function Todo({titles, tasks}) {
+    const [click, setClick] = useState(false);
+
+    const clicked = e => {
+        setClick(true);
     }
 
-    if (change.id) {
-        return <TodoForm change={change} onSubmit={submitUpdate}/>
-    }
 
-    return todos.map((todo,index)=>(
-        <div 
-        className={todo.isComplete ? 'todo-row complete' :
-        'todo-row'} 
-        key={index}>
-
-            <div key={todo.id} onClick={()=>completeTodo(todo.id)}>
-                {todo.text}
+    return (
+        <div id="container">
+            <div id="header">
+                <h1>Your Tasks</h1>
+                <div>
+                    <button className="new-task-button" onClick={clicked}>Add New Task</button>
+                </div>
             </div>
-            <div
-                className="icons"
-            >
-                <AiFillCloseCircle
-                    onClick={()=>removeTodo(todo.id)}
-                    className='delete-task-icon'
-                />
-                <TiEdit 
-                    onClick={()=>setChange({id: todo.id, value:todo.text})}
-                    className='edit-task-icon'
-                />
-            </div>
-
+            <TodoForm trigger={click} setTrigger={setClick}/>
         </div>
-    ))
+
+        
+    )
 }
 
 export default Todo

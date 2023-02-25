@@ -1,77 +1,58 @@
-import '../../css/Todo.css';
-import React, { useState,useEffect,useRef } from 'react';
+import React from "react";
+import { useState } from "react";
 
-export function TodoForm(props1,props2) {
-    const [text,setText] = useState(props1.change ? props1.change.value : '');
-    const [description, setDesc] = useState('');
-    // const inputRef = useRef(null);
-    // const descriptionRef = useRef(null);
 
-    // useEffect(()=>{
-    //     inputRef.current.focus()
-    // })
+function TodoForm(props) {
+    const [titles, setTitles] = useState([])
+    const [tasks, setTasks] = useState({
+        title:"",
+        description:"",
+        option:"Personal"
+    })
 
-    const handleSubmit = e => {
+    async function handleSubmit(e) {
         e.preventDefault();
-
-        props1.onSubmit({
-            id: Math.floor(Math.random()*10000),
-            text: text
-        });
-
-        setText("");
-        setDesc("");
-    };
-
-    const inputChange = (e) => {
-        setText(e.target.value)
     }
 
-    const descriptionChange=(e)=> {
-        setDesc(e.target.value)
+    const handleTitle = (e) => {
+        const newTitle = {...titles}
+        newTitle[e.target.id] = e.target.value
+        setTitles(newTitle)
+        console.log(titles)
+
+        const newTask = {...tasks};
+        newTask[e.target.id] = e.target.value;
+        setTasks(newTask)
+        console.log(tasks)
     }
 
+    const handleTask = (e) => {
+        const newTask = {...tasks};
+        newTask[e.target.id] = e.target.value;
+        setTasks(newTask)
+        console.log(tasks)
+    }
 
-    return (
-            <form 
-            className='todo-form'
-            onSubmit={handleSubmit}
-            
-            >
-                {props1.change ? (
-                    <>
-                        <input 
-                            placeholder = {text}
-                            className = "New_Task"
-                            value={text}
-                            // ref={inputRef}
-                            onChange={inputChange}
-                        />
-                        <button className='todo-button'>Update</button>
-                    </>
-                ) : 
-                <>
-                    <input 
-                        placeholder = "Enter new task"
-                        className = "New_Task"
-                        value={text}
-                        // ref={inputRef}
-                        onChange={inputChange}
-                    />
-                    <input
-                        placeholder='Description'
-                        className='Task_Description'
-                        onChange={descriptionChange}
-                        value={description}
-                        // ref={descriptionRef}
-                    />
-                    
-                    <button className='todo-button'>Add</button>
-                </>
-                }
-                
-            </form>
-    );
+    return (props.trigger) ? (
+        <div className="popup">
+            <div>
+                <h3>New Task</h3>
+                <form
+                    onSubmit={handleSubmit}
+                >
+                    <input onChange={handleTitle} id="title" type="text" placeholder="Task Title" />
+                    <textarea onChange={handleTask} id="description" type="text" placeholder="Description" />
+                    <select onChange={handleTask} id="option">
+                        <option id="personal">Personal</option>
+                        <option id="team">Team</option>
+                    </select>
+                    <button>Add</button>
+                </form>
+                <button onClick={()=> props.setTrigger(false)}>Cancel</button>
+                {props.children}
+            </div>
+        </div>
+    ) : "";
 }
 
 export default TodoForm
