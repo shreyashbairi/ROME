@@ -24,5 +24,15 @@
 .close {
     position: absolute;
     top: 75%;
-    right: 5%;
+    right: 25%;
 }
+
+.inner-text {
+    height: 70vh;
+    width: 70vw;
+}
+
+/* .description-box {
+    height: 40%;
+    position: relative;
+} */
