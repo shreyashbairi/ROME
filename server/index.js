@@ -57,6 +57,22 @@ app.post('/Submit', async (req, res) =>{
 });
 
 app.post('/Submit', async (req, res) =>{
+    const {team, description} = req.body;
+    try {
+        const userDoc = await User.create({
+            team,
+            description
+        });
+        res.json(userDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+
+
+    
+});
+
+app.post('/Submit', async (req, res) =>{
     const {userUserName, userPassword} = req.body;
     const userDoc = await User.findOne({userUserName});
     if(userDoc){

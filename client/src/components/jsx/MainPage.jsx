@@ -39,8 +39,7 @@ function MainPage (){
         <div>
             <button onClick={newTeamButton}>New Team</button>
             <TeamPop trigger={buttonPop} setTrigger={setButtonPop}>
-                <h3>Create New Team</h3>
-                <div>This will be the team input stuff</div>
+                
             </TeamPop>
         </div>
 
