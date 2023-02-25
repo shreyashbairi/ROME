@@ -1,13 +1,13 @@
 function CalendarDays(props) {
     let firstDayOfMonth = new Date(props.day.getFullYear(), props.day.getMonth(), 1);
-    let weekdayOfFirstDay = firstDayOfMonth.getDay();
+    // let weekdayOfFirstDay = firstDayOfMonth.getDay();
     let firstDayOfWeek = new Date(props.day);
     let weekdayOfCurDay = firstDayOfWeek.getDay();
-    let currentDays = [];
+    // let currentDays = [];
     let currentWeekDays = [];
     let amountHours = 168;
     let currentTimes = [];
-    
+
     // for (let day = 0; day < 35; day++) {
     //     if (day === 0 && weekdayOfFirstDay === 0) {
     //     firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7);
@@ -49,8 +49,15 @@ function CalendarDays(props) {
     }
 
     for (let i=0; i < amountHours; i++) {
-        
-        currentTimes.push(i)
+        //event display handler
+        let hour = {
+            day: i%7, 
+            time: ((i - i%7) / 7) + 1,
+            selected: false, //maybe pull in from database
+            name: "Event",
+            top: false
+        }
+        currentTimes.push(hour)
     }
     return (
         <>
@@ -58,7 +65,8 @@ function CalendarDays(props) {
             {
                 currentWeekDays.map((day) => {
                 return (
-                    <div className={"calendar-day" + (day.currentMonth ? " current" : "") + (day.selected ? " selected" : "")}>
+                    <div className={"calendar-day" + (day.currentMonth ? " current" : "") + 
+                            (day.selected && day.date.getDate() === new Date().getDate() ? " selected" : "")}>
                             {/* onClick={() => props.changeCurrentDay(day)}> */}
                         <p>{day.number}</p>
                     </div>
@@ -66,10 +74,11 @@ function CalendarDays(props) {
                 })
             }
             {
-                currentTimes.map(() => {
+                currentTimes.map((hour) => {
                 return (
-                    <div className={"calendar-day p"}>
-                        <p>{}</p>
+                    <div className={"calendar-hour" + (hour.selected ? " scheduled" : "")}>
+                        {/* onClick= {scheduleEvent(hour)}> */}
+                        <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     </div>
                 )
                 })

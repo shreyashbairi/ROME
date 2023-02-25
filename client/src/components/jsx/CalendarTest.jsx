@@ -9,11 +9,11 @@ class CalendarTest extends Component {
         this.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 
                        'July', 'August', 'September', 'October', 'November', 'December'];
-        this.hours =['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', 
-                     '12pm','1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
+        this.hours =['1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm',
+                     '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm', '12am']
     
         this.state = {
-          currentDay: new Date() // Get from time of week grabed from backend
+          currentDay: new Date()
         }
         
     }
@@ -22,13 +22,22 @@ class CalendarTest extends Component {
         this.setState({ currentDay: new Date(day.year, day.month, day.number) });
     }
 
+    nextWeek = () => {
+        this.setState({ currentDay: new Date(this.state.currentDay.setDate(this.state.currentDay.getDate() + 7)) });
+    }
+    
+    previousWeek = () => {
+        this.setState({ currentDay: new Date(this.state.currentDay.setDate(this.state.currentDay.getDate() - 7)) });
+    }
+
+
     render() {
         return (
             <div class="Calendar-container">
                 <div class="Calendar-header">
                     <div class="header-left">
-                    <button type="button" class="btn btn-secondary">&#60;</button>
-                    <button type="button" class="btn btn-secondary">&#62;</button>
+                    <button type="button" class="btn btn-secondary" onClick={this.previousWeek}>&#60;</button>
+                    <button type="button" class="btn btn-secondary" onClick={this.nextWeek}>&#62;</button>
                     </div>
                     <h2 class="Calendar-header-content">{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
                     <div class="header-right">
@@ -63,8 +72,5 @@ class CalendarTest extends Component {
         
 }
 
-function CalendarData () {
-
-}
     
 export default CalendarTest;
