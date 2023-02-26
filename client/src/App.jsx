@@ -26,7 +26,6 @@ import Todo from "./components/jsx/Todo/TodoTest"
 function App() {
   return (
     <div className="App">
-      {/* <TodoList /> */}
 
       
       { /* Used to route thorugh pages add any adition pages here} */ }
@@ -54,10 +53,7 @@ function App() {
         </Routes>
       </BrowserRouter> */}
 
-      <Todo />
-
-      {/* <MainPage /> */}
-      {/* <TodoList /> */}
+      <TodoList />
     </div>
   );
 }

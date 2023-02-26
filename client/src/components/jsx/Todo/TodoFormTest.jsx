@@ -3,6 +3,8 @@ import { useState } from "react";
 
 
 function TodoForm(props) {
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
     const [titles, setTitles] = useState([])
     const [tasks, setTasks] = useState({
         title:"",
@@ -12,43 +14,65 @@ function TodoForm(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setTitle("")
+        setDescription("")
+        return(
+            <div>
+                Task Added Successfully
+            </div>
+        )
     }
 
     const handleTitle = (e) => {
         const newTitle = {...titles}
         newTitle[e.target.id] = e.target.value
         setTitles(newTitle)
-        console.log(titles)
+        setTitle(e.target.value)
+        // console.log(titles)
 
         const newTask = {...tasks};
         newTask[e.target.id] = e.target.value;
         setTasks(newTask)
-        console.log(tasks)
+        // console.log(tasks)
     }
 
-    const handleTask = (e) => {
+    const handleDescription = (e) => {
         const newTask = {...tasks};
         newTask[e.target.id] = e.target.value;
         setTasks(newTask)
-        console.log(tasks)
+        setDescription(e.target.value)
+        // console.log(tasks)
+    }
+
+    const handleCategory = (e) => {
+        const newTask = {...tasks};
+        newTask[e.target.id] = e.target.value;
+        setTasks(newTask)
+        // console.log(tasks)
     }
 
     return (props.trigger) ? (
         <div className="popup">
-            <div>
+            <div className="popupinner">
                 <h3>New Task</h3>
                 <form
                     onSubmit={handleSubmit}
                 >
-                    <input onChange={handleTitle} id="title" type="text" placeholder="Task Title" />
-                    <textarea onChange={handleTask} id="description" type="text" placeholder="Description" />
-                    <select onChange={handleTask} id="option">
+                    <input onChange={handleTitle} value={title} id="title" type="text" placeholder="Task Title" />
+                    <textarea onChange={handleDescription} value={description} id="description" type="text" placeholder="Description" />
+                    <select onChange={handleCategory} id="option">
                         <option id="personal">Personal</option>
                         <option id="team">Team</option>
                     </select>
-                    <button>Add</button>
+                    <button type="submit"
+                    onClick={()=> {
+                        props.setTitles(titles)
+                        props.setTasks(tasks)
+                        // props.setTrigger(false)
+                    }}
+                    >Add</button>
                 </form>
-                <button onClick={()=> props.setTrigger(false)}>Cancel</button>
+                <button type="button" onClick={()=> props.setTrigger(false)}>Cancel</button>
                 {props.children}
             </div>
         </div>
