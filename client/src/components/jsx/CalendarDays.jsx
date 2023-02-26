@@ -1,5 +1,5 @@
 function CalendarDays(props) {
-    let firstDayOfMonth = new Date(props.day.getFullYear(), props.day.getMonth(), 1);
+    // let firstDayOfMonth = new Date(props.day.getFullYear(), props.day.getMonth(), 1);
     // let weekdayOfFirstDay = firstDayOfMonth.getDay();
     let firstDayOfWeek = new Date(props.day);
     let weekdayOfCurDay = firstDayOfWeek.getDay();
@@ -49,13 +49,24 @@ function CalendarDays(props) {
     }
 
     for (let i=0; i < amountHours; i++) {
+        if (i%7 === 0) {
+            firstDayOfWeek.setDate(firstDayOfWeek.getDate()- 6);
+        } else {
+            firstDayOfWeek.setDate(firstDayOfWeek.getDate() + 1);
+        }
         //event display handler
         let hour = {
             day: i%7, 
             time: ((i - i%7) / 7) + 1,
-            selected: false, //maybe pull in from database
+            selected: false,
             name: "Event",
-            top: false
+            top: false,
+            date: (new Date(firstDayOfWeek))
+        }
+        for (let j = 0; j < props.events.length; j++) {
+            if (props.events[j].time === hour.time && props.events[j].date === hour.date) {
+                hour.selected = true;
+            }
         }
         currentTimes.push(hour)
     }
@@ -67,7 +78,7 @@ function CalendarDays(props) {
                 return (
                     <div className={"calendar-day" + (day.currentMonth ? " current" : "") + 
                             (day.selected && day.date.getDate() === new Date().getDate() ? " selected" : "")}>
-                            {/* onClick={() => props.changeCurrentDay(day)}> */}
+                             {/* onClick={() => props.changeCurrentDay(day)}> */}
                         <p>{day.number}</p>
                     </div>
                 )
@@ -76,8 +87,8 @@ function CalendarDays(props) {
             {
                 currentTimes.map((hour) => {
                 return (
-                    <div className={"calendar-hour" + (hour.selected ? " scheduled" : "")}>
-                        {/* onClick= {scheduleEvent(hour)}> */}
+                    <div className={"calendar-hour" + (hour.selected ? " scheduled" : "")}
+                        onClick= {() => props.scheduleEvent(hour)}>
                         <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     </div>
                 )
@@ -100,4 +111,4 @@ function CalendarDays(props) {
     )
   }
   
-  export default CalendarDays;
+export default CalendarDays;

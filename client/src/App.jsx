@@ -29,7 +29,7 @@ function App() {
 
       
       { /* Used to route thorugh pages add any adition pages here} */ }
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Welcome />} />
@@ -51,9 +51,9 @@ function App() {
 
 
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
 
-      <TodoList />
+      {/* <TodoList /> */}
     </div>
   );
 }
