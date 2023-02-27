@@ -10,6 +10,17 @@
     align-items: center;
 }
 
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
 .popupinner {
     position:relative;
     width: 50vw;
@@ -30,7 +41,9 @@
 .inner-text {
     height: 70vh;
     width: 70vw;
+    text-align: cente;
 }
+
 
 /* .description-box {
     height: 40%;

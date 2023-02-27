@@ -14,6 +14,7 @@ function MainPage (){
     const newTeamButton = () => {
         setButtonPop(true);
     }
+    
 
   return (
     <div >
@@ -41,7 +42,7 @@ function MainPage (){
 
 
 
-        <div class="calendar">
+        {/*<div class="calendar">
             <div class="align-center">
               
             </div>
@@ -49,7 +50,7 @@ function MainPage (){
 
         <div class="todo">
             <p>This will be Todo</p>
-        </div>
+  </div>*/}
 
 
         

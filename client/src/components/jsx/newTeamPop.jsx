@@ -2,6 +2,7 @@ import React from "react";
 import "../css/TeamPop.css";
 import { useState } from "react";
 import axios from 'axios';
+
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function TeamPop(props) {
@@ -46,38 +47,46 @@ function TeamPop(props) {
     }
 
     return(props.trigger) ? (
+        
         <div className="popup">
-            <div className="popupinner">
-                <div className="inner-text">
-                    <h3>Create New Team</h3>
-                    <form 
-                        id="new-team-form"
-                        onSubmit={handleSubmit}
-                    > 
-                        
-                        <input
-                            id="team"
-                            placeholder="Team Name"
-                            type="text"
-                            onChange={handleTeam}
-                            value={team}
-                        />
+            <div className="card">
+                <div className="popupinner ">
+                    <div className="inner-text">
+                        <h3>Create New Team</h3>
+                        <form 
+                            id="new-team-form"
+                            onSubmit={handleSubmit}
+                        > 
+
+                        <div class="col-sm-9 text-secondary mt-5">
+                            <input
+                                id="team"
+                                placeholder="Team Name"
+                                type="text"
+                                onChange={handleTeam}
+                                value={team}
+                            />
+                    </div>
+                    <div class="col-sm-9 text-secondary mt-4">
                         <textarea
-                            id="description"
-                            placeholder="Description"
-                            type="text"
-                            className="description-box"
-                            onChange={handleDescription}
-                            value={description}
-                        />
-                        <button>Submit</button>
-                    </form>
+                                    id="description"
+                                    placeholder="Description"
+                                    type="text"
+                                    className="description-box"
+                                    onChange={handleDescription}
+                                    value={description}
+                                />
+                    </div>
+
+                            <button>Submit</button>
+                        </form>
+                    </div>
+                    
+                    <button className="close" onClick={()=> props.setTrigger(false)}>
+                        close
+                    </button>
+                    {props.children}
                 </div>
-                
-                <button className="close" onClick={()=> props.setTrigger(false)}>
-                    close
-                </button>
-                {props.children}
             </div>
         </div>
     ) : "";
