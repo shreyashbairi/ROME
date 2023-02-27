@@ -39,10 +39,8 @@ function App() {
             <Route index element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
-
           </Route>
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/profile" element={<Profile />} />

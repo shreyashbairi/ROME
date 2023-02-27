@@ -9,7 +9,11 @@
     overflow: auto;
     border-radius: .25rem;
   }
-
+  .add-team{
+    margin: 0;
+    border-radius: .25rem;
+    margin-left: 15px;
+  }
   .calendar{
     margin-top: 10px;
     margin-left: 100px;
@@ -46,6 +50,10 @@
     color: white;
   }
   
+  .sidebar button:hover:not(.active) {
+    background-color: #544fec;
+    color: white;
+  }
   /* Links on mouse-over */
   .sidebar a:hover:not(.active) {
     background-color: #544fec;
