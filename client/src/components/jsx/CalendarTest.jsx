@@ -11,11 +11,26 @@ class CalendarTest extends Component {
                        'July', 'August', 'September', 'October', 'November', 'December'];
         this.hours =['1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm',
                      '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm', '12am']
-    
+        
+
         this.state = {
-          currentDay: new Date()
+          currentDay: new Date(),
+          events: [] //grab for database
         }
         
+    }
+
+    scheduleEvent = (hour) => {
+        // alert(hour.date)
+        const newevent = {
+            date: hour.date,
+            time: hour.time
+        };
+        this.setState(prevState => ({
+            evetns: [...prevState.events, newevent]
+          }))
+        // alert(this.events[0].date)
+        // alert(hour.date)
     }
     
     changeCurrentDay = (day) => {
@@ -61,7 +76,8 @@ class CalendarTest extends Component {
                                 })
                             }
                             </div>
-                            <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
+                            <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} 
+                                          events={this.state.events} scheduleEvent={this.scheduleEvent} />
                         </div>
                     </div>
                 </div>

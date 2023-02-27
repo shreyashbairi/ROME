@@ -26,11 +26,14 @@ import DefaultLayout from './components/jsx/DefaultLayout';
 function App() {
   return (
     <div className="App">
-      {/* <TodoList /> */}
 
       
       { /* Used to route thorugh pages add any adition pages here} */ }
+<<<<<<< HEAD
        <BrowserRouter>
+=======
+      <BrowserRouter>
+>>>>>>> c5e939cbebd3d407fe9efdd453dc2e0f30339b57
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Welcome />} />
@@ -54,9 +57,12 @@ function App() {
         </Routes>
       </BrowserRouter>
 
+<<<<<<< HEAD
       {/* <Todo /> */}
 
       {/* <MainPage /> */}
+=======
+>>>>>>> c5e939cbebd3d407fe9efdd453dc2e0f30339b57
       {/* <TodoList /> */}
     </div>
   );
