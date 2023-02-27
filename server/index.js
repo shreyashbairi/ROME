@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('./models/User.js');
 const Team = require('./models/Team.js');
 require('dotenv').config();
@@ -13,6 +14,7 @@ const port = process.env.PORT || 8000;
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10); 
+const jwtSecret = "2326a84bd9f67c9b9cb44a25c4e9a988";
 
 app.use(express.json());
  app.use(cors({credentials: true, 
@@ -39,7 +41,8 @@ app.get('/test', (req, res) =>{
 //User is user schema/type defined in models
 //userDoc is new user created 
 //SHREY do not confuse the two
-app.post('/Submit', async (req, res) =>{
+//for signup
+app.post('/signup', async (req, res) => {  
     const {userFullname, userEmail, userUserName, userPassword} = req.body;
     try {
         const userDoc = await User.create({
@@ -56,7 +59,7 @@ app.post('/Submit', async (req, res) =>{
 
     
 });
-
+//for team
 app.post('/Submit', async (req, res) =>{
     const {team, description} = req.body;
     try {
@@ -72,23 +75,25 @@ app.post('/Submit', async (req, res) =>{
 
     
 });
+//for login
+app.post('/login', async (req, res) => {
+    const { userUserName, userPassword } = req.body;
+    const userDoc = await User.findOne({ username: userUserName });
+    if (userDoc) {
+      const passOk = bcrypt.compareSync(userPassword, userDoc.userPassword);
+      if (passOk) {
+        jwt.sign({username:userDoc.userUserName, id:userDoc._id}, jwtSecret, {}, (err, token) =>{
+            if(err) throw(err);
+            res.cookie('token', token).json('password ok');
+        });
 
-app.post('/Submit', async (req, res) =>{
-    const {userUserName, userPassword} = req.body;
-    const userDoc = await User.findOne({userUserName});
-    if(userDoc){
-        const passOk = bcrypt.compareSync(userPassword, userDoc.userPassword);
-        if(passOk) {
-            res.json('password ok');
-        } else{
-            res.status(422).json('password not ok');
-        }
-        res.json('User found');
+      } else {
+        res.status(422).json('password not ok');
+      }
+    } else {
+      res.json('User not found');
     }
-    else{
-        res.json('User not found');
-    }
-});
+  });
 
 
 //middleware
