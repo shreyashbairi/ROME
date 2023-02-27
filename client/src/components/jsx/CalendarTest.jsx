@@ -20,17 +20,35 @@ class CalendarTest extends Component {
         
     }
 
-    scheduleEvent = (hour) => {
-        // alert(hour.date)
+    scheduleEventHour = (hour) => {
         const newevent = {
             date: hour.date,
-            time: hour.time
+            time: hour.time,
+            top: false //only make top kinda need pop up first tho i think
         };
-        this.setState(prevState => ({
-            evetns: [...prevState.events, newevent]
-          }))
-        // alert(this.events[0].date)
-        // alert(hour.date)
+        this.setState({events : [...this.state.events, newevent]})
+    }
+
+    scheduleEvent = () => {
+        const newElapsedEvent = { //grab from user with pop up 
+            date: new Date(),
+            startTime: 8,
+            endTime: 12,
+        };
+        const elapsedEvent = [];
+        for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
+            let topHour = false;
+            if (i === newElapsedEvent.startTime) {
+                topHour = true;
+            }
+            const newevent = {
+                date: newElapsedEvent.date,
+                time: i,
+                top: topHour
+            }; 
+            elapsedEvent.push(newevent)
+        }
+        this.setState({events : [...this.state.events, ...elapsedEvent]})
     }
     
     changeCurrentDay = (day) => {
@@ -56,7 +74,7 @@ class CalendarTest extends Component {
                     </div>
                     <h2 class="Calendar-header-content">{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
                     <div class="header-right">
-                    <button type="button" class="btn btn-secondary">Week</button>
+                    <button type="button" class="btn btn-secondary" onClick={this.scheduleEvent}>Week</button>
                     </div>
                 </div>
                 <div class="Calendar-content-body">
@@ -77,7 +95,7 @@ class CalendarTest extends Component {
                             }
                             </div>
                             <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} 
-                                          events={this.state.events} scheduleEvent={this.scheduleEvent} />
+                                          events={this.state.events} scheduleEventHour={this.scheduleEventHour} />
                         </div>
                     </div>
                 </div>

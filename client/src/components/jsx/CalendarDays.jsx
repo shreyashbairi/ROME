@@ -64,8 +64,11 @@ function CalendarDays(props) {
             date: (new Date(firstDayOfWeek))
         }
         for (let j = 0; j < props.events.length; j++) {
-            if (props.events[j].time === hour.time && props.events[j].date === hour.date) {
+            if (props.events[j].time === hour.time && props.events[j].date.getDate() === hour.date.getDate()) {
                 hour.selected = true;
+                if (props.events[j].top) {
+                    hour.top = true;
+                }
             }
         }
         currentTimes.push(hour)
@@ -88,7 +91,7 @@ function CalendarDays(props) {
                 currentTimes.map((hour) => {
                 return (
                     <div className={"calendar-hour" + (hour.selected ? " scheduled" : "")}
-                        onClick= {() => props.scheduleEvent(hour)}>
+                        onClick= {() => props.scheduleEventHour(hour)}>
                         <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     </div>
                 )
