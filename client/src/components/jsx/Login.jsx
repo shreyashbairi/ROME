@@ -10,7 +10,7 @@ export default function () {
   async function HandleSubmit (e) { 
     e.preventDefault();
     try{
-      await axios.post('/login', {userUserName, userPassword}, );
+      await axios.post('/login', {userUserName, userPassword});
       alert(`login succesful. Hi ${userUserName}!`);
       setRedirect(true);
     } catch (e){
