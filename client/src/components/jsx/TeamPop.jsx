@@ -2,6 +2,8 @@ import React from "react";
 import "../css/TeamPop.css";
 import { useState } from "react";
 import axios from 'axios';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import TeamHome from "./TeamHome"
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function TeamPop(props) {
@@ -45,6 +47,16 @@ function TeamPop(props) {
         console.log(newdata)
     }
 
+    const openTeamPage = e => {
+        return (
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/team" element={<TeamHome />}/>
+                </Routes>
+            </BrowserRouter>
+        )
+    }
+
     return(props.trigger) ? (
         <div className="popup">
             <div className="popupinner">
@@ -70,7 +82,7 @@ function TeamPop(props) {
                             onChange={handleDescription}
                             value={description}
                         />
-                        <button>Submit</button>
+                        <button onClick={openTeamPage}>Submit</button>
                     </form>
                 </div>
                 

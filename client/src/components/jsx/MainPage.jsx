@@ -3,7 +3,7 @@ import Todo from "./Todo/Todo";
 import '../css/MainPage.css'
 import Calendar from "./Calendar";
 // import  {useNavigate} from "react-router-dom";
-import TeamPop from "./newTeamPop"
+import TeamPop from "./TeamPop"
 import { useState } from "react";
 
 

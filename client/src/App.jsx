@@ -54,6 +54,7 @@ function App() {
       </BrowserRouter> */}
 
       <TodoList />
+      {/* <MainPage /> */}
     </div>
   );
 }
