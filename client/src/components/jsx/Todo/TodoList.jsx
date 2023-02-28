@@ -71,7 +71,7 @@ function TodoList(props) {
             Your Tasks
             
         </h1>
-        <h3><AiFillPlusCircle onClick={clicked}/></h3>
+        <h3 class="task-add-button"><AiFillPlusCircle onClick={clicked}/></h3>
 
         <TodoForm 
             onSubmit={addTodo}

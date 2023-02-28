@@ -51,7 +51,7 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
         <div>
             {todos.map((todo,index)=>{
                 return(
-                    <div key = {index}>
+                    <div key = {index} class="task">
                         
                         <div key={todo.id} onClick={()=>completeTodo(todo.id)}>
                             {todo.title}
