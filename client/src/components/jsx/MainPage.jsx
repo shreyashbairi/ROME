@@ -2,6 +2,7 @@ import React from "react";
 import Todo from "./Todo/Todo";
 import '../css/MainPage.css'
 import Calendar from "./Calendar";
+import CalendarTest from "./CalendarTest";
 // import  {useNavigate} from "react-router-dom";
 import TeamPop from "./newTeamPop"
 import { useState } from "react";
@@ -42,15 +43,15 @@ function MainPage (){
 
 
 
-        {/*<div class="calendar">
+        <div class="calendar">
             <div class="align-center">
-              
+              <CalendarTest />
             </div>
         </div>
 
         <div class="todo">
             <p>This will be Todo</p>
-  </div>*/}
+  </div>
 
 
         

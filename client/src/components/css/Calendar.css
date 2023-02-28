@@ -10,8 +10,8 @@
 @import "../../../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
 
 .Calendar-container {
-    margin-left: 20vw;
-    margin-right: 25vw;
+    /* margin-left: 20vw;
+    margin-right: 25vw; */
     height: 100vh;
     margin-top: 0%;
     background-color: #b995d2
@@ -26,13 +26,13 @@
 
 .header-left{
     text-align: left;
-    width: 9vw;
+    width: 16vw;
     display: inline-block;
 }
 
 .header-right{
     text-align: right;
-    width: 9vw;
+    width: 16vw;
     display: inline-block;
 }
 
@@ -46,7 +46,7 @@
 .Calendar-content-body {
   padding: 0;
   margin: 0;
-  height: 88%;
+  height: 76%;
 }
 
 .Calendar-Content{
