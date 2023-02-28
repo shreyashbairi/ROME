@@ -16,15 +16,16 @@ function TodoList(props) {
     // const [todos,setTodos] = useState([]);
     const [click, setClick] = useState(false);
     const [todos, setTodos] = useState([{
-        title:"",
-        description:"",
-        date:""
+        title:String,
+        description:String,
+        date:Object
     }])
 
     const addTodo = todo => {
-        // if (!todo.text || /^\s*$/.test(todo.test)) {
-        //     return;
-        // }
+        if (!todo.title || /^\s*$/.test(todo.title)) {
+            setClick(false);
+            return;
+        }
 
         // const newTasks = [todo, ...todos]
         // setTodos(newTasks)
@@ -35,8 +36,9 @@ function TodoList(props) {
     }
 
     const removeTodo = id => {
+        console.log([...todos])
         const removeArray = [...todos].filter(todo => todo.id !== id)
-
+        
         setTodos(removeArray)
     }
 
@@ -54,6 +56,7 @@ function TodoList(props) {
             if(todo.id===id){
                 todo.isComplete = !todo.isComplete
             }
+            console.log(todo)
             return todo
         })
         setTodos(updatedTodos)
@@ -76,6 +79,7 @@ function TodoList(props) {
         <TodoForm 
             onSubmit={addTodo}
             trigger={click}
+            setTrigger={()=>setClick(false)}
         />
         <Todo 
             // todos={todos}

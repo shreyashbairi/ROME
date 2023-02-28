@@ -5,7 +5,7 @@ import Calendar from "./Calendar";
 import TodoList from "./Todo/TodoList";
 import CalendarTest from "./CalendarTest";
 // import  {useNavigate} from "react-router-dom";
-import TeamPop from "./newTeamPop"
+import TeamPop from "./TeamPop"
 import { useState } from "react";
 
 
