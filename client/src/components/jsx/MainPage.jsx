@@ -2,6 +2,7 @@ import React from "react";
 import Todo from "./Todo/Todo";
 import '../css/MainPage.css'
 import Calendar from "./Calendar";
+import TodoList from "./Todo/TodoList";
 import CalendarTest from "./CalendarTest";
 // import  {useNavigate} from "react-router-dom";
 import TeamPop from "./TeamPop"
@@ -83,8 +84,6 @@ function MainPage (){
             
         </div> 
 
-
-
         {/* <div class="calendar">
             <div class="align-center">
               <CalendarTest />
@@ -92,7 +91,8 @@ function MainPage (){
         </div> */}
 
         <div class="todo">
-            <p>This will be Todo</p>
+            <TodoList />
+            {/* <p>This will be Todo</p> */}
   </div>
 
 

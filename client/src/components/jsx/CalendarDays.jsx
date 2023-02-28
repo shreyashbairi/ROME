@@ -68,6 +68,7 @@ function CalendarDays(props) {
                 hour.selected = true;
                 if (props.events[j].top) {
                     hour.top = true;
+                    hour.name = props.events[j].title;
                 }
             }
         }

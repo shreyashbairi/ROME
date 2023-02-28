@@ -5,17 +5,18 @@
 }
 
 #container {
-    margin-left: 75vw;
-    height: 100vh;
+    /* margin-left: 75vw; */
+    height: 100%;
     margin-top: 0%;
-    background-color: #E0B0FF
+    background-color: #f1f1f1;
 }
 
 #header{
-    background-color: rgb(127, 0, 255);
+    background-color: #0d6efd;
     text-align: center;
     padding: 2.5%;
     overflow-y: hidden;
+    border-radius: .25rem;
 }
 
 #task_box {
@@ -30,4 +31,16 @@
 .New_Task {
     border: solid;
     width: 25vw;
+}
+
+.task-add-button {
+    align-items: left;
+    text-align: left;
+    margin-left: 1vw;
+}
+
+.task {
+    align-items: left;
+    text-align: left;
+    margin-left: 1vw;
 }

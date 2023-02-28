@@ -34,6 +34,7 @@ class CalendarTest extends Component {
             date: new Date(),
             startTime: 8,
             endTime: 12,
+            title: "Meeting"
         };
         const elapsedEvent = [];
         for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
@@ -44,7 +45,8 @@ class CalendarTest extends Component {
             const newevent = {
                 date: newElapsedEvent.date,
                 time: i,
-                top: topHour
+                top: topHour,
+                title: newElapsedEvent.title
             }; 
             elapsedEvent.push(newevent)
         }
