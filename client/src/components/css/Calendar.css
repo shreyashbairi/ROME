@@ -10,29 +10,30 @@
 @import "../../../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
 
 .Calendar-container {
-    margin-left: 20vw;
-    margin-right: 25vw;
+    /* margin-left: 20vw;
+    margin-right: 25vw; */
     height: 100vh;
     margin-top: 0%;
-    background-color: #b995d2
+    /* background-color: #b995d2 */
+    background-color: #f1f1f1;
 }
 
 .Calendar-header{
-   
-    background-color: rgb(147, 86, 207);
+    background-color: #0d6efd;
+    /* background-color: rgb(147, 86, 207); */
     padding: 2.5%;
     text-align: center;
 }
 
 .header-left{
     text-align: left;
-    width: 9vw;
+    width: 16vw;
     display: inline-block;
 }
 
 .header-right{
     text-align: right;
-    width: 9vw;
+    width: 16vw;
     display: inline-block;
 }
 
@@ -46,7 +47,7 @@
 .Calendar-content-body {
   padding: 0;
   margin: 0;
-  height: 88%;
+  height: 76%;
 }
 
 .Calendar-Content{
@@ -54,7 +55,7 @@
 }
 
 .time-sidebar{
-  width: 1.5vw;
+  width: 2vw;
   float: left;
   margin-top: 10vh;
 }
@@ -108,7 +109,8 @@
   }
   
   .calendar-day:hover {
-    background-color: rgba(0,0,0,.10);
+    /* background-color: rgba(0,0,0,.10); */
+    background-color: #6561d19c;
   }
   
   .calendar-day p {
@@ -121,7 +123,7 @@
   }
   
   .selected p {
-    color: #ea0be7;
+    color:  #0d6efd;
     font-weight: bold;
   }
 
@@ -133,7 +135,8 @@
   }
   
   .calendar-hour:hover {
-    background-color: rgba(0,0,0,.10);
+    /* background-color: rgba(0,0,0,.10); */
+    background-color: #6561d19c;
   }
   
   .calendar-hour p {
@@ -142,9 +145,9 @@
   }
   
   .scheduled {
-    background-color: rgb(145, 50, 150);
+    background-color: rgb(29, 155, 209);
   }
 
   .scheduled:hover {
-    background-color: rgb(200, 40, 120);
+    background-color: rgba(111, 187, 220, 0.681);
   }

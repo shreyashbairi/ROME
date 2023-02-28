@@ -11,11 +11,44 @@ class CalendarTest extends Component {
                        'July', 'August', 'September', 'October', 'November', 'December'];
         this.hours =['1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm',
                      '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm', '12am']
-    
+        
+
         this.state = {
-          currentDay: new Date()
+          currentDay: new Date(),
+          events: [] //grab for database
         }
         
+    }
+
+    scheduleEventHour = (hour) => {
+        const newevent = {
+            date: hour.date,
+            time: hour.time,
+            top: false //only make top kinda need pop up first tho i think
+        };
+        this.setState({events : [...this.state.events, newevent]})
+    }
+
+    scheduleEvent = () => {
+        const newElapsedEvent = { //grab from user with pop up 
+            date: new Date(),
+            startTime: 8,
+            endTime: 12,
+        };
+        const elapsedEvent = [];
+        for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
+            let topHour = false;
+            if (i === newElapsedEvent.startTime) {
+                topHour = true;
+            }
+            const newevent = {
+                date: newElapsedEvent.date,
+                time: i,
+                top: topHour
+            }; 
+            elapsedEvent.push(newevent)
+        }
+        this.setState({events : [...this.state.events, ...elapsedEvent]})
     }
     
     changeCurrentDay = (day) => {
@@ -41,7 +74,7 @@ class CalendarTest extends Component {
                     </div>
                     <h2 class="Calendar-header-content">{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
                     <div class="header-right">
-                    <button type="button" class="btn btn-secondary">Week</button>
+                    <button type="button" class="btn btn-secondary" onClick={this.scheduleEvent}>Week</button>
                     </div>
                 </div>
                 <div class="Calendar-content-body">
@@ -61,7 +94,8 @@ class CalendarTest extends Component {
                                 })
                             }
                             </div>
-                            <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
+                            <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} 
+                                          events={this.state.events} scheduleEventHour={this.scheduleEventHour} />
                         </div>
                     </div>
                 </div>

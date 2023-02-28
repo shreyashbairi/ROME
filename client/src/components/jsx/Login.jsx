@@ -2,23 +2,26 @@ import React from "react"
 import { useState } from "react";
 import axios from "axios";
 import '../css/Login.css';
-
+import { Navigate } from "react-router-dom";
 export default function () {
   const [userUserName,setUserUserName] = useState("");
   const [userPassword,setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
   async function HandleSubmit (e) { 
     e.preventDefault();
     try{
-      await axios.post('/Submit', {userUserName, userPassword});
-      alert(`Hi ${userUserName}!`);
-      window.open("/main");
+      await axios.post('/login', {userUserName, userPassword});
+      alert(`login succesful. Hi ${userUserName}!`);
+      setRedirect(true);
     } catch (e){
       alert("Login Failed");
     }
-
-
-    /* send user input to backend */
+    
   }
+  if(redirect){
+    return <Navigate to={'/main'} />
+  }
+     /* send user input to backend */
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={HandleSubmit}>

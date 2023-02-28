@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import '../css/Login.css';
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:8000';
+
 export default function SignUp (props) {
   const [userFullname,setUserFullname] = useState('');
   const [userEmail,setUserEmail] = useState('');
@@ -11,7 +11,7 @@ export default function SignUp (props) {
   async function HandleSignUpSubmit (e) { 
     e.preventDefault();
     try{
-      await axios.post('/Submit', {
+      await axios.post('/signup', {
         userFullname, 
         userEmail,
         userUserName,

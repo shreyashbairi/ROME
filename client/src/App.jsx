@@ -17,28 +17,30 @@ import Profile from './components/jsx/Profile';
 import EditProfile from './components/jsx/EditProfile';
 import MainPage from './components/jsx/MainPage';
 import DefaultLayout from './components/jsx/DefaultLayout';
+import axios from 'axios';
 
+axios.defaults.baseURL = "http://localhost:8000/";
+axios.defaults.withCredentials = true;
 //TODO delete below
-import Todo from "./components/jsx/Todo/TodoTest"
+//import Todo from "./components/jsx/Todo/TodoTest"
 
 
 
 function App() {
   return (
     <div className="App">
+      {/* <TodoList /> */}
 
       
       { /* Used to route thorugh pages add any adition pages here} */ }
-      {/* <BrowserRouter>
+       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
-
           </Route>
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/profile" element={<Profile />} />
@@ -51,10 +53,11 @@ function App() {
 
 
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
 
-      <TodoList />
-      {/* <MainPage /> */}
+      {/* <Todo /> */}
+
+      {/* <TodoList /> */}
     </div>
   );
 }
