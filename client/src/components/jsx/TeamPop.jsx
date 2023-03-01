@@ -16,6 +16,7 @@ function TeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+<<<<<<< HEAD
         try{
             await axios.post('/Submit', {
               team,
@@ -25,6 +26,23 @@ function TeamPop(props) {
           } catch (e){
             alert('Team Creation Failed. Please try again later.')
           }
+=======
+        // try{
+        //     await axios.post('/Submit', {
+        //       team,
+        //       description
+        //     });
+        //     alert("Team Successfully Created.  Redirecting you now.");
+        //   } catch (e){
+        //     alert('Team Creation Failed. Please try again later.')
+        //   }
+        props.onSubmit({
+            teamID: Math.floor(Math.random()*10000),
+            team: team,
+            description: description
+        });
+        props.setTrigger(false);
+>>>>>>> 0c89cd0e12e97e383a399fab5a6f1f9385aecd76
         setTeam("");
         setDescription("");
     }
@@ -49,11 +67,22 @@ function TeamPop(props) {
 
     const openTeamPage = e => {
         return (
+<<<<<<< HEAD
             <BrowserRouter>
                 <Routes>
                     <Route path="/team" element={<TeamHome />}/>
                 </Routes>
             </BrowserRouter>
+=======
+            // <BrowserRouter>
+            //     <Routes>
+            //         <Route path="/team" element={<TeamHome />}/>
+            //     </Routes>
+            // </BrowserRouter>
+            <>
+                props.setTrigger(false)
+            </>
+>>>>>>> 0c89cd0e12e97e383a399fab5a6f1f9385aecd76
         )
     }
 
@@ -88,7 +117,11 @@ function TeamPop(props) {
                                 onChange={handleDescription}
                                 value={description}
                             />
+<<<<<<< HEAD
                             <button onClick={openTeamPage}>Submit</button>
+=======
+                            <button>Submit</button>
+>>>>>>> 0c89cd0e12e97e383a399fab5a6f1f9385aecd76
                             </div>  
                         </form>
                         <button className="close" onClick={()=> props.setTrigger(false)}>
