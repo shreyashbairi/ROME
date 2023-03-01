@@ -152,3 +152,7 @@
   .scheduled:hover {
     background-color: rgba(111, 187, 220, 0.681);
   }
+
+  .addevent {
+    border-radius: .25rem !important;
+  }

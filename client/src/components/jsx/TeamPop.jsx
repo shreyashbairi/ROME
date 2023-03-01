@@ -68,47 +68,45 @@ function TeamPop(props) {
 
     return(props.trigger) ? (
         
-        <div className="popup">
-            <div className="card">
-                <div className="popupinner ">
-                    <div className="inner-text">
-                        <h3>Create New Team</h3>
-                        <form 
-                            id="new-team-form"
-                            onSubmit={handleSubmit}
-                        > 
+        <div className="inner-text">
+            <div class="card-body">
 
-                            <div class="col-sm-9 text-secondary mt-5">
-                                <input
-                                    id="team"
-                                    placeholder="Team Name"
-                                    type="text"
-                                    onChange={handleTeam}
-                                    value={team}
-                                />
-                            </div>
-                            <div class="col-sm-9 text-secondary mt-4">
-                            
-                            <textarea
-                                id="description"
-                                placeholder="Description"
-                                type="text"
-                                className="description-box"
-                                onChange={handleDescription}
-                                value={description}
-                            />
-                            <button>Submit</button>
-                            </div>  
-                        </form>
-                        <button className="close" onClick={()=> props.setTrigger(false)}>
-                            close
-                        </button>
-                        
-                        {props.children}
+                <h3>Create New Team</h3>
+                <form 
+                    id="new-team-form"
+                    onSubmit={handleSubmit}
+                > 
+                    <div class="col-sm-9 text-secondary mt-5">
+                        <input
+                            id="team"
+                            placeholder="Team Name"
+                            type="text"
+                            onChange={handleTeam}
+                            value={team}
+                        />
                     </div>
-                </div>
+                    <div class="col-sm-9 text-secondary mt-4">
+                    
+                    <textarea
+                        id="description"
+                        placeholder="Description"
+                        type="text"
+                        className="description-box"
+                        onChange={handleDescription}
+                        value={description}
+                    />
+                    <button>Submit</button>
+                    </div>  
+                </form>
+                <button className="close" onClick={()=> props.setTrigger(false)}>
+                    close
+                </button>
+                
+                {props.children}
             </div>
         </div>
+
+
     ) : "";
 
 }

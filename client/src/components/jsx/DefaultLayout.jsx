@@ -4,6 +4,7 @@ import '../css/DefaultLayout.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import TeamPop from "./TeamPop"
+import Popup from "reactjs-popup";
 
 function DefaultLayout () {
     const navigate = useNavigate();
@@ -64,14 +65,17 @@ function DefaultLayout () {
             })}
             <br></br>
             <div class="add-team">
-            <button onClick={newTeamButton}>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plus_symbol.svg/1200px-Plus_symbol.svg.png" alt="Logo" width="40" height="40" class="rounded mx-auto d-block center" />      
-            </button>
-            <TeamPop 
-                trigger={buttonPop} 
-                setTrigger={setButtonPop}
-                onSubmit={addTeam}
-            />
+            <Popup trigger={<button type="button" class="btn btn-secondary"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plus_symbol.svg/1200px-Plus_symbol.svg.png" alt="Logo" width="40" height="40" class="rounded mx-auto d-block center" />  </button>} 
+ open={buttonPop} onOpen={newTeamButton} position="right center" nested modal >
+                <div class="card">
+                <TeamPop 
+                    trigger={buttonPop} 
+                    setTrigger={setButtonPop}
+                    onSubmit={addTeam}
+                />   
+                </div>
+            </ Popup>
+
             
             </div>
 

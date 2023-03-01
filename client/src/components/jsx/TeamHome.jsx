@@ -3,7 +3,7 @@ import "../css/TeamHome.css"
 function TeamHome() {
     return (
         <div>
-            <div className="todo-container">
+            <div class="team1"> 
                 {/* make a different component than TodoList bc this one has some additional functionality
                 other code can still be used for reference.  It's just easier to make new
                 for now we just need the spaces for it */}

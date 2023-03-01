@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
 import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 
 
 
@@ -100,8 +99,7 @@ class CalendarTest extends Component {
                         <h2 class="Calendar-header-content">{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
                         <div class="header-right">
 
-
-                        <Popup trigger={<button type="button" class="btn btn-secondary">Add Events </button>} open={this.state.show}
+                        <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">Add Events </button>} open={this.state.show}
                         onOpen={this.openform} position="right center" nested modal>
                             <div class="card">
                             <AddEvent  
@@ -110,13 +108,6 @@ class CalendarTest extends Component {
                                 />     
                             </div>
                         </ Popup>
-
-
-
-
-
-
-
 
                         <button type="button" class="btn btn-secondary" onClick={this.scheduleEvent}>Week</button>
                         </div>
