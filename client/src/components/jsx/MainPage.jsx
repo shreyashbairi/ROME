@@ -84,11 +84,11 @@ function MainPage (){
             
         </div> 
 
-        {/* <div class="calendar">
+        <div class="calendar">
             <div class="align-center">
               <CalendarTest />
             </div>
-        </div> */}
+        </div>
 
         <div class="todo">
             <TodoList />
