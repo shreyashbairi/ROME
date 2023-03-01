@@ -20,6 +20,7 @@ import DefaultLayout from './components/jsx/DefaultLayout';
 import axios from 'axios';
 import AddEvent from './components/jsx/AddEvent';
 import { useState } from 'react';
+import TeamHome from './components/jsx/TeamHome';
 
 
 
@@ -55,6 +56,7 @@ function App() {
             {/* <Route path="/calendar" element={<CalendarTest />} /> */}
             <Route path="/todo" element={<TodoList />} />
             <Route path="/add" element={<AddEvent  />} />
+            <Route path='/team/:teamID' element={<TeamHome />}/>
 
           </Route>
 
