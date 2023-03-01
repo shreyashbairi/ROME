@@ -62,6 +62,7 @@ class CalendarTest extends Component {
         this.setState({events : [...this.state.events, ...elapsedEvent]})
     }
     
+    
     changeCurrentDay = (day) => {
         this.setState({ currentDay: new Date(day.year, day.month, day.number) });
     }
@@ -74,10 +75,12 @@ class CalendarTest extends Component {
         this.setState({ currentDay: new Date(this.state.currentDay.setDate(this.state.currentDay.getDate() - 7)) });
     }
 
-
+    
     openform = () => {
         this.setState({ show: true });
     };
+
+
 
     closeform = () => {
         this.setState({ show: false });
@@ -85,59 +88,65 @@ class CalendarTest extends Component {
 
     render() {
         return (
-            <div class="Calendar-container">
+            <>
 
-                <div class="Calendar-header">
-                    <div class="header-left">
-                    <button type="button" class="btn btn-secondary" onClick={this.previousWeek}>&#60;</button>
-                    <button type="button" class="btn btn-secondary" onClick={this.nextWeek}>&#62;</button>
-                    </div>
-                    <h2 class="Calendar-header-content">{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
-                    <div class="header-right">
+                <div class="Calendar-container">
 
-
-                    <Popup trigger=<button type="button" class="btn btn-secondary">Add Events </button>
-
-                         modal nested   position="right center">
-                        <div class="card">                
-                            <AddEvent />
-                            
+                    <div class="Calendar-header">
+                        <div class="header-left">
+                        <button type="button" class="btn btn-secondary" onClick={this.previousWeek}>&#60;</button>
+                        <button type="button" class="btn btn-secondary" onClick={this.nextWeek}>&#62;</button>
                         </div>
-                    </Popup>
+                        <h2 class="Calendar-header-content">{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
+                        <div class="header-right">
+
+
+                        <Popup trigger={<button type="button" class="btn btn-secondary">Add Events </button>} open={this.state.show}
+                        onOpen={this.openform} position="right center" nested modal>
+                            <div class="card">
+                            <AddEvent  
+                                    trigger={this.state.show}
+                                    setTrigger={this.closeform}
+                                />     
+                            </div>
+                        </ Popup>
 
 
 
 
 
 
-                    <button type="button" class="btn btn-secondary" onClick={this.scheduleEvent}>Week</button>
+
+
+                        <button type="button" class="btn btn-secondary" onClick={this.scheduleEvent}>Week</button>
+                        </div>
                     </div>
-                </div>
-                <div class="Calendar-content-body">
-                    <div class="time-sidebar">
-                        {
-                            this.hours.map((hour) => {
-                                return <div className="hour"><p>{hour}</p></div>
-                            })
-                        }
-                    </div>
-                    <div class="Calendar-Content">
-                        <div className="calendar-body">
-                            <div className="table-header">
+                    <div class="Calendar-content-body">
+                        <div class="time-sidebar">
                             {
-                                this.weekdays.map((weekday) => {
-                                return <div className="weekday"><p>{weekday}</p></div>
+                                this.hours.map((hour) => {
+                                    return <div className="hour"><p>{hour}</p></div>
                                 })
                             }
+                        </div>
+                        <div class="Calendar-Content">
+                            <div className="calendar-body">
+                                <div className="table-header">
+                                {
+                                    this.weekdays.map((weekday) => {
+                                    return <div className="weekday"><p>{weekday}</p></div>
+                                    })
+                                }
+                                </div>
+                                <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} 
+                                            events={this.state.events} scheduleEventHour={this.scheduleEventHour} />
                             </div>
-                            <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} 
-                                          events={this.state.events} scheduleEventHour={this.scheduleEventHour} />
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
-
+        
     }
         
 }

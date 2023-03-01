@@ -2,11 +2,9 @@ body{
     margin-top:20px;
     color: #1a202c;
     text-align: left;
-    background-color: #e196d7;    
+ 
 }
-temp{
-    background-color: #e196d7;    
-}
+
 .main-body {
     padding: 15px;
 }
@@ -21,7 +19,6 @@ temp{
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #d278b6;
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
     border-radius: .25rem;
