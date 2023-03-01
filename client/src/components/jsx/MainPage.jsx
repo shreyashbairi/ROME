@@ -2,6 +2,7 @@ import React from "react";
 import Todo from "./Todo/Todo";
 import '../css/MainPage.css'
 import Calendar from "./Calendar";
+import AddEvent from "./AddEvent";
 import TodoList from "./Todo/TodoList";
 import CalendarTest from "./CalendarTest";
 // import  {useNavigate} from "react-router-dom";
@@ -12,6 +13,9 @@ import { useState } from "react";
 function MainPage (){
     // let navigation = useNavigate();
     const [buttonPop, setButtonPop] = useState(false);
+    const [show,setShow] = useState(false)
+
+
     const [teams, setTeams] = useState([{
         teamID: String,
         team: String,
@@ -86,7 +90,7 @@ function MainPage (){
 
         <div class="calendar">
             <div class="align-center">
-              <CalendarTest />
+            <CalendarTest />
             </div>
         </div>
 

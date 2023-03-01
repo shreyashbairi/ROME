@@ -1,8 +1,14 @@
 import "../css/Calendar.css";
 import React, {Component} from 'react';
 import CalendarDays from "./CalendarDays";
+import AddEvent from "./AddEvent";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
+
 
 class CalendarTest extends Component {
+
     constructor() {
         super();
 
@@ -11,14 +17,17 @@ class CalendarTest extends Component {
                        'July', 'August', 'September', 'October', 'November', 'December'];
         this.hours =['1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm',
                      '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm', '12am']
-        
+
 
         this.state = {
           currentDay: new Date(),
-          events: [] //grab for database
+          events: [], //grab for database
+          show: false
         }
         
     }
+
+
 
     scheduleEventHour = (hour) => {
         const newevent = {
@@ -66,9 +75,18 @@ class CalendarTest extends Component {
     }
 
 
+    openform = () => {
+        this.setState({ show: true });
+    };
+
+    closeform = () => {
+        this.setState({ show: false });
+    }
+
     render() {
         return (
             <div class="Calendar-container">
+
                 <div class="Calendar-header">
                     <div class="header-left">
                     <button type="button" class="btn btn-secondary" onClick={this.previousWeek}>&#60;</button>
@@ -76,6 +94,22 @@ class CalendarTest extends Component {
                     </div>
                     <h2 class="Calendar-header-content">{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
                     <div class="header-right">
+
+
+                    <Popup trigger=                    <button type="button" class="btn btn-secondary">Add Events </button>
+
+                         modal nested   position="right center">
+                        <div class="card">                
+                            <AddEvent />
+                            
+                        </div>
+                    </Popup>
+
+
+
+
+
+
                     <button type="button" class="btn btn-secondary" onClick={this.scheduleEvent}>Week</button>
                     </div>
                 </div>

@@ -18,6 +18,10 @@ import EditProfile from './components/jsx/EditProfile';
 import MainPage from './components/jsx/MainPage';
 import DefaultLayout from './components/jsx/DefaultLayout';
 import axios from 'axios';
+import AddEvent from './components/jsx/AddEvent';
+import { useState } from 'react';
+
+
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
@@ -27,13 +31,15 @@ axios.defaults.withCredentials = true;
 
 
 function App() {
+  const [show,setShow] = useState(false)
   return (
     <div className="App">
       {/* <TodoList /> */}
 
+
       
       { /* Used to route thorugh pages add any adition pages here} */ }
-       <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Welcome />} />
@@ -48,6 +54,8 @@ function App() {
             <Route path="/main" element={<MainPage />} />
             {/* <Route path="/calendar" element={<CalendarTest />} /> */}
             <Route path="/todo" element={<TodoList />} />
+            <Route path="/add" element={<AddEvent  />} />
+
           </Route>
 
 
