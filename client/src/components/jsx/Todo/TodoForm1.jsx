@@ -82,6 +82,7 @@ export function TodoForm(props) {
                         />
                         <input name="date" onChange={changeDate} id="date" type="date" placeholder={input.date}></input>
                         <button className='todo-button'>Add</button>
+                        
                     </>
                 ) :
                 <>
@@ -105,6 +106,7 @@ export function TodoForm(props) {
                     />
                     <input name="date" onChange={changeDate} id="date" type="date"></input>
                     <button className='todo-button'>Add</button>
+                    <button type="button" onClick={()=> props.setTrigger(false)}>Cancel</button>
                     </>
                 }
                 

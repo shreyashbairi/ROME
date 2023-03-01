@@ -23,6 +23,7 @@
     /* background-color: rgb(147, 86, 207); */
     padding: 2.5%;
     text-align: center;
+    border-radius: .25rem;
 }
 
 .header-left{

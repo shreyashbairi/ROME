@@ -47,17 +47,29 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
 
     //     </div>
     // ))
+
+    const displayIcon = (todo) => {
+        console.log(todo)
+        if (!todo.title || /^\s*$/.test(todo.title)) {
+            return;
+        }
+        return (
+            <AiFillCloseCircle
+                                    onClick={()=>removeTodo(todo.id)}
+            />
+        )
+    }
     return (
         <div>
             {todos.map((todo,index)=>{
                 return(
-                    <div key = {index}>
+                    <div key = {index} class="task">
                         
                         <div key={todo.id} onClick={()=>completeTodo(todo.id)}>
-                            {todo.title}
-                            {todo.description}
+                            {todo.title} {todo.date}
+                            
                         </div>
-
+                            
                         <div>
                             <AiFillCloseCircle
                                 onClick={()=>removeTodo(todo.id)}

@@ -26,42 +26,6 @@ function Profile (){
   return (
     
     <div >
-
-
-      {/*< div class="card mt-1 ml-1 mr-1">
-      <nav className=" navbar navbar-expand-lg navbar-light bg-light ">
-        
-        <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="20" height="20" class="d-inline-block" />
-          <a className="navbar-brand" href="#">
-            ROME
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-  </button> *
-            <ul className="navbar-nav">
-              <li className="nav-item active">
-                <a className="nav-link" href="#" >
-                  Homepage 
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  settings
-                </a>
-              </li>
-            </ul>
-        </nav>
-        </div>
-  */}
       <div class="container">
 
       
@@ -113,13 +77,13 @@ function Profile (){
               <div class="card mb-3">
                 <div class="card-body">
                   <div class="row">
-                      <div class="col-sm-3">
-                        <h class="mb-0">Full Name</h>
-                      </div>
-                      <div class="col-sm-9 text-secondary">
-                        Chiho Song
-                      </div>
+                    <div class="col-sm-3">
+                      <h class="mb-0">Full Name</h>
                     </div>
+                    <div class="col-sm-9 text-secondary">
+                      Chiho Song
+                    </div>
+                  </div>
                     <ColoredLine color="grey" />
                     <div class="row">
                       <div class="col-sm-3">
@@ -211,7 +175,7 @@ function Profile (){
           </div>
           <div class="col-sm-12 mt-1">
                         <a class="changepassword " href="/resetpassword" data-inline="true" >Reset Password</a>         
-                      </div>
+                  </div>
         </div> 
         
       </div>
