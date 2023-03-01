@@ -16,6 +16,7 @@ function TeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+<<<<<<< HEAD
         try{
             await axios.post('/Submit', {
               team,
@@ -25,6 +26,7 @@ function TeamPop(props) {
           } catch (e){
             alert('Team Creation Failed. Please try again later.')
           }
+=======
         // try{
         //     await axios.post('/Submit', {
         //       team,
@@ -64,7 +66,14 @@ function TeamPop(props) {
 
     const openTeamPage = e => {
         return (
+<<<<<<< HEAD
             
+=======
+            // <BrowserRouter>
+            //     <Routes>
+            //         <Route path="/team" element={<TeamHome />}/>
+            //     </Routes>
+            // </BrowserRouter>
             <>
                 props.setTrigger(false)
             </>

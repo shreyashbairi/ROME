@@ -96,7 +96,6 @@ function MainPage (){
 
         <div class="todo">
             <TodoList />
-            {/* <p>This will be Todo</p> */}
   </div>
 
 

@@ -96,7 +96,7 @@ class CalendarTest extends Component {
                     <div class="header-right">
 
 
-                    <Popup trigger=                    <button type="button" class="btn btn-secondary">Add Events </button>
+                    <Popup trigger=<button type="button" class="btn btn-secondary">Add Events </button>
 
                          modal nested   position="right center">
                         <div class="card">                
