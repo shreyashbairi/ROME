@@ -1,0 +1,8 @@
+npm install reactjs-popup
+npm install axios
+npm i bootstrap@5.3.0-alpha1
+npm install react-icons
+npm install bcrypt
+npm install cors
+npm install mongoose
+npm install jsonwebstoken
