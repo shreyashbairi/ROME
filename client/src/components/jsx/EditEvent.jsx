@@ -140,4 +140,4 @@ const EditEvent = (props) => {
 }
 
 
-export default AddEvent
+export default EditEvent

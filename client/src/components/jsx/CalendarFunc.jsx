@@ -49,6 +49,10 @@ export default function CalendarFunc (props) {
         setEvents([...events, newevent])
     }
 
+    const editEvent = (newElapsedEvebt) => {
+        
+    }
+
     const scheduleEvent = (newElapsedEvent) => { //Deal with server communication within this fucntion
         const elapsedEvent = [];
         if (newElapsedEvent.endTime === 1) {
