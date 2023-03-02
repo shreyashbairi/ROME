@@ -5,6 +5,7 @@ import Calendar from "./Calendar";
 import AddEvent from "./AddEvent";
 import TodoList from "./Todo/TodoList";
 import CalendarTest from "./CalendarTest";
+import CalendarFunc from "./CalendarFunc"
 // import  {useNavigate} from "react-router-dom";
 import { useState } from "react";
 import Popup from 'reactjs-popup';
@@ -40,7 +41,7 @@ function MainPage (){
 
         <div class="calendar"> 
             <div class="align-center">
-             <CalendarTest /> 
+             <CalendarFunc /> 
             </div> 
          </div> 
 

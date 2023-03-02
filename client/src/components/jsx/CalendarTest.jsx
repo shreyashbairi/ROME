@@ -23,10 +23,15 @@ class CalendarTest extends Component {
           events: [], //grab for database
           show: false
         }
+
+        //grab initial from DB all we are doing for sprint 1
+
+        
         
     }
 
 
+    
 
     scheduleEventHour = (hour) => {
         const newevent = {
@@ -56,6 +61,8 @@ class CalendarTest extends Component {
             elapsedEvent.push(newevent)
         }
         this.setState({events : [...this.state.events, ...elapsedEvent]})
+
+        // saveEventHandler(newElapsedEvent);
     }
     
     
@@ -65,7 +72,6 @@ class CalendarTest extends Component {
 
     nextWeek = () => {
         this.setState({ currentDay: new Date(this.state.currentDay.setDate(this.state.currentDay.getDate() + 7)) });
-        console.log("clicked");
     }
     
     previousWeek = () => {
@@ -141,5 +147,21 @@ class CalendarTest extends Component {
         
 }
 
+async function eventSaveHandler(elapsedEvent) {
+    const {date, startTime, endTime, title, description} = elapsedEvent.body;
+    alert(date);
+    // try{
+    //     await axios.post('/eventsave', {
+    //         date,
+    //         startTime,
+    //         endTime,
+    //         title,
+    //         descritpion
+    //     });
+    //     alert("Event Successfully Saved.");
+    //   } catch (e){
+    //     alert('Event Save Failed. Please try again later.')
+    //   }  
+}
     
 export default CalendarTest;

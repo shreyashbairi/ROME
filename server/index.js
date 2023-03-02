@@ -75,6 +75,24 @@ app.post('/Submit', async (req, res) =>{
 
     
 });
+
+
+app.post('/eventsave', async (req, res) =>{
+    const {date, startTime, endTime, title, description} = req.body;
+    try {
+        const evntDoc = await Event.create({ //change todo something with user
+            date,
+            startTime,
+            endTime,
+            title,
+            description
+        });
+        res.json(eventDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+
+});
 //for login
 app.post('/login', async (req, res) => {
     const { userUserName, userPassword } = req.body;
