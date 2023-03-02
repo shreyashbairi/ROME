@@ -13,6 +13,7 @@ import Login from './components/jsx/Login';
 import Signup from './components/jsx/Signup';
 import Calendar from './components/jsx/Calendar';
 import CalendarTest from './components/jsx/CalendarTest';
+import CalendarFunc from './components/jsx/CalendarFunc';
 import Profile from './components/jsx/Profile';
 import EditProfile from './components/jsx/EditProfile';
 import MainPage from './components/jsx/MainPage';
@@ -53,7 +54,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/editprofile" element={<EditProfile />} />
             <Route path="/main" element={<MainPage />} />
-            {/* <Route path="/calendar" element={<CalendarTest />} /> */}
+            <Route path="/calendar" element={<CalendarFunc />} />
             <Route path="/todo" element={<TodoList />} />
             <Route path="/add" element={<AddEvent  />} />
             <Route path='/team/:teamID' element={<TeamHome />}/>
