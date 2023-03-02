@@ -19,7 +19,7 @@ export default function SignUp (props) {
       });
       alert("Registration Successful. You can now login.");
     } catch (e){
-      alert('Registration Failed. Please try again later.')
+      alert('Registration Failed. Please try again later.');
     }
 
   

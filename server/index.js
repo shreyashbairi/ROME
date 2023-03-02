@@ -48,8 +48,9 @@ app.post('/signup', async (req, res) => {
     const { userFullname, userEmail, userUserName, userPassword } = req.body;
     try {
       // Check if a user with the given userFullname already exists
-      const existingUser = await User.findOne({ userFullname });
+      const existingUser = await User.findOne({ userUserName });
       if (existingUser) {
+        alert("User already exists.");
         return res.status(409).json({ error: 'User already exists' });
       }
       // If no user exists, create a new user
