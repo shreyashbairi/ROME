@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./models/User.js');
 const Team = require('./models/Team.js');
+const Events = require('./models/Events.js')
 require('dotenv').config();
 
 const port = process.env.PORT || 8000;
@@ -78,20 +79,35 @@ app.post('/Submit', async (req, res) =>{
 
 
 app.post('/eventsave', async (req, res) =>{
-    const {date, startTime, endTime, title, description} = req.body;
+    const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername} = req.body;
     try {
-        const evntDoc = await Event.create({ //change todo something with user
-            date,
-            startTime,
-            endTime,
-            title,
-            description
-        });
-        res.json(eventDoc);
+        // const eventsDoc = await Events.create(
+        //     { userid: curusername ,
+        //     events: {
+        //     date: newDate,
+        //     startTime: newStartTime,
+        //     endTime: newEndTime,
+        //     title: newTitle,
+        //     description: newDescription
+        //     }});
+        // res.json(eventsDoc);
+        const eventsDoc = await User.updateOne(
+            {userUserName: curusername} ,
+            {
+                $push: {events: {
+                    date: newDate,
+                    startTime: newStartTime,
+                    endTime: newEndTime,
+                    title: newTitle,
+                    description: newDescription
+                }}
+            }
+
+        )
+        res.json(eventsDoc);
     } catch (e) {
         res.status(422).json(e);    
     }
-
 });
 //for login
 app.post('/login', async (req, res) => {

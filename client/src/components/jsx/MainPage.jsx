@@ -42,7 +42,7 @@ function MainPage (){
 
         <div class="calendar"> 
             <div class="align-center">
-             <CalendarTest /> 
+             <CalendarFunc /> 
 
             </div> 
          </div> 

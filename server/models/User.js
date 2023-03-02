@@ -31,7 +31,7 @@ const UserSchema = new Schema({
     userUserName: String,
     userPassword: String,
     userTeams: [TeamSchema],
-    userEvents: [EventSchema],
+    userEvents: [],
     userPersonalTask: [PersonalTaskSchema],
     userProfile: ProfileSchema,
 });

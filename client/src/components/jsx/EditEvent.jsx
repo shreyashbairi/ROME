@@ -6,7 +6,7 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
-const AddEvent = (props) => {
+const EditEvent = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
@@ -14,7 +14,7 @@ const AddEvent = (props) => {
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
 
-    async function handleEventSubmit (e) {
+    async function handleEventEdit (e) {
         e.preventDefault();
         const newElapsedEvent = { //grab from user with pop up 
             date: new Date(eventDate),
@@ -27,7 +27,7 @@ const AddEvent = (props) => {
         if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
         } else {
-            props.scheduleEvent(newElapsedEvent);
+            props.editEvent(newElapsedEvent);
             props.setTrigger();
             const curusername = localStorage.getItem("userid");
             const newDate = newElapsedEvent.date;
@@ -36,7 +36,7 @@ const AddEvent = (props) => {
             const newTitle = newElapsedEvent.title;
             const newDescription = newElapsedEvent.description;
             try {
-                await axios.post('/eventsave', {
+                await axios.post('/eventedit', {
                     newDate, 
                     newStartTime, 
                     newEndTime, 
@@ -44,35 +44,19 @@ const AddEvent = (props) => {
                     newDescription, 
                     curusername
                 });
-                alert('Event Saved');
+                alert('Event Edit Saved');
             } catch (e) {
-                alert('Event Failed to Save');
+                alert('Event Edit Failed to Save');
             }
         } 
     }
-    // async function handlSubmit(e) {
-    //     e.preventDefault();
-    //     try{
-    //         await axios.post('/Submit', {
-
-    //         });
-    //         alert("Team Successfully Created.  Redirecting you now.");
-    //       } catch (e){
-    //         alert('Team Creation Failed. Please try again later.')
-    //       }
-
-    //     props.onSubmit({
-
-    //     });
-        //props.setTrigger(false);
-    // }
     
     return (props.trigger) ? (
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
-        <h2>Add Team events</h2>
-        <form autoComplete="off" onSubmit={handleEventSubmit}>
+        <h2>Edit Event</h2>
+        <form autoComplete="off" onSubmit={handleEventEdit}>
         <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Title</strong>

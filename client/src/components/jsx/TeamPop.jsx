@@ -16,8 +16,8 @@ function TeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        try{
-            await axios.post('/Submit', {
+        try {
+            await axios.post('/Submit',{
               team,
               description
             });

@@ -2,8 +2,10 @@ import "../css/Calendar.css";
 import React, {Component} from 'react';
 import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
+import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
 import { useState } from "react";
+import axios from "axios";
 
 
 
@@ -16,6 +18,26 @@ export default function CalendarFunc (props) {
     const [currentDay, setCurrentDay] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [show, setShow] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+ 
+
+    // async function saveEventHandler(elapsedEvent) {
+    //     const {newdate, newstartTime, newendTime, newtitle, newdescription} = elapsedEvent.body;
+    //     const curusername = localStorage.getItem();
+    //     try {
+    //         await axios.post('/eventsave', {
+    //             date: newdate,
+    //             startTime: newstartTime,
+    //             endTime: newendTime,
+    //             title: newtitle,
+    //             description: newdescription,
+    //             username: curusername
+    //         });
+    //         alert('Event Saved');
+    //     } catch (e) {
+    //         alert('Event Failed to Save');
+    //     }
+    // }
 
     
     const scheduleEventHour = (hour) => {
@@ -69,7 +91,15 @@ export default function CalendarFunc (props) {
     };
 
     const closeform = () => {
-        setShow(false);
+        setShowEdit(false);
+    }
+
+    const openEditform = () => {
+        setShow(true);
+    };
+
+    const closeEditform = () => {
+        setShowEdit(false);
     }
 
     
@@ -86,13 +116,24 @@ export default function CalendarFunc (props) {
                     <h2 class="Calendar-header-content">{months[currentDay.getMonth()]} {currentDay.getFullYear()}</h2>
                     <div class="header-right">
 
-                    <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">Add Events </button>} open={show}
+                    <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">Add Events</button>} open={show}
                     onOpen={openform} position="right center" nested modal>
                         <div class="card">
                         <AddEvent  
                                 trigger={show}
                                 setTrigger={closeform}
                                 scheduleEvent={scheduleEvent}
+                            />     
+                        </div>
+                    </ Popup>
+
+                    <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={show}
+                    onOpen={openEditform} position="right center" nested modal>
+                        <div class="card">
+                        <EditEvent  
+                                trigger={showEdit}
+                                setTrigger={closeEditform}
+                                scheduleEvent={editEvent}
                             />     
                         </div>
                     </ Popup>
