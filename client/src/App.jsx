@@ -22,7 +22,7 @@ import axios from 'axios';
 import AddEvent from './components/jsx/AddEvent';
 import { useState } from 'react';
 import TeamHome from './components/jsx/TeamHome';
-
+import { UserContextProvider } from './components/jsx/UserContext';
 
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -41,7 +41,9 @@ function App() {
 
       
       { /* Used to route thorugh pages add any adition pages here} */ }
+      
       <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Welcome />} />
@@ -64,8 +66,9 @@ function App() {
 
 
         </Routes>
+       
       </BrowserRouter>
-
+      
       {/* <Todo /> */}
 
       {/* <TodoList /> */}
