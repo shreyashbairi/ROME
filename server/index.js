@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User.js');
 const Team = require('./models/Team.js');
 const Events = require('./models/Events.js')
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const port = process.env.PORT || 8000;
@@ -17,6 +18,7 @@ const app = express();
 const bcryptSalt = bcrypt.genSaltSync(10); 
 const jwtSecret = "2326a84bd9f67c9b9cb44a25c4e9a988";
 
+app.use(cookieParser());
 app.use(express.json());
  app.use(cors({credentials: true, 
      origin: 'http://localhost:3000',
@@ -44,22 +46,31 @@ app.get('/test', (req, res) =>{
 //SHREY do not confuse the two
 //for signup
 app.post('/signup', async (req, res) => {  
-    const {userFullname, userEmail, userUserName, userPassword} = req.body;
+    const { userFullname, userEmail, userUserName, userPassword } = req.body;
     try {
-        const userDoc = await User.create({
-            userFullname,
-            userEmail,
-            userUserName, 
-            userPassword:bcrypt.hashSync(userPassword, bcryptSalt),
-        });
-        res.json(userDoc);
+      // Check if a user with the given userFullname already exists
+      const existingUser = await User.findOne({ userUserName });
+      if (existingUser) {
+        alert("User already exists.");
+        return res.status(409).json({ error: 'User already exists' });
+      }
+      // If no user exists, create a new user
+      const userDoc = await User.create({
+        userFullname,
+        userEmail,
+        userUserName, 
+        userPassword: bcrypt.hashSync(userPassword, bcryptSalt),
+      });
+      const savedUser = await userDoc.save();
+      res.status(201).json(savedUser);
     } catch (e) {
-        res.status(422).json(e);    
+      res.status(422).json(e);    
     }
+  });
 
 
-    
-});
+
+
 //for team
 app.post('/Submit', async (req, res) =>{
     const {team, description} = req.body;
@@ -73,8 +84,6 @@ app.post('/Submit', async (req, res) =>{
         res.status(422).json(e);    
     }
 
-
-    
 });
 
 
@@ -112,13 +121,17 @@ app.post('/eventsave', async (req, res) =>{
 //for login
 app.post('/login', async (req, res) => {
     const { userUserName, userPassword } = req.body;
-    const userDoc = await User.findOne({ username: userUserName });
+    const userDoc = await User.findOne({ userUserName: userUserName });
+    console.log(userDoc);
     if (userDoc) {
       const passOk = bcrypt.compareSync(userPassword, userDoc.userPassword);
+      
       if (passOk) {
-        jwt.sign({username:userDoc.userUserName, id:userDoc._id}, jwtSecret, {}, (err, token) =>{
+        jwt.sign({username:userDoc.userUserName, 
+            id:userDoc._id
+        }, jwtSecret, {}, (err, token) =>{
             if(err) throw(err);
-            res.cookie('token', token).json('password ok');
+            res.cookie('token', token).json(userDoc);
         });
 
       } else {
@@ -128,6 +141,21 @@ app.post('/login', async (req, res) => {
       res.json('User not found');
     }
   });
+
+
+//for profile
+app.get('/profile', (req, res) => {
+    const {token} = req.cookies;
+    if(token){
+        jwt.verify(token, jwtSecret, {}, async (err, userData)=>{
+            if(err) throw err;
+            const {userUserName, userEmail, _id} = await User.findById(userData.id);
+            res.json({userUserName, userEmail, _id});
+        });
+    } else{
+        res.json(null);
+    }
+})
 
 
 //middleware

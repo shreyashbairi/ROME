@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import '../css/DefaultLayout.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import TeamPop from "./TeamPop"
 import Popup from "reactjs-popup";
+//import { UserContext } from "./UserContext";
 
 function DefaultLayout () {
+    //const user = useContext(UserContext);
+
     const navigate = useNavigate();
     const [buttonPop, setButtonPop] = useState(false);
     const [teams, setTeams] = useState([{
         teamID: String,
         team: String,
-        descritpion: String
+        description: String
     }])
 
     const newTeamButton = () => {

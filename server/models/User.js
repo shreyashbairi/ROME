@@ -26,7 +26,7 @@ const ProfileSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-    userFullname: String,
+    userFullname:{type:String, unique:false},
     userEmail: {type:String, unique:true},
     userUserName: String,
     userPassword: String,
