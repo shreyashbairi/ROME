@@ -7,7 +7,11 @@ const TeamSchema = new Schema({
 });
 
 const EventSchema = new Schema({
-
+    date: Date,
+    startTime: Number,
+    endTime: Number,
+    title: String,
+    description: String
 });
 
 const PersonalTaskSchema = new Schema({

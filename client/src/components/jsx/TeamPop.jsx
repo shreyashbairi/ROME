@@ -16,15 +16,15 @@ function TeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        // try{
-        //     await axios.post('/Submit', {
-        //       team,
-        //       description
-        //     });
-        //     alert("Team Successfully Created.  Redirecting you now.");
-        //   } catch (e){
-        //     alert('Team Creation Failed. Please try again later.')
-        //   }
+        try{
+            await axios.post('/Submit', {
+              team,
+              description
+            });
+            alert("Team Successfully Created.  Redirecting you now.");
+          } catch (e){
+            alert('Team Creation Failed. Please try again later.')
+          }
         props.onSubmit({
             teamID: Math.floor(Math.random()*10000),
             team: team,
