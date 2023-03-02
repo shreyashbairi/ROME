@@ -2,13 +2,35 @@ import React, {useState} from "react";
 import '../css/Profile.css';
 
 function EditProfile (){
-  const [message, setMessage] = useState('');
-  const [updated, setUpdated] = useState(message);
+  const [birthday, setBirthday] = useState("")
+  const [phone, setPhone] = useState("")
+  const [address, setAddress] = useState("")
+  const [notification, setNotificatoin] = useState()
 
 
-  const handleChange = (event) => {
-    setMessage(event.target.value);
-  };
+  function handleSubmit(e) {
+    e.preventDefault();
+}
+
+
+
+
+  const handleBirthday = (e) => {
+      setBirthday(e.target.value);
+      console.log(birthday);
+  }
+  const handlePhone = (e) => {
+    setPhone(e.target.value);
+    console.log(phone);
+  }
+  const handleAddress = (e) => {
+    setAddress(e.target.value);
+    console.log(address);
+  }
+  const handleNotification = (e) => {
+    setNotificatoin(e.target.value);
+    console.log(notification);
+  }
   
   const handleClick = () => {
     // 👇 "message" stores input field value
@@ -27,16 +49,8 @@ function EditProfile (){
     />
 );
   return (
-    
     <div >
-
-
-      
       <div class="container">
-
-      
-
-
         <div class="main-body">
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -82,115 +96,132 @@ function EditProfile (){
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Full Name</h>
-                    </div>
+                  <form 
+                      id="editprofile"
+                      onSubmit={handleSubmit}
+                  >
+                    {/* <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Full Name</h>
+                        </div>
 
-                      <div class="col-sm-9 text-secondary">
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" />
+                          <div class="col-sm-9 text-secondary">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" />
+
+                          </div>
 
                       </div>
-
-                  </div>
-                  <ColoredLine color="grey" />
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Birthday</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Birthday" />
-            
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
-
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Email</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-     
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
-
-
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Phone</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone number" />
-
-                  </div>
-                  </div>
-                  <ColoredLine color="grey" />
-
-  
-
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Address</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Address" />
-            
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
-
-
-                    <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Notification</h>
-                     
-                    </div>
-                    
-                    <div class="col-sm-9">
-                    <label>
-                        <input type="checkbox" />
-                      </label>
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Email Notification</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />                  <div class="row">
-                    <div class="col-sm-3">
-                      <h class="mb-0">Theme</h>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
+                      <ColoredLine color="grey" /> */}
                       
-                    </div>
-                  </div>
-                  <ColoredLine color="grey" />
-                  <div class="row">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Birthday</h>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          
+                        <input
+                            id="birthday"
+                            type="date"
+                            onChange={handleBirthday}
+                            value={birthday}
+                        />                
+                        </div>
+                      </div>
+                      <ColoredLine color="grey" />
 
-                    <div class="col-sm-12">
-                    <a class="submit" href="/profile" onClick={handleClick} target="__blank">Submit</a>                
-                    </div>
-                </div>
+                      {/* <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Email</h>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+        
+                        </div>
+                      </div>
+                      <ColoredLine color="grey" /> */}
 
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Phone</h>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <textarea
+                          id="text"
+                          placeholder="phone"
+                          onChange={handlePhone}
+                          value={phone}
+                      />
+                      </div>
+                      </div>
+                      <ColoredLine color="grey" />
+
+      
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Address</h>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                        <textarea
+                          id="address"
+                          placeholder="address"
+                          type="text"
+                          className="description-box"
+                          onChange={handleAddress}
+                          value={address}
+                      />                
+                        </div>
+                      </div>
+                      <ColoredLine color="grey" />
+
+
+                        <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Notification</h>
+                        
+                        </div>
+                        
+                        <div class="col-sm-9">
+                        <label>
+                        <input
+                          id="notification"
+                          type="checkbox"
+                          className="description-box"
+                          onChange={handleNotification}
+                          value={notification}
+                      />                                       </label>
+                        </div>
+                      </div>
+                      <ColoredLine color="grey" />                  <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Email Notification</h>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          
+                        </div>
+                      </div>
+                      <ColoredLine color="grey" />                  <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Theme</h>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          
+                        </div>
+                      </div>
+                      <ColoredLine color="grey" />
+                        <div class="row">
+
+                        <div class="col-sm-12">
+                          <button class="submit">submit</button>
+                      </div>
+
+                    </div>
+                  </form>
                 </div>
               </div>
-            </div>
-
-
- 
-            
+            </div>            
           </div>
-
-
-
- 
-            
-
         </div> 
       </div>
     </div>

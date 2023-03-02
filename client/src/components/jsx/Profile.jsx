@@ -1,10 +1,16 @@
 import React, {useState} from "react";
 import '../css/Profile.css';
 import EditProfile from "./EditProfile";
-
+import { useEffect } from "react";
 
 function Profile (){
   const [message, setMessage] = useState('');
+  // const userDoc = User.findOne (username);
+  // User._id = userDoc._id;
+  const [prof, setProf] = useState({
+    name:String,
+  })
+
   const [updated, setUpdated] = useState(message);
   const handleChange = (event) => {
     setMessage(event.target.value);
@@ -27,10 +33,7 @@ function Profile (){
     
     <div >
       <div class="container">
-
-      
-
-
+      {localStorage.getItem("userid")}
         <div class="main-body">
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -43,8 +46,7 @@ function Profile (){
                       </button>
 
                       <h1>Chiho Song</h1>  
-                      <p class="text-secondary mb-1">Description</p>
-                      <p class="text-secondary">Address</p>
+                      <p class="text-secondary mb-1">song593@data.cs.purdue</p>
                     </div>
                   </div>
                 </div>
@@ -76,15 +78,15 @@ function Profile (){
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
+                  {/* <div class="row">
                     <div class="col-sm-3">
                       <h class="mb-0">Full Name</h>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       Chiho Song
                     </div>
-                  </div>
-                    <ColoredLine color="grey" />
+                  </div> */}
+                    {/* <ColoredLine color="grey" /> */}
                     <div class="row">
                       <div class="col-sm-3">
                         <h class="mb-0">Birthday</h>
@@ -95,15 +97,15 @@ function Profile (){
                     </div>
                     <ColoredLine color="grey" />
 
-                    <div class="row">
+                    {/* <div class="row">
                       <div class="col-sm-3">
                         <h class="mb-0">Email</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
                         song593@purdue.edu
                       </div>
-                    </div>
-                    <ColoredLine color="grey" />
+                    </div> */}
+                    {/* <ColoredLine color="grey" /> */}
 
 
                     <div class="row">
