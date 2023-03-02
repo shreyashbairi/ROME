@@ -13,6 +13,7 @@ export default function () {
       await axios.post('/login', {userUserName, userPassword});
       alert(`login succesful. Hi ${userUserName}!`);
       setRedirect(true);
+      localStorage.setItem("userid",userUserName);
     } catch (e){
       alert("Login Failed");
     }
