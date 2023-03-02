@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import '../css/Login.css';
 import { Navigate } from "react-router-dom";
-export default function () {
+function Login() {
   const [userUserName,setUserUserName] = useState("");
   const [userPassword,setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
@@ -61,3 +61,5 @@ export default function () {
     </div>
   )
 }
+
+export default Login
