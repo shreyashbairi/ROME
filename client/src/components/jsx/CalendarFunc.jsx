@@ -39,18 +39,46 @@ export default function CalendarFunc (props) {
     //     }
     // }
 
+    const removeEvents = (newElapsedEvent) => {
+        const arr = [...events]; // make a separate copy of the array
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].title === newElapsedEvent.title) {
+                arr.splice(i,1);
+            }
+        }
+        setEvents([...arr]);
+    }
+
     
     const scheduleEventHour = (hour) => {
         const newevent = {
             date: hour.date,
             time: hour.time,
-            top: false //only make top kinda need pop up first tho i think
+            top: false
         };
         setEvents([...events, newevent])
     }
 
-    const editEvent = (newElapsedEvebt) => {
-        
+    const editEvent = (newElapsedEvent) => {
+        removeEvents(newElapsedEvent);
+        const elapsedEvent = [];
+        if (newElapsedEvent.endTime === 1) {
+            newElapsedEvent.endTime = 25;
+        }
+        for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
+            let topHour = false;
+            if (i === newElapsedEvent.startTime) {
+                topHour = true;
+            }
+            const newevent = {
+                date: newElapsedEvent.date,
+                time: i,
+                top: topHour,
+                title: newElapsedEvent.title
+            }; 
+            elapsedEvent.push(newevent)
+        }
+        setEvents([...events, ...elapsedEvent])
     }
 
     const scheduleEvent = (newElapsedEvent) => { //Deal with server communication within this fucntion
@@ -95,11 +123,11 @@ export default function CalendarFunc (props) {
     };
 
     const closeform = () => {
-        setShowEdit(false);
+        setShow(false);
     }
 
     const openEditform = () => {
-        setShow(true);
+        setShowEdit(true);
     };
 
     const closeEditform = () => {
@@ -131,13 +159,14 @@ export default function CalendarFunc (props) {
                         </div>
                     </ Popup>
 
-                    <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={show}
+                    <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
                     onOpen={openEditform} position="right center" nested modal>
                         <div class="card">
                         <EditEvent  
                                 trigger={showEdit}
                                 setTrigger={closeEditform}
-                                scheduleEvent={editEvent}
+                                editEvent={editEvent}
+                                events={events}
                             />     
                         </div>
                     </ Popup>
