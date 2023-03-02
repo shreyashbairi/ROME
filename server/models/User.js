@@ -19,7 +19,10 @@ const PersonalTaskSchema = new Schema({
 });
 
 const ProfileSchema = new Schema({
-
+    userBrithday: Date,
+    userPhone: String,
+    userAddress: String,
+    userNotification: Boolean,
 });
 
 const UserSchema = new Schema({
