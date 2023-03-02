@@ -65,6 +65,7 @@ class CalendarTest extends Component {
 
     nextWeek = () => {
         this.setState({ currentDay: new Date(this.state.currentDay.setDate(this.state.currentDay.getDate() + 7)) });
+        console.log("clicked");
     }
     
     previousWeek = () => {
