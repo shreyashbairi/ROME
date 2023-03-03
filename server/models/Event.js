@@ -3,13 +3,11 @@ const {Schema} = mongoose;
 
 const EventSchema = new Schema({
     usernameid: String,
-    event: {
-        date: Date,
-        startTime: Number,
-        endTime: Number,
-        title: String,
-        description: String
-    }
+    date: Date,
+    startTime: Number,
+    endTime: Number,
+    title: String,
+    description: String
 });
 
 const EventModel = mongoose.model('Event', EventSchema);
