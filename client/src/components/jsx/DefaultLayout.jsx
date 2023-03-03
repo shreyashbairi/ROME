@@ -20,14 +20,14 @@ function DefaultLayout () {
     }])
 
     useEffect( () => {
-        const username = localStorage.getItem("username");
-        axios.get(`/teams${username}`)
+        const username = localStorage.getItem("userid");
+        axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
             console.log(teamsGrabed);
             setTeams(teamsGrabed);
         })
-    })
+    }, [] )
 
     const newTeamButton = () => {
         setButtonPop(true);
