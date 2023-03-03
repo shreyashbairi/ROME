@@ -1,8 +1,5 @@
 .Welcome-page {
-    text-align: center;
-    height: 100vh;
-    display: flex;
-   
+    padding-top: 25vh;
 }
 
 .Welcome-img {
@@ -11,7 +8,6 @@
 }
 
 .Welcome-header {
-    color:blueviolet;
     background-color: white;
     display: flex;
     flex-direction: column;

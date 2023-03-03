@@ -6,7 +6,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./models/User.js');
 const Team = require('./models/Team.js');
-const Events = require('./models/Events.js')
+const Events = require('./models/Events.js');
+const Event = require('./models/Event.js');
+const Task = require('./models/ToDoSchema.js');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
@@ -86,38 +88,64 @@ app.post('/Submit', async (req, res) =>{
 
 });
 
+app.get("/events/:username", async (req,res) => {
+    // console.log(req.params.username);
+    try{
+        console.log(req.params.username);
+        const events = await Event.find({ usernameid: req.params.username })
+        console.log(events);
+        res.json(events);
+    } catch (e){
+        console.log(e)
+        res.status(422).json(e);    
+    }
+});
+
 
 app.post('/eventsave', async (req, res) =>{
     const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername} = req.body;
     try {
-        // const eventsDoc = await Events.create(
-        //     { userid: curusername ,
-        //     events: {
-        //     date: newDate,
-        //     startTime: newStartTime,
-        //     endTime: newEndTime,
-        //     title: newTitle,
-        //     description: newDescription
-        //     }});
-        // res.json(eventsDoc);
-        const eventsDoc = await User.updateOne(
-            {userUserName: curusername} ,
-            {
-                $push: {events: {
-                    date: newDate,
-                    startTime: newStartTime,
-                    endTime: newEndTime,
-                    title: newTitle,
-                    description: newDescription
-                }}
-            }
-
-        )
+        const eventsDoc = await Event.create(
+            { usernameid: curusername,
+            event: {
+            date: newDate,
+            startTime: newStartTime,
+            endTime: newEndTime,
+            title: newTitle,
+            description: newDescription
+            }});
         res.json(eventsDoc);
     } catch (e) {
         res.status(422).json(e);    
     }
 });
+
+app.post('/tasksave', async (req, res) =>{
+    const {id, title, description, date, user} = req.body;
+    try {
+        const taskDoc = await Task.create({ 
+            title: title,
+            description: description, 
+            date: date,
+            username: user
+            });
+        res.json(taskDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
+app.get("/tasks/:username", async (req,res) => {
+    try{
+        const tasks = await Task.find({ username: req.params.username })
+        console.log(tasks);
+        res.json(tasks);
+    } catch (e){
+        console.log(e)
+        res.status(422).json(e);    
+    }
+});
+
 //for login
 app.post('/login', async (req, res) => {
     const { userUserName, userPassword } = req.body;

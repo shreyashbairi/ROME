@@ -24,30 +24,39 @@ const EditEvent = (props) => {
             description: eventDescription
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
-        if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
+        let exists = false;
+        for(let i = 0; i < props.events.length; i++) {
+            if (props.events[i].title === newElapsedEvent.title) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            alert("Event Title Does Not Exist")
+        } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
         } else {
-            props.editEvent(newElapsedEvent);
             props.setTrigger();
-            const curusername = localStorage.getItem("userid");
-            const newDate = newElapsedEvent.date;
-            const newStartTime = newElapsedEvent.startTime;
-            const newEndTime = newElapsedEvent.endTime;
-            const newTitle = newElapsedEvent.title;
-            const newDescription = newElapsedEvent.description;
-            try {
-                await axios.post('/eventedit', {
-                    newDate, 
-                    newStartTime, 
-                    newEndTime, 
-                    newTitle, 
-                    newDescription, 
-                    curusername
-                });
-                alert('Event Edit Saved');
-            } catch (e) {
-                alert('Event Edit Failed to Save');
-            }
+            props.editEvent(newElapsedEvent);
+            // const curusername = localStorage.getItem("userid");
+            // const newDate = newElapsedEvent.date;
+            // const newStartTime = newElapsedEvent.startTime;
+            // const newEndTime = newElapsedEvent.endTime;
+            // const newTitle = newElapsedEvent.title;
+            // const newDescription = newElapsedEvent.description;
+            // try {
+            //     await axios.post('/eventedit', {
+            //         newDate, 
+            //         newStartTime, 
+            //         newEndTime, 
+            //         newTitle, 
+            //         newDescription, 
+            //         curusername
+            //     });
+            //     alert('Event Edit Saved');
+            // } catch (e) {
+            //     alert('Event Edit Failed to Save');
+            // }
         } 
     }
     
@@ -59,7 +68,7 @@ const EditEvent = (props) => {
         <form autoComplete="off" onSubmit={handleEventEdit}>
         <div class="row mt-3">
             <div class="col-sm-3">
-               <strong>Title</strong>
+               <strong>Existing Title</strong>
             </div>
             <div class="col-sm-9 text-secondary">
                 <input 

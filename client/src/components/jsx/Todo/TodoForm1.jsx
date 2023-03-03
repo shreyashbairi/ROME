@@ -1,5 +1,6 @@
 import '../../css/Todo.css';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export function TodoForm(props) {
     const [title,setTitle] = useState(props.change ? props.change.value : '');
@@ -10,15 +11,34 @@ export function TodoForm(props) {
         date:""
     })
 
-    const handleSubmit = e => {
+    async function handleSubmit(e) {
         e.preventDefault();
 
-        props.onSubmit({
+        const newTask = {
             id: Math.floor(Math.random()*10000),
             title: title,
             description: description,
-            date: input.date
+            date: input.date,
+            user: localStorage.getItem("userid")
+        }
+
+        try {
+            await axios.post('/tasksave', 
+                newTask
+            );
+            alert('Task Saved');
+        } catch (e) {
+            alert('Task Failed to Save');
+        }
+
+        props.onSubmit({
+            id: newTask.id,
+            title: newTask.title,
+            description: newTask.description,
+            date: newTask.date
         });
+
+
 
         console.log(props)
 
@@ -30,6 +50,7 @@ export function TodoForm(props) {
             date:""
         })
     };
+    
 
     const inputChange = (e) => {
         setTitle(e.target.value)

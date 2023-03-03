@@ -26,14 +26,15 @@ const ProfileSchema = new Schema({
 });
 
 const UserSchema = new Schema({
+    // _id: {type:String, unique: true},
     userFullname:{type:String, unique:false},
     userEmail: {type:String, unique:true},
     userUserName: String,
     userPassword: String,
-    userTeams: [TeamSchema],
-    userEvents: [],
-    userPersonalTask: [PersonalTaskSchema],
-    userProfile: ProfileSchema,
+    // userTeams: [TeamSchema],
+    // userEvents: [],
+    // userPersonalTask: [PersonalTaskSchema],
+    // userProfile: ProfileSchema,
 });
 
 const UserModel = mongoose.model('User', UserSchema);

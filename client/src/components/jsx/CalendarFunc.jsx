@@ -4,7 +4,7 @@ import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
 import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 
@@ -19,38 +19,98 @@ export default function CalendarFunc (props) {
     const [events, setEvents] = useState([]);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+
+    useEffect( () => {
+        const username = localStorage.getItem('userid');
+        axios.get(`/events/${username}`)
+        .then(res => {
+            // console.log(res.data)
+            const eventsGrabed = res.data;
+            // console.log(eventsGrabed.length)
+            const elapsedEvent = [];
+            for (let i = 0; i < eventsGrabed.length; i++) {
+                console.log(eventsGrabed[i].event)
+                const newElapsedEvent = { 
+                    date: new Date(eventsGrabed[i].event.date),
+                    startTime: eventsGrabed[i].event.startTime,
+                    endTime: eventsGrabed[i].event.endTime,
+                    title: eventsGrabed[i].event.title,
+                    description: eventsGrabed[i].event.description
+                };
+                console.log(newElapsedEvent);
+                if (newElapsedEvent.endTime === 1) {
+                    newElapsedEvent.endTime = 25;
+                }
+                for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
+                    let topHour = false;
+                    if (i === newElapsedEvent.startTime) {
+                        topHour = true;
+                    }
+                    const newevent = {
+                        date: newElapsedEvent.date,
+                        time: i,
+                        top: topHour,
+                        title: newElapsedEvent.title
+                    }; 
+                    elapsedEvent.push(newevent)
+                }
+            }
+            setEvents([...events, ...elapsedEvent])
+          })
+      }, [] )
+
+    // componentDidMount() {
+    //     const username = localStorage.getItem('userid');
+    //     axios.get(`/events/${username}`)
+    //     .then(res => {
+    //         console.log(res.data)
+    //         const events = res.data;
+    //         setEvents({events});
+    //       })
+    // }
+    
  
 
-    // async function saveEventHandler(elapsedEvent) {
-    //     const {newdate, newstartTime, newendTime, newtitle, newdescription} = elapsedEvent.body;
-    //     const curusername = localStorage.getItem();
-    //     try {
-    //         await axios.post('/eventsave', {
-    //             date: newdate,
-    //             startTime: newstartTime,
-    //             endTime: newendTime,
-    //             title: newtitle,
-    //             description: newdescription,
-    //             username: curusername
-    //         });
-    //         alert('Event Saved');
-    //     } catch (e) {
-    //         alert('Event Failed to Save');
-    //     }
-    // }
+    const removeEvents = (newElapsedEvent) => {
+        const arr = [...events]; // make a separate copy of the array
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].title === newElapsedEvent.title) {
+                arr.splice(i,1);
+            }
+        }
+        setEvents([...arr]);
+    }
 
     
     const scheduleEventHour = (hour) => {
         const newevent = {
             date: hour.date,
             time: hour.time,
-            top: false //only make top kinda need pop up first tho i think
+            top: false
         };
         setEvents([...events, newevent])
     }
 
-    const editEvent = (newElapsedEvebt) => {
-        
+    const editEvent = (newElapsedEvent) => {
+        removeEvents(newElapsedEvent);
+        const elapsedEvent = [];
+        if (newElapsedEvent.endTime === 1) {
+            newElapsedEvent.endTime = 25;
+        }
+        for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
+            let topHour = false;
+            if (i === newElapsedEvent.startTime) {
+                topHour = true;
+            }
+            const newevent = {
+                date: newElapsedEvent.date,
+                time: i,
+                top: topHour,
+                title: newElapsedEvent.title
+            }; 
+            elapsedEvent.push(newevent)
+        }
+        setEvents([...events, ...elapsedEvent])
     }
 
     const scheduleEvent = (newElapsedEvent) => { //Deal with server communication within this fucntion
@@ -95,11 +155,11 @@ export default function CalendarFunc (props) {
     };
 
     const closeform = () => {
-        setShowEdit(false);
+        setShow(false);
     }
 
     const openEditform = () => {
-        setShow(true);
+        setShowEdit(true);
     };
 
     const closeEditform = () => {
@@ -131,13 +191,14 @@ export default function CalendarFunc (props) {
                         </div>
                     </ Popup>
 
-                    <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={show}
+                    <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
                     onOpen={openEditform} position="right center" nested modal>
                         <div class="card">
                         <EditEvent  
                                 trigger={showEdit}
                                 setTrigger={closeEditform}
-                                scheduleEvent={editEvent}
+                                editEvent={editEvent}
+                                events={events}
                             />     
                         </div>
                     </ Popup>
