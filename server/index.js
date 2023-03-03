@@ -75,18 +75,33 @@ app.post('/signup', async (req, res) => {
 
 
 //for team
-app.post('/Submit', async (req, res) =>{
-    const {team, description} = req.body;
+app.post('/teamsubmit', async (req, res) =>{
+    const {teamID, team, description, username} = req.body;
     try {
         const teamDoc = await Team.create({
-            team,
-            description
+            teamID: teamID,
+            team: team,
+            description: description,
+            userid: username
         });
         res.json(teamDoc);
     } catch (e) {
         res.status(422).json(e);    
     }
 
+});
+
+app.get("/teams/:username", async (req,res) => {
+    // console.log(req.params.username);
+    try{
+        console.log(req.params.username);
+        const teams = await Team.find({ userid: req.params.username })
+        // console.log(events);
+        res.json(teams);
+    } catch (e){
+        // console.log(e)
+        res.status(422).json(e);    
+    }
 });
 
 app.get("/events/:username", async (req,res) => {

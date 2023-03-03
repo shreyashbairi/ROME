@@ -27,7 +27,7 @@ function TodoList(props) {
         axios.get(`/tasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;
-            console.log(tasksGrabed);
+            // console.log(tasksGrabed);
             setTodos(tasksGrabed);
         })
     }, [])
