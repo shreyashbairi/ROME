@@ -30,7 +30,7 @@ const UserSchema = new Schema({
     userEmail: {type:String, unique:true},
     userUserName: String,
     userPassword: String,
-    userBrithday: Date,
+    userBirthday: Date,
     userPhone: String,
     userAddress: String,
     userNotification: Boolean,

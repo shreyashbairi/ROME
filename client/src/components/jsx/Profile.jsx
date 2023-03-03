@@ -61,7 +61,7 @@ function Profile (){
                       </button>
 
                       <h1>{userProfile.userFullname}</h1>  
-                      <p class="text-secondary mb-1">{userProfile.uesrEmail}</p>
+                      <p class="text-secondary mb-1">{userProfile.userEmail}</p>
                     </div>
                   </div>
                 </div>
@@ -107,7 +107,7 @@ function Profile (){
                         <h class="mb-0">Birthday</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                        {birthday}
+                        {userProfile.userBirthday}
                       </div>
                     </div>
                     <ColoredLine color="grey" />
@@ -128,7 +128,7 @@ function Profile (){
                         <h class="mb-0">Phone</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                        {phone}
+                        {userProfile.userPhone}
                       </div>
                     </div>
                     <ColoredLine color="grey" />
@@ -140,7 +140,7 @@ function Profile (){
                         <h class="mb-0">Address</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                        {address}
+                        {userProfile.userAddress}
                       </div>
                       
                     </div>
@@ -155,7 +155,7 @@ function Profile (){
                       
                       <div class="col-sm-9">
                       <label>
-                          {notification}
+                          {userProfile.userNotification}
                         </label>
                       </div>
                     </div>
