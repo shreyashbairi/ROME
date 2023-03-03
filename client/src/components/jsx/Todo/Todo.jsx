@@ -59,14 +59,36 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
             />
         )
     }
+
+    function displayDetails(date, description) {
+        console.log(date)
+        console.log(description)
+        if(!description || /^\s*$/.test(description)) {
+            description="no discription"
+        }
+        // return(
+        //     <div>
+        //         {date}
+        //         <br>
+        //         </br>
+        //         {description}
+        //     </div>
+        // )
+        alert(description)
+    }
     return (
         <div>
             {todos.map((todo,index)=>{
                 return(
                     <div key = {index} class="task">
                         
-                        <div key={todo.id} onClick={()=>completeTodo(todo.id)}>
+                        <div key={todo.id} > 
+                        {/* onClick={()=>completeTodo(todo.id)} was removed from above */}
+                        <button onClick={()=>displayDetails(todo.date, todo.description)}>
                             {todo.title} {todo.date}
+                            {/* {todo.date} */}
+                        </button>
+                            
                             
                         </div>
                             
