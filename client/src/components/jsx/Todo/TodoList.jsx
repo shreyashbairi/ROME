@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import TodoForm from './TodoForm1'
 import Todo from './Todo'
 import {AiFillPlusCircle} from 'react-icons/ai'
+import axios from 'axios'
 
 // TODO
 // Comment everything
@@ -20,6 +21,16 @@ function TodoList(props) {
         description:String,
         date:Object
     }])
+
+    useEffect( () => {
+        const username = localStorage.getItem('userid');
+        axios.get(`/tasks/${username}`)
+        .then(res => {
+            const tasksGrabed = res.data;
+            console.log(tasksGrabed);
+            setTodos(tasksGrabed);
+        })
+    }, [])
 
     const addTodo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {

@@ -2,7 +2,7 @@ import '../css/Welcome.css';
 
 function Welcome () {
   return (
-    <div calss="Welcome-page">
+    <div class="Welcome-page">
         <div class="Welcome-img">
         <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="150" height="120"/>
         </div>

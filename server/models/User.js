@@ -31,10 +31,10 @@ const UserSchema = new Schema({
     userEmail: {type:String, unique:true},
     userUserName: String,
     userPassword: String,
-    userTeams: [TeamSchema],
+    // userTeams: [TeamSchema],
     // userEvents: [],
-    userPersonalTask: [PersonalTaskSchema],
-    userProfile: ProfileSchema,
+    // userPersonalTask: [PersonalTaskSchema],
+    // userProfile: ProfileSchema,
 });
 
 const UserModel = mongoose.model('User', UserSchema);
