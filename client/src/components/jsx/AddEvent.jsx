@@ -103,6 +103,20 @@ const AddEvent = (props) => {
         </div>
         <div class="row mt-3">
             <div class="col-sm-3">
+               <strong>Label</strong>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                <input 
+                type="lable" 
+                class="form-control" 
+                id="eventdescription"  
+                placeholder="label" 
+                value={eventDescription} 
+                onChange={e => setEventDescription(e.target.value)} required />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm-3">
                <strong>Date</strong>
             </div>
             <div class="col-sm-9 text-secondary">
