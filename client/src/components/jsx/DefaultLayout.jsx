@@ -42,7 +42,7 @@ function DefaultLayout () {
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="pic d-inline-block align-text-top" />
                     Rome
                     </a>
-                    PAGENAME
+                    {/* PAGENAME */}
                     <a class="navbar-brand" href="/profile"> 
 <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
                     </a>

@@ -34,11 +34,8 @@ function MainPage (){
 
   return (
     <div >
-        
-      
-
-        
-        <p>{localStorage.getItem("userid")}</p>
+  
+        {/* <p>{localStorage.getItem("userid")}</p> */}
 
         <div class="calendar"> 
             <div class="align-center">
