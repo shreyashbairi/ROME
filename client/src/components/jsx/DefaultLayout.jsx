@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import '../css/DefaultLayout.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import TeamPop from "./TeamPop"
 import Popup from "reactjs-popup";
+import axios from "axios";
 //import { UserContext } from "./UserContext";
 
 function DefaultLayout () {
