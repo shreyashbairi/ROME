@@ -13,6 +13,8 @@ const AddEvent = (props) => {
     const [eventDate, setEventDate] = useState("");
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
+    const [eventLabel, setEventLabel] = useState("");
+
 
     async function handleEventSubmit (e) {
         e.preventDefault();
@@ -35,6 +37,7 @@ const AddEvent = (props) => {
             const newEndTime = newElapsedEvent.endTime;
             const newTitle = newElapsedEvent.title;
             const newDescription = newElapsedEvent.description;
+            
             try {
                 await axios.post('/eventsave', {
                     newDate, 
@@ -111,8 +114,8 @@ const AddEvent = (props) => {
                 class="form-control" 
                 id="eventdescription"  
                 placeholder="label" 
-                value={eventDescription} 
-                onChange={e => setEventDescription(e.target.value)} required />
+                value={eventLabel} 
+                onChange={e => setEventLabel(e.target.value)} required />
             </div>
         </div>
         <div class="row mt-3">

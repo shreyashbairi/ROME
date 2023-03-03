@@ -25,7 +25,7 @@ function TeamPop(props) {
               description,
               username
             });
-            alert("Team Successfully Created.  Redirecting you now.");
+            alert("Team Successfully Created.");
           } catch (e){
             alert('Team Creation Failed. Please try again later.')
           }

@@ -125,7 +125,7 @@ function Profile (){
 
                     <div class="row">
                       <div class="col-sm-3">
-                        <h class="mb-0">Phone</h>
+                        <h class="mb-0">Preferred Name</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
                         {userProfile.userPhone}
@@ -137,7 +137,7 @@ function Profile (){
 
                     <div class="row">
                       <div class="col-sm-3">
-                        <h class="mb-0">Address</h>
+                        <h class="mb-0">Pronous</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
                         {userProfile.userAddress}
