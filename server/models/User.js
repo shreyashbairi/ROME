@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
-const TeamSchema = new Schema({
-    team: String,
-    description:String
-});
+// const TeamSchema = new Schema({
+//     team: String,
+//     description:String
+// });
 
-const EventSchema = new Schema({
-    date: Date,
-    startTime: Number,
-    endTime: Number,
-    title: String,
-    description: String
-});
+// const EventSchema = new Schema({
+//     date: Date,
+//     startTime: Number,
+//     endTime: Number,
+//     title: String,
+//     description: String
+// });
 
-const PersonalTaskSchema = new Schema({
+// const PersonalTaskSchema = new Schema({
 
-});
+// });
 
 // const ProfileSchema = new Schema({
 //     userBrithday: Date,

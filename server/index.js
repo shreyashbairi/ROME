@@ -63,7 +63,11 @@ app.post('/signup', async (req, res) => {
         userEmail,
         userUserName, 
         userPassword: bcrypt.hashSync(userPassword, bcryptSalt),
-      });
+        userBirthday: new Date(),
+        userPhone: "",
+        userAddress: "",
+        userNotification: false
+      }); 
       const savedUser = await userDoc.save();
       res.status(201).json(savedUser);
     } catch (e) {
@@ -146,9 +150,9 @@ app.post('/eventedit', async (req, res) =>{
             endTime: newEndTime,
             description: newDescription
             });
-        console.log(newTitle);
-        console.log(curusername)
-        console.log(eventsDoc);
+        // console.log(newTitle);
+        // console.log(curusername)
+        // console.log(eventsDoc);
         res.json(eventsDoc);
     } catch (e) {
         res.status(422).json(e);    
@@ -206,22 +210,27 @@ app.post('/login', async (req, res) => {
   });
 
 
-//for profile
-// app.get('/profile', (req, res) => {
-//     const {token} = req.cookies;
-//     if(token){
-//         jwt.verify(token, jwtSecret, {}, async (err, userData)=>{
-//             if(err) throw err;
-//             const {userUserName, userEmail, _id} = await User.findById(userData.id);
-//             res.json({userUserName, userEmail, _id});
-//         });
-//     } else{
-//         res.json(null);
-//     }
-// })
 
 
 //middleware
+
+app.post("/editprofile", async (req,res) => {
+    const {username, cbirthday, cphone, caddress, cnotification} = req.body;
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                userBirthday: new Date(cbirthday),
+                userPhone: cphone,
+                userAddress: caddress,
+                // userNotification: cnotification
+        });
+        res.json(userDoc);
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+});
 
 app.get("/profile/:username", async (req,res) => {
     try{

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import '../css/Profile.css';
 import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
+import { Navigate } from "react-router-dom";
 
 function EditProfile (){
   const [username, setUser] = useState(localStorage.getItem('userid'))
@@ -11,18 +12,36 @@ function EditProfile (){
   const [phone, setPhone] = useState("")
   const [address, setAddress] = useState("")
   const [notification, setNotification] = useState("")
+  const [count, setCount] = useState(0);
 
   const [cbirthday, setcBirthday] = useState("")
   const [cphone, setcPhone] = useState("")
   const [caddress, setcAddress] = useState("")
   const [cnotification, setcNotification] = useState("")
+  const [redirect, setRedirect] = useState(false);
   async function handleSubmit(e) {
-    console.log("phonnumber:")
-    console.log(cphone);
-    // axios.put('/editprofile', {username, cbirthday, cphone, caddress, cnotification});
-    axios.post('/editprofile', cphone);
-    console.log("i tried");
+    
+    // console.log("i tried");
     e.preventDefault();
+    const username = localStorage.getItem("userid");
+    // console.log("phonnumber:")
+    // console.log(cphone);
+    // axios.put('/editprofile', {username, cbirthday, cphone, caddress, cnotification});
+    try {
+      axios.post('/editprofile', {
+        username,
+        cbirthday,
+        cphone,
+        caddress,
+        cnotification
+      });
+      setRedirect(true);
+    } catch (e) {
+      alert("Profile Update Failed")
+    }
+}
+if (redirect) {
+  return <Navigate to={'/profile'}/>
 }
   // const [profile, setProfile] = useState([{
   //   birthday: Date,
@@ -34,12 +53,12 @@ function EditProfile (){
 
 
  
-  axios.get('/profileName',localStorage.getItem("userid")).then(Response =>{
-    setName(Response.data);
-  })
-  axios.get('/profileEmail',localStorage.getItem("userid")).then(Response =>{
-    setEmail(Response.data);
-  })
+  // axios.get('/profileName',localStorage.getItem("userid")).then(Response =>{
+  //   setName(Response.data);
+  // })
+  // axios.get('/profileEmail',localStorage.getItem("userid")).then(Response =>{
+  //   setEmail(Response.data);
+  // })
 
 //   axios.get('/profileBirthday',localStorage.getItem("userid")).then(Response =>{
 //     setBirthday(Response.data);
@@ -57,22 +76,22 @@ function EditProfile (){
 //   })
 
 
-  const handleBirthday = (e) => {
-    setcBirthday(e.target.value);
-  }
-  const handlePhone = (e) => {
-    setcPhone(e.target.value);
-  }
-  const handleAddress = (e) => {
-    setcAddress(e.target.value);
-  }
-  const handleNotification = (e) => {
-    setcNotification(e.target.value);
-  }
+  // const handleBirthday = (e) => {
+  //   setcBirthday(e.target.value);
+  // }
+  // const handlePhone = (e) => {
+  //   setcPhone(e.target.value);
+  // }
+  // const handleAddress = (e) => {
+  //   setcAddress(e.target.value);
+  // }
+  // const handleNotification = (e) => {
+  //   setcNotification(e.target.value);
+  // }
 
   
 
-  const [count, setCount] = useState(0);
+ 
 
   const ColoredLine = ({ color }) => (
     <hr
@@ -156,7 +175,7 @@ function EditProfile (){
                         <input
                             id="birthday"
                             type="date"
-                            onChange={handleBirthday}
+                            onChange={e => setcBirthday(e.target.value)}
                             value={cbirthday}
                         />                
                         </div>
@@ -183,7 +202,7 @@ function EditProfile (){
                           <textarea
                           id="text"
                           placeholder="phone"
-                          onChange={handlePhone}
+                          onChange={e => setcPhone(e.target.value)}
                           value={cphone}
                       />
                       </div>
@@ -202,7 +221,7 @@ function EditProfile (){
                           placeholder="address"
                           type="text"
                           className="description-box"
-                          onChange={handleAddress}
+                          onChange={e => setcAddress(e.target.value)}
                           value={caddress}
                       />                
                         </div>
@@ -222,7 +241,7 @@ function EditProfile (){
                           id="notification"
                           type="checkbox"
                           className="description-box"
-                          onChange={handleNotification}
+                          onChange={e => setcNotification(e.target.value)}
                           value={notification}
                       />                                       </label>
                         </div>

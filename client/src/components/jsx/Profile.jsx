@@ -180,7 +180,7 @@ function Profile (){
                     <div class="row ">
 
                       <div class="col-sm-12 ">
-                        <a class="edit " href="/profile/editprofile" data-inline="true" target="__blank">Edit</a>  
+                        <a class="edit " href="/editprofile" data-inline="true">Edit</a>  
        
                       </div>
 
