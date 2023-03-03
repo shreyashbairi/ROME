@@ -7,6 +7,7 @@ import { useState } from "react"
 import TeamTodoList from "./TeamTodoList"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
+    alert("You are entering as a manager");
 
     const closeform = () => {
         setButtonPop(false);
