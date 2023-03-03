@@ -211,7 +211,7 @@ app.post('/login', async (req, res) => {
     // console.log(userDoc);
     if (userDoc) {
       const passOk = bcrypt.compareSync(userPassword, userDoc.userPassword);
-      
+      console.log(passOk);
       if (passOk) {
         jwt.sign({username:userDoc.userUserName, 
             id:userDoc._id
@@ -265,6 +265,22 @@ app.post("/editprofile", async (req,res) => {
                 userAddress: caddress,
                 // userNotification: cnotification
         });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+});
+
+app.post("/resetpassword", async (req,res) => {
+    const {username, userPassword} = req.body;
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                userPassword: bcrypt.hashSync(userPassword, bcryptSalt)
+            });
+        console.log(userDoc);
+        res.json(userDoc);
     } catch (e) {
         res.status(422).json(e); 
     }
