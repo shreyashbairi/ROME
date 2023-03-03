@@ -5,6 +5,8 @@ import UpdateTask from "./UpdateTask"
 import AddEvent from "./AddEvent"
 import { useState } from "react"
 import TeamTodoList from "./TeamTodoList"
+import TeamCompleteList from "./TeamCompleteList"
+// import {completes} from "./TeamCompleteList"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
 
@@ -44,7 +46,7 @@ function TeamHome() {
             <div className="top bg-primary">
                 Completed
             </div>
-
+            {/* <TeamCompleteList/> */}
 
         </div> 
         <div class="members">

@@ -4,11 +4,12 @@ import { TiEdit } from 'react-icons/ti'
 import TeamTodoForm from './TeamTodoForm'
 import {BsThreeDots} from 'react-icons/bs'
 
-function TeamTodo({todos,completeTodo,removeTodo,editTask}) {
+function TeamTodo({todos,removeTodo,editTask,progs}) {
     const [change, setChange] = useState({
         id: null,
         value:''
     })
+    const [status, setStatus] = useState('')
 
     const submitUpdate = value => {
         editTask(change.id, value)
@@ -23,31 +24,6 @@ function TeamTodo({todos,completeTodo,removeTodo,editTask}) {
         return <TeamTodoForm change={change} onSubmit={submitUpdate}/>
     }
 
-    // return todos.map((todo,index)=>(
-    //     <div 
-    //     className={todo.isComplete ? 'todo-row complete' :
-    //     'todo-row'} 
-    //     key={index}>
-
-    //         <div key={todo.id} onClick={()=>completeTodo(todo.id)}>
-    //             {todo.text}
-    //         </div>
-    //         <div
-    //             className="icons"
-    //         >
-    //             <AiFillCloseCircle
-    //                 onClick={()=>removeTodo(todo.id)}
-    //                 className='delete-task-icon'
-    //             />
-    //             {/* <TiEdit 
-    //                 onClick={()=>setChange({id: todo.id, value:todo.text})}
-    //                 className='edit-task-icon'
-    //             /> */}
-    //         </div>
-
-    //     </div>
-    // ))
-
     const displayIcon = (todo) => {
         console.log(todo)
         if (!todo.title || /^\s*$/.test(todo.title)) {
@@ -55,7 +31,7 @@ function TeamTodo({todos,completeTodo,removeTodo,editTask}) {
         }
         return (
             <AiFillCloseCircle
-                                    onClick={()=>removeTodo(todo.id)}
+                onClick={()=>removeTodo(todo.id)}
             />
         )
     }
@@ -76,6 +52,10 @@ function TeamTodo({todos,completeTodo,removeTodo,editTask}) {
         // )
         alert(description)
     }
+
+    const inProgress = () => {
+        console.log("in progress")
+    }
     return (
         <div>
             {todos.map((todo,index)=>{
@@ -84,25 +64,22 @@ function TeamTodo({todos,completeTodo,removeTodo,editTask}) {
                         
                         <div key={todo.id} > 
                         {/* onClick={()=>completeTodo(todo.id)} was removed from above */}
-                        <button onClick={()=>displayDetails(todo.date, todo.description)}>
+                        <button style={{border:"none"}} onClick={()=>displayDetails(todo.date, todo.description)}>
                             {todo.title} {todo.date}
                             {/* {todo.date} */}
+                            
                         </button>
                             
                             
                         </div>
                             
                         <div>
+                            {/* onClick={progs(todo.id)} removed from below */}
+                            <button style={{border:"none", backgroundColor:"blue", color:"white"}} >In Progress</button>
+                            <br></br>
                             <AiFillCloseCircle
                                 onClick={()=>removeTodo(todo.id)}
                             />
-                            <form>
-                                <select>
-                                    <option>Not Started</option>
-                                    <option>In Progress</option>
-                                    <option>Completed</option>
-                                </select>
-                            </form>
                             {/* <TiEdit
                                 onClick={()=>setChange({id: todo.id, value:todo.text})}
                             /> */}
