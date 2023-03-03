@@ -1,12 +1,11 @@
 import React from "react";
-import "../css/AddEvent.css";
 import { useState } from "react";
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
-const AddEvent = (props) => {
+const TodoEdit = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
@@ -71,7 +70,7 @@ const AddEvent = (props) => {
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
-        <h2>Add Team events</h2>
+        <h2>Edit Task</h2>
         <form autoComplete="off" onSubmit={handleEventSubmit}>
         <div class="row mt-3">
             <div class="col-sm-3">
@@ -103,20 +102,6 @@ const AddEvent = (props) => {
         </div>
         <div class="row mt-3">
             <div class="col-sm-3">
-               <strong>Label</strong>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <input 
-                type="lable" 
-                class="form-control" 
-                id="eventdescription"  
-                placeholder="label" 
-                value={eventDescription} 
-                onChange={e => setEventDescription(e.target.value)} required />
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-sm-3">
                <strong>Date</strong>
             </div>
             <div class="col-sm-9 text-secondary">
@@ -128,34 +113,8 @@ const AddEvent = (props) => {
                 onChange={e => setEventDate(e.target.value)} required />
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-sm-3">
-               <strong>Start time</strong>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <input 
-                type="time" 
-                class="form-control" 
-                id="eventstarttime"  
-                value={eventStartTime}
-                onChange={e => setEventStartTime(e.target.value)} required />
-            </div>
 
-        </div>
-        <div class="row mt-3">
 
-            <div class="col-sm-3">
-               <strong>End time</strong>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <input 
-                type="time" 
-                class="form-control" 
-                id="eventendtime" 
-                value={eventEndTime}
-                onChange={e => setEventEndTime(e.target.value)} required />
-            </div>
-            </div>
 
             
 
@@ -170,4 +129,4 @@ const AddEvent = (props) => {
 }
 
 
-export default AddEvent
+export default TodoEdit

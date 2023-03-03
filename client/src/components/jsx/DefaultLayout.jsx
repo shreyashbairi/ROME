@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import '../css/DefaultLayout.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import TeamPop from "./TeamPop"
 import Popup from "reactjs-popup";
+import axios from "axios";
 //import { UserContext } from "./UserContext";
 
 function DefaultLayout () {
@@ -17,6 +18,16 @@ function DefaultLayout () {
         team: String,
         description: String
     }])
+
+    useEffect( () => {
+        const username = localStorage.getItem("userid");
+        axios.get(`/teams/${username}`)
+        .then (res => {
+            const teamsGrabed = res.data;
+            console.log(teamsGrabed);
+            setTeams(teamsGrabed);
+        })
+    }, [] )
 
     const newTeamButton = () => {
         setButtonPop(true);
@@ -35,6 +46,10 @@ function DefaultLayout () {
     const goWelcome = () => {
         navigate("/Welcome")
     }
+
+    const handlelogout = () =>{
+        localStorage.setItem("userid", "");
+    }
     return (
         <>
             <nav class="navbar navbar-light bg-primary mt-1 rounded">
@@ -43,9 +58,17 @@ function DefaultLayout () {
                     Rome
                     </a>
                     {/* PAGENAME */}
-                    <a class="navbar-brand" href="/profile"> 
+                    <div>                    
+                        <a class="navbar-brand" href="/profile"> 
 <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
-                    </a>
+                        </a>
+                        <a class="navbar-brand" href="/" onClick={handlelogout}> 
+                            logout
+                        </a>
+
+                    </div>
+
+
             </nav> 
             <Outlet />
             <div class="sidebar">

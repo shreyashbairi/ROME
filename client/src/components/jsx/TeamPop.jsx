@@ -16,17 +16,21 @@ function TeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        const username = localStorage.getItem("userid");
+        const teamID = Math.floor(Math.random()*10000);
         try {
-            await axios.post('/Submit',{
+            await axios.post('/teamsubmit',{
+              teamID,
               team,
-              description
+              description,
+              username
             });
             alert("Team Successfully Created.  Redirecting you now.");
           } catch (e){
             alert('Team Creation Failed. Please try again later.')
           }
         props.onSubmit({
-            teamID: Math.floor(Math.random()*10000),
+            teamID: teamID,
             team: team,
             description: description
         });

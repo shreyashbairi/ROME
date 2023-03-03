@@ -9,6 +9,7 @@ import TeamCompleteList from "./TeamCompleteList"
 // import {completes} from "./TeamCompleteList"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
+    alert("You are entering as a manager");
 
     const closeform = () => {
         setButtonPop(false);

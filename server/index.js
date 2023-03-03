@@ -49,6 +49,7 @@ app.get('/test', (req, res) =>{
 //for signup
 app.post('/signup', async (req, res) => {  
     const { userFullname, userEmail, userUserName, userPassword } = req.body;
+
     try {
       // Check if a user with the given userFullname already exists
       const existingUser = await User.findOne({ userUserName });
@@ -74,18 +75,33 @@ app.post('/signup', async (req, res) => {
 
 
 //for team
-app.post('/Submit', async (req, res) =>{
-    const {team, description} = req.body;
+app.post('/teamsubmit', async (req, res) =>{
+    const {teamID, team, description, username} = req.body;
     try {
         const teamDoc = await Team.create({
-            team,
-            description
+            teamID: teamID,
+            team: team,
+            description: description,
+            userid: username
         });
         res.json(teamDoc);
     } catch (e) {
         res.status(422).json(e);    
     }
 
+});
+
+app.get("/teams/:username", async (req,res) => {
+    // console.log(req.params.username);
+    try{
+        console.log(req.params.username);
+        const teams = await Team.find({ userid: req.params.username })
+        // console.log(events);
+        res.json(teams);
+    } catch (e){
+        // console.log(e)
+        res.status(422).json(e);    
+    }
 });
 
 app.get("/events/:username", async (req,res) => {
@@ -191,23 +207,38 @@ app.post('/login', async (req, res) => {
 
 
 //for profile
-app.get('/profile', (req, res) => {
-    const {token} = req.cookies;
-    if(token){
-        jwt.verify(token, jwtSecret, {}, async (err, userData)=>{
-            if(err) throw err;
-            const {userUserName, userEmail, _id} = await User.findById(userData.id);
-            res.json({userUserName, userEmail, _id});
-        });
-    } else{
-        res.json(null);
-    }
-})
+// app.get('/profile', (req, res) => {
+//     const {token} = req.cookies;
+//     if(token){
+//         jwt.verify(token, jwtSecret, {}, async (err, userData)=>{
+//             if(err) throw err;
+//             const {userUserName, userEmail, _id} = await User.findById(userData.id);
+//             res.json({userUserName, userEmail, _id});
+//         });
+//     } else{
+//         res.json(null);
+//     }
+// })
 
 
 //middleware
 
+app.get("/profile/:username", async (req,res) => {
+    try{
+        const user = await User.findOne({ userUserName: req.params.username })
+        // console.log(tasks);
+        res.json(user);
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
 
+// app.get('/profile', async (req, res) => {
+//     const { userUserName} = req.body;
+//     const userDoc = await User.findOne({ username: userUserName });
+//     res.json(userDoc);
+// });
 
 //listener
 const server = app.listen(port, ()=>console.log(`Server is running on ${port}`))
