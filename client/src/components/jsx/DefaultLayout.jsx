@@ -45,6 +45,10 @@ function DefaultLayout () {
     const goWelcome = () => {
         navigate("/Welcome")
     }
+
+    const handlelogout = () =>{
+        localStorage.setItem("userid", "");
+    }
     return (
         <>
             <nav class="navbar navbar-light bg-primary mt-1 rounded">
@@ -53,9 +57,17 @@ function DefaultLayout () {
                     Rome
                     </a>
                     {/* PAGENAME */}
-                    <a class="navbar-brand" href="/profile"> 
+                    <div>                    
+                        <a class="navbar-brand" href="/profile"> 
 <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
-                    </a>
+                        </a>
+                        <a class="navbar-brand" href="/" onClick={handlelogout}> 
+                            logout
+                        </a>
+
+                    </div>
+
+
             </nav> 
             <Outlet />
             <div class="sidebar">

@@ -18,23 +18,22 @@ const PersonalTaskSchema = new Schema({
 
 });
 
-const ProfileSchema = new Schema({
-    userBrithday: Date,
-    userPhone: String,
-    userAddress: String,
-    userNotification: Boolean,
-});
+// const ProfileSchema = new Schema({
+//     userBrithday: Date,
+//     userPhone: String,
+//     userAddress: String,
+//     userNotification: Boolean,
+// });
 
 const UserSchema = new Schema({
-    // _id: {type:String, unique: true},
     userFullname:{type:String, unique:false},
     userEmail: {type:String, unique:true},
     userUserName: String,
     userPassword: String,
-    // userTeams: [TeamSchema],
-    // userEvents: [],
-    // userPersonalTask: [PersonalTaskSchema],
-    // userProfile: ProfileSchema,
+    userBrithday: Date,
+    userPhone: String,
+    userAddress: String,
+    userNotification: Boolean,
 });
 
 const UserModel = mongoose.model('User', UserSchema);
