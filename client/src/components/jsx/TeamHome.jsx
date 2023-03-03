@@ -4,6 +4,7 @@ import Popup from "reactjs-popup"
 import UpdateTask from "./UpdateTask"
 import AddEvent from "./AddEvent"
 import { useState } from "react"
+import TeamTodoList from "./TeamTodoList"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
 
@@ -18,10 +19,10 @@ function TeamHome() {
         <div >
         <div class="todobefore"> 
             <div className="top bg-primary">
-                todo1
+                Current Tasks
             </div>
             
-            <Popup class="updatetask" trigger={<button type="button" class="btn btn-secondary"> {'>'} </button>} open={show}
+            {/* <Popup class="updatetask" trigger={<button type="button" class="btn btn-secondary"> {'>'} </button>} open={show}
                         onOpen={openform} position="right center" nested modal>
                             <div class="card">
                             <UpdateTask
@@ -29,18 +30,19 @@ function TeamHome() {
                                     setTrigger={closeform}
                                 />     
                             </div>
-            </ Popup>
+            </ Popup> */}
+            <TeamTodoList />
         </div> 
         <div class="todoprogress"> 
             <div className="top bg-primary">
-                todo2
+                In Progress
             </div>
 
 
         </div> 
         <div class="todocomplete"> 
             <div className="top bg-primary">
-                todo3
+                Completed
             </div>
 
 
