@@ -1,13 +1,37 @@
 import React from "react"
 import { useState } from "react";
 import '../css/Login.css';
+import axios from 'axios';
+import { Navigate } from "react-router-dom";
 
 export default function (props) {
   const [userPassword,setPassword] = useState("");
   const [userPasswordConfirm,setPasswordConfirm] = useState("");
+  const [redirect, setRedirect] = useState(false);
   function HandleSubmit (e) { 
     e.preventDefault();
+    e.preventDefault();
+    const username = localStorage.getItem("userid");
+    // console.log("phonnumber:")
+    // console.log(cphone);
+    // axios.put('/editprofile', {username, cbirthday, cphone, caddress, cnotification});
+    if (userPassword === userPasswordConfirm) {
+    try {
+      axios.post('/resetpassword', {
+        username,
+        userPassword
+      });
+      setRedirect(true);
+    } catch (e) {
+      alert("Password Update Failed");
+    }
+    } else {
+      alert("Passwords Dont Match");
+    }
     /* send user input to backend */
+  }
+  if (redirect) {
+    return <Navigate to={'/profile'} />
   }
   return (
     <div className="Auth-form-container" onSubmit={HandleSubmit}>
@@ -36,7 +60,7 @@ export default function (props) {
           </div>
           <div className="d-grid gap-2 mt-3">
             <button type="submit" className="btn btn-primary">
-              Send Email
+              Reset Password
             </button>
           </div>
         </div>
