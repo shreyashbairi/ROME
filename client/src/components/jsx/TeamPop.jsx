@@ -16,10 +16,13 @@ function TeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        const username = localStorage.getItem("userid");
         try {
-            await axios.post('/Submit',{
+            await axios.post('/teamsubmit',{
+              teamID,
               team,
-              description
+              description,
+              username
             });
             alert("Team Successfully Created.  Redirecting you now.");
           } catch (e){
