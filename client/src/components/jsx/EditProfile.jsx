@@ -196,7 +196,7 @@ if (redirect) {
 
                       <div class="row">
                         <div class="col-sm-3">
-                          <h class="mb-0">Phone</h>
+                          <h class="mb-0">Preferred name</h>
                         </div>
                         <div class="col-sm-9 text-secondary">
                           <textarea
@@ -213,7 +213,7 @@ if (redirect) {
 
                       <div class="row">
                         <div class="col-sm-3">
-                          <h class="mb-0">Address</h>
+                          <h class="mb-0">Pronouns</h>
                         </div>
                         <div class="col-sm-9 text-secondary">
                         <textarea
