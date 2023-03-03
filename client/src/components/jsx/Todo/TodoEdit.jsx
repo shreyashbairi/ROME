@@ -7,74 +7,39 @@ import 'reactjs-popup/dist/index.css';
 
 const TodoEdit = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
-    const [eventTitle, setEventTitle] = useState("");
-    const [eventDescription, setEventDescription] = useState("");
-    const [eventDate, setEventDate] = useState("");
-    const [eventStartTime, setEventStartTime] = useState("");
-    const [eventEndTime, setEventEndTime] = useState("");
+    const [taskTitle, setTaskTitle] = useState("");
+    const [taskDescription, setTaskDescription] = useState("");
+    const [taskDate, setTaskDate] = useState("");
 
-    async function handleEventSubmit (e) {
+    async function handleSubmit (e) {
         e.preventDefault();
-        const newElapsedEvent = { //grab from user with pop up 
-            date: new Date(eventDate),
-            startTime: parseInt(eventStartTime.substring(0,2)),
-            endTime: parseInt(eventEndTime.substring(0,2)),
-            title: eventTitle,
-            description: eventDescription
-        };
-        newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
-        if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
-            alert("Enter Valid Times");
-        } else {
-            props.scheduleEvent(newElapsedEvent);
+        let exists = false;
+        const username = localStorage.getItem("userid");
             props.setTrigger();
-            const curusername = localStorage.getItem("userid");
-            const newDate = newElapsedEvent.date;
-            const newStartTime = newElapsedEvent.startTime;
-            const newEndTime = newElapsedEvent.endTime;
-            const newTitle = newElapsedEvent.title;
-            const newDescription = newElapsedEvent.description;
+            const taskTitle=props.title;
             try {
-                await axios.post('/eventsave', {
-                    newDate, 
-                    newStartTime, 
-                    newEndTime, 
-                    newTitle, 
-                    newDescription, 
-                    curusername
+                await axios.post('/taskedit', {
+                    taskTitle,
+                    taskDescription,
+                    taskDate,
+                    username
                 });
-                alert('Event Saved');
+                alert('Task Saved');
             } catch (e) {
-                alert('Event Failed to Save');
+                alert('Task Failed to Save');
             }
-        } 
-    }
-    // async function handlSubmit(e) {
-    //     e.preventDefault();
-    //     try{
-    //         await axios.post('/Submit', {
+    } 
 
-    //         });
-    //         alert("Team Successfully Created.  Redirecting you now.");
-    //       } catch (e){
-    //         alert('Team Creation Failed. Please try again later.')
-    //       }
-
-    //     props.onSubmit({
-
-    //     });
-        //props.setTrigger(false);
-    // }
     
     return (props.trigger) ? (
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
         <h2>Edit Task</h2>
-        <form autoComplete="off" onSubmit={handleEventSubmit}>
-        <div class="row mt-3">
+        <form autoComplete="off" onSubmit={handleSubmit}>
+        {/* <div class="row mt-3">
             <div class="col-sm-3">
-               <strong>Title</strong>
+               <strong>Existing Title</strong>
             </div>
             <div class="col-sm-9 text-secondary">
                 <input 
@@ -82,10 +47,10 @@ const TodoEdit = (props) => {
                 class="form-control" 
                 id="eventtitle"  
                 placeholder="Title"
-                value={eventTitle}
-                onChange={e => setEventTitle(e.target.value)} required />
+                value={taskTitle}
+                onChange={e => setTaskTitle(e.target.value)} required />
             </div>
-        </div>
+        </div> */}
         <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Description</strong>
@@ -96,8 +61,8 @@ const TodoEdit = (props) => {
                 class="form-control" 
                 id="eventdescription"  
                 placeholder="Description" 
-                value={eventDescription} 
-                onChange={e => setEventDescription(e.target.value)} required />
+                value={taskDescription} 
+                onChange={e => setTaskDescription(e.target.value)} required />
             </div>
         </div>
         <div class="row mt-3">
@@ -109,8 +74,8 @@ const TodoEdit = (props) => {
                 type="date" 
                 class="form-control" 
                 id="eventdate"  
-                value={eventDate}
-                onChange={e => setEventDate(e.target.value)} required />
+                value={taskDate}
+                onChange={e => setTaskDate(e.target.value)} required />
             </div>
         </div>
 

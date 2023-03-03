@@ -86,7 +86,8 @@ app.post('/teamsubmit', async (req, res) =>{
             teamID: teamID,
             team: team,
             description: description,
-            userid: username
+            userid: username,
+            role: "manager"
         });
         res.json(teamDoc);
     } catch (e) {
@@ -154,6 +155,23 @@ app.post('/eventedit', async (req, res) =>{
         // console.log(curusername)
         // console.log(eventsDoc);
         res.json(eventsDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
+app.post('/taskedit', async (req, res) =>{
+    const {taskTitle, taskDescription, taskDate, username} = req.body;
+    // console.log(req.body)
+    try {
+        const tasksDoc = await Task.findOneAndUpdate(
+            {title: taskTitle, username: username},
+            {
+            description: taskDescription,
+            date: taskDate
+            });
+        console.log(tasksDoc);
+        res.json(tasksDoc);
     } catch (e) {
         res.status(422).json(e);    
     }

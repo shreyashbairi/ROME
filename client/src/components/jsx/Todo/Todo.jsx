@@ -145,6 +145,7 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
                                     trigger={edit}
                                     setTrigger={closeedit}
                                     scheduleEvent={todo}
+                                    title={todo.title}
                                 />     
                             </div>
                         </Popup>
