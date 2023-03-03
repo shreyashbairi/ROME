@@ -91,12 +91,12 @@ app.post('/Submit', async (req, res) =>{
 app.get("/events/:username", async (req,res) => {
     // console.log(req.params.username);
     try{
-        console.log(req.params.username);
+        // console.log(req.params.username);
         const events = await Event.find({ usernameid: req.params.username })
-        console.log(events);
+        // console.log(events);
         res.json(events);
     } catch (e){
-        console.log(e)
+        // console.log(e)
         res.status(422).json(e);    
     }
 });
@@ -107,13 +107,32 @@ app.post('/eventsave', async (req, res) =>{
     try {
         const eventsDoc = await Event.create(
             { usernameid: curusername,
-            event: {
             date: newDate,
             startTime: newStartTime,
             endTime: newEndTime,
             title: newTitle,
             description: newDescription
-            }});
+            });
+        res.json(eventsDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
+app.post('/eventedit', async (req, res) =>{
+    const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername} = req.body;
+    try {
+        const eventsDoc = await Event.findOneAndUpdate(
+            {title: newTitle , usernameid: curusername},
+            {
+            date: newDate,
+            startTime: newStartTime,
+            endTime: newEndTime,
+            description: newDescription
+            });
+        console.log(newTitle);
+        console.log(curusername)
+        console.log(eventsDoc);
         res.json(eventsDoc);
     } catch (e) {
         res.status(422).json(e);    
@@ -138,10 +157,10 @@ app.post('/tasksave', async (req, res) =>{
 app.get("/tasks/:username", async (req,res) => {
     try{
         const tasks = await Task.find({ username: req.params.username })
-        console.log(tasks);
+        // console.log(tasks);
         res.json(tasks);
     } catch (e){
-        console.log(e)
+        // console.log(e);
         res.status(422).json(e);    
     }
 });

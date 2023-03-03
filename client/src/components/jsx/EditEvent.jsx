@@ -38,25 +38,24 @@ const EditEvent = (props) => {
         } else {
             props.setTrigger();
             props.editEvent(newElapsedEvent);
-            // const curusername = localStorage.getItem("userid");
-            // const newDate = newElapsedEvent.date;
-            // const newStartTime = newElapsedEvent.startTime;
-            // const newEndTime = newElapsedEvent.endTime;
-            // const newTitle = newElapsedEvent.title;
-            // const newDescription = newElapsedEvent.description;
-            // try {
-            //     await axios.post('/eventedit', {
-            //         newDate, 
-            //         newStartTime, 
-            //         newEndTime, 
-            //         newTitle, 
-            //         newDescription, 
-            //         curusername
-            //     });
-            //     alert('Event Edit Saved');
-            // } catch (e) {
-            //     alert('Event Edit Failed to Save');
-            // }
+            const curusername = localStorage.getItem("userid");
+            const newDate = newElapsedEvent.date;
+            const newStartTime = newElapsedEvent.startTime;
+            const newEndTime = newElapsedEvent.endTime;
+            const newTitle = newElapsedEvent.title;
+            const newDescription = newElapsedEvent.description;
+            try {
+                await axios.post('/eventedit', {
+                    newDate, 
+                    newStartTime, 
+                    newEndTime, 
+                    newTitle, 
+                    newDescription, 
+                    curusername
+                });
+            } catch (e) {
+                alert("Event did not Update")
+            }
         } 
     }
     

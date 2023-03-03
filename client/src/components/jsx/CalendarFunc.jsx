@@ -29,13 +29,13 @@ export default function CalendarFunc (props) {
             // console.log(eventsGrabed.length)
             const elapsedEvent = [];
             for (let i = 0; i < eventsGrabed.length; i++) {
-                console.log(eventsGrabed[i].event)
+                console.log(eventsGrabed[i])
                 const newElapsedEvent = { 
-                    date: new Date(eventsGrabed[i].event.date),
-                    startTime: eventsGrabed[i].event.startTime,
-                    endTime: eventsGrabed[i].event.endTime,
-                    title: eventsGrabed[i].event.title,
-                    description: eventsGrabed[i].event.description
+                    date: new Date(eventsGrabed[i].date),
+                    startTime: eventsGrabed[i].startTime,
+                    endTime: eventsGrabed[i].endTime,
+                    title: eventsGrabed[i].title,
+                    description: eventsGrabed[i].description
                 };
                 console.log(newElapsedEvent);
                 if (newElapsedEvent.endTime === 1) {
