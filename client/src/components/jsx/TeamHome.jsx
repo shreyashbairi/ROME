@@ -5,12 +5,9 @@ import UpdateTask from "./UpdateTask"
 import AddEvent from "./AddEvent"
 import { useState } from "react"
 import TeamTodoList from "./TeamTodoList"
-import TeamCompleteList from "./TeamCompleteList"
-// import {completes} from "./TeamCompleteList"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
     alert("You are entering as a manager");
-
     const closeform = () => {
         setButtonPop(false);
     }
@@ -36,20 +33,21 @@ function TeamHome() {
             </ Popup> */}
             <TeamTodoList />
         </div> 
-        <div class="todoprogress"> 
+        {/* <div class="todoprogress"> 
             <div className="top bg-primary">
                 In Progress
             </div>
 
 
-        </div> 
-        <div class="todocomplete"> 
+        </div>  */}
+        {/* <div class="todocomplete"> 
             <div className="top bg-primary">
                 Completed
             </div>
-            {/* <TeamCompleteList/> */}
 
-        </div> 
+
+        </div>  */}
+
         <div class="members">
             <div className="top bg-primary">
                 members
