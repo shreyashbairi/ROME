@@ -2,24 +2,40 @@ import React, {useState} from "react";
 import '../css/Profile.css';
 import EditProfile from "./EditProfile";
 import { useEffect } from "react";
+import axios from "axios";
+
+
 
 function Profile (){
-  const [message, setMessage] = useState('');
-  // const userDoc = User.findOne (username);
-  // User._id = userDoc._id;
-  const [prof, setProf] = useState({
-    name:String,
-  })
+   const [name, setName] = useState("")
+  // const [email, setEmail] = useState("")
+  const [birthday, setBirthday] = useState("")
+  const [phone, setPhone] = useState("")
+  const [address, setAddress] = useState("")
+  const [notification, setNotification] = useState("")
+  const [userProfile, setProfile] = useState({});
+  useEffect( () => {
+    const username = localStorage.getItem("userid")
+    axios.get(`/profile/${username}`)
+    .then(res => {
+      console.log(res.data)
+      setProfile(res.data);
+      // console.log(setProfile);
+    })
+  }, []);
 
-  const [updated, setUpdated] = useState(message);
-  const handleChange = (event) => {
-    setMessage(event.target.value);
-  };
-  const handleClick = () => {
-    // 👇 "message" stores input field value
-    
-    setUpdated(message);
-  };
+  // useEffect( () => {
+  //   const username = localStorage.getItem("userid")
+  //   axios.get(`/profile`,username)
+  //   .then(res => {
+  //     setname
+  //     setProfile(res.data);
+  //     console.log(setProfile);
+  //   })
+  // });
+
+
+
   const ColoredLine = ({ color }) => (
     <hr
         style={{
@@ -33,7 +49,6 @@ function Profile (){
     
     <div >
       <div class="container">
-      {localStorage.getItem("userid")}
         <div class="main-body">
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -45,8 +60,8 @@ function Profile (){
                         <img src="https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw" alt="Logo" width="100" height="100" class="rounded mx-auto d-block center" />      
                       </button>
 
-                      <h1>Chiho Song</h1>  
-                      <p class="text-secondary mb-1">song593@data.cs.purdue</p>
+                      <h1>{userProfile.userFullname}</h1>  
+                      <p class="text-secondary mb-1">{userProfile.uesrEmail}</p>
                     </div>
                   </div>
                 </div>
@@ -92,7 +107,7 @@ function Profile (){
                         <h class="mb-0">Birthday</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                        2000.12.16
+                        {birthday}
                       </div>
                     </div>
                     <ColoredLine color="grey" />
@@ -113,7 +128,7 @@ function Profile (){
                         <h class="mb-0">Phone</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                        7657672136
+                        {phone}
                       </div>
                     </div>
                     <ColoredLine color="grey" />
@@ -125,7 +140,7 @@ function Profile (){
                         <h class="mb-0">Address</h>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                        purdue
+                        {address}
                       </div>
                       
                     </div>
@@ -140,7 +155,7 @@ function Profile (){
                       
                       <div class="col-sm-9">
                       <label>
-                          <input type="checkbox" />
+                          {notification}
                         </label>
                       </div>
                     </div>

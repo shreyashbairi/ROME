@@ -1,42 +1,77 @@
 import React, {useState} from "react";
 import '../css/Profile.css';
+import axios from "axios";
+import { BsWindowSidebar } from "react-icons/bs";
 
 function EditProfile (){
+  const [username, setUser] = useState(localStorage.getItem('userid'))
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
   const [birthday, setBirthday] = useState("")
   const [phone, setPhone] = useState("")
   const [address, setAddress] = useState("")
-  const [notification, setNotificatoin] = useState()
+  const [notification, setNotification] = useState("")
 
-
-  function handleSubmit(e) {
+  const [cbirthday, setcBirthday] = useState("")
+  const [cphone, setcPhone] = useState("")
+  const [caddress, setcAddress] = useState("")
+  const [cnotification, setcNotification] = useState("")
+  async function handleSubmit(e) {
+    console.log("phonnumber:")
+    console.log(cphone);
+    // axios.put('/editprofile', {username, cbirthday, cphone, caddress, cnotification});
+    axios.post('/editprofile', cphone);
+    console.log("i tried");
     e.preventDefault();
 }
+  // const [profile, setProfile] = useState([{
+  //   birthday: Date,
+  //   phone: String,
+  //   address: String,
+  //   notification: Boolean,
+  // }])
+  
 
 
+ 
+  axios.get('/profileName',localStorage.getItem("userid")).then(Response =>{
+    setName(Response.data);
+  })
+  axios.get('/profileEmail',localStorage.getItem("userid")).then(Response =>{
+    setEmail(Response.data);
+  })
+
+//   axios.get('/profileBirthday',localStorage.getItem("userid")).then(Response =>{
+//     setBirthday(Response.data);
+// s  })
+//   axios.get('/profilePhone',localStorage.getItem("userid")).then(Response =>{
+//     setPhone(Response.data);
+
+//   })
+//   axios.get('/profileAddress',localStorage.getItem("userid")).then(Response =>{
+//     setAddress(Response.data);
+
+//   })
+//   axios.get('/profileNotification',localStorage.getItem("userid")).then(Response =>{
+//     setNotification(Response.data);
+//   })
 
 
   const handleBirthday = (e) => {
-      setBirthday(e.target.value);
-      console.log(birthday);
+    setcBirthday(e.target.value);
   }
   const handlePhone = (e) => {
-    setPhone(e.target.value);
-    console.log(phone);
+    setcPhone(e.target.value);
   }
   const handleAddress = (e) => {
-    setAddress(e.target.value);
-    console.log(address);
+    setcAddress(e.target.value);
   }
   const handleNotification = (e) => {
-    setNotificatoin(e.target.value);
-    console.log(notification);
+    setcNotification(e.target.value);
   }
-  
-  const handleClick = () => {
-    // 👇 "message" stores input field value
-    <img src="https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw" alt="Logo" width="100" height="100" class="rounded mx-auto d-block center" />      
 
-  };
+  
+
   const [count, setCount] = useState(0);
 
   const ColoredLine = ({ color }) => (
@@ -62,9 +97,8 @@ function EditProfile (){
                         <img src="https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw" alt="Logo" width="100" height="100" class="rounded mx-auto d-block center" />      
                       </button>
 
-                      <h1>Chiho Song</h1>  
-                      <p class="text-secondary mb-1">Description</p>
-                      <p class="text-secondary">Address</p>
+                      <h1>{name} </h1> 
+                      <p class="text-secondary mb-1"> {email}</p>
                     </div>
                   </div>
                 </div>
@@ -123,7 +157,7 @@ function EditProfile (){
                             id="birthday"
                             type="date"
                             onChange={handleBirthday}
-                            value={birthday}
+                            value={cbirthday}
                         />                
                         </div>
                       </div>
@@ -150,7 +184,7 @@ function EditProfile (){
                           id="text"
                           placeholder="phone"
                           onChange={handlePhone}
-                          value={phone}
+                          value={cphone}
                       />
                       </div>
                       </div>
@@ -169,7 +203,7 @@ function EditProfile (){
                           type="text"
                           className="description-box"
                           onChange={handleAddress}
-                          value={address}
+                          value={caddress}
                       />                
                         </div>
                       </div>
