@@ -2,6 +2,12 @@ import React, {useState} from 'react'
 import TodoForm from './TeamTodoForm'
 import TeamTodo from './TeamTodo'
 import {AiFillPlusCircle} from 'react-icons/ai'
+import TeamCompleteList from './TeamCompleteList';
+import TeamProgressList from './TeamProgressList';
+
+var complete =[];
+
+
 
 // TODO
 // Comment everything
@@ -12,10 +18,21 @@ import {AiFillPlusCircle} from 'react-icons/ai'
 // have submit direct to a different page
 // have team added to DB under user
 
+
 export default function TeamTodoList(props) {
     // const [todos,setTodos] = useState([]);
     const [click, setClick] = useState(false);
     const [todos, setTodos] = useState([{
+        title:String,
+        description:String,
+        date:Object
+    }])
+    const [inProgs, setInProgs] = useState([{
+        title:String,
+        description:String,
+        date:Object
+    }])
+    const [completes, setCompletes] = useState([{
         title:String,
         description:String,
         date:Object
@@ -36,7 +53,8 @@ export default function TeamTodoList(props) {
     }
 
     const removeTodo = id => {
-        console.log([...todos])
+        completeTodo(id)
+        // console.log(completes)
         const removeArray = [...todos].filter(todo => todo.id !== id)
         
         setTodos(removeArray)
@@ -52,15 +70,34 @@ export default function TeamTodoList(props) {
     }
 
     const completeTodo = id => {
-        let updatedTodos=todos.map(todo=>{
+        todos.map(todo=>{
             if(todo.id===id){
                 todo.isComplete = !todo.isComplete
+                const newcomps = [todo,...completes]
+                // complete = [todo,...complete]
+                // myComplete(complete)
+                setCompletes(newcomps)
             }
-            console.log(todo)
+            // console.log(todo)
             return todo
         })
-        setTodos(updatedTodos)
+        
     }
+
+    // const progs = id => {
+    //     todos.map(todo=>{
+    //         if(todo.id===id){
+    //             const newcomps = [todo,...inProgs]
+    //             // complete = [todo,...complete]
+    //             // myComplete(complete)
+    //             setInProgs(newcomps)
+    //         }
+    //         // console.log(todo)
+    //         return todo
+    //     })
+        
+    // }
+
 
     const clicked = e => {
         setClick(true)
@@ -69,8 +106,8 @@ export default function TeamTodoList(props) {
 
   return (
     <div id="container">
-        
-        <h3 class="task-add-button"><AiFillPlusCircle onClick={clicked}/></h3>
+
+        <h4 class="task-add-button">In Progress<AiFillPlusCircle onClick={clicked}/></h4>
 
         <TodoForm 
             onSubmit={addTodo}
@@ -80,11 +117,27 @@ export default function TeamTodoList(props) {
         <TeamTodo 
             // todos={todos}
             todos={todos}
-            completeTodo={completeTodo}
             removeTodo={removeTodo}
             editTask={editTask}
+            // progs={progs}
+        />
+
+        {/* In Progress
+        <TeamProgressList inProgs={inProgs}/> */}
+        <br></br>
+        <h4>Complete Todos</h4>
+        <TeamCompleteList
+            completes={completes}
         />
         
     </div>
   )
+}
+
+function myComplete(complete) {
+    this.complete = complete;
+}
+
+export function completeExport() {
+    return complete;
 }
