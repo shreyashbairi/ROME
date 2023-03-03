@@ -10,6 +10,7 @@ const Events = require('./models/Events.js');
 const Event = require('./models/Event.js');
 const Task = require('./models/ToDoSchema.js');
 const cookieParser = require('cookie-parser');
+const { json } = require('express');
 require('dotenv').config();
 
 const port = process.env.PORT || 8000;
@@ -206,8 +207,8 @@ app.get("/tasks/:username", async (req,res) => {
 //for login
 app.post('/login', async (req, res) => {
     const { userUserName, userPassword } = req.body;
-    const userDoc = await User.findOne({ userUserName: userUserName });
-    console.log(userDoc);
+    const userDoc = await User.findOne({ userUserName: userUserName }).catch((error) => next(error));
+    // console.log(userDoc);
     if (userDoc) {
       const passOk = bcrypt.compareSync(userPassword, userDoc.userPassword);
       
@@ -240,11 +241,30 @@ app.post("/editprofile", async (req,res) => {
             {userUserName: username},
             {
                 userBirthday: new Date(cbirthday),
+                // userNotification: cnotification
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
                 userPhone: cphone,
+                // userNotification: cnotification
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
                 userAddress: caddress,
                 // userNotification: cnotification
         });
-        res.json(userDoc);
     } catch (e) {
         res.status(422).json(e); 
     }

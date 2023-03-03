@@ -18,7 +18,6 @@ function Profile (){
     const username = localStorage.getItem("userid")
     axios.get(`/profile/${username}`)
     .then(res => {
-      console.log(res.data)
       setProfile(res.data);
       // console.log(setProfile);
     })
@@ -147,7 +146,7 @@ function Profile (){
                     <ColoredLine color="grey" />
 
 
-                      <div class="row">
+                      {/* <div class="row">
                       <div class="col-sm-3">
                         <h class="mb-0">Notification</h>
                       
@@ -159,7 +158,7 @@ function Profile (){
                         </label>
                       </div>
                     </div>
-                    <ColoredLine color="grey" />                  
+                    <ColoredLine color="grey" />                   */}
                     <div class="row">
                       <div class="col-sm-3">
                         <h class="mb-0">Email Notification</h>

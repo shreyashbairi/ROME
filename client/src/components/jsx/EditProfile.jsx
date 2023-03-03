@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import '../css/Profile.css';
 import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 function EditProfile (){
@@ -13,13 +14,23 @@ function EditProfile (){
   const [address, setAddress] = useState("")
   const [notification, setNotification] = useState("")
   const [count, setCount] = useState(0);
+  const [userProfile, setProfile] = useState({});
 
   const [cbirthday, setcBirthday] = useState("")
   const [cphone, setcPhone] = useState("")
   const [caddress, setcAddress] = useState("")
   const [cnotification, setcNotification] = useState("")
   const [redirect, setRedirect] = useState(false);
+  useEffect( () => {
+    const username = localStorage.getItem("userid")
+    axios.get(`/profile/${username}`)
+    .then(res => {
+      setProfile(res.data);
+      // console.log(setProfile);
+    })
+  }, []);
   async function handleSubmit(e) {
+
     
     // console.log("i tried");
     e.preventDefault();
@@ -116,8 +127,8 @@ if (redirect) {
                         <img src="https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw" alt="Logo" width="100" height="100" class="rounded mx-auto d-block center" />      
                       </button>
 
-                      <h1>{name} </h1> 
-                      <p class="text-secondary mb-1"> {email}</p>
+                      <h1>{userProfile.userFullname}</h1>  
+                      <p class="text-secondary mb-1">{userProfile.userEmail}</p>
                     </div>
                   </div>
                 </div>
@@ -201,7 +212,7 @@ if (redirect) {
                         <div class="col-sm-9 text-secondary">
                           <textarea
                           id="text"
-                          placeholder="phone"
+                          placeholder="Preferred name"
                           onChange={e => setcPhone(e.target.value)}
                           value={cphone}
                       />
@@ -218,7 +229,7 @@ if (redirect) {
                         <div class="col-sm-9 text-secondary">
                         <textarea
                           id="address"
-                          placeholder="address"
+                          placeholder="Pronous"
                           type="text"
                           className="description-box"
                           onChange={e => setcAddress(e.target.value)}
@@ -229,7 +240,7 @@ if (redirect) {
                       <ColoredLine color="grey" />
 
 
-                        <div class="row">
+                        {/* <div class="row">
                         <div class="col-sm-3">
                           <h class="mb-0">Notification</h>
                         
@@ -246,7 +257,8 @@ if (redirect) {
                       />                                       </label>
                         </div>
                       </div>
-                      <ColoredLine color="grey" />                  <div class="row">
+                      <ColoredLine color="grey" />                   */}
+                      <div class="row">
                         <div class="col-sm-3">
                           <h class="mb-0">Email Notification</h>
                         </div>
