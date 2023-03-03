@@ -4,6 +4,7 @@ import { TiEdit } from 'react-icons/ti'
 import TodoForm from './TodoForm1'
 import {BsThreeDots} from 'react-icons/bs'
 import Popup from 'reactjs-popup'
+import TodoEdit from './TodoEdit'
 
 function Todo({todos,completeTodo,removeTodo,editTask}) {
     const [show, setShow] = useState(false);
@@ -137,6 +138,17 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
                             </div>
 
                         </ Popup>
+                        <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
+                            onOpen={openedit} position="right center" nested modal>
+                            <div class="card">
+                            <TodoEdit 
+                                    trigger={edit}
+                                    setTrigger={closeedit}
+                                    scheduleEvent={todo}
+                                />     
+                            </div>
+                        </Popup>
+
                         <div key={todo.id} > 
                         {/* onClick={()=>completeTodo(todo.id)} was removed from above */}
                         {/* <button>
