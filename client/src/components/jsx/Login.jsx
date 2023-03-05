@@ -7,21 +7,31 @@ function Login() {
   const [userUserName,setUserUserName] = useState("");
   const [userPassword,setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  async function HandleSubmit (e) { 
+  async function HandleSubmit(e) {
     e.preventDefault();
-    try{
-      await axios.post('/login', {userUserName, userPassword});
-      alert(`login succesful. Hi ${userUserName}!`);
-      setRedirect(true);
-      localStorage.setItem("userid",userUserName);
-    } catch (e){
-      alert("Login Failed");
+    try {
+      const response = await axios.post('/login', { userUserName, userPassword });
+      const { data: userDoc } = response;
+      console.log(userDoc);
+      if (response != null) {
+        alert(`login successful. Hi ${userUserName}!`);
+        window.open('/main', '_self');
+        
+        localStorage.setItem('userid', userUserName);
+      } else {
+        alert('User not found');
+        setRedirect(false);
+        return <Navigate to={'/login'} />;
+      }
+    } catch (e) {
+      alert('Login Failed');
+      return <Navigate to={'/login'} />;
     }
-    
   }
-  if(redirect){
-    return <Navigate to={'/main'} />
-  }
+  
+
+
+  
      /* send user input to backend */
   return (
     <div className="Auth-form-container">
