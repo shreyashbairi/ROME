@@ -1,5 +1,7 @@
 import React from "react"
-import { useState } from "react";
+import { UserContext } from "./UserContext";
+import { Redirect } from "react-router-dom";
+import { useContext, useState } from "react";
 import axios from "axios";
 import '../css/Login.css';
 import { Navigate } from "react-router-dom";
@@ -7,16 +9,16 @@ function Login() {
   const [userUserName,setUserUserName] = useState("");
   const [userPassword,setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const { setUser } = useContext(UserContext);
+
   async function HandleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('/login', { userUserName, userPassword });
-      const { data: userDoc } = response;
-      console.log(userDoc);
-      if (response != null) {
+      const { data } = await axios.post('/login', { userUserName, userPassword });
+      //setUser(data.data); // set the user state to the userDoc object received from the server
+      if (data != null) {
         alert(`login successful. Hi ${userUserName}!`);
         window.open('/main', '_self');
-        
         localStorage.setItem('userid', userUserName);
       } else {
         alert('User not found');

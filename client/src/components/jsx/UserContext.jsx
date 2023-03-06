@@ -8,8 +8,10 @@ export function UserContextProvider({children}){
     const [user, setUser] = useState(null);
     useEffect(()=>{
         if(!user){
+            //grabbing response from the data returned from profile
             axios.get("/profile").then(({data})=>{
                 setUser(data);
+
             });
         }
     }, []);

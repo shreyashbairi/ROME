@@ -43,32 +43,30 @@ function App() {
       
       { /* Used to route thorugh pages add any adition pages here} */ }
       
-      <BrowserRouter>
-      
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Welcome />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
-          </Route>
-          <Route path="/" element={<DefaultLayout />}>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/editprofile" element={<EditProfile />} />
-            <Route path="/main" element={<MainPage />} />
-            <Route path="/calendar" element={<CalendarFunc />} />
-            <Route path="/todo" element={<TodoList />} />
-            <Route path="/add" element={<AddEvent  />} />
-            <Route path='/team/:teamID' element={<TeamHome />}/>
-
-          </Route>
-
-
-
-        </Routes>
-       
-      </BrowserRouter>
+      <UserContextProvider>
+  <BrowserRouter>
+  
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Welcome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+      </Route>
+      <Route path="/" element={<DefaultLayout />}>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/calendar" element={<CalendarFunc />} />
+        <Route path="/todo" element={<TodoList />} />
+        <Route path="/add" element={<AddEvent />} />
+        <Route path='/team/:teamID' element={<TeamHome />} />
+      </Route>
+    </Routes>
+   
+  </BrowserRouter>
+</UserContextProvider>
       
       {/* <Todo /> */}
 

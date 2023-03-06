@@ -18,6 +18,7 @@ export default function SignUp (props) {
         userPassword,
       });
       alert("Registration Successful. You can now login.");
+      window.open('/login', '_self');
     } catch (e){
       alert('Registration Failed. Please try again later.');
     }

@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import TeamPop from "./TeamPop"
 import Popup from "reactjs-popup";
 import axios from "axios";
+
+import { UserContext } from "./UserContext";
+
 //import { UserContext } from "./UserContext";
 
 function DefaultLayout () {
@@ -13,6 +16,8 @@ function DefaultLayout () {
 
     const navigate = useNavigate();
     const [buttonPop, setButtonPop] = useState(false);
+    const {user,setUser} = useContext(UserContext);
+
     const [teams, setTeams] = useState([{
         teamID: String,
         team: String,
@@ -47,9 +52,11 @@ function DefaultLayout () {
         navigate("/Welcome")
     }
 
-    const handlelogout = () =>{
-        localStorage.setItem("userid", "");
-    }
+    const handlelogout = async () => {
+        await axios.post('/logout');
+        navigate("/Welcome");
+        setUser(null);
+      };
     return (
         <>
             <nav class="navbar navbar-light bg-primary mt-1 rounded">
