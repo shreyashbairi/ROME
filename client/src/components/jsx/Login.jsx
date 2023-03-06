@@ -15,7 +15,7 @@ function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post('/login', { userUserName, userPassword });
-      //setUser(data.data); // set the user state to the userDoc object received from the server
+      setUser(data); // set the user state to the userDoc object received from the server
       if (data != null) {
         alert(`login successful. Hi ${userUserName}!`);
         window.open('/main', '_self');
