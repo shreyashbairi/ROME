@@ -11,6 +11,8 @@ import axios from "axios";
 
 export default function CalendarFunc (props) {
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const workWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    // const curWeekdays = weekdays;
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 
                        'July', 'August', 'September', 'October', 'November', 'December'];
     const hours =['1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm',
@@ -19,6 +21,9 @@ export default function CalendarFunc (props) {
     const [events, setEvents] = useState([]);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [viewMode, setViewMode] = useState(7);
+    const [viewModeString, setViewModeString] = useState("Week");
+    const [curWeekdays, setCurWeekdays] = useState(weekdays);
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
@@ -58,17 +63,6 @@ export default function CalendarFunc (props) {
             setEvents([...events, ...elapsedEvent])
           })
       }, [] )
-
-    // componentDidMount() {
-    //     const username = localStorage.getItem('userid');
-    //     axios.get(`/events/${username}`)
-    //     .then(res => {
-    //         console.log(res.data)
-    //         const events = res.data;
-    //         setEvents({events});
-    //       })
-    // }
-    
  
 
     const removeEvents = (newElapsedEvent) => {
@@ -134,6 +128,18 @@ export default function CalendarFunc (props) {
         setEvents([...events, ...elapsedEvent])
 
         // saveEventHandler(newElapsedEvent);
+    }
+
+    const changeViewMode = () => {
+        if (viewMode === 7) {
+            setViewMode(5);
+            setViewModeString("Work Week");
+            setCurWeekdays(workWeekdays);
+        } else if (viewMode === 5) {
+            setViewMode(7);
+            setViewModeString("Week");
+            setCurWeekdays(weekdays);
+        }
     }
     
     
@@ -203,7 +209,7 @@ export default function CalendarFunc (props) {
                         </div>
                     </ Popup>
 
-                    <button type="button" class="btn btn-secondary">Week</button>
+                    <button type="button" class="btn btn-secondary" onClick={changeViewMode}>View</button>
                     </div>
                 </div>
                 <div class="Calendar-content-body">
@@ -218,13 +224,18 @@ export default function CalendarFunc (props) {
                         <div className="calendar-body">
                             <div className="table-header">
                             {
-                                weekdays.map((weekday) => {
+                                curWeekdays.map((weekday) => {
                                 return <div className="weekday"><p>{weekday}</p></div>
                                 })
                             }
                             </div>
-                            <CalendarDays day={currentDay} changeCurrentDay={changeCurrentDay} 
-                                        events={events} scheduleEventHour={scheduleEventHour} />
+                            <CalendarDays 
+                                day={currentDay} 
+                                changeCurrentDay={changeCurrentDay} 
+                                events={events} 
+                                scheduleEventHour={scheduleEventHour} 
+                                viewMode={viewMode}
+                            />
                         </div>
                     </div>
                 </div>

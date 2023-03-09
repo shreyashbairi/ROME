@@ -44,13 +44,18 @@ function CalendarDays(props) {
         selected: (firstDayOfWeek.toDateString() === props.day.toDateString()),
         year: firstDayOfWeek.getFullYear()
         }
-
-        currentWeekDays.push(calendarWeekDay);
+        if (props.viewMode == 5) { // will skip sun and sat if work week
+            if (calendarWeekDay.date.getDay() != 0 && calendarWeekDay.date.getDay() != 6) {
+                currentWeekDays.push(calendarWeekDay)
+            }
+        } else {
+            currentWeekDays.push(calendarWeekDay);
+        }
     }
 
     for (let i=0; i < amountHours; i++) {
         if (i%7 === 0) {
-            firstDayOfWeek.setDate(firstDayOfWeek.getDate()- 6);
+            firstDayOfWeek.setDate(firstDayOfWeek.getDate() - 6);
         } else {
             firstDayOfWeek.setDate(firstDayOfWeek.getDate() + 1);
         }
@@ -72,7 +77,13 @@ function CalendarDays(props) {
                 }
             }
         }
-        currentTimes.push(hour)
+        if (props.viewMode == 5) {
+            if (hour.day != 0 && hour.day != 6) {
+                currentTimes.push(hour);
+            }
+        } else {
+            currentTimes.push(hour)
+        }
     }
     return (
         <>
@@ -81,7 +92,8 @@ function CalendarDays(props) {
                 currentWeekDays.map((day) => {
                 return (
                     <div className={"calendar-day" + (day.currentMonth ? " current" : "") + 
-                            (day.selected && day.date.getDate() === new Date().getDate() ? " selected" : "")}>
+                            (day.selected && day.date.getDate() === new Date().getDate() ? " selected" : "") + 
+                            (props.viewMode === 5 ? " work" : " full")}>
                              {/* onClick={() => props.changeCurrentDay(day)}> */}
                         <p>{day.number}</p>
                     </div>
@@ -91,8 +103,9 @@ function CalendarDays(props) {
             {
                 currentTimes.map((hour) => {
                 return (
-                    <div className={"calendar-hour" + (hour.selected ? " scheduled" : "")}>
-                        {/* onClick= {() => props.scheduleEventHour(hour)}> */}
+                    <div className={"calendar-hour" + (hour.selected ? " scheduled" : "") + 
+                        (props.viewMode === 5 ? " work-hour" : " full-hour")}
+                        onClick= {() => props.scheduleEventHour(hour)}>
                         <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     </div>
                 )
