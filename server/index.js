@@ -123,7 +123,7 @@ app.post('/logout', (req,res) => {
   });
 
 //for team
-app.post('/Submit', async (req, res) =>{
+app.post('/teamsubmit', async (req, res) =>{
     const {team, description} = req.body;
     try {
         const teamDoc = await Team.create({
@@ -136,6 +136,7 @@ app.post('/Submit', async (req, res) =>{
     }
 
 });
+
 
 app.get("/events/:username", async (req,res) => {
     // console.log(req.params.username);
@@ -150,7 +151,7 @@ app.get("/events/:username", async (req,res) => {
     }
 });
 
-
+//in AddEvent
 app.post('/eventsave', async (req, res) =>{
     const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername} = req.body;
     try {
