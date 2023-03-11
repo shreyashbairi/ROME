@@ -1,11 +1,11 @@
 import React from "react";
 import Todo from "./Todo/Todo";
 import '../css/MainPage.css'
-import Calendar from "./Calendar";
-import AddEvent from "./AddEvent";
+import Calendar from "./Calendar/Calendar";
+import AddEvent from "./Calendar/AddEvent";
 import TodoList from "./Todo/TodoList";
-import CalendarTest from "./CalendarTest";
-import CalendarFunc from "./CalendarFunc"
+import CalendarTest from "./Calendar/CalendarTest";
+import CalendarFunc from "./Calendar/CalendarFunc"
 // import  {useNavigate} from "react-router-dom";
 import { useState } from "react";
 import Popup from 'reactjs-popup';
