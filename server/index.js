@@ -68,6 +68,11 @@ app.post('/signup', async (req, res) => {
         userEmail,
         userUserName, 
         userPassword: bcrypt.hashSync(userPassword, bcryptSalt),
+        userBirthday: new Date(),
+        userPhone: "",
+        userAddress: "",
+        userNotification: false,
+        userViewMode: 7
       });
       const savedUser = await userDoc.save();
       res.status(201).json(savedUser);
@@ -123,18 +128,34 @@ app.post('/logout', (req,res) => {
   });
 
 //for team
-app.post('/Submit', async (req, res) =>{
-    const {team, description} = req.body;
+app.post('/teamsubmit', async (req, res) =>{
+    const {teamID, team, description, username} = req.body;
     try {
         const teamDoc = await Team.create({
-            team,
-            description
+            teamID: teamID,
+            team: team,
+            description: description,
+            userid: username,
+            role: "manager"
         });
         res.json(teamDoc);
     } catch (e) {
         res.status(422).json(e);    
     }
 
+});
+
+app.get("/teams/:username", async (req,res) => {
+    // console.log(req.params.username);
+    try{
+        // console.log(req.params.username);
+        const teams = await Team.find({ usernameid: req.params.username })
+        // console.log(events);
+        res.json(teams);
+    } catch (e){
+        // console.log(e)
+        res.status(422).json(e);    
+    }
 });
 
 app.get("/events/:username", async (req,res) => {
@@ -182,10 +203,27 @@ app.post('/eventedit', async (req, res) =>{
             endTime: newEndTime,
             description: newDescription
             });
-        console.log(newTitle);
-        console.log(curusername)
-        console.log(eventsDoc);
+        // console.log(newTitle);
+        // console.log(curusername)
+        // console.log(eventsDoc);
         res.json(eventsDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
+app.post('/taskedit', async (req, res) =>{
+    const {taskTitle, taskDescription, taskDate, username} = req.body;
+    // console.log(req.body)
+    try {
+        const tasksDoc = await Task.findOneAndUpdate(
+            {title: taskTitle, username: username},
+            {
+            description: taskDescription,
+            date: taskDate
+            });
+        console.log(tasksDoc);
+        res.json(tasksDoc);
     } catch (e) {
         res.status(422).json(e);    
     }
@@ -216,6 +254,97 @@ app.get("/tasks/:username", async (req,res) => {
         res.status(422).json(e);    
     }
 });
+
+app.post("/saveViewMode", async (req,res) => {
+    const {username, tempViewMode} = req.body;
+    try{
+        const user = await User.findOneAndUpdate(
+            { userUserName: username },
+            { userViewMode: tempViewMode});
+        // console.log(user);
+        res.json(user);
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
+
+app.get("/getViewMode/:username", async (req,res) => {
+    try{
+        const user = await User.findOne({ username: req.params.username })
+        // console.log(user);
+        res.json(user);
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
+
+app.post("/editprofile", async (req,res) => {
+    const {username, cbirthday, cphone, caddress, cnotification} = req.body;
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                userBirthday: new Date(cbirthday),
+                // userNotification: cnotification
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                userPhone: cphone,
+                // userNotification: cnotification
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                userAddress: caddress,
+                // userNotification: cnotification
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+});
+
+app.post("/resetpassword", async (req,res) => {
+    const {username, userPassword} = req.body;
+    try {
+        console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                userPassword: bcrypt.hashSync(userPassword, bcryptSalt)
+            });
+        console.log(userDoc);
+        res.json(userDoc);
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+});
+
+app.get("/profile/:username", async (req,res) => {
+    try{
+        const user = await User.findOne({ userUserName: req.params.username })
+        // console.log(tasks);
+        res.json(user);
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
+
+
 
 
   

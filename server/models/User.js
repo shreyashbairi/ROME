@@ -34,6 +34,7 @@ const UserSchema = new Schema({
     userPhone: String,
     userAddress: String,
     userNotification: Boolean,
+    userViewMode: Number
 });
 
 const UserModel = mongoose.model('User', UserSchema);

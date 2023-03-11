@@ -34,7 +34,7 @@ export default function CalendarFunc (props) {
             // console.log(eventsGrabed.length)
             const elapsedEvent = [];
             for (let i = 0; i < eventsGrabed.length; i++) {
-                console.log(eventsGrabed[i])
+                // console.log(eventsGrabed[i])
                 const newElapsedEvent = { 
                     date: new Date(eventsGrabed[i].date),
                     startTime: eventsGrabed[i].startTime,
@@ -42,7 +42,7 @@ export default function CalendarFunc (props) {
                     title: eventsGrabed[i].title,
                     description: eventsGrabed[i].description
                 };
-                console.log(newElapsedEvent);
+                // console.log(newElapsedEvent);
                 if (newElapsedEvent.endTime === 1) {
                     newElapsedEvent.endTime = 25;
                 }
@@ -62,6 +62,24 @@ export default function CalendarFunc (props) {
             }
             setEvents([...events, ...elapsedEvent])
           })
+        axios.get(`/getViewMode/${username}`)
+        .then(res => {
+            let userProfile = res.data;
+            // console.log(userProfile);
+            // console.log(userProfile.userViewMode);
+            let userViewMode = userProfile.userViewMode;
+            // console.log(userViewMode);
+            userProfile = null;
+            if (userViewMode == 5) {
+                setViewMode(5);
+                setViewModeString("Work Week");
+                setCurWeekdays(workWeekdays);
+            } else {
+                setViewMode(7);
+                setViewModeString("Week");
+                setCurWeekdays(weekdays);
+            }
+        });
       }, [] )
  
 
@@ -130,16 +148,43 @@ export default function CalendarFunc (props) {
         // saveEventHandler(newElapsedEvent);
     }
 
-    const changeViewMode = () => {
+    async function changeViewMode () {
+        const username = localStorage.getItem('userid');
+        let tempViewMode = 7;
         if (viewMode === 7) {
             setViewMode(5);
             setViewModeString("Work Week");
             setCurWeekdays(workWeekdays);
+            tempViewMode = 5;
+            try {
+                await axios.post('/saveViewMode', {
+                    username,
+                    tempViewMode
+                })
+                console.log(username);
+                console.log(tempViewMode);
+                alert("Viewmode Saved");
+            } catch (e) {
+                alert('ViewMode Failed to Save');
+            }
         } else if (viewMode === 5) {
             setViewMode(7);
             setViewModeString("Week");
             setCurWeekdays(weekdays);
+            tempViewMode = 7;
+            try {
+                await axios.post('/saveViewMode', {
+                    username,
+                    tempViewMode
+                })
+                console.log(username);
+                console.log(tempViewMode);
+                alert("Viewmode Saved");
+            } catch (e) {
+                alert('ViewMode Failed to Save');
+            }
         }
+        
     }
     
     
