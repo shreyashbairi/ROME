@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import TodoForm from './TeamTodoForm'
 import TeamTodo from './TeamTodo'
 import {AiFillPlusCircle} from 'react-icons/ai'
@@ -37,6 +37,13 @@ export default function TeamTodoList(props) {
         description:String,
         date:Object
     }])
+    useEffect( () => {
+        setTodos([{
+            title:String,
+            description:String,
+            date:Object
+        }]);
+    }, [] )
 
     const addTodo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {
