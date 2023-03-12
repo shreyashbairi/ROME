@@ -4,28 +4,22 @@ import TeamTodo from './TeamTodo'
 import {AiFillPlusCircle} from 'react-icons/ai'
 import TeamCompleteList from './TeamCompleteList';
 import TeamProgressList from './TeamProgressList';
+import "../../css/TeamHome.css"
 
 var complete =[];
 
-
-
-// TODO
-// Comment everything
-// create a button that makes a pop up interface with 2 text boxes (description and name), drop down for personal and team
-// have each task have down arrow that allows view of details
-// create button to add team
-// create UI pop up for team name
-// have submit direct to a different page
-// have team added to DB under user
-
-
 export default function TeamTodoList(props) {
     // const [todos,setTodos] = useState([]);
+    const[started, setStarted] = useState([{
+        title:String,
+        description:String,
+        date:Date
+    }])
     const [click, setClick] = useState(false);
     const [todos, setTodos] = useState([{
         title:String,
         description:String,
-        date:Object
+        date:Date
     }])
     const [inProgs, setInProgs] = useState([{
         title:String,
@@ -114,7 +108,7 @@ export default function TeamTodoList(props) {
   return (
     <div id="container">
 
-        <h4 class="task-add-button">In Progress<AiFillPlusCircle onClick={clicked}/></h4>
+        <h4>Not Started<AiFillPlusCircle onClick={clicked}/></h4>
 
         <TodoForm 
             onSubmit={addTodo}
@@ -122,11 +116,19 @@ export default function TeamTodoList(props) {
             setTrigger={()=>setClick(false)}
         />
         <TeamTodo 
-            // todos={todos}
             todos={todos}
             removeTodo={removeTodo}
             editTask={editTask}
-            // progs={progs}
+            started={started}
+            setStarted={setStarted}
+            setTodos={setTodos}
+        />
+
+        <br></br>
+        <h4>In Progress</h4>
+
+        <TeamProgressList
+            started={started}
         />
 
         {/* In Progress

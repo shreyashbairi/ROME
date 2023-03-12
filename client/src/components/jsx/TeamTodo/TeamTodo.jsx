@@ -4,11 +4,13 @@ import { TiEdit } from 'react-icons/ti'
 import TeamTodoForm from './TeamTodoForm'
 import {BsThreeDots} from 'react-icons/bs'
 
-function TeamTodo({todos,removeTodo,editTask,progs}) {
+function TeamTodo({todos,removeTodo,editTask, started, setStarted,setTodos}) {
     const [change, setChange] = useState({
         id: null,
         value:''
     })
+    
+
     const [status, setStatus] = useState('')
 
     const submitUpdate = value => {
@@ -53,9 +55,13 @@ function TeamTodo({todos,removeTodo,editTask,progs}) {
         alert(description)
     }
 
-    const inProgress = () => {
-        console.log("in progress")
+    function inProgress(todo,id) {
+        const newStarted = [todo, ...started];
+        setStarted(newStarted);
+        const removedTodos = [...todos].filter(todo => todo.id !== id);
+        setTodos(removedTodos);
     }
+
     return (
         <div>
             {todos.map((todo,index)=>{
@@ -75,7 +81,7 @@ function TeamTodo({todos,removeTodo,editTask,progs}) {
                             
                         <div>
                             {/* onClick={progs(todo.id)} removed from below */}
-                            <button style={{border:"none", backgroundColor:"blue", color:"white"}} >In Progress</button>
+                            <button style={{border:"none", backgroundColor:"blue", color:"white"}} onClick={e=>inProgress(todo,todo.id)}>In Progress</button>
                             <br></br>
                             <AiFillCloseCircle
                                 onClick={()=>removeTodo(todo.id)}

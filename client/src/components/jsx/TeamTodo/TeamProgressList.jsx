@@ -1,7 +1,9 @@
-function TeamProgressList({inProgs}) {
+import React, {useState} from "react"
+
+function TeamProgressList({started}) {
     return (
         <div>
-            {inProgs.map((todo,index)=>{
+            {started.map((todo,index)=>{
                 return(
                     <div key = {index} class="task">
                         
