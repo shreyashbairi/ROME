@@ -20,17 +20,26 @@ import MainPage from './components/jsx/MainPage';
 import DefaultLayout from './components/jsx/DefaultLayout';
 import axios from 'axios';
 import AddEvent from './components/jsx/Calendar/AddEvent';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import TeamHome from './components/jsx/TeamHome';
 import { UserContextProvider } from './components/jsx/UserContext';
-
+import { Navigate} from 'react-router-dom';
+import { UserContext } from './components/jsx/UserContext';
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
 //TODO delete below
 //import Todo from "./components/jsx/Todo/TodoTest"
 
+function PrivateRoute({ element, ...props }) {
+  const { user } = useContext(UserContext);
 
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  return <Route element={element} {...props} />;
+}
 
 function App() {
   const [show,setShow] = useState(false)
@@ -43,7 +52,7 @@ function App() {
       
       { /* Used to route thorugh pages add any adition pages here} */ }
       
-      <UserContextProvider>
+  <UserContextProvider>
   <BrowserRouter>
   
     <Routes>
@@ -55,14 +64,14 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Route>
       <Route path="/" element={<DefaultLayout />}>
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/main" element={<MainPage />} />
-        <Route path="/calendar" element={<CalendarFunc />} />
-        <Route path="/todo" element={<TodoList />} />
-        <Route path="/add" element={<AddEvent />} />
-        <Route path='/team/:teamID' element={<TeamHome />} />
-      </Route>
+  <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
+  <Route path="/editprofile" element={<PrivateRoute element={<EditProfile />} />} />
+  <Route path="/main" element={<PrivateRoute element={<MainPage />} />} />
+  <Route path="/calendar" element={<PrivateRoute element={<CalendarFunc />} />} />
+  <Route path="/todo" element={<PrivateRoute element={<TodoList />} />} />
+  <Route path="/add" element={<PrivateRoute element={<AddEvent />} />} />
+  <Route path='/team/:teamID' element={<PrivateRoute element={<TeamHome />} />} />
+</Route>
     </Routes>
    
   </BrowserRouter>
