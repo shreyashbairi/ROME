@@ -35,7 +35,8 @@ export default function TeamTodoList(props) {
         setTodos([{
             title:String,
             description:String,
-            date:Object
+            date:Object,
+            workers:Array
         }]);
     }, [] )
 
@@ -157,6 +158,7 @@ export default function TeamTodoList(props) {
 
         <TeamProgressList
             started={started}
+            setStarted={setStarted}
             removeTodoFromProg={removeTodoFromProg}
         />
 
