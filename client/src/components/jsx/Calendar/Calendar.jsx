@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../css/Calendar.css';
+import '../../css/Calendar.css';
 // import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject } from '@syncfusion/ej2-react-schedule';
 
 class Calendar extends Component {

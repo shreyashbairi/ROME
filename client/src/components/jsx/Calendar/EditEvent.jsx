@@ -1,22 +1,20 @@
 import React from "react";
-import "../css/AddEvent.css";
+import "../../css/AddEvent.css";
 import { useState } from "react";
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
-const AddEvent = (props) => {
+const EditEvent = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
     const [eventDate, setEventDate] = useState("");
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
-    const [eventLabel, setEventLabel] = useState("");
 
-
-    async function handleEventSubmit (e) {
+    async function handleEventEdit (e) {
         e.preventDefault();
         const newElapsedEvent = { //grab from user with pop up 
             date: new Date(eventDate),
@@ -26,20 +24,28 @@ const AddEvent = (props) => {
             description: eventDescription
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
-        if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
+        let exists = false;
+        for(let i = 0; i < props.events.length; i++) {
+            if (props.events[i].title === newElapsedEvent.title) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            alert("Event Title Does Not Exist")
+        } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
         } else {
-            props.scheduleEvent(newElapsedEvent);
             props.setTrigger();
+            props.editEvent(newElapsedEvent);
             const curusername = localStorage.getItem("userid");
             const newDate = newElapsedEvent.date;
             const newStartTime = newElapsedEvent.startTime;
             const newEndTime = newElapsedEvent.endTime;
             const newTitle = newElapsedEvent.title;
             const newDescription = newElapsedEvent.description;
-            
             try {
-                await axios.post('/eventsave', {
+                await axios.post('/eventedit', {
                     newDate, 
                     newStartTime, 
                     newEndTime, 
@@ -47,38 +53,21 @@ const AddEvent = (props) => {
                     newDescription, 
                     curusername
                 });
-                alert('Event Saved');
             } catch (e) {
-                alert('Event Failed to Save');
+                alert("Event did not Update")
             }
         } 
     }
-    // async function handlSubmit(e) {
-    //     e.preventDefault();
-    //     try{
-    //         await axios.post('/Submit', {
-
-    //         });
-    //         alert("Team Successfully Created.  Redirecting you now.");
-    //       } catch (e){
-    //         alert('Team Creation Failed. Please try again later.')
-    //       }
-
-    //     props.onSubmit({
-
-    //     });
-        //props.setTrigger(false);
-    // }
     
     return (props.trigger) ? (
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
-        <h2>Add Team events</h2>
-        <form autoComplete="off" onSubmit={handleEventSubmit}>
+        <h2>Edit Event</h2>
+        <form autoComplete="off" onSubmit={handleEventEdit}>
         <div class="row mt-3">
             <div class="col-sm-3">
-               <strong>Title</strong>
+               <strong>Existing Title</strong>
             </div>
             <div class="col-sm-9 text-secondary">
                 <input 
@@ -102,20 +91,6 @@ const AddEvent = (props) => {
                 placeholder="Description" 
                 value={eventDescription} 
                 onChange={e => setEventDescription(e.target.value)} required />
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-sm-3">
-               <strong>Label</strong>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <input 
-                type="lable" 
-                class="form-control" 
-                id="eventdescription"  
-                placeholder="label" 
-                value={eventLabel} 
-                onChange={e => setEventLabel(e.target.value)} required />
             </div>
         </div>
         <div class="row mt-3">
@@ -173,4 +148,4 @@ const AddEvent = (props) => {
 }
 
 
-export default AddEvent
+export default EditEvent

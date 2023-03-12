@@ -1,31 +1,25 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import TodoForm from './TeamTodoForm'
 import TeamTodo from './TeamTodo'
 import {AiFillPlusCircle} from 'react-icons/ai'
 import TeamCompleteList from './TeamCompleteList';
 import TeamProgressList from './TeamProgressList';
+import "../../css/TeamHome.css"
 
 var complete =[];
 
-
-
-// TODO
-// Comment everything
-// create a button that makes a pop up interface with 2 text boxes (description and name), drop down for personal and team
-// have each task have down arrow that allows view of details
-// create button to add team
-// create UI pop up for team name
-// have submit direct to a different page
-// have team added to DB under user
-
-
 export default function TeamTodoList(props) {
     // const [todos,setTodos] = useState([]);
+    const[started, setStarted] = useState([{
+        title:String,
+        description:String,
+        date:Date
+    }])
     const [click, setClick] = useState(false);
     const [todos, setTodos] = useState([{
         title:String,
         description:String,
-        date:Object
+        date:Date
     }])
     const [inProgs, setInProgs] = useState([{
         title:String,
@@ -37,6 +31,14 @@ export default function TeamTodoList(props) {
         description:String,
         date:Object
     }])
+    useEffect( () => {
+        setTodos([{
+            title:String,
+            description:String,
+            date:Object,
+            workers:Array
+        }]);
+    }, [] )
 
     const addTodo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {
@@ -54,10 +56,22 @@ export default function TeamTodoList(props) {
 
     const removeTodo = id => {
         completeTodo(id)
+        console.log(id)
         // console.log(completes)
         const removeArray = [...todos].filter(todo => todo.id !== id)
         
         setTodos(removeArray)
+    }
+
+    const removeTodoFromProg = id => {
+        completeTodoProgs(id)
+        // console.log(completes)
+        console.log("in remove")
+        console.log(id)
+        console.log(started)
+        const removeArray = [...started].filter(todo => todo.id !== id)
+        
+        setStarted(removeArray)
     }
 
     const editTask = (id, newValue) => {
@@ -71,6 +85,22 @@ export default function TeamTodoList(props) {
 
     const completeTodo = id => {
         todos.map(todo=>{
+            if(todo.id===id){
+                todo.isComplete = !todo.isComplete
+                const newcomps = [todo,...completes]
+                // complete = [todo,...complete]
+                // myComplete(complete)
+                setCompletes(newcomps)
+            }
+            // console.log(todo)
+            return todo
+        })
+        
+    }
+
+    const completeTodoProgs = id => {
+        // console.log("in completes")
+        started.map(todo=>{
             if(todo.id===id){
                 todo.isComplete = !todo.isComplete
                 const newcomps = [todo,...completes]
@@ -107,7 +137,7 @@ export default function TeamTodoList(props) {
   return (
     <div id="container">
 
-        <h4 class="task-add-button">In Progress<AiFillPlusCircle onClick={clicked}/></h4>
+        <h4>Not Started<AiFillPlusCircle onClick={clicked}/></h4>
 
         <TodoForm 
             onSubmit={addTodo}
@@ -115,11 +145,21 @@ export default function TeamTodoList(props) {
             setTrigger={()=>setClick(false)}
         />
         <TeamTodo 
-            // todos={todos}
             todos={todos}
             removeTodo={removeTodo}
             editTask={editTask}
-            // progs={progs}
+            started={started}
+            setStarted={setStarted}
+            setTodos={setTodos}
+        />
+
+        <br></br>
+        <h4>In Progress</h4>
+
+        <TeamProgressList
+            started={started}
+            setStarted={setStarted}
+            removeTodoFromProg={removeTodoFromProg}
         />
 
         {/* In Progress

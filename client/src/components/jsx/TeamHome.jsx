@@ -2,9 +2,9 @@ import TodoList from "./Todo/TodoList"
 import "../css/TeamHome.css"
 import Popup from "reactjs-popup"
 import UpdateTask from "./UpdateTask"
-import AddEvent from "./AddEvent"
+import AddEvent from "./Calendar/AddEvent"
 import { useState } from "react"
-import TeamTodoList from "./TeamTodoList"
+import TeamTodoList from "./TeamTodo/TeamTodoList"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
     alert("You are entering as a manager");
