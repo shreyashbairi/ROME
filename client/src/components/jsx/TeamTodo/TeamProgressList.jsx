@@ -1,6 +1,7 @@
 import React, {useState} from "react"
+import  { AiFillCloseCircle } from 'react-icons/ai'
 
-function TeamProgressList({started}) {
+function TeamProgressList({started,removeTodoFromProg}) {
     return (
         <div>
             {started.map((todo,index)=>{
@@ -8,15 +9,16 @@ function TeamProgressList({started}) {
                     <div key = {index} class="task">
                         
                         <div key={todo.id} > 
-                        {/* onClick={()=>completeTodo(todo.id)} was removed from above */}
                         <button style={{border:"none"}}>
                             {todo.title} {todo.date}
-                            {/* {todo.date} */}
-                            
                         </button>
                             
                             
                         </div>
+
+                        <AiFillCloseCircle 
+                            onClick={()=>removeTodoFromProg(todo.id)}
+                        />
                             
                         
                     </div>

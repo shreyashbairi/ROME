@@ -55,10 +55,22 @@ export default function TeamTodoList(props) {
 
     const removeTodo = id => {
         completeTodo(id)
+        console.log(id)
         // console.log(completes)
         const removeArray = [...todos].filter(todo => todo.id !== id)
         
         setTodos(removeArray)
+    }
+
+    const removeTodoFromProg = id => {
+        completeTodoProgs(id)
+        // console.log(completes)
+        console.log("in remove")
+        console.log(id)
+        console.log(started)
+        const removeArray = [...started].filter(todo => todo.id !== id)
+        
+        setStarted(removeArray)
     }
 
     const editTask = (id, newValue) => {
@@ -72,6 +84,22 @@ export default function TeamTodoList(props) {
 
     const completeTodo = id => {
         todos.map(todo=>{
+            if(todo.id===id){
+                todo.isComplete = !todo.isComplete
+                const newcomps = [todo,...completes]
+                // complete = [todo,...complete]
+                // myComplete(complete)
+                setCompletes(newcomps)
+            }
+            // console.log(todo)
+            return todo
+        })
+        
+    }
+
+    const completeTodoProgs = id => {
+        // console.log("in completes")
+        started.map(todo=>{
             if(todo.id===id){
                 todo.isComplete = !todo.isComplete
                 const newcomps = [todo,...completes]
@@ -129,6 +157,7 @@ export default function TeamTodoList(props) {
 
         <TeamProgressList
             started={started}
+            removeTodoFromProg={removeTodoFromProg}
         />
 
         {/* In Progress
