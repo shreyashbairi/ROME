@@ -103,6 +103,7 @@ app.post('/login', async (req, res) => {
   });
 
 
+  
 //context has only been set up for login, to preserve login info on every page 
 //and after refresh
 app.get('/profile', (req, res) => {
@@ -222,7 +223,7 @@ app.post('/taskedit', async (req, res) =>{
             description: taskDescription,
             date: taskDate
             });
-        console.log(tasksDoc);
+       // console.log(tasksDoc);
         res.json(tasksDoc);
     } catch (e) {
         res.status(422).json(e);    
@@ -283,7 +284,7 @@ app.get("/getViewMode/:username", async (req,res) => {
 app.post("/editprofile", async (req,res) => {
     const {username, cbirthday, cphone, caddress, cnotification} = req.body;
     try {
-        console.log(req.body);
+        //console.log(req.body);
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {
@@ -294,7 +295,7 @@ app.post("/editprofile", async (req,res) => {
         res.status(422).json(e); 
     }
     try {
-        console.log(req.body);
+        //console.log(req.body);
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {
@@ -305,7 +306,7 @@ app.post("/editprofile", async (req,res) => {
         res.status(422).json(e); 
     }
     try {
-        console.log(req.body);
+        //console.log(req.body);
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {
@@ -320,13 +321,13 @@ app.post("/editprofile", async (req,res) => {
 app.post("/resetpassword", async (req,res) => {
     const {username, userPassword} = req.body;
     try {
-        console.log(req.body);
+        //console.log(req.body);
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {
                 userPassword: bcrypt.hashSync(userPassword, bcryptSalt)
             });
-        console.log(userDoc);
+        //console.log(userDoc);
         res.json(userDoc);
     } catch (e) {
         res.status(422).json(e); 

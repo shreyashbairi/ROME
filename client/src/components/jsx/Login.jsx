@@ -1,13 +1,13 @@
 import React from "react"
 import { UserContext } from "./UserContext";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 import { useContext, useState } from "react";
 import axios from "axios";
 import '../css/Login.css';
 import { Navigate } from "react-router-dom";
 function Login() {
-  const [userUserName,setUserUserName] = useState("");
-  const [userPassword,setPassword] = useState("");
+  const [userUserName, setUserUserName] = useState("");
+  const [userPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const { setUser } = useContext(UserContext);
 
@@ -15,22 +15,24 @@ function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post('/login', { userUserName, userPassword });
-      setUser(data); // set the user state to the userDoc object received from the server
+      setUser(data);
       if (data != null) {
         alert(`login successful. Hi ${userUserName}!`);
-        window.open('/main', '_self');
         localStorage.setItem('userid', userUserName);
+        setRedirect(true); // Set the redirect state to true
+        localStorage.setItem('isLoggedIn', 'true'); 
       } else {
         alert('User not found');
-        setRedirect(false);
-        return <Navigate to={'/login'} />;
       }
     } catch (e) {
       alert('Login Failed');
-      return <Navigate to={'/login'} />;
     }
   }
-  
+
+  // If redirect is true, render the Navigate component to redirect to the main page
+  if (redirect) {
+    return <Navigate to="/main" />;
+  }
 
 
   

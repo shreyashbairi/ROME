@@ -31,14 +31,15 @@ axios.defaults.withCredentials = true;
 //TODO delete below
 //import Todo from "./components/jsx/Todo/TodoTest"
 
-function PrivateRoute({ element, ...props }) {
+function PrivateRoute({ element: Element, ...rest }) {
   const { user } = useContext(UserContext);
 
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-
-  return <Route element={element} {...props} />;
+  return (
+    <Route
+      {...rest}
+      element={user ? <Element /> : <Navigate to="/login" />}
+    />
+  );
 }
 
 function App() {
@@ -64,14 +65,14 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Route>
       <Route path="/" element={<DefaultLayout />}>
-  <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
-  <Route path="/editprofile" element={<PrivateRoute element={<EditProfile />} />} />
-  <Route path="/main" element={<PrivateRoute element={<MainPage />} />} />
-  <Route path="/calendar" element={<PrivateRoute element={<CalendarFunc />} />} />
-  <Route path="/todo" element={<PrivateRoute element={<TodoList />} />} />
-  <Route path="/add" element={<PrivateRoute element={<AddEvent />} />} />
-  <Route path='/team/:teamID' element={<PrivateRoute element={<TeamHome />} />} />
-</Route>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/calendar" element={<CalendarFunc />} />
+        <Route path="/todo" element={<TodoList />} />
+        <Route path="/add" element={<AddEvent />} />
+        <Route path='/team/:teamID' element={<TeamHome />} />
+      </Route>
     </Routes>
    
   </BrowserRouter>
