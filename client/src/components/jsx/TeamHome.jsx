@@ -5,9 +5,19 @@ import UpdateTask from "./UpdateTask"
 import AddEvent from "./Calendar/AddEvent"
 import { useState } from "react"
 import TeamTodoList from "./TeamTodo/TeamTodoList"
+import AddTeamMember from "./AddTeamMember"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
-    alert("You are entering as a manager");
+    const [addTeam, setAddTeam] = useState(false);
+    const closeAdd = () => {
+        setAddTeam(false);
+    }
+
+    const openAdd = () => {
+        setAddTeam(true);
+    }
+
+    // alert("You are entering as a manager");
     const closeform = () => {
         setButtonPop(false);
     }
@@ -15,6 +25,15 @@ function TeamHome() {
     const openform = () => {
         setButtonPop(true);
     }
+    const ColoredLine = ({ color }) => (
+        <hr
+            style={{
+                color: color,
+                backgroundColor: color,
+                height: 1
+            }}
+        />
+    );
     return (
         <div >
         <div class="todobefore"> 
@@ -51,7 +70,37 @@ function TeamHome() {
         <div class="members">
             <div className="top bg-primary">
                 members
+                <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">  </button>} open={addTeam}
+                        onOpen={openAdd} position="right center" nested modal>
+                            <div class="card">
+                            <AddTeamMember 
+                                    trigger={AddEvent}
+                                    setTrigger={closeAdd}
+                                    // scheduleEvent={this.scheduleEvent}
+                                />     
+                            </div>
+            </ Popup>
             </div>
+
+
+            <div class="row mt-2">
+                <div class="col-sm-3">
+                    <h class="mb-0">Name</h>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    email                      
+                </div>
+            </div>
+            <ColoredLine color="grey" />
+
+
+            {/* <div class="col-sm-3 mt-2">
+                <h class="mb-0">Name     Email</h>
+
+            </div> */}
+
+
+
         </div>
         <div class="teamchat">
             <div className="top bg-primary">
