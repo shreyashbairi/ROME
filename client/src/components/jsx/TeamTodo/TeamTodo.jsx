@@ -3,6 +3,7 @@ import  { AiFillCloseCircle } from 'react-icons/ai'
 import { TiEdit } from 'react-icons/ti'
 import TeamTodoForm from './TeamTodoForm'
 import {BsThreeDots} from 'react-icons/bs'
+import axios from 'axios'
 
 function TeamTodo({todos,removeTodo,editTask, started, setStarted,setTodos}) {
     const [change, setChange] = useState({
@@ -55,11 +56,23 @@ function TeamTodo({todos,removeTodo,editTask, started, setStarted,setTodos}) {
         alert(description)
     }
 
-    function inProgress(todo,id) {
+    async function inProgress(todo,id) {
         const newStarted = [todo, ...started];
         setStarted(newStarted);
         const removedTodos = [...todos].filter(todo => todo.id !== id);
         setTodos(removedTodos);
+        try {
+            await axios.post('/teamtaskedit', {
+                title:todo.title,
+                description:todo.description,
+                date:todo.date,
+                started:true,
+                complete:false
+                
+            });
+        } catch (e) {
+            alert("Team Task did not Update")
+        }
     }
 
     return (
@@ -84,7 +97,7 @@ function TeamTodo({todos,removeTodo,editTask, started, setStarted,setTodos}) {
                             <button style={{border:"none", backgroundColor:"blue", color:"white"}} onClick={e=>inProgress(todo,todo.id)}>In Progress</button>
                             <br></br>
                             <AiFillCloseCircle
-                                onClick={()=>removeTodo(todo.id)}
+                                onClick={()=>removeTodo(todo)}
                             />
                             {/* <TiEdit
                                 onClick={()=>setChange({id: todo.id, value:todo.text})}

@@ -35,7 +35,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                         </div>
 
                         <AiFillCloseCircle 
-                            onClick={()=>removeTodoFromProg(todo.id)}
+                            onClick={()=>removeTodoFromProg(todo)}
                         />
                             
                         

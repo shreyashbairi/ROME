@@ -1,5 +1,6 @@
 import '../../css/Todo.css';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export function TeamTodoForm(props) {
     const [title,setTitle] = useState(props.change ? props.change.value : '');
@@ -10,8 +11,28 @@ export function TeamTodoForm(props) {
         date:""
     })
 
-    const handleSubmit = e => {
+    async function handleSubmit(e) {
         e.preventDefault();
+
+        const newTask = {
+            id: Math.floor(Math.random()*10000),
+            title: title,
+            description: description,
+            date: input.date,
+            user: localStorage.getItem("userid"),
+            complete:false,
+            started:false,
+            workers:[]
+        }
+
+        try {
+            await axios.post('/teamtasksave', 
+                newTask
+            );
+            alert('Team Task Saved');
+        } catch (e) {
+            alert('Team Task Failed to Save');
+        }
 
         props.onSubmit({
             id: Math.floor(Math.random()*10000),

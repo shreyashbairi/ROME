@@ -23,7 +23,7 @@ function DefaultLayout () {
     const {user,setUser} = useContext(UserContext);
 
     const [teams, setTeams] = useState([{
-        teamID: String,
+        teamID: Number,
         team: String,
         description: String
     }])

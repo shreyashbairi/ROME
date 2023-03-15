@@ -20,10 +20,10 @@ function TeamPop(props) {
         const teamID = Math.floor(Math.random()*10000);
         try {
             await axios.post('/teamsubmit',{
-              teamID,
-              team,
-              description,
-              username
+              teamID: teamID,
+              team: team,
+              description: description,
+              username: username
             });
             alert("Team Successfully Created.");
           } catch (e){

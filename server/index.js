@@ -9,6 +9,7 @@ const Team = require('./models/Team.js');
 const Events = require('./models/Events.js');
 const Event = require('./models/Event.js');
 const Task = require('./models/ToDoSchema.js');
+const TeamTask=require('./models/TeamTask');
 const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
@@ -191,6 +192,24 @@ app.post('/eventsave', async (req, res) =>{
 });
 
 
+app.post('/teamtaskedit', async (req, res) =>{
+    const {title, description, date, started,complete} = req.body;
+    try {
+        const teamTasksDoc = await TeamTask.findOneAndUpdate(
+            {title: title , description:description, date:date},
+            {
+            started:started,
+            complete:complete
+            });
+        // console.log(newTitle);
+        // console.log(curusername)
+        // console.log(eventsDoc);
+        res.json(teamTasksDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
 
 
 app.post('/eventedit', async (req, res) =>{
@@ -245,9 +264,40 @@ app.post('/tasksave', async (req, res) =>{
     }
 });
 
+app.post('/teamtasksave', async (req, res) =>{
+    const {id, title, description, date, user, complete, started, workers, team} = req.body;
+    try {
+        const teamTaskDoc = await TeamTask.create({ 
+            teamID: id,
+            title: title,
+            description: description, 
+            date: date,
+            username: user,
+            complete: complete,
+            started:started,
+            workers:workers,
+            team:team
+            });
+        res.json(teamTaskDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
 app.get("/tasks/:username", async (req,res) => {
     try{
         const tasks = await Task.find({ username: req.params.username })
+        // console.log(tasks);
+        res.json(tasks);
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
+
+app.get("/teamTasks/:username", async (req,res) => {
+    try{
+        const tasks = await TeamTask.find({ username: req.params.username })
         // console.log(tasks);
         res.json(tasks);
     } catch (e){

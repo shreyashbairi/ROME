@@ -5,6 +5,7 @@ import {AiFillPlusCircle} from 'react-icons/ai'
 import TeamCompleteList from './TeamCompleteList';
 import TeamProgressList from './TeamProgressList';
 import "../../css/TeamHome.css"
+import axios from 'axios';
 
 var complete =[];
 
@@ -21,24 +22,56 @@ export default function TeamTodoList(props) {
         description:String,
         date:Date
     }])
-    const [inProgs, setInProgs] = useState([{
-        title:String,
-        description:String,
-        date:Object
-    }])
+    // const [inProgs, setInProgs] = useState([{
+    //     title:String,
+    //     description:String,
+    //     date:Object
+    // }])
     const [completes, setCompletes] = useState([{
         title:String,
         description:String,
         date:Object
     }])
+    // useEffect( () => {
+    //     setTodos([{
+    //         title:String,
+    //         description:String,
+    //         date:Object,
+    //         workers:Array
+    //     }]);
+    // }, [] )
+
+
     useEffect( () => {
-        setTodos([{
-            title:String,
-            description:String,
-            date:Object,
-            workers:Array
-        }]);
-    }, [] )
+        const username = localStorage.getItem('userid');
+        axios.get(`/teamTasks/${username}`)
+        .then(res => {
+            const tasksGrabed = res.data;
+            // console.log(tasksGrabed);
+            var i;
+            var task;
+            setCompletes([])
+            setStarted([])
+            setTodos([])
+            for (i=0;i<tasksGrabed.length;i++) {
+                task=tasksGrabed[i];
+                if (task.complete === true) {
+                    setCompletes([task,...completes]);
+                    setStarted([...started]);
+                    setTodos([...todos]);
+                } else if (task.started === true) {
+                    setStarted([task,...started]);
+                    setCompletes([...completes]);
+                    setTodos([...todos]);
+                } else {
+                    setTodos([task,...todos]);
+                    setStarted([...started]);
+                    setCompletes([...completes]);
+                }
+            }
+            // setTodos(tasksGrabed);
+        })
+    }, [])
 
     const addTodo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {
@@ -54,22 +87,48 @@ export default function TeamTodoList(props) {
         console.log(todo)
     }
 
-    const removeTodo = id => {
-        completeTodo(id)
-        console.log(id)
+    async function removeTodo(todo) {
+        completeTodo(todo.id)
+        console.log(todo.id)
         // console.log(completes)
-        const removeArray = [...todos].filter(todo => todo.id !== id)
+        const removeArray = [...todos].filter(todoCheck => todoCheck.id !== todo.id)
+
+        try {
+            await axios.post('/teamtaskedit', {
+                title:todo.title,
+                description:todo.description,
+                date:todo.date,
+                started:false,
+                complete:true
+                
+            });
+        } catch (e) {
+            alert("Team Task did not Update")
+        }
         
         setTodos(removeArray)
     }
 
-    const removeTodoFromProg = id => {
-        completeTodoProgs(id)
+    async function removeTodoFromProg(todo) {
+        completeTodoProgs(todo.id)
         // console.log(completes)
         console.log("in remove")
-        console.log(id)
+        console.log(todo.id)
         console.log(started)
-        const removeArray = [...started].filter(todo => todo.id !== id)
+        const removeArray = [...started].filter(todoCheck => todoCheck.id !== todo.id)
+
+        try {
+            await axios.post('/teamtaskedit', {
+                title:todo.title,
+                description:todo.description,
+                date:todo.date,
+                started:false,
+                complete:true
+                
+            });
+        } catch (e) {
+            alert("Team Task did not Update")
+        }
         
         setStarted(removeArray)
     }

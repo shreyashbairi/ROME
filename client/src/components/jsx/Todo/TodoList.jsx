@@ -4,14 +4,6 @@ import Todo from './Todo'
 import {AiFillPlusCircle} from 'react-icons/ai'
 import axios from 'axios'
 
-// TODO
-// Comment everything
-// create a button that makes a pop up interface with 2 text boxes (description and name), drop down for personal and team
-// have each task have down arrow that allows view of details
-// create button to add team
-// create UI pop up for team name
-// have submit direct to a different page
-// have team added to DB under user
 
 function TodoList(props) {
     // const [todos,setTodos] = useState([]);
