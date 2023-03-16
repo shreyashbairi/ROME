@@ -150,7 +150,7 @@ app.post('/teamsubmit', async (req, res) =>{
 app.get("/teams/:username", async (req,res) => {
     console.log(req.params.username);
     try{
-        console.log(req.params.username);
+        // console.log(req.params.username);
         const teams = await Team.find({ userid: req.params.username })
         // console.log(events);
         res.json(teams);
@@ -265,10 +265,11 @@ app.post('/tasksave', async (req, res) =>{
 });
 
 app.post('/teamtasksave', async (req, res) =>{
-    const {id, title, description, date, user, complete, started, workers, team} = req.body;
+    const {title, description, date, user, complete, started, workers, team} = req.body;
+    console.log(team)
     try {
         const teamTaskDoc = await TeamTask.create({ 
-            teamID: id,
+            // teamID: id,
             title: title,
             description: description, 
             date: date,
@@ -295,10 +296,10 @@ app.get("/tasks/:username", async (req,res) => {
     }
 });
 
-app.get("/teamTasks/:username", async (req,res) => {
+app.get("/teamTasks/:team", async (req,res) => {
     try{
-        const tasks = await TeamTask.find({ username: req.params.username })
-        // console.log(tasks);
+        const tasks = await TeamTask.find({ team: req.params.team })
+        console.log(tasks);
         res.json(tasks);
     } catch (e){
         // console.log(e);

@@ -9,7 +9,8 @@ const TeamTaskSchema = new Schema({
   complete: Boolean,
   started:Boolean,
   workers: Array,
-  teamID: Number
+  teamID: Number,
+  team: String
 });
 
 const TeamTask = mongoose.model('TeamTask', TeamTaskSchema);

@@ -14,6 +14,10 @@ export function TeamTodoForm(props) {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        console.log(localStorage.getItem('team'))
+        console.log("should have printed")
+        const team = localStorage.getItem('team');
+
         const newTask = {
             id: Math.floor(Math.random()*10000),
             title: title,
@@ -22,7 +26,8 @@ export function TeamTodoForm(props) {
             user: localStorage.getItem("userid"),
             complete:false,
             started:false,
-            workers:[]
+            workers:[],
+            team: team
         }
 
         try {

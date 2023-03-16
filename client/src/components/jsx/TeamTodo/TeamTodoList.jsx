@@ -43,8 +43,9 @@ export default function TeamTodoList(props) {
 
 
     useEffect( () => {
-        const username = localStorage.getItem('userid');
-        axios.get(`/teamTasks/${username}`)
+        const team = localStorage.getItem('team');
+        console.log(team);
+        axios.get(`/teamTasks/${team}`)
         .then(res => {
             const tasksGrabed = res.data;
             // console.log(tasksGrabed);

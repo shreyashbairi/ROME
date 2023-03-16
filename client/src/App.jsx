@@ -25,6 +25,7 @@ import TeamHome from './components/jsx/TeamHome';
 import { UserContextProvider } from './components/jsx/UserContext';
 import { Navigate} from 'react-router-dom';
 import { UserContext } from './components/jsx/UserContext';
+// import { TeamContext } from './components/jsx/TeamContextProvider';
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
@@ -71,7 +72,7 @@ function App() {
         <Route path="/calendar" element={<CalendarFunc />} />
         <Route path="/todo" element={<TodoList />} />
         <Route path="/add" element={<AddEvent />} />
-        <Route path='/team/:teamID' element={<TeamHome />} />
+        <Route path='/team/:team' element={<TeamHome />} />
       </Route>
     </Routes>
    

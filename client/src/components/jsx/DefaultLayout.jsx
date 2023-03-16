@@ -65,6 +65,12 @@ function DefaultLayout () {
         navigate("/Welcome");
         setUser(null);
       };
+
+    function changeTeam(team) {
+        console.log("Changing team")
+        localStorage.setItem('team', team.team)
+    };
+
     return (
         <>
         
@@ -123,7 +129,9 @@ function DefaultLayout () {
                     return (
                         <div key={index}>
                             <div key={team.teamID}>
-                                    <Link to={`/team/${team.teamID}`}>{team.team}</Link>
+                                {/* {localStorage.setItem('team', team.team)} */}
+                                    <Link to={`/team/${team.team}`} onClick={()=>changeTeam(team)}>{team.team}</Link>
+                                    {/* <button onClick={switchTeam}>{team.team}</button> */}
                             </div>
                         </div>
                     )
