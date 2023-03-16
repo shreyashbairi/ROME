@@ -148,10 +148,10 @@ app.post('/teamsubmit', async (req, res) =>{
 });
 
 app.get("/teams/:username", async (req,res) => {
-    // console.log(req.params.username);
+    console.log(req.params.username);
     try{
-        // console.log(req.params.username);
-        const teams = await Team.find({ usernameid: req.params.username })
+        console.log(req.params.username);
+        const teams = await Team.find({ userid: req.params.username })
         // console.log(events);
         res.json(teams);
     } catch (e){
