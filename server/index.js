@@ -397,6 +397,7 @@ app.get("/profile/:username", async (req,res) => {
 });
 
 app.delete("/teamtaskdelete", async(req,res) => {
+    const {team} = req.body;
 
     console.log("entered")
 

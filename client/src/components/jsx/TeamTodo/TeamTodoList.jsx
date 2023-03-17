@@ -61,26 +61,37 @@ export default function TeamTodoList(props) {
     },[])
 
     function loadTasks(tasksGrabed) {
-        var i;
-        var task;
-        setCompletes([])
-        setStarted([])
-        setTodos([])
+        let completes = [];
+        let started = [];
+        let todos = [];
 
-        for (i=0;i<tasksGrabed.length;i++) {
-            task=tasksGrabed[i];
-            if (task.complete === true) {
-                setCompletes([task,...completes]);
-                console.log(task.title + " complete");
-                console.log(completes);
-            } else if (task.started === true) {
-                setStarted([task,...started]);
-                console.log(task.title + " started");
+        // for (i=0;i<tasksGrabed.length;i++) {
+        //     task=tasksGrabed[i];
+        //     if (task.complete === true) {
+        //         setCompletes([task,...completes]);
+        //         console.log(task.title + " complete");
+        //         console.log(completes);
+        //     } else if (task.started === true) {
+        //         setStarted([task,...started]);
+        //         console.log(task.title + " started");
+        //     } else {
+        //         setTodos([task,...todos]);
+        //         console.log(task.title + " todos");
+        //     }
+        // }
+        tasksGrabed.forEach((element)=> {
+            if (element.complete === true) {
+                completes.push(element);
+            } else if (element.started === true) {
+                started.push(element);
             } else {
-                setTodos([task,...todos]);
-                console.log(task.title + " todos");
+                todos.push(element);
             }
-        }
+        });
+
+        setCompletes(completes);
+        setStarted(started);
+        setTodos(todos);
     }
 
 
@@ -177,7 +188,7 @@ export default function TeamTodoList(props) {
         console.log("hi");
 
         try {
-            await axios.delete('/teamtaskdelete', {})
+            await axios.delete('/teamtaskdelete', {});
         } catch (e) {
             alert("Team Tasks didn't delete properly")
         }
