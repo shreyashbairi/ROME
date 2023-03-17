@@ -266,7 +266,7 @@ app.post('/tasksave', async (req, res) =>{
 
 app.post('/teamtasksave', async (req, res) =>{
     const {title, description, date, user, complete, started, workers, team} = req.body;
-    console.log(team)
+    // console.log(team)
     try {
         const teamTaskDoc = await TeamTask.create({ 
             // teamID: id,
@@ -395,6 +395,14 @@ app.get("/profile/:username", async (req,res) => {
         res.status(422).json(e);    
     }
 });
+
+app.delete("/teamtaskdelete", async(req,res) => {
+
+    console.log("entered")
+
+    TeamTask.deleteMany({complete: true}, function(err) {
+    });
+})
 
 
 

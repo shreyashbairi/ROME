@@ -6,40 +6,47 @@ import TeamCompleteList from './TeamCompleteList';
 import TeamProgressList from './TeamProgressList';
 import "../../css/TeamHome.css"
 import axios from 'axios';
-
-var complete =[];
+import {BsFillTrashFill} from 'react-icons/bs'
 
 export default function TeamTodoList(props) {
-    // const [todos,setTodos] = useState([]);
+
     const[started, setStarted] = useState([{
-        title:String,
-        description:String,
-        date:Date
+        title: String,
+        description: String,
+        date: Object,
+        username: String,
+        complete: Boolean,
+        started:Boolean,
+        workers: Array,
+        teamID: Number,
+        team: String
     }])
+
     const [click, setClick] = useState(false);
+
     const [todos, setTodos] = useState([{
-        title:String,
-        description:String,
-        date:Date
+        title: String,
+        description: String,
+        date: Object,
+        username: String,
+        complete: Boolean,
+        started:Boolean,
+        workers: Array,
+        teamID: Number,
+        team: String
     }])
-    // const [inProgs, setInProgs] = useState([{
-    //     title:String,
-    //     description:String,
-    //     date:Object
-    // }])
+
     const [completes, setCompletes] = useState([{
-        title:String,
-        description:String,
-        date:Object
+        title: String,
+        description: String,
+        date: Object,
+        username: String,
+        complete: Boolean,
+        started:Boolean,
+        workers: Array,
+        teamID: Number,
+        team: String
     }])
-    // useEffect( () => {
-    //     setTodos([{
-    //         title:String,
-    //         description:String,
-    //         date:Object,
-    //         workers:Array
-    //     }]);
-    // }, [] )
 
 
     useEffect( () => {
@@ -48,31 +55,34 @@ export default function TeamTodoList(props) {
         axios.get(`/teamTasks/${team}`)
         .then(res => {
             const tasksGrabed = res.data;
-            // console.log(tasksGrabed);
-            var i;
-            var task;
-            setCompletes([])
-            setStarted([])
-            setTodos([])
-            for (i=0;i<tasksGrabed.length;i++) {
-                task=tasksGrabed[i];
-                if (task.complete === true) {
-                    setCompletes([task,...completes]);
-                    setStarted([...started]);
-                    setTodos([...todos]);
-                } else if (task.started === true) {
-                    setStarted([task,...started]);
-                    setCompletes([...completes]);
-                    setTodos([...todos]);
-                } else {
-                    setTodos([task,...todos]);
-                    setStarted([...started]);
-                    setCompletes([...completes]);
-                }
-            }
-            // setTodos(tasksGrabed);
+            console.log(tasksGrabed);
+            loadTasks(tasksGrabed);
         })
-    }, [])
+    },[])
+
+    function loadTasks(tasksGrabed) {
+        var i;
+        var task;
+        setCompletes([])
+        setStarted([])
+        setTodos([])
+
+        for (i=0;i<tasksGrabed.length;i++) {
+            task=tasksGrabed[i];
+            if (task.complete === true) {
+                setCompletes([task,...completes]);
+                console.log(task.title + " complete");
+                console.log(completes);
+            } else if (task.started === true) {
+                setStarted([task,...started]);
+                console.log(task.title + " started");
+            } else {
+                setTodos([task,...todos]);
+                console.log(task.title + " todos");
+            }
+        }
+    }
+
 
     const addTodo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {
@@ -80,8 +90,6 @@ export default function TeamTodoList(props) {
             return;
         }
 
-        // const newTasks = [todo, ...todos]
-        // setTodos(newTasks)
         const newTask = [todo, ...todos]
         setTodos(newTask)
         setClick(false)
@@ -91,7 +99,6 @@ export default function TeamTodoList(props) {
     async function removeTodo(todo) {
         completeTodo(todo.id)
         console.log(todo.id)
-        // console.log(completes)
         const removeArray = [...todos].filter(todoCheck => todoCheck.id !== todo.id)
 
         try {
@@ -112,7 +119,6 @@ export default function TeamTodoList(props) {
 
     async function removeTodoFromProg(todo) {
         completeTodoProgs(todo.id)
-        // console.log(completes)
         console.log("in remove")
         console.log(todo.id)
         console.log(started)
@@ -135,11 +141,6 @@ export default function TeamTodoList(props) {
     }
 
     const editTask = (id, newValue) => {
-    
-        // if (!newValue.text || /^\s*$/.test(newValue.test)) {
-        //     return;
-        // }
-
         setTodos(prev=>prev.map(item=>(item.id===id ? newValue : item)))
     }
 
@@ -148,50 +149,40 @@ export default function TeamTodoList(props) {
             if(todo.id===id){
                 todo.isComplete = !todo.isComplete
                 const newcomps = [todo,...completes]
-                // complete = [todo,...complete]
-                // myComplete(complete)
                 setCompletes(newcomps)
             }
-            // console.log(todo)
             return todo
         })
         
     }
 
     const completeTodoProgs = id => {
-        // console.log("in completes")
         started.map(todo=>{
             if(todo.id===id){
                 todo.isComplete = !todo.isComplete
                 const newcomps = [todo,...completes]
-                // complete = [todo,...complete]
-                // myComplete(complete)
                 setCompletes(newcomps)
             }
-            // console.log(todo)
             return todo
         })
         
     }
 
-    // const progs = id => {
-    //     todos.map(todo=>{
-    //         if(todo.id===id){
-    //             const newcomps = [todo,...inProgs]
-    //             // complete = [todo,...complete]
-    //             // myComplete(complete)
-    //             setInProgs(newcomps)
-    //         }
-    //         // console.log(todo)
-    //         return todo
-    //     })
-        
-    // }
-
-
     const clicked = e => {
         setClick(true)
         console.log(click)
+    }
+
+    async function deleteArchive() {
+        console.log("hi");
+
+        try {
+            await axios.delete('/teamtaskdelete', {})
+        } catch (e) {
+            alert("Team Tasks didn't delete properly")
+        }
+        console.log("check db");
+        
     }
 
   return (
@@ -222,22 +213,14 @@ export default function TeamTodoList(props) {
             removeTodoFromProg={removeTodoFromProg}
         />
 
-        {/* In Progress
-        <TeamProgressList inProgs={inProgs}/> */}
         <br></br>
-        <h4>Complete Todos</h4>
+        <h4>Complete Todos
+            <BsFillTrashFill onClick={deleteArchive}/>
+        </h4>
         <TeamCompleteList
             completes={completes}
         />
         
     </div>
   )
-}
-
-function myComplete(complete) {
-    this.complete = complete;
-}
-
-export function completeExport() {
-    return complete;
 }
