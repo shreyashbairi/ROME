@@ -250,13 +250,14 @@ app.post('/taskedit', async (req, res) =>{
 });
 
 app.post('/tasksave', async (req, res) =>{
-    const {id, title, description, date, user} = req.body;
+    const {id, title, description, date, user, repeating} = req.body;
     try {
         const taskDoc = await Task.create({ 
             title: title,
             description: description, 
             date: date,
-            username: user
+            username: user,
+            repeating: repeating
             });
         res.json(taskDoc);
     } catch (e) {

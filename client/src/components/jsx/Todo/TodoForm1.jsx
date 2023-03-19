@@ -10,6 +10,7 @@ export function TodoForm(props) {
         description:"",
         date:""
     })
+    const [repeating, setRepeating] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -19,7 +20,8 @@ export function TodoForm(props) {
             title: title,
             description: description,
             date: input.date,
-            user: localStorage.getItem("userid")
+            user: localStorage.getItem("userid"),
+            repeating: repeating
         }
 
         try {
@@ -49,6 +51,7 @@ export function TodoForm(props) {
             description:"",
             date:""
         })
+        setRepeating(false);
     };
     
 
@@ -127,6 +130,27 @@ export function TodoForm(props) {
                         name="description"
                     />
                     <input name="date" onChange={changeDate} id="date" type="date"></input>
+                    <br></br>
+                Repeating?
+                <br></br>
+                <label>
+                    <input
+                        type={'radio'}
+                        value={false}
+                        onClick={()=>setRepeating(true)}
+                        checked={repeating}
+                    />Yes
+                </label>
+                     
+                <label>
+                    <input
+                        type={'radio'}
+                        value={true}
+                        checked={!repeating}
+                        onClick={()=>setRepeating(false)}
+                    />No
+                </label>
+                <br></br>
                     <button className='todo-button'>Add</button>
                     <button type="button" onClick={()=> props.setTrigger(false)}>Cancel</button>
                     </>

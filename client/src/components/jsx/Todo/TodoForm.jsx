@@ -4,6 +4,7 @@ import { useState } from 'react';
 function TodoForm(props) {
     const [text,setText] = useState(props.change ? props.change.value : '');
     const [description,setDescription] = useState(props.change ? props.change.value : '');
+    const [repeating, setRepeating] = useState(false);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -57,6 +58,8 @@ function TodoForm(props) {
                     value={description}
                     onChange={descriptionChange}
                 />
+                
+                
                 <button className='todo-button'>Add</button>
             </>
             }
