@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const TeamTaskSchema = new Schema({
   title: String,
   description: String,
-  date: Object,
+  date: Date,
   username: String,
   complete: Boolean,
   started:Boolean,

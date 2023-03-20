@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import  { AiFillCloseCircle } from 'react-icons/ai'
 import { TiEdit } from 'react-icons/ti'
 import TodoForm from './TodoForm1'
@@ -9,6 +9,13 @@ import TodoEdit from './TodoEdit'
 function Todo({todos,completeTodo,removeTodo,editTask}) {
     const [show, setShow] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [color, setColor] = useState('black');
+    
+
+    var currentDate = () => {
+        let date = new Date();
+        return (date)
+    }
 
 
     const [change, setChange] = useState({
@@ -98,13 +105,41 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
         // )
         alert(description)
     }
+
+
+    function ChangeStyle(deadline) {
+        var date = new Date();
+        date = date.toISOString().substring(0,10);
+        
+        var color='';
+
+        useEffect(()=> {
+            
+        
+            if (deadline != null && deadline < date) { //before current
+                color = 'red';
+            } else {
+                color='black';
+            }
+        
+            setColor(color);
+            
+        },[color]);
+
+        return <></>;
+    }
+
     return (
         <div>
             {todos.map((todo,index)=>{
                 return(
                     <div key = {index} class="task">
-                        <Popup class="detailedTask" trigger={<button>
-                            {todo.title} {todo.date} </button>} open={show}
+
+                        {/* TODO the function with the error */}
+                        {/* {ChangeStyle(todo.date)} */}
+
+                        <Popup class="detailedTask" trigger={
+                        <button style={{color: color}}>{todo.title}<br></br>{todo.date} </button>} open={show}
                             onOpen={openform} position="right center" nested modal>
                             <div class="card">
                             <h2>Task details</h2>
