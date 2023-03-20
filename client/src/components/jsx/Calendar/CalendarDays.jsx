@@ -64,13 +64,15 @@ function CalendarDays(props) {
             day: i%7, 
             time: ((i - i%7) / 7) + 1,
             selected: false,
-            name: "Event",
+            name: "NA",
             top: false,
-            date: (new Date(firstDayOfWeek))
+            date: (new Date(firstDayOfWeek)),
+            color: "#f1f1f1"
         }
         for (let j = 0; j < props.events.length; j++) {
             if (props.events[j].time === hour.time && props.events[j].date.getDate() === hour.date.getDate()) {
                 hour.selected = true;
+                hour.color = props.events[j].color;
                 if (props.events[j].top) {
                     hour.top = true;
                     hour.name = props.events[j].title;
@@ -103,9 +105,14 @@ function CalendarDays(props) {
             {
                 currentTimes.map((hour) => {
                 return (
-                    <div className={"calendar-hour" + (hour.selected ? " scheduled" : "") + 
-                        (props.viewMode === 5 ? " work-hour" : " full-hour")}
-                        onClick= {() => props.scheduleEventHour(hour)}>
+                    // <div className={"calendar-hour" + (hour.selected ? " scheduled" : "") + 
+                    //     (props.viewMode === 5 ? " work-hour" : " full-hour")}>
+                    //     {/* onClick= {() => props.scheduleEventHour(hour)}> */}
+                    //     <p>{hour.selected && hour.top ? hour.name : ""}</p>
+                    // </div>
+                    <div className={"calendar-hour" + 
+                        (props.viewMode === 5 ? " work-hour" : " full-hour")} 
+                        style={{backgroundColor: hour.color}}>
                         <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     </div>
                 )

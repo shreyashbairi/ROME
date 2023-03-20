@@ -119,7 +119,7 @@ app.get('/profile', (req, res) => {
             const {userEmail, userUserName, _id} = await User.findById(userData.id);
             res.json({userEmail, userUserName, _id}); 
         })
-    }else{
+    } else {
         res.status(401).json('not authorized');
     }
 })
@@ -131,14 +131,15 @@ app.post('/logout', (req,res) => {
 
 //for team
 app.post('/teamsubmit', async (req, res) =>{
-    const {teamID, team, description, username} = req.body;
+    const {teamID, team, description, username, color} = req.body;
     try {
         const teamDoc = await Team.create({
             teamID: teamID,
             team: team,
             description: description,
             userid: username,
-            role: "manager"
+            role: "manager",
+            color: color
         });
         res.json(teamDoc);
     } catch (e) {
@@ -175,7 +176,8 @@ app.get("/events/:username", async (req,res) => {
 
 //in AddEvent
 app.post('/eventsave', async (req, res) =>{
-    const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername} = req.body;
+    const {newDate, newStartTime, newEndTime, newTitle, newDescription, 
+           curusername, newTeamName, newTeamID, newColor} = req.body;
     try {
         const eventsDoc = await Event.create(
             { usernameid: curusername,
@@ -183,7 +185,10 @@ app.post('/eventsave', async (req, res) =>{
             startTime: newStartTime,
             endTime: newEndTime,
             title: newTitle,
-            description: newDescription
+            description: newDescription,
+            teamName: newTeamName,
+            teamID: newTeamID,
+            color: newColor
             });
         res.json(eventsDoc);
     } catch (e) {
@@ -213,7 +218,7 @@ app.post('/teamtaskedit', async (req, res) =>{
 
 
 app.post('/eventedit', async (req, res) =>{
-    const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername} = req.body;
+    const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername, teamName, teamID, color} = req.body;
     try {
         const eventsDoc = await Event.findOneAndUpdate(
             {title: newTitle , usernameid: curusername},
@@ -221,7 +226,10 @@ app.post('/eventedit', async (req, res) =>{
             date: newDate,
             startTime: newStartTime,
             endTime: newEndTime,
-            description: newDescription
+            description: newDescription,
+            teamName: teamName,
+            teamID: teamID,
+            color: color
             });
         // console.log(newTitle);
         // console.log(curusername)
