@@ -51,9 +51,9 @@ const AddEvent = (props) => {
             newElapsedEvent.color = "#1D9BD1";
             newElapsedEvent.teamName = "Personal"
         } else {
-            console.log(teamName);
+            //console.log(teamName);
             for (let i = 0; i < props.teams.length; i++) {
-                console.log(props.teams[i].team);
+                //console.log(props.teams[i].team);
                 if (props.teams[i].team === teamName) {
                     exists = true;
                     teamIndex = i;

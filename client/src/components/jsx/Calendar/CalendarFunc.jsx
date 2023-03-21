@@ -143,7 +143,9 @@ export default function CalendarFunc (props) {
                 date: newElapsedEvent.date,
                 time: i,
                 top: topHour,
-                title: newElapsedEvent.title
+                title: newElapsedEvent.title,
+                color: newElapsedEvent.color,
+                teamName: newElapsedEvent.teamName 
             }; 
             elapsedEvent.push(newevent)
         }
