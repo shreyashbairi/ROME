@@ -135,7 +135,7 @@ function DefaultLayout () {
                             </div>
                         </div>
                     )
-                })}
+                })} 
                 <br></br>
                     <div class="add-team">
                         <Popup trigger={<button type="button" class="btn btn-secondary"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plus_symbol.svg/1200px-Plus_symbol.svg.png" alt="Logo" width="25" height="30" class="rounded mx-auto d-block center" />  </button>} 

@@ -127,6 +127,8 @@ app.get('/profile', (req, res) => {
 //for logout
 app.post('/logout', (req,res) => {
     res.cookie('token', '').json(true);
+    userDoc = null;
+    
   });
 
 //for team
