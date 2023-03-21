@@ -25,9 +25,11 @@ const EditEvent = (props) => {
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
         let exists = false;
+        let eventIndex = -1;
         for(let i = 0; i < props.events.length; i++) {
             if (props.events[i].title === newElapsedEvent.title) {
                 exists = true;
+                eventIndex = i;
                 break;
             }
         }
@@ -44,6 +46,9 @@ const EditEvent = (props) => {
             const newEndTime = newElapsedEvent.endTime;
             const newTitle = newElapsedEvent.title;
             const newDescription = newElapsedEvent.description;
+            const teamName = props.events[eventIndex].teamName;
+            const teamID = props.events[eventIndex].teamID;
+            const color = props.events[eventIndex].color;
             try {
                 await axios.post('/eventedit', {
                     newDate, 
@@ -51,7 +56,10 @@ const EditEvent = (props) => {
                     newEndTime, 
                     newTitle, 
                     newDescription, 
-                    curusername
+                    curusername,
+                    teamName,
+                    teamID,
+                    color
                 });
             } catch (e) {
                 alert("Event did not Update")

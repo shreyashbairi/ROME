@@ -4,14 +4,17 @@ import { useState } from "react";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
+import { GithubPicker } from "react-color";
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function TeamPop(props) {
     const [team, setTeam] = useState("")
     const [description, setDescription] = useState("")
+    const [color, setColor] = useState("")
     const [data, setData] = useState({
         team: {team},
-        description: {description}
+        description: {description},
+        // color: {color}
     })
 
     async function handleSubmit(e) {
@@ -23,7 +26,8 @@ function TeamPop(props) {
               teamID: teamID,
               team: team,
               description: description,
-              username: username
+              username: username,
+              color: color
             });
             alert("Team Successfully Created.");
           } catch (e){
@@ -47,6 +51,15 @@ function TeamPop(props) {
         setData(newdata)
         console.log(newdata)
     }
+
+    // const handleColor = (e) => {
+    //     setColor(e.target.value);
+    //     console.log(color);
+    //     const newdata = {...data}
+    //     newdata[e.target.id]=e.target.value
+    //     setData(newdata)
+    //     console.log(newdata)
+    // }
 
     const handleDescription = (e) => {
         setDescription(e.target.value);
@@ -99,6 +112,12 @@ function TeamPop(props) {
                         onChange={handleDescription}
                         value={description}
                     />
+                    <GithubPicker 
+                        width="13vw"
+                         onChange={(color) => {
+                            setColor(color.hex);}}
+                        value={color}
+                     />
                     <button>Submit</button>
                     </div>  
                 </form>

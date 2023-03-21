@@ -1,6 +1,6 @@
 import React from "react";
 import "../../css/AddEvent.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
@@ -14,7 +14,22 @@ const AddEvent = (props) => {
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
     const [eventLabel, setEventLabel] = useState("");
+    const [teamName, setTeamName] = useState("");
+    const [localTeams, setLocalTeams] = useState([]);
+    // const [teamID, setTeamID] = useState(0);
 
+    useEffect( () => { 
+        console.log("ATTEMPT MADE");
+        const username = localStorage.getItem('userid');
+        axios.get(`/teams/${username}`)
+        .then (res => {
+            const teamsGrabed = res.data;
+            console.log(teamsGrabed);
+            setLocalTeams(teamsGrabed);
+            props.setTeams(teamsGrabed);
+        });
+        console.log(localTeams);
+    }, []);
 
     async function handleEventSubmit (e) {
         e.preventDefault();
@@ -23,10 +38,32 @@ const AddEvent = (props) => {
             startTime: parseInt(eventStartTime.substring(0,2)),
             endTime: parseInt(eventEndTime.substring(0,2)),
             title: eventTitle,
-            description: eventDescription
+            description: eventDescription,
+            teamName: teamName,
+            teamID: -1,
+            color: "gray"
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
-        if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
+        let exists = false;
+        let teamIndex = -1;
+        if (teamName === "Personal" || teamName === "personal") {
+            exists = true;
+            newElapsedEvent.color = "#1D9BD1";
+        } else {
+            console.log(teamName);
+            for (let i = 0; i < props.teams.length; i++) {
+                console.log(props.teams[i].team);
+                if (props.teams[i].team === teamName) {
+                    exists = true;
+                    teamIndex = i;
+                    newElapsedEvent.color = props.teams[i].color;
+                    break;
+                }
+            }
+        }
+        if (!exists) {
+            alert("Team Does Not Exist.")
+        } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
         } else {
             props.scheduleEvent(newElapsedEvent);
@@ -37,6 +74,12 @@ const AddEvent = (props) => {
             const newEndTime = newElapsedEvent.endTime;
             const newTitle = newElapsedEvent.title;
             const newDescription = newElapsedEvent.description;
+            if (teamIndex != -1) {
+                newElapsedEvent.id =  props.teams[teamIndex].teamId;
+            }
+            const newTeamName = newElapsedEvent.teamName;
+            const newTeamID = newElapsedEvent.teamID;
+            const newColor = newElapsedEvent.color;
             
             try {
                 await axios.post('/eventsave', {
@@ -45,7 +88,10 @@ const AddEvent = (props) => {
                     newEndTime, 
                     newTitle, 
                     newDescription, 
-                    curusername
+                    curusername,
+                    newTeamName,
+                    newTeamID,
+                    newColor
                 });
                 alert('Event Saved');
             } catch (e) {
@@ -106,16 +152,16 @@ const AddEvent = (props) => {
         </div>
         <div class="row mt-3">
             <div class="col-sm-3">
-               <strong>Label</strong>
+               <strong>Team</strong>
             </div>
             <div class="col-sm-9 text-secondary">
                 <input 
                 type="lable" 
                 class="form-control" 
-                id="eventdescription"  
+                id="teamName"  
                 placeholder="label" 
-                value={eventLabel} 
-                onChange={e => setEventLabel(e.target.value)} required />
+                value={teamName} 
+                onChange={e => setTeamName(e.target.value)} required />
             </div>
         </div>
         <div class="row mt-3">

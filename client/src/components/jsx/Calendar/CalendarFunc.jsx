@@ -24,6 +24,7 @@ export default function CalendarFunc (props) {
     const [viewMode, setViewMode] = useState(7);
     const [viewModeString, setViewModeString] = useState("Week");
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
+    const [teams, setTeams] = useState([]);
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
@@ -40,7 +41,10 @@ export default function CalendarFunc (props) {
                     startTime: eventsGrabed[i].startTime,
                     endTime: eventsGrabed[i].endTime,
                     title: eventsGrabed[i].title,
-                    description: eventsGrabed[i].description
+                    description: eventsGrabed[i].description,
+                    teamName: eventsGrabed[i].teamName,
+                    teamID: eventsGrabed[i].teamID,
+                    color: eventsGrabed[i]. color
                 };
                 // console.log(newElapsedEvent);
                 if (newElapsedEvent.endTime === 1) {
@@ -55,13 +59,14 @@ export default function CalendarFunc (props) {
                         date: newElapsedEvent.date,
                         time: i,
                         top: topHour,
-                        title: newElapsedEvent.title
+                        title: newElapsedEvent.title,
+                        color: newElapsedEvent.color
                     }; 
                     elapsedEvent.push(newevent)
                 }
             }
             setEvents([...events, ...elapsedEvent])
-          })
+        });
         axios.get(`/getViewMode/${username}`)
         .then(res => {
             let userProfile = res.data;
@@ -80,7 +85,24 @@ export default function CalendarFunc (props) {
                 setCurWeekdays(weekdays);
             }
         });
+        axios.get(`/teams/${username}`)
+        .then (res => {
+            const teamsGrabed = res.data;
+            console.log(teamsGrabed);
+            setTeams(teamsGrabed);
+        });
       }, [] )
+
+    const grabTeams = () => {
+        console.log("ATTEMPT MADE");
+        const username = localStorage.getItem('userid');
+        axios.get(`/teams/${username}`)
+        .then (res => {
+            const teamsGrabed = res.data;
+            console.log(teamsGrabed);
+            setTeams(teamsGrabed);
+        });
+    }
  
 
     const removeEvents = (newElapsedEvent) => {
@@ -139,7 +161,8 @@ export default function CalendarFunc (props) {
                 date: newElapsedEvent.date,
                 time: i,
                 top: topHour,
-                title: newElapsedEvent.title
+                title: newElapsedEvent.title,
+                color: newElapsedEvent.color
             }; 
             elapsedEvent.push(newevent)
         }
@@ -163,7 +186,7 @@ export default function CalendarFunc (props) {
                 })
                 console.log(username);
                 console.log(tempViewMode);
-                alert("Viewmode Saved");
+                // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
             }
@@ -179,7 +202,7 @@ export default function CalendarFunc (props) {
                 })
                 console.log(username);
                 console.log(tempViewMode);
-                alert("Viewmode Saved");
+                // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
             }
@@ -231,13 +254,15 @@ export default function CalendarFunc (props) {
                     <h2 class="Calendar-header-content">{months[currentDay.getMonth()]} {currentDay.getFullYear()}</h2>
                     <div class="header-right">
 
-                    <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">Add Events</button>} open={show}
+                    <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary" onClick={grabTeams}>Add Events</button>} open={show}
                     onOpen={openform} position="right center" nested modal>
                         <div class="card">
                         <AddEvent  
                                 trigger={show}
                                 setTrigger={closeform}
                                 scheduleEvent={scheduleEvent}
+                                teams={teams}
+                                setTeams={setTeams}
                             />     
                         </div>
                     </ Popup>
@@ -250,6 +275,7 @@ export default function CalendarFunc (props) {
                                 setTrigger={closeEditform}
                                 editEvent={editEvent}
                                 events={events}
+                                teams={teams}
                             />     
                         </div>
                     </ Popup>

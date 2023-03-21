@@ -6,7 +6,8 @@ const TeamSchema = new Schema({
     team: String,
     description:String,
     userid: String,
-    role: String
+    role: String,
+    color: String
 });
 
 const TeamModel = mongoose.model('Team', TeamSchema);

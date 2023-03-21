@@ -7,7 +7,10 @@ const EventSchema = new Schema({
     startTime: Number,
     endTime: Number,
     title: String,
-    description: String
+    description: String,
+    teamName: String,
+    teamID: Number,
+    color: String
 });
 
 const EventModel = mongoose.model('Event', EventSchema);
