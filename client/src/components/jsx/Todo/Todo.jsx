@@ -5,6 +5,7 @@ import TodoForm from './TodoForm1'
 import {BsThreeDots} from 'react-icons/bs'
 import Popup from 'reactjs-popup'
 import TodoEdit from './TodoEdit'
+import '../../css/Todo.css';
 
 function Todo({todos,completeTodo,removeTodo,editTask}) {
     const [show, setShow] = useState(false);
@@ -106,29 +107,6 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
         alert(description)
     }
 
-
-    function ChangeStyle(deadline) {
-        var date = new Date();
-        date = date.toISOString().substring(0,10);
-        
-        var color='';
-
-        useEffect(()=> {
-            
-        
-            if (deadline != null && deadline < date) { //before current
-                color = 'red';
-            } else {
-                color='black';
-            }
-        
-            setColor(color);
-            
-        },[color]);
-
-        return <></>;
-    }
-
     return (
         <div>
             {todos.map((todo,index)=>{
@@ -138,9 +116,18 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
                         {/* TODO the function with the error */}
                         {/* {ChangeStyle(todo.date)} */}
 
-                        <Popup class="detailedTask" trigger={
-                        <button style={{color: color}}>{todo.title}<br></br>{todo.date} </button>} open={show}
-                            onOpen={openform} position="right center" nested modal>
+                        <Popup class="detailedTask" 
+                            trigger={
+                                // <button style={todo.date < new Date() && {color: 'red'}}>
+                                <button className={(todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
+                                    {todo.title}<br></br>{todo.date} 
+                                </button>
+                            } 
+                            open={show}
+                            onOpen={openform} 
+                            position="right center" nested modal
+                        >
+                            
                             <div class="card">
                             <h2>Task details</h2>
 
