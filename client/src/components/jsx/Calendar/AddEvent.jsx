@@ -49,6 +49,7 @@ const AddEvent = (props) => {
         if (teamName === "Personal" || teamName === "personal") {
             exists = true;
             newElapsedEvent.color = "#1D9BD1";
+            newElapsedEvent.teamName = "Personal"
         } else {
             console.log(teamName);
             for (let i = 0; i < props.teams.length; i++) {
@@ -159,7 +160,7 @@ const AddEvent = (props) => {
                 type="lable" 
                 class="form-control" 
                 id="teamName"  
-                placeholder="label" 
+                placeholder="Team" 
                 value={teamName} 
                 onChange={e => setTeamName(e.target.value)} required />
             </div>
