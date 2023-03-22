@@ -6,6 +6,7 @@ import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
 import { useState, useEffect } from "react";
 import axios from "axios";
+import EventFocus from "./EventFocus";
 
 
 
@@ -25,6 +26,7 @@ export default function CalendarFunc (props) {
     const [viewModeString, setViewModeString] = useState("Week");
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
     const [teams, setTeams] = useState([]);
+    const [focusTeams, setFocusTeams] = useState([]);
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
@@ -60,7 +62,8 @@ export default function CalendarFunc (props) {
                         time: i,
                         top: topHour,
                         title: newElapsedEvent.title,
-                        color: newElapsedEvent.color
+                        color: newElapsedEvent.color,
+                        teamName: newElapsedEvent.teamName 
                     }; 
                     elapsedEvent.push(newevent)
                 }
@@ -140,14 +143,16 @@ export default function CalendarFunc (props) {
                 date: newElapsedEvent.date,
                 time: i,
                 top: topHour,
-                title: newElapsedEvent.title
+                title: newElapsedEvent.title,
+                color: newElapsedEvent.color,
+                teamName: newElapsedEvent.teamName 
             }; 
             elapsedEvent.push(newevent)
         }
         setEvents([...events, ...elapsedEvent])
     }
 
-    const scheduleEvent = (newElapsedEvent) => { //Deal with server communication within this fucntion
+    const scheduleEvent = (newElapsedEvent) => {
         const elapsedEvent = [];
         if (newElapsedEvent.endTime === 1) {
             newElapsedEvent.endTime = 25;
@@ -162,13 +167,12 @@ export default function CalendarFunc (props) {
                 time: i,
                 top: topHour,
                 title: newElapsedEvent.title,
-                color: newElapsedEvent.color
+                color: newElapsedEvent.color,
+                teamName: newElapsedEvent.teamName
             }; 
             elapsedEvent.push(newevent)
         }
         setEvents([...events, ...elapsedEvent])
-
-        // saveEventHandler(newElapsedEvent);
     }
 
     async function changeViewMode () {
@@ -240,6 +244,9 @@ export default function CalendarFunc (props) {
         setShowEdit(false);
     }
 
+    const handleFocus = (teamSelected) => {
+        setFocusTeams(teamSelected);
+    }
     
     return (
         <>
@@ -284,6 +291,12 @@ export default function CalendarFunc (props) {
                     </div>
                 </div>
                 <div class="Calendar-content-body">
+                    <div class ="event-focus">
+                        <EventFocus 
+                            teams = {teams}
+                            handleFocus={handleFocus}
+                        />
+                    </div>
                     <div class="time-sidebar">
                         {
                             hours.map((hour) => {
@@ -306,6 +319,7 @@ export default function CalendarFunc (props) {
                                 events={events} 
                                 scheduleEventHour={scheduleEventHour} 
                                 viewMode={viewMode}
+                                focusTeams={focusTeams}
                             />
                         </div>
                     </div>

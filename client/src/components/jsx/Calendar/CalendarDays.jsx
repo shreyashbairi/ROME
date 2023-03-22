@@ -70,7 +70,8 @@ function CalendarDays(props) {
             color: "#f1f1f1"
         }
         for (let j = 0; j < props.events.length; j++) {
-            if (props.events[j].time === hour.time && props.events[j].date.getDate() === hour.date.getDate()) {
+            if (props.events[j].time === hour.time && props.events[j].date.getDate() === hour.date.getDate() 
+                && !props.focusTeams.includes(props.events[j].teamName)) { //not is used as bandaid TODO fix
                 hour.selected = true;
                 hour.color = props.events[j].color;
                 if (props.events[j].top) {

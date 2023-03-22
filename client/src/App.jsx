@@ -1,8 +1,8 @@
 import './App.css';
 
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 //components
 import TodoList from './components/jsx/Todo/TodoList';
 import ResetPassword from './components/jsx/ResetPassword';
@@ -26,37 +26,36 @@ import { UserContextProvider } from './components/jsx/UserContext';
 import { Navigate} from 'react-router-dom';
 import { UserContext } from './components/jsx/UserContext';
 // import { TeamContext } from './components/jsx/TeamContextProvider';
-
+import { Redirect } from "react-router-dom";
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
 //TODO delete below
 //import Todo from "./components/jsx/Todo/TodoTest"
 
-function PrivateRoute({ element: Element, ...rest }) {
-  const { user } = useContext(UserContext);
+// function PrivateRoute({ element, ...rest }) {
+//   const loggedInUser = localStorage.getItem('user');
+
+//   return (
+//     <Route
+//       {...rest}
+//       element={loggedInUser ? element : <Navigate to="/login" replace />}
+//     />
+//   );
+// }
+
+function AuthRoutes() {
+  const loggedInUser = localStorage.getItem("userid");
+
+  console.log(loggedInUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedInUser) {
+      navigate('/login', { replace: true });
+    }
+  }, [loggedInUser, navigate]);
 
   return (
-    <Route
-      {...rest}
-      element={user ? <Element /> : <Navigate to="/login" />}
-    />
-  );
-}
-
-function App() {
-  const [show,setShow] = useState(false)
-  return (
-    <div className="App">
-      {/* <TodoList /> */}
-     
-
-
-      
-      { /* Used to route thorugh pages add any adition pages here} */ }
-      
-  <UserContextProvider>
-  <BrowserRouter>
-  
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Welcome />} />
@@ -65,24 +64,35 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Route>
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/main" element={<MainPage />} />
-        <Route path="/calendar" element={<CalendarFunc />} />
-        <Route path="/todo" element={<TodoList />} />
-        <Route path="/add" element={<AddEvent />} />
-        <Route path='/team/:team' element={<TeamHome />} />
-      </Route>
+      {loggedInUser ? (
+        <Route path="/" element={<DefaultLayout />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/main" element={<MainPage />} />
+          <Route path="/calendar" element={<CalendarFunc />} />
+          <Route path="/todo" element={<TodoList />} />
+          <Route path="/add" element={<AddEvent />} />
+          <Route path='/team/:team' element={<TeamHome />} />
+        </Route>
+      ) : null}
     </Routes>
-   
-  </BrowserRouter>
-</UserContextProvider>
-      
-      {/* <Todo /> */}
+  );
+}
 
-      {/* <TodoList /> */}
-    </div>
+function App() {
+  const [redirect, setRedirect] = useState(false);
+  const [show,setShow] = useState(false);
+
+  // Check if user is logged in
+
+  return (
+    <div className="App">
+    <UserContextProvider>
+      <BrowserRouter>
+        <AuthRoutes />
+      </BrowserRouter>
+    </UserContextProvider>
+  </div>
   );
 }
 

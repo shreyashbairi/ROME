@@ -21,7 +21,10 @@ const EditEvent = (props) => {
             startTime: parseInt(eventStartTime.substring(0,2)),
             endTime: parseInt(eventEndTime.substring(0,2)),
             title: eventTitle,
-            description: eventDescription
+            description: eventDescription,
+            teamName: props.event,
+            teamID: -1,
+            color: "gray"
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
         let exists = false;
@@ -29,6 +32,9 @@ const EditEvent = (props) => {
         for(let i = 0; i < props.events.length; i++) {
             if (props.events[i].title === newElapsedEvent.title) {
                 exists = true;
+                newElapsedEvent.color = props.events[i].color;
+                newElapsedEvent.teamName = props.events[i].color;
+                newElapsedEvent.teamID = props.events[i].teamID;
                 eventIndex = i;
                 break;
             }

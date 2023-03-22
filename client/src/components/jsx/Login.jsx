@@ -25,7 +25,7 @@ function Login() {
         alert('User not found');
       }
     } catch (e) {
-      alert('Login Failed');
+      alert('Login Failed. Invalid Username or Password');
     }
   }
 
