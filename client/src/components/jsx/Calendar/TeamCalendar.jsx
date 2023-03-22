@@ -1,6 +1,6 @@
-import "../../css/Calendar.css";
+import "../../css/TeamCalendar.css";
 import React, {Component} from 'react';
-import CalendarDays from "./CalendarDays";
+import TeamCalendarDays from "./TeamCalendarDays";
 import AddEvent from "./AddEvent";
 import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
@@ -10,7 +10,7 @@ import EventFocus from "./EventFocus";
 
 
 
-export default function CalendarFunc (props) {
+export default function TeamCalendar (props) {
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const workWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     // const curWeekdays = weekdays;
@@ -30,6 +30,7 @@ export default function CalendarFunc (props) {
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
+        // const username = "will2"
         axios.get(`/events/${username}`)
         .then(res => {
             // console.log(res.data)
@@ -255,7 +256,7 @@ export default function CalendarFunc (props) {
 
             <div class="Calendar-container">
 
-                <div class="Calendar-header">
+                <div class="Calendar-header-team">
                     <div class="header-left">
                     <button type="button" class="btn btn-secondary" onClick={previousWeek}>&#60;</button>
                     <button type="button" class="btn btn-secondary" onClick={nextWeek}>&#62;</button>
@@ -276,7 +277,7 @@ export default function CalendarFunc (props) {
                         </div>
                     </ Popup>
 
-                    <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
+                    {/* <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
                     onOpen={openEditform} position="right center" nested modal>
                         <div class="card">
                         <EditEvent  
@@ -287,18 +288,18 @@ export default function CalendarFunc (props) {
                                 teams={teams}
                             />     
                         </div>
-                    </ Popup>
+                    </ Popup> */}
 
                     <button type="button" class="btn btn-secondary" onClick={changeViewMode}>View</button>
                     </div>
                 </div>
-                <div class="Calendar-content-body">
-                    <div class ="event-focus">
+                <div class="Calendar-content-body-team">
+                    {/* <div class ="event-focus">
                         <EventFocus 
                             teams = {teams}
                             handleFocus={handleFocus}
                         />
-                    </div>
+                    </div> */}
                     <div class="time-sidebar">
                         {
                             hours.map((hour) => {
@@ -315,7 +316,7 @@ export default function CalendarFunc (props) {
                                 })
                             }
                             </div>
-                            <CalendarDays 
+                            <TeamCalendarDays 
                                 day={currentDay} 
                                 changeCurrentDay={changeCurrentDay} 
                                 events={events} 

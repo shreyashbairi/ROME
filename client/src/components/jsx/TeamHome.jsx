@@ -6,9 +6,13 @@ import AddEvent from "./Calendar/AddEvent"
 import { useState } from "react"
 import TeamTodoList from "./TeamTodo/TeamTodoList"
 import AddTeamMember from "./AddTeamMember"
+import TeamCalendar from "./Calendar/TeamCalendar"
+import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
     const [addTeam, setAddTeam] = useState(false);
+    const [bodyView, setBodyView] = useState(0);
+    const [bodyViewName, setBodyViewName] = useState("Todo");
     const closeAdd = () => {
         setAddTeam(false);
     }
@@ -34,11 +38,40 @@ function TeamHome() {
             }}
         />
     );
+    
+    const changePersonalCalendar = () => {
+        setBodyView(3);
+        setBodyViewName("Calendar");
+    }
+
+
+    const changeBody = () => {
+        if (bodyView == 0) {
+            setBodyView(1);
+            setBodyViewName("Calendar");
+        } else {
+            setBodyView(0);
+            setBodyViewName("Todo");
+        }
+    }
+
+    let teamBody;
+    if (bodyView === 0) {
+        teamBody = <TeamTodoList />
+    } else if (bodyView === 1) {
+        teamBody = <TeamCalendar />
+        // teamBody = <TeamMemberCalendar />
+    } else {
+        teamBody = <TeamMemberCalendar />
+    }
+    
     return (
         <div >
         <div class="todobefore"> 
             <div className="top bg-primary">
-                Current Tasks
+                {/* Current Tasks */}
+                <button type="button" class="btn btn-secondary" onClick={changeBody}>{bodyViewName}</button>
+                {/* TODO ^^^make only display for managers */}
             </div>
             
             {/* <Popup class="updatetask" trigger={<button type="button" class="btn btn-secondary"> {'>'} </button>} open={show}
@@ -50,7 +83,10 @@ function TeamHome() {
                                 />     
                             </div>
             </ Popup> */}
-            <TeamTodoList />
+            <div class="team-body">
+            {teamBody}
+            </div>
+            {/* <TeamTodoList /> */}
         </div> 
         {/* <div class="todoprogress"> 
             <div className="top bg-primary">
