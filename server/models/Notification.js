@@ -12,4 +12,4 @@ const NotificationSchema = new Schema({
 
 const EventModel = mongoose.model('Notification', NotificationSchema);
 
-module.exports = NotificationModel;
+module.exports = NotificationSchema;
