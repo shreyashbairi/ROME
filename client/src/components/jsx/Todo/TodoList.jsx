@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import TodoForm from './TodoForm1'
 import Todo from './Todo'
-import {AiFillPlusCircle} from 'react-icons/ai'
+import {AiFillPlusCircle , AiFillFilter} from 'react-icons/ai'
 import axios from 'axios'
+import Popup from "reactjs-popup";
+
 
 
 function TodoList(props) {
@@ -75,8 +77,32 @@ function TodoList(props) {
 
         <h1 id='header'>
             Your Tasks
+
+            <Popup trigger={  <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <AiFillFilter/>
+                    </button>  }  >
+                <div className="card-header">
+                    <p className="title">Filter</p>
+                </div>
+                <div class="focus-body">
+                    {/* {teamBoxes.map((item, index) => {
+                        return ( */}
+                        <div className="checkbox-container">
+                            <input
+                            type="checkbox"
+                            name="teams"
+                            // value={}
+                            // onChange={}
+                            />
+                            <label style={{}}>{}</label>
+                        </div>
+                        {/* );
+                    })} */}
+                </div>                    
+            </ Popup>
             
         </h1>
+        
         <h3 class="task-add-button"><AiFillPlusCircle onClick={clicked}/></h3>
 
         <TodoForm 

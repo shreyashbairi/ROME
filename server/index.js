@@ -8,6 +8,8 @@ const User = require('./models/User.js');
 const Team = require('./models/Team.js');
 const Events = require('./models/Events.js');
 const Event = require('./models/Event.js');
+const Notification = require('./models/Notification.js');
+
 const Task = require('./models/ToDoSchema.js');
 const TeamTask=require('./models/TeamTask');
 const cookieParser = require('cookie-parser');
@@ -415,6 +417,25 @@ app.delete("/teamtaskdelete", async(req,res) => {
     TeamTask.deleteMany({complete: true}, function(err) {
     });
 })
+
+app.post('/invitenotification', async (req, res) =>{
+    const {newUsernameid, newDate, newDescription, 
+         newTeamName, newTeamID} = req.body;
+    try {
+        const notification = await Notification.create(
+            {
+                usernameid: newUsernameid,
+                date: newDate,
+                description: newDescription,
+                teamName: newTeamName,
+                teamID: newTeamID,
+            });
+        res.json(notification);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
 
 
 
