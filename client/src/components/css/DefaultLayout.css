@@ -12,6 +12,12 @@
     }
 }
 
+.notification {
+    border: none ;
+    background-color: none;
+    cursor: pointer;
+}
+
 .pic{
     margin-left: 10px;
 }

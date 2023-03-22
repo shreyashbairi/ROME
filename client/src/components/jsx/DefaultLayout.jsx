@@ -8,6 +8,8 @@ import Popup from "reactjs-popup";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
+import  { AiFillBell } from 'react-icons/ai'
+
 
 
 
@@ -97,9 +99,11 @@ function DefaultLayout () {
           <li><a class="dropdown-item" href="#">Levelling up Your Next.js</a></li>
         </ul>
       </div> */}
- 
-                    <Popup trigger={<button type="button" class="">                     <img src="https://static.vecteezy.com/system/resources/previews/006/086/198/original/notification-icon-for-web-vector.jpg" alt="Logo" width="35" height="35" class="" />
-                        </button>}  >
+
+
+                    <Popup trigger={  <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <AiFillBell/>
+                    </button>  }  >
                         <p>Here is my notification</p>
                     </ Popup>
 
