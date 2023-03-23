@@ -73,7 +73,6 @@ function DefaultLayout () {
         localStorage.setItem('isLoggedIn', 'false'); 
         Cookies.remove("token");
         navigate("/Welcome");
-        
       };
 
     function changeTeam(team) {
@@ -92,27 +91,39 @@ function DefaultLayout () {
                     
                     {/* PAGENAME */}
                     <div>  
-                    {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-    </DropdownButton> */}
-                    {/* <div class="dropdown mt-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown">
-          Choose a book title
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="book-dropdown">
-          <li><a class="dropdown-item" href="#">Become a React Superhero</a></li>
-          <li><a class="dropdown-item" href="#">Conquering Vue.js</a></li>
-          <li><a class="dropdown-item" href="#">Levelling up Your Next.js</a></li>
-        </ul>
-      </div> */}
-
-
-                    <Popup trigger={  <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  >
-                        <p>Here is my notification</p>
+                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">invite from Chiho sOng</button>} nested modal>
+                            <div classname="loginpopup">
+                                        <div class="formPopup" id="popupForm">
+                                        <h2>Invite from</h2>
+                                        <form autoComplete="off" >
+                                        <div class="row mt-3">
+                                            <div class="col-sm-3">
+                                            <strong>Title</strong>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                Name
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-sm-3">
+                                            <strong>Description</strong>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                Description
+
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn">Submit</button>
+                                        </form>
+                                        </div>
+                            </div>
+                            </ Popup>
+                            
+
+
                     </ Popup>
 
          
@@ -129,13 +140,6 @@ function DefaultLayout () {
             </nav> 
             <Outlet />
             <div class="sidebar">
-
-            {/* <a href="#bar">                        
-                <img src="https://www.hyperakt.com/assets/images/fc-barcelona/_1200x1200_crop_center-center_82_line/Barcelona.jpg" alt="Logo" width="40" height="40" class="rounded mx-auto d-block center" />      
-            </a>
-            <a href="#real">
-                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/1200px-Real_Madrid_CF.svg.png" alt="Logo" width="40" height="40" class="rounded mx-auto d-block center" />      
-            </a> */}
             <div>
                 {teams.map((team,index)=>{
                     return (
