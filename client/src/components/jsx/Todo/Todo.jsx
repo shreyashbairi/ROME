@@ -7,10 +7,11 @@ import Popup from 'reactjs-popup'
 import TodoEdit from './TodoEdit'
 import '../../css/Todo.css';
 
-function Todo({todos,completeTodo,removeTodo,editTask}) {
+function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending,setTodos}) {
     const [show, setShow] = useState(false);
     const [edit, setEdit] = useState(false);
     const [color, setColor] = useState('black');
+    const [buttonPrinted] = useState(false);
     
 
     var currentDate = () => {
@@ -119,9 +120,33 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
                         <Popup class="detailedTask" 
                             trigger={
                                 // <button style={todo.date < new Date() && {color: 'red'}}>
-                                <button className={(todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
-                                    {todo.title}<br></br>{todo.date} 
-                                </button>
+                                <div className='filters'>
+
+                                    {(()=>{
+                                    var date = new Date();
+                                    date.setDate(date.getDate()+7);
+                                    if (seven && todo.date <= date.toISOString().substring(0,10) && todo.date >= new Date().toISOString().substring(0,10)) {
+                                    {/* list only next seven days */}
+                                        return(<button>
+                                            {todo.title}<br></br>{todo.date} 
+                                        </button>)
+                                    }
+                                    else if (pastDue && !seven && todo.date<new Date().toISOString().substring(0,10)) {
+                                    {/* list only past due */}
+                                    return(<button className={!seven && pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
+                                        {todo.title}<br></br>{todo.date} 
+                                    </button>)
+                                    } else if (!pastDue && !seven) {
+
+                                    {/* default list all */}
+                                    return(<button className={!seven && !pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
+                                        {todo.title}<br></br>{todo.date}
+                                    </button>)
+
+                                    }
+
+                                    })()}
+                                </div>
                             } 
                             open={show}
                             onOpen={openform} 

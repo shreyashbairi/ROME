@@ -15,6 +15,9 @@ function TodoList(props) {
         description:String,
         date:Object
     }])
+    const [seven, setSeven] = useState(false);
+    const [ascending, setAscending] = useState(false);
+    const [pastDue, setPastDue] = useState(false);
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
@@ -42,16 +45,16 @@ function TodoList(props) {
 
     async function removeTodo(task) {
         console.log([...todos])
-        const toDel = [...todos].filter(todo=>todo.id === task.id);
+        // const toDel = [...todos].filter(todo=>todo.id === task.id);
         const removeArray = [...todos].filter(todo => todo.id !== task.id)
         console.log(task.title);
-        try {
-            await axios.delete("/personaltaskdelete", {
-                title:task.title
-            });
-        } catch (e) {
-            alert("Task wasn't deleted")
-        }
+        // try {
+        //     await axios.delete("/personaltaskdelete", {
+        //         title:task.title
+        //     });
+        // } catch (e) {
+        //     alert("Task wasn't deleted")
+        // }
 
         setTodos(removeArray)
     }
@@ -81,6 +84,14 @@ function TodoList(props) {
         console.log(click)
     }
 
+    function processFilters(pastDue, seven, ascending, descending) {
+        console.log("entered");
+        console.log(pastDue);
+        console.log(seven);
+        console.log(ascending);
+        console.log(descending);
+    }
+
   return (
     <div id="container">
 
@@ -93,7 +104,10 @@ function TodoList(props) {
                 <div className="card-header">
                     <p className="title">Filter</p>
                 </div>
-                <div class="focus-body">
+                <form 
+                    class="focus-body"
+                    onSubmit={processFilters(pastDue, seven, ascending)}
+                >
                     {/* {teamBoxes.map((item, index) => {
                         return ( */}
                         <div className="checkbox-container">
@@ -101,7 +115,7 @@ function TodoList(props) {
                             type="checkbox"
                             name="teams"
                             // value={}
-                            // onChange={}
+                            onChange={()=>setPastDue(!pastDue)}
                             />
                             <label style={{}}>Past Due</label>
                         </div>
@@ -110,49 +124,13 @@ function TodoList(props) {
                             type="checkbox"
                             name="teams"
                             // value={}
-                            // onChange={}
-                            />
-                            <label style={{}}>Future Deadlines</label>
-                        </div>
-                        <div className="checkbox-container">
-                            <input
-                            type="checkbox"
-                            name="teams"
-                            // value={}
-                            // onChange={}
+                            onChange={()=>setSeven(!seven)}
                             />
                             <label style={{}}>Next 7 Days</label>
                         </div>
-                        <div className="checkbox-container">
-                            <input
-                            type="checkbox"
-                            name="teams"
-                            // value={}
-                            // onChange={}
-                            />
-                            <label style={{}}>Next 4 Weeks</label>
-                        </div>
-                        <div className="checkbox-container">
-                            <input
-                            type="checkbox"
-                            name="teams"
-                            // value={}
-                            // onChange={}
-                            />
-                            <label style={{}}>Personal Tasks</label>
-                        </div>
-                        <div className="checkbox-container">
-                            <input
-                            type="checkbox"
-                            name="teams"
-                            // value={}
-                            // onChange={}
-                            />
-                            <label style={{}}>Team Tasks</label>
-                        </div>
                         {/* );
                     })} */}
-                </div>                    
+                </form>                    
             </ Popup>
             
         </h1>
@@ -170,6 +148,11 @@ function TodoList(props) {
             completeTodo={completeTodo}
             removeTodo={removeTodo}
             editTask={editTask}
+            seven={seven}
+            ascending={ascending}
+            pastDue={pastDue}
+            setTodos={setTodos}
+
         />
         
     </div>
