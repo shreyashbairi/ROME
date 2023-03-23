@@ -428,13 +428,14 @@ app.delete("/personaltaskdelete", async(req,res) => {
 })
 
 app.post('/invitenotification', async (req, res) =>{
-    const {newUsernameid, newDate, newDescription, 
+    const {newFromuser, newTouser, newType, newDescription, 
          newTeamName, newTeamID} = req.body;
     try {
         const notification = await Notification.create(
             {
-                usernameid: newUsernameid,
-                date: newDate,
+                fromuser: newFromuser,
+                touser: newTouser,
+                type: newType,
                 description: newDescription,
                 teamName: newTeamName,
                 teamID: newTeamID,

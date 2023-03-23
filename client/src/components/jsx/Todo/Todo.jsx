@@ -123,8 +123,6 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
                                     {todo.title}<br></br>{todo.date} 
                                 </button>
                             } 
-                            open={show}
-                            onOpen={openform} 
                             position="right center" nested modal
                         >
                             
@@ -155,7 +153,6 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
                                         {todo.date}
                                     </div>
                                 </div>
-                                <button type="Cancel" class="btn cancel" onClick={closeform}>Cancel</button>
    
                             </div>
 

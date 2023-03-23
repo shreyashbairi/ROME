@@ -85,7 +85,6 @@ const TodoEdit = (props) => {
 
         <button type="submit" class="btn">Submit</button>
         </form>
-        <button type="Cancel" class="btn cancel" onClick={()=> props.setTrigger()}>Cancel</button>
         </div>
       </div>
 
