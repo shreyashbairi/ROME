@@ -418,6 +418,15 @@ app.delete("/teamtaskdelete", async(req,res) => {
     });
 })
 
+app.delete("/personaltaskdelete", async(req,res) => {
+    const {title} = req.body;
+
+    console.log(title);
+
+    Task.deleteOne({title:title}, function(err) {
+    });
+})
+
 app.post('/invitenotification', async (req, res) =>{
     const {newUsernameid, newDate, newDescription, 
          newTeamName, newTeamID} = req.body;

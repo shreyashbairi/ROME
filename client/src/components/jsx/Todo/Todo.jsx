@@ -85,7 +85,7 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
         }
         return (
             <AiFillCloseCircle
-                                    onClick={()=>removeTodo(todo.id)}
+                                    onClick={()=>removeTodo(todo)}
             />
         )
     }
@@ -183,7 +183,7 @@ function Todo({todos,completeTodo,removeTodo,editTask}) {
                             
                         <div>
                             <AiFillCloseCircle
-                                onClick={()=>removeTodo(todo.id)}
+                                onClick={()=>removeTodo(todo)}
                             />
                             {/* <TiEdit
                                 onClick={()=>setChange({id: todo.id, value:todo.text})}

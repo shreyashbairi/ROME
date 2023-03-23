@@ -40,10 +40,19 @@ function TodoList(props) {
         console.log(todo)
     }
 
-    const removeTodo = id => {
+    async function removeTodo(task) {
         console.log([...todos])
-        const removeArray = [...todos].filter(todo => todo.id !== id)
-        
+        const toDel = [...todos].filter(todo=>todo.id === task.id);
+        const removeArray = [...todos].filter(todo => todo.id !== task.id)
+        console.log(task.title);
+        try {
+            await axios.delete("/personaltaskdelete", {
+                title:task.title
+            });
+        } catch (e) {
+            alert("Task wasn't deleted")
+        }
+
         setTodos(removeArray)
     }
 
@@ -94,7 +103,52 @@ function TodoList(props) {
                             // value={}
                             // onChange={}
                             />
-                            <label style={{}}>{}</label>
+                            <label style={{}}>Past Due</label>
+                        </div>
+                        <div className="checkbox-container">
+                            <input
+                            type="checkbox"
+                            name="teams"
+                            // value={}
+                            // onChange={}
+                            />
+                            <label style={{}}>Future Deadlines</label>
+                        </div>
+                        <div className="checkbox-container">
+                            <input
+                            type="checkbox"
+                            name="teams"
+                            // value={}
+                            // onChange={}
+                            />
+                            <label style={{}}>Next 7 Days</label>
+                        </div>
+                        <div className="checkbox-container">
+                            <input
+                            type="checkbox"
+                            name="teams"
+                            // value={}
+                            // onChange={}
+                            />
+                            <label style={{}}>Next 4 Weeks</label>
+                        </div>
+                        <div className="checkbox-container">
+                            <input
+                            type="checkbox"
+                            name="teams"
+                            // value={}
+                            // onChange={}
+                            />
+                            <label style={{}}>Personal Tasks</label>
+                        </div>
+                        <div className="checkbox-container">
+                            <input
+                            type="checkbox"
+                            name="teams"
+                            // value={}
+                            // onChange={}
+                            />
+                            <label style={{}}>Team Tasks</label>
                         </div>
                         {/* );
                     })} */}
