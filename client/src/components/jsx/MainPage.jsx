@@ -15,7 +15,7 @@ import {Link} from 'react-router-dom'
 
 function MainPage (){
     // let navigation = useNavigate();
-    const [show,setShow] = useState(false)
+    const [show,setShow] = useState(false);
     const enterTeam = (team, index) => {
         //  console.log(team, index)
          //route to team page localhost:3000/team/{index}/

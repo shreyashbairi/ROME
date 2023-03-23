@@ -9,6 +9,8 @@ import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
 import  { AiFillBell } from 'react-icons/ai'
+import Cookies from 'js-cookie';
+
 
 
 
@@ -21,6 +23,7 @@ function DefaultLayout () {
     const navigate = useNavigate();
     const [buttonPop, setButtonPop] = useState(false);
     const [joinPop, setJoinPop] = useState(false);
+    const [isLoggedIn] = useState(false);
 
     const {user,setUser} = useContext(UserContext);
 
@@ -64,8 +67,13 @@ function DefaultLayout () {
 
     const handlelogout = async () => {
         await axios.post('/logout');
-        navigate("/Welcome");
+        console.log(user);
         setUser(null);
+        localStorage.setItem('userid', "");
+        localStorage.setItem('isLoggedIn', 'false'); 
+        Cookies.remove("token");
+        navigate("/Welcome");
+        
       };
 
     function changeTeam(team) {

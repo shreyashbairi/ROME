@@ -9,6 +9,7 @@ function Login() {
   const [userUserName, setUserUserName] = useState("");
   const [userPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { setUser } = useContext(UserContext);
 
   async function HandleSubmit(e) {
@@ -18,9 +19,11 @@ function Login() {
       setUser(data);
       if (data != null) {
         alert(`login successful. Hi ${userUserName}!`);
+        //TODO: set the user context
         localStorage.setItem('userid', userUserName);
         setRedirect(true); // Set the redirect state to true
-        localStorage.setItem('isLoggedIn', 'true'); 
+        setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', 'true');
       } else {
         alert('User not found');
       }

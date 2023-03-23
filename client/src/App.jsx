@@ -44,16 +44,23 @@ axios.defaults.withCredentials = true;
 // }
 
 function AuthRoutes() {
-  const loggedInUser = localStorage.getItem("userid");
+   
 
+  const isLoggedIn =localStorage.getItem('isLoggedIn');
+  console.log(isLoggedIn);
+  const loggedInUser = localStorage.getItem("userid");
   console.log(loggedInUser);
+  
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!loggedInUser) {
-      navigate('/login', { replace: true });
-    }
-  }, [loggedInUser, navigate]);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     navigate('/login', { replace: true });
+  //   }
+  // }, [loggedInUser, navigate]);
+  if (!isLoggedIn) {
+    navigate('/login');
+  }
 
   return (
     <Routes>
@@ -64,17 +71,16 @@ function AuthRoutes() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Route>
-      {loggedInUser ? (
         <Route path="/" element={<DefaultLayout />}>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/editprofile" element={<EditProfile />} />
-          <Route path="/main" element={<MainPage />} />
-          <Route path="/calendar" element={<CalendarFunc />} />
-          <Route path="/todo" element={<TodoList />} />
-          <Route path="/add" element={<AddEvent />} />
-          <Route path='/team/:team' element={<TeamHome />} />
+          <Route path="/profile" element={isLoggedIn === 'true' ? <Profile /> : <Navigate to="/login" />}/>
+          <Route path="/main" element={isLoggedIn === 'true' ? <MainPage /> : <Navigate to="/login" />}/>
+          <Route path="/editprofile" element={isLoggedIn === 'true' ? <EditProfile /> : <Navigate to="/login" />}/>
+          <Route path="/calendar" element={isLoggedIn === 'true' ? <CalendarFunc /> : <Navigate to="/login" />}/>
+          <Route path="/todo" element={isLoggedIn === 'true' ? <TodoList /> : <Navigate to="/login" />}/>
+          <Route path="/add" element={isLoggedIn === 'true' ? <AddEvent /> : <Navigate to="/login" />}/>
+          <Route path='/team/:team' element={isLoggedIn === 'true' ? <TeamHome /> : <Navigate to="/login" />}/>
         </Route>
-      ) : null}
+      : null;
     </Routes>
   );
 }
@@ -83,7 +89,7 @@ function App() {
   const [redirect, setRedirect] = useState(false);
   const [show,setShow] = useState(false);
 
-  // Check if user is logged in
+  // Check if user is logged in <Route path="/calendar" element={<CalendarFunc />} />   <Route path="/editprofile" element={<EditProfile />} />  <Route path="/main" element={<MainPage />} />
 
   return (
     <div className="App">
