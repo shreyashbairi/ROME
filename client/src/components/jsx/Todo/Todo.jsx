@@ -54,31 +54,6 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
         return <TodoForm change={change} onSubmit={submitUpdate}/>
     }
 
-    // return todos.map((todo,index)=>(
-    //     <div 
-    //     className={todo.isComplete ? 'todo-row complete' :
-    //     'todo-row'} 
-    //     key={index}>
-
-    //         <div key={todo.id} onClick={()=>completeTodo(todo.id)}>
-    //             {todo.text}
-    //         </div>
-    //         <div
-    //             className="icons"
-    //         >
-    //             <AiFillCloseCircle
-    //                 onClick={()=>removeTodo(todo.id)}
-    //                 className='delete-task-icon'
-    //             />
-    //             {/* <TiEdit 
-    //                 onClick={()=>setChange({id: todo.id, value:todo.text})}
-    //                 className='edit-task-icon'
-    //             /> */}
-    //         </div>
-
-    //     </div>
-    // ))
-
     const displayIcon = (todo) => {
         console.log(todo)
         if (!todo.title || /^\s*$/.test(todo.title)) {
@@ -86,7 +61,7 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
         }
         return (
             <AiFillCloseCircle
-                                    onClick={()=>removeTodo(todo)}
+                    onClick={()=>removeTodo(todo)}
             />
         )
     }
@@ -134,131 +109,103 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                                     if (seven && todo.date <= date.toISOString().substring(0,10) && todo.date >= new Date().toISOString().substring(0,10)) {
                                     {/* list only next seven days */}
                                         return(
-                                        <>
-                                        <button>
-                                            {todo.title}<br></br>{todo.date} 
-                                            {()=>setButtonPrinted(true)}
-                                        </button>
-                                        <div>
+                                            <>
+                                                <button>
+                                                    {todo.title}<br></br>{todo.date} 
+                                                    {()=>setButtonPrinted(true)}
+                                                </button>
+                                                <div>
 
-                                        <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
-                            onOpen={openedit} position="right center" nested modal>
-                            <div class="card">
-                            <TodoEdit 
-                                    trigger={edit}
-                                    setTrigger={closeedit}
-                                    scheduleEvent={todo}
-                                    title={todo.title}
-                                />     
-                            </div>
-                        </Popup>
+                                                    <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
+                                                        onOpen={openedit} position="right center" nested modal>
+                                                        <div class="card">
+                                                        <TodoEdit 
+                                                                trigger={edit}
+                                                                setTrigger={closeedit}
+                                                                scheduleEvent={todo}
+                                                                title={todo.title}
+                                                            />     
+                                                        </div>
+                                                    </Popup>
 
-                        <div key={todo.id} > 
-                        {/* onClick={()=>completeTodo(todo.id)} was removed from above */}
-                        {/* <button>
-                            {todo.title} {todo.date}
-                        </button> */}
-                            
-                            
-                        </div>
-                            
-                        <div>
-                            <AiFillCloseCircle
-                                onClick={()=>removeTodo(todo)}
-                            />
-                            {/* <TiEdit
-                                onClick={()=>setChange({id: todo.id, value:todo.text})}
-                            /> */}
-                        </div> 
+                                        
+                                                    <div>
+                                                        <AiFillCloseCircle
+                                                            onClick={()=>removeTodo(todo)}
+                                                        />
+                                                        {/* <TiEdit
+                                                            onClick={()=>setChange({id: todo.id, value:todo.text})}
+                                                        /> */}
+                                                    </div> 
 
-                                        </div>
-                                        </>
+                                                </div>
+                                            </>
                                         )
                                     }
                                     else if (pastDue && !seven && todo.date<new Date().toISOString().substring(0,10)) {
                                     {/* list only past due */}
                                     return(
                                     <>
-                                    <button className={!seven && pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
-                                        {todo.title}<br></br>{todo.date}
-                                        {()=>setButtonPrinted(true)}
-                                    </button>
-                                    <div>
+                                        <button className={!seven && pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
+                                            {todo.title}<br></br>{todo.date}
+                                            {()=>setButtonPrinted(true)}
+                                        </button>
+                                        <div>
 
-                                    <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
-                            onOpen={openedit} position="right center" nested modal>
-                            <div class="card">
-                            <TodoEdit 
-                                    trigger={edit}
-                                    setTrigger={closeedit}
-                                    scheduleEvent={todo}
-                                    title={todo.title}
-                                />     
-                            </div>
-                        </Popup>
+                                            <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
+                                                onOpen={openedit} position="right center" nested modal>
+                                                <div class="card">
+                                                <TodoEdit 
+                                                        trigger={edit}
+                                                        setTrigger={closeedit}
+                                                        scheduleEvent={todo}
+                                                        title={todo.title}
+                                                    />     
+                                                </div>
+                                            </Popup>
+                                    
+                                            <div>
+                                                <AiFillCloseCircle
+                                                    onClick={()=>removeTodo(todo)}
+                                                />
+                                            </div>
 
-                        <div key={todo.id} > 
-                        {/* onClick={()=>completeTodo(todo.id)} was removed from above */}
-                        {/* <button>
-                            {todo.title} {todo.date}
-                        </button> */}
-                            
-                            
-                        </div>
-                            
-                        <div>
-                            <AiFillCloseCircle
-                                onClick={()=>removeTodo(todo)}
-                            />
-                            {/* <TiEdit
-                                onClick={()=>setChange({id: todo.id, value:todo.text})}
-                            /> */}
-                        </div>
-
-                                    </div>
+                                        </div>
                                     </>
                                     )
                                     } else if (!pastDue && !seven) {
 
                                     {/* default list all */}
                                     return(
-                                    <><button className={!seven && !pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
-                                        {todo.title}<br></br>{todo.date}
-                                        {()=>setButtonPrinted(true)}
-                                    </button>
-                                    <div>
+                                    <>
+                                        <button className={!seven && !pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
+                                            {todo.title}<br></br>{todo.date}
+                                            {()=>setButtonPrinted(true)}
+                                        </button>
+                                        <div>
 
-                                    <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
-                            onOpen={openedit} position="right center" nested modal>
-                            <div class="card">
-                            <TodoEdit 
-                                    trigger={edit}
-                                    setTrigger={closeedit}
-                                    scheduleEvent={todo}
-                                    title={todo.title}
-                                />     
-                            </div>
-                        </Popup>
+                                            <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
+                                                onOpen={openedit} position="right center" nested modal>
+                                                <div class="card">
+                                                <TodoEdit 
+                                                        trigger={edit}
+                                                        setTrigger={closeedit}
+                                                        scheduleEvent={todo}
+                                                        title={todo.title}
+                                                    />     
+                                                </div>
+                                            </Popup>
+                                    
+                                            <div>
+                                                <AiFillCloseCircle
+                                                    onClick={()=>removeTodo(todo)}
+                                                />
+                                                {/* <TiEdit
+                                                    onClick={()=>setChange({id: todo.id, value:todo.text})}
+                                                /> */}
+                                            </div>
 
-                        <div key={todo.id} > 
-                        {/* onClick={()=>completeTodo(todo.id)} was removed from above */}
-                        {/* <button>
-                            {todo.title} {todo.date}
-                        </button> */}
-                            
-                            
-                        </div>
-                            
-                        <div>
-                            <AiFillCloseCircle
-                                onClick={()=>removeTodo(todo)}
-                            />
-                            {/* <TiEdit
-                                onClick={()=>setChange({id: todo.id, value:todo.text})}
-                            /> */}
-                        </div>
-
-                                    </div>
+                                        </div>
                                     </>)
 
                                     }
