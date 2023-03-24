@@ -70,7 +70,7 @@ export default function CalendarFunc (props) {
             }
             setEvents([...events, ...elapsedEvent])
         });
-        axios.get(`/getViewMode/${username}`)
+        axios.get(`/getUser/${username}`)
         .then(res => {
             let userProfile = res.data;
             // console.log(userProfile);
