@@ -3,16 +3,36 @@ import "../css/TeamHome.css"
 import Popup from "reactjs-popup"
 import UpdateTask from "./UpdateTask"
 import AddEvent from "./Calendar/AddEvent"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import TeamTodoList from "./TeamTodo/TeamTodoList"
 import AddTeamMember from "./AddTeamMember"
 import TeamCalendar from "./Calendar/TeamCalendar"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
+import axios from "axios";
+
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
     const [addTeam, setAddTeam] = useState(false);
     const [bodyView, setBodyView] = useState(0);
     const [bodyViewName, setBodyViewName] = useState("Todo");
+    const [managerBool, setManagerBool] = useState(false);
+    
+    useEffect(() => {
+        const teamname = localStorage.getItem('team');
+        const username = localStorage.getItem('userid');
+        axios.get(`getmanager/${teamname}`)
+        .then(res => {
+            const manager = res.data;
+            console.log(manager);
+            const managername = manager.userUserName;
+            if (managername === username) {
+                setManagerBool(true);
+            } else {
+                setManagerBool(false);
+            }
+        })
+    }, [])
+    
     const closeAdd = () => {
         setAddTeam(false);
     }
@@ -46,10 +66,10 @@ function TeamHome() {
 
 
     const changeBody = () => {
-        if (bodyView == 0) {
+        if (bodyView == 0 && managerBool) {
             setBodyView(1);
             setBodyViewName("Calendar");
-        } else {
+        } else if (managerBool) {
             setBodyView(0);
             setBodyViewName("Todo");
         }
@@ -58,10 +78,10 @@ function TeamHome() {
     let teamBody;
     if (bodyView === 0) {
         teamBody = <TeamTodoList />
-    } else if (bodyView === 1) {
+    } else if (bodyView === 1 && managerBool) {
         teamBody = <TeamCalendar />
         // teamBody = <TeamMemberCalendar />
-    } else {
+    } else if (managerBool) {
         teamBody = <TeamMemberCalendar />
     }
     

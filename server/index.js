@@ -234,6 +234,22 @@ app.get("/fullteamevents/:teamname", async (req,res) => {
     }
 });
 
+app.get("/getmanager/:teamname", async (req,res) => {
+    // console.log(req.params.username);
+    try{
+        // console.log(req.params.teamname);
+        const team = await Team.findOne({ team: req.params.teamname });
+        // console.log(team);
+        const username = team.managerid;
+        // console.log(username);
+        const manager = await User.findOne({ userUserName: username });
+        res.json(manager);
+    } catch (e){
+        // console.log(e)
+        res.status(422).json(e);    
+    }
+});
+
 //in AddEvent
 app.post('/eventsave', async (req, res) =>{
     const {newDate, newStartTime, newEndTime, newTitle, newDescription, 
