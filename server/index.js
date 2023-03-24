@@ -147,8 +147,8 @@ app.post('/teamsubmit', async (req, res) =>{
             members: members 
         });
         const user = await User.findOne({ username: username })
-        console.log(user);
-        console.log(user.userTeamList);
+        // console.log(user);
+        // console.log(user.userTeamList);
         const newUserTeamList = [...user.userTeamList, ...userTeamList];
         const userDoc = await User.findOneAndUpdate(
             { username: username },
@@ -166,15 +166,32 @@ app.post('/teamsubmit', async (req, res) =>{
     // }
 });
 
-app.get("/teams/:username", async (req,res) => {
-    // console.log(req.params.username);
+app.get("/members/:teamname", async (req,res) => {
     try{
-        // console.log(req.params.username);
-        const teams = await Team.find({ userid: req.params.username })
-        // console.log(events);
+        const team = await Team.findOne({team: req.params.teamname});
+        const usernameList = team.members;
+        const members= []
+        for (let i = 0; i < usernameList.length; i++) {
+            const newUser = await User.findOne({userUserName: userameList[i]});
+            members.push(newTeam);
+        }
+        res.json(members);
+    } catch (e){
+        res.status(422).json(e);    
+    }
+});
+
+app.get("/teams/:username", async (req,res) => {
+    try{
+        const user = await User.findOne({userUserName: req.params.username});
+        const teamNameList = user.userTeamList;
+        const teams = []
+        for (let i = 0; i < teamNameList.length; i++) {
+            const newTeam = await Team.findOne({team: teamNameList[i]});
+            teams.push(newTeam);
+        }
         res.json(teams);
     } catch (e){
-        // console.log(e)
         res.status(422).json(e);    
     }
 });
