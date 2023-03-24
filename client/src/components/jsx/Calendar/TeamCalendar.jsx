@@ -30,10 +30,11 @@ export default function TeamCalendar (props) {
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
+        const teamname = localStorage.getItem('team');
         // const username = "will2"
-        axios.get(`/events/${username}`)
+        axios.get(`/fullteamevents/${teamname}`)
         .then(res => {
-            // console.log(res.data)
+            console.log(res.data)
             const eventsGrabed = res.data;
             // console.log(eventsGrabed.length)
             const elapsedEvent = [];
@@ -71,7 +72,7 @@ export default function TeamCalendar (props) {
             }
             setEvents([...events, ...elapsedEvent])
         });
-        axios.get(`/getViewMode/${username}`)
+        axios.get(`/getUser/${username}`)
         .then(res => {
             let userProfile = res.data;
             // console.log(userProfile);
@@ -92,7 +93,7 @@ export default function TeamCalendar (props) {
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            console.log(teamsGrabed);
+            // console.log(teamsGrabed);
             setTeams(teamsGrabed);
         });
       }, [] )
