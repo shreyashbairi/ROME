@@ -17,17 +17,65 @@ function TeamPop(props) {
         // color: {color}
     })
 
+    // async function contSubmit(e) {
+    //     console.log("USER TEAM LIST GRABED");
+    //     console.log(e.userTeamList);
+    //     try {
+    //         await axios.post('/teamsubmit',{
+    //           teamID: e.teamID,
+    //           team: team,
+    //           description: description,
+    //           username: e.username,
+    //           color: color,
+    //           members: e.members,
+    //           userTeamList: e.userTeamList
+    //         });
+    //         alert("Team Successfully Created.");
+    //       } catch (e){
+    //         alert('Team Creation Failed. Please try again later.')
+    //       }
+    //     props.onSubmit({
+    //         teamID: e.teamID,
+    //         team: team,
+    //         description: description
+    //     });
+    //     props.setTrigger(false);
+    //     setTeam("");
+    //     setDescription("");
+    // }
+
     async function handleSubmit(e) {
         e.preventDefault();
         const username = localStorage.getItem("userid");
         const teamID = Math.floor(Math.random()*10000);
+        const members = [username];
+        const userTeamList = [team];
+        // try {
+        //     await axios.get(`/getUser/${username}`)
+        //     .then(res => {
+        //         const userInfo = res.data;
+        //         console.log("USER INFO GRABED");
+        //         console.log(res.data);
+        //         userTeamList = [...userInfo.userTeamList, team];
+        //         contSubmit({
+        //             username: username,
+        //             teamID: teamID,
+        //             members: members,
+        //             userTeamList: userTeamList
+        //         })
+        //     })
+        // } catch (e) {
+        //     alert('Team Creation Failed. User Not Found')
+        // }
         try {
             await axios.post('/teamsubmit',{
               teamID: teamID,
               team: team,
               description: description,
               username: username,
-              color: color
+              color: color,
+              members: members,
+              userTeamList: userTeamList
             });
             alert("Team Successfully Created.");
           } catch (e){

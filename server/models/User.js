@@ -34,7 +34,8 @@ const UserSchema = new Schema({
     userPhone: String,
     userAddress: String,
     userNotification: Boolean,
-    userViewMode: Number
+    userViewMode: Number,
+    userTeamList: [String]
 });
 
 const UserModel = mongoose.model('User', UserSchema);

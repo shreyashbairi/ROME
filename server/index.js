@@ -75,7 +75,8 @@ app.post('/signup', async (req, res) => {
         userPhone: "",
         userAddress: "",
         userNotification: false,
-        userViewMode: 7
+        userViewMode: 7,
+        userTeamList:[]
       });
       const savedUser = await userDoc.save();
       res.status(201).json(savedUser);
@@ -133,34 +134,64 @@ app.post('/logout', (req,res) => {
     
   });
 
-//for team
+//for creating a new team TeamPop
 app.post('/teamsubmit', async (req, res) =>{
-    const {teamID, team, description, username, color} = req.body;
+    const {teamID, team, description, username, color, members, userTeamList} = req.body;
     try {
         const teamDoc = await Team.create({
             teamID: teamID,
             team: team,
             description: description,
-            userid: username,
-            role: "manager",
-            color: color
+            managerid: username,
+            color: color,
+            members: members 
         });
+        const user = await User.findOne({ username: username })
+        // console.log(user);
+        // console.log(user.userTeamList);
+        const newUserTeamList = [...user.userTeamList, ...userTeamList];
+        const userDoc = await User.findOneAndUpdate(
+            { username: username },
+            { userTeamList: newUserTeamList }
+        );
         res.json(teamDoc);
     } catch (e) {
         res.status(422).json(e);    
     }
+    // try {
+        
+    //     // res.json(userDoc);
+    // } catch (e) {
+    //     res.status(422).json(e);
+    // }
+});
 
+app.get("/members/:teamname", async (req,res) => {
+    try{
+        const team = await Team.findOne({team: req.params.teamname});
+        const usernameList = team.members;
+        const members= []
+        for (let i = 0; i < usernameList.length; i++) {
+            const newUser = await User.findOne({userUserName: userameList[i]});
+            members.push(newTeam);
+        }
+        res.json(members);
+    } catch (e){
+        res.status(422).json(e);    
+    }
 });
 
 app.get("/teams/:username", async (req,res) => {
-    console.log(req.params.username);
     try{
-        // console.log(req.params.username);
-        const teams = await Team.find({ userid: req.params.username })
-        // console.log(events);
+        const user = await User.findOne({userUserName: req.params.username});
+        const teamNameList = user.userTeamList;
+        const teams = []
+        for (let i = 0; i < teamNameList.length; i++) {
+            const newTeam = await Team.findOne({team: teamNameList[i]});
+            teams.push(newTeam);
+        }
         res.json(teams);
     } catch (e){
-        // console.log(e)
         res.status(422).json(e);    
     }
 });
@@ -334,7 +365,7 @@ app.post("/saveViewMode", async (req,res) => {
     }
 });
 
-app.get("/getViewMode/:username", async (req,res) => {
+app.get("/getUser/:username", async (req,res) => {
     try{
         const user = await User.findOne({ username: req.params.username })
         // console.log(user);
