@@ -120,9 +120,9 @@ function TeamHome() {
                 Completed
             </div>
 
-
+     //opens the popup that is in addteammembers
         </div>  */}
-
+   
         <div class="members">
             <div className="top bg-primary">
                 members
