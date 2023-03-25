@@ -27,6 +27,7 @@ export default function CalendarFunc (props) {
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
     const [teams, setTeams] = useState([]);
     const [focusTeams, setFocusTeams] = useState([]);
+    
 
     useEffect( () => {
         const username = localStorage.getItem('userid');

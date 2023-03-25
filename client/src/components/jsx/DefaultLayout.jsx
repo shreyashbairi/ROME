@@ -11,10 +11,6 @@ import JoinTeamPop from "./JoinTeamPop";
 import  { AiFillBell } from 'react-icons/ai'
 import Cookies from 'js-cookie';
 
-
-
-
-
 //import { UserContext } from "./UserContext";
 
 function DefaultLayout () {
@@ -24,7 +20,7 @@ function DefaultLayout () {
     const [buttonPop, setButtonPop] = useState(false);
     const [joinPop, setJoinPop] = useState(false);
     const [isLoggedIn] = useState(false);
-
+    const [color,setColor] = useState('');
     const {user,setUser} = useContext(UserContext);
 
     const [teams, setTeams] = useState([{
@@ -41,6 +37,11 @@ function DefaultLayout () {
             console.log(teamsGrabed);
             setTeams(teamsGrabed);
         })
+        axios.get(`/color/${username}`)
+        .then (res => {
+            setColor(res.data);
+        })
+
     }, [] )
 
     const newTeamButton = () => {
@@ -55,7 +56,6 @@ function DefaultLayout () {
         if (!newTeam.team || /^\s*$/.test(newTeam.team)) {
             return;
         }
-
         const withNew = [newTeam,...teams]
         setTeams(withNew)
         console.log(teams)
@@ -83,7 +83,7 @@ function DefaultLayout () {
     return (
         <>
         
-            <nav class="navbar navbar-light bg-primary mt-1 rounded">
+            <nav style={{backgroundColor: color}} class="navbar navbar-light mt-1 rounded">
                     <a class="navbar-brand" href="/main">
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="pic d-inline-block align-text-top" />
                     Rome

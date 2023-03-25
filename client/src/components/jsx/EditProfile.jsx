@@ -4,23 +4,18 @@ import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import { GithubPicker } from "react-color";
+
 
 function EditProfile (){
-  const [username, setUser] = useState(localStorage.getItem('userid'))
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [birthday, setBirthday] = useState("")
-  const [phone, setPhone] = useState("")
-  const [address, setAddress] = useState("")
-  const [notification, setNotification] = useState("")
-  const [count, setCount] = useState(0);
   const [userProfile, setProfile] = useState({});
-
   const [cbirthday, setcBirthday] = useState("")
   const [cphone, setcPhone] = useState("")
   const [caddress, setcAddress] = useState("")
   const [cnotification, setcNotification] = useState("")
   const [redirect, setRedirect] = useState(false);
+  const [color, setColor] = useState("")
+
   useEffect( () => {
     const username = localStorage.getItem("userid")
     axios.get(`/profile/${username}`)
@@ -271,7 +266,12 @@ if (redirect) {
                           <h class="mb-0">Theme</h>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                          
+                        <GithubPicker 
+                        width="13vw"
+                         onChange={(color) => {
+                            setColor(color.hex);}}
+                        value={color}
+                     />
                         </div>
                       </div>
                       <ColoredLine color="grey" />

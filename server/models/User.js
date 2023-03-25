@@ -33,6 +33,7 @@ const UserSchema = new Schema({
     userBirthday: Date,
     userPhone: String,
     userAddress: String,
+    userColor: String,
     userNotification: Boolean,
     userViewMode: Number,
     userTeamList: [String]

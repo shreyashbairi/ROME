@@ -74,6 +74,7 @@ app.post('/signup', async (req, res) => {
         userBirthday: new Date(),
         userPhone: "",
         userAddress: "",
+        userColor: "#0d6efd",
         userNotification: false,
         userViewMode: 7,
         userTeamList:[]
@@ -480,6 +481,18 @@ app.get("/profile/:username", async (req,res) => {
         const user = await User.findOne({ userUserName: req.params.username })
         // console.log(tasks);
         res.json(user);
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
+
+app.get("/color/:username", async (req,res) => {
+    try{
+        const user = await User.findOne({ userUserName: req.params.username })
+        // console.log(tasks);
+ 
+        res.json(user.userColor);
     } catch (e){
         // console.log(e);
         res.status(422).json(e);    

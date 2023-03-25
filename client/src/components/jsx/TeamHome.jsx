@@ -16,6 +16,7 @@ function TeamHome() {
     const [bodyView, setBodyView] = useState(0);
     const [bodyViewName, setBodyViewName] = useState("Todo");
     const [managerBool, setManagerBool] = useState(false);
+    const [color,setColor] = useState('');
     const [members, setMembers] = useState([{
         userFullname: String,
         userEmail: String,
@@ -47,6 +48,10 @@ function TeamHome() {
             console.log("HERE");
             
             console.log(mem);
+        })
+        axios.get(`/color/${username}`)
+        .then (res => {
+            setColor(res.data);
         })
     }, [])
     
@@ -105,7 +110,7 @@ function TeamHome() {
     return (
         <div >
         <div class="todobefore"> 
-            <div className="top bg-primary">
+            <div style={{backgroundColor: color}} className="top">
                 {/* Current Tasks */}
                 <button type="button" class="btn btn-secondary" onClick={changeBody}>{bodyViewName}</button>
                 {/* TODO ^^^make only display for managers */}
@@ -141,7 +146,7 @@ function TeamHome() {
         </div>  */}
    
         <div class="members">
-            <div className="top bg-primary">
+            <div style={{backgroundColor: color}} className="top">
                 members
                     
                 {managerBool ?                 
@@ -186,7 +191,7 @@ function TeamHome() {
 
         </div>
         <div class="teamchat">
-            <div className="top bg-primary">
+            <div style={{backgroundColor: color}} className="top">
                 chat
             </div>
         </div>

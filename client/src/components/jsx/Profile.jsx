@@ -7,12 +7,7 @@ import axios from "axios";
 
 
 function Profile (){
-   const [name, setName] = useState("")
   // const [email, setEmail] = useState("")
-  const [birthday, setBirthday] = useState("")
-  const [phone, setPhone] = useState("")
-  const [address, setAddress] = useState("")
-  const [notification, setNotification] = useState("")
   const [userProfile, setProfile] = useState({});
   useEffect( () => {
     const username = localStorage.getItem("userid")
