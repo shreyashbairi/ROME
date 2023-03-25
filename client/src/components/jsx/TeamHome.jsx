@@ -143,7 +143,9 @@ function TeamHome() {
         <div class="members">
             <div className="top bg-primary">
                 members
-                <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">  </button>} open={addTeam}
+                    
+                {managerBool ?                 
+                <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary">  </button>} open={addTeam}
                         onOpen={openAdd} position="right center" nested modal>
                             <div class="card">
                             <AddTeamMember 
@@ -152,7 +154,10 @@ function TeamHome() {
                                     // scheduleEvent={this.scheduleEvent}
                                 />     
                             </div>
-            </ Popup>
+                </ Popup>
+                  : null}
+
+                
             </div>
             {members.map((member,index)=>{
                     return (
