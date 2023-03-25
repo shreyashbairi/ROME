@@ -168,13 +168,15 @@ app.post('/teamsubmit', async (req, res) =>{
 
 app.get("/members/:teamname", async (req,res) => {
     try{
+        //console.log(req.params.teamname);
         const team = await Team.findOne({team: req.params.teamname});
         const usernameList = team.members;
         const members= []
         for (let i = 0; i < usernameList.length; i++) {
             const newUser = await User.findOne({userUserName: usernameList[i]});
-            members.push(newTeam);
+            members.push(newUser);
         }
+        //console.log(members);
         res.json(members);
     } catch (e){
         res.status(422).json(e);    
@@ -189,7 +191,7 @@ app.get("/teams/:username", async (req,res) => {
         for (let i = 0; i < teamNameList.length; i++) {
             const newTeam = await Team.findOne({team: teamNameList[i]});
             teams.push(newTeam);
-        }
+        }1
         res.json(teams);
     } catch (e){
         res.status(422).json(e);    
@@ -235,7 +237,7 @@ app.get("/fullteamevents/:teamname", async (req,res) => {
 });
 
 app.get("/getmanager/:teamname", async (req,res) => {
-    // console.log(req.params.username);
+    //console.log(req.params.teamname);
     try{
         // console.log(req.params.teamname);
         const team = await Team.findOne({ team: req.params.teamname });

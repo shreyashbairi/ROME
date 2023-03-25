@@ -16,20 +16,37 @@ function TeamHome() {
     const [bodyView, setBodyView] = useState(0);
     const [bodyViewName, setBodyViewName] = useState("Todo");
     const [managerBool, setManagerBool] = useState(false);
+    const [members, setMembers] = useState([{
+        userFullname: String,
+        userEmail: String,
+        userUserName: String,
+    }
+    ]);
     
     useEffect(() => {
         const teamname = localStorage.getItem('team');
         const username = localStorage.getItem('userid');
+        //console.log(teamname);
         axios.get(`getmanager/${teamname}`)
         .then(res => {
             const manager = res.data;
-            console.log(manager);
             const managername = manager.userUserName;
+            console.log(managername);
             if (managername === username) {
                 setManagerBool(true);
             } else {
                 setManagerBool(false);
+
             }
+        })
+        axios.get(`members/${teamname}`)
+        .then(res => {
+            const mem = res.data;
+            //console.log(res.data);
+            setMembers(mem);
+            console.log("HERE");
+            
+            console.log(mem);
         })
     }, [])
     
@@ -137,17 +154,22 @@ function TeamHome() {
                             </div>
             </ Popup>
             </div>
+            {members.map((member,index)=>{
+                    return (
+                        <div key={index}>
+                                <div class="row mt-2">
+                                    <div class="col-sm-3">
+                                        <h class="mb-0">{member.userFullname}</h>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {member.userEmail}                  
+                                    </div>
+                                </div>
+                                <ColoredLine color="grey" />
+                        </div>
+                    )
+                })} 
 
-
-            <div class="row mt-2">
-                <div class="col-sm-3">
-                    <h class="mb-0">Name</h>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                    email                      
-                </div>
-            </div>
-            <ColoredLine color="grey" />
 
 
             {/* <div class="col-sm-3 mt-2">
