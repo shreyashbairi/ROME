@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const NotificationSchema = new Schema({
-    usernameid: String,
-    date: Date,
+    fromuser: String,
+    touser: String,
     description: String,
+    type: String,
     teamName: String,
-    teamID: Number,
-    color: String
+    teamID: String,
 });
 
 const EventModel = mongoose.model('Notification', NotificationSchema);

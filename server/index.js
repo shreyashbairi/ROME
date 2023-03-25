@@ -168,13 +168,15 @@ app.post('/teamsubmit', async (req, res) =>{
 
 app.get("/members/:teamname", async (req,res) => {
     try{
+        //console.log(req.params.teamname);
         const team = await Team.findOne({team: req.params.teamname});
         const usernameList = team.members;
         const members= []
         for (let i = 0; i < usernameList.length; i++) {
-            const newUser = await User.findOne({userUserName: userameList[i]});
-            members.push(newTeam);
+            const newUser = await User.findOne({userUserName: usernameList[i]});
+            members.push(newUser);
         }
+        //console.log(members);
         res.json(members);
     } catch (e){
         res.status(422).json(e);    
@@ -203,6 +205,47 @@ app.get("/events/:username", async (req,res) => {
         const events = await Event.find({ usernameid: req.params.username })
         // console.log(events);
         res.json(events);
+    } catch (e){
+        // console.log(e)
+        res.status(422).json(e);    
+    }
+});
+
+app.get("/fullteamevents/:teamname", async (req,res) => {
+    console.log(req.params.teamname);
+    try{
+        // console.log(req.params.username);
+        const team = await Team.findOne({team: req.params.teamname});
+        const usernameList = team.members;
+        // console.log(usernameList);
+        const events = []
+        for (let i = 0; i < usernameList.length; i++) {
+            const newEvents = await Event.find({usernameid: usernameList[i]});
+            // console.log(newEvents);
+            events.push(...newEvents);
+            // console.log("here1");
+        }
+        // console.log("here");
+        // res.json(members);
+        // const events = await Event.find({ usernameid: req.params.username })
+        // console.log(events);
+        res.json(events);
+    } catch (e){
+        // console.log(e)
+        res.status(422).json(e);    
+    }
+});
+
+app.get("/getmanager/:teamname", async (req,res) => {
+    //console.log(req.params.teamname);
+    try{
+        // console.log(req.params.teamname);
+        const team = await Team.findOne({ team: req.params.teamname });
+        // console.log(team);
+        const username = team.managerid;
+        // console.log(username);
+        const manager = await User.findOne({ userUserName: username });
+        res.json(manager);
     } catch (e){
         // console.log(e)
         res.status(422).json(e);    

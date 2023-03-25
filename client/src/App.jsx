@@ -52,7 +52,6 @@ function AuthRoutes() {
   console.log(loggedInUser);
   
   const navigate = useNavigate();
-
   // useEffect(() => {
   //   if (!isLoggedIn) {
   //     navigate('/login', { replace: true });

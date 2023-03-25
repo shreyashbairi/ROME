@@ -3,16 +3,53 @@ import "../css/TeamHome.css"
 import Popup from "reactjs-popup"
 import UpdateTask from "./UpdateTask"
 import AddEvent from "./Calendar/AddEvent"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import TeamTodoList from "./TeamTodo/TeamTodoList"
 import AddTeamMember from "./AddTeamMember"
 import TeamCalendar from "./Calendar/TeamCalendar"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
+import axios from "axios";
+
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
     const [addTeam, setAddTeam] = useState(false);
     const [bodyView, setBodyView] = useState(0);
     const [bodyViewName, setBodyViewName] = useState("Todo");
+    const [managerBool, setManagerBool] = useState(false);
+    const [members, setMembers] = useState([{
+        userFullname: String,
+        userEmail: String,
+        userUserName: String,
+    }
+    ]);
+    
+    useEffect(() => {
+        const teamname = localStorage.getItem('team');
+        const username = localStorage.getItem('userid');
+        //console.log(teamname);
+        axios.get(`getmanager/${teamname}`)
+        .then(res => {
+            const manager = res.data;
+            const managername = manager.userUserName;
+            console.log(managername);
+            if (managername === username) {
+                setManagerBool(true);
+            } else {
+                setManagerBool(false);
+
+            }
+        })
+        axios.get(`members/${teamname}`)
+        .then(res => {
+            const mem = res.data;
+            //console.log(res.data);
+            setMembers(mem);
+            console.log("HERE");
+            
+            console.log(mem);
+        })
+    }, [])
+    
     const closeAdd = () => {
         setAddTeam(false);
     }
@@ -46,10 +83,10 @@ function TeamHome() {
 
 
     const changeBody = () => {
-        if (bodyView == 0) {
+        if (bodyView == 0 && managerBool) {
             setBodyView(1);
             setBodyViewName("Calendar");
-        } else {
+        } else if (managerBool) {
             setBodyView(0);
             setBodyViewName("Todo");
         }
@@ -58,10 +95,10 @@ function TeamHome() {
     let teamBody;
     if (bodyView === 0) {
         teamBody = <TeamTodoList />
-    } else if (bodyView === 1) {
+    } else if (bodyView === 1 && managerBool) {
         teamBody = <TeamCalendar />
         // teamBody = <TeamMemberCalendar />
-    } else {
+    } else if (managerBool) {
         teamBody = <TeamMemberCalendar />
     }
     
@@ -100,13 +137,15 @@ function TeamHome() {
                 Completed
             </div>
 
-
+     //opens the popup that is in addteammembers
         </div>  */}
-
+   
         <div class="members">
             <div className="top bg-primary">
                 members
-                <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary">  </button>} open={addTeam}
+                    
+                {managerBool ?                 
+                <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary">  </button>} open={addTeam}
                         onOpen={openAdd} position="right center" nested modal>
                             <div class="card">
                             <AddTeamMember 
@@ -115,19 +154,27 @@ function TeamHome() {
                                     // scheduleEvent={this.scheduleEvent}
                                 />     
                             </div>
-            </ Popup>
-            </div>
+                </ Popup>
+                  : null}
 
-
-            <div class="row mt-2">
-                <div class="col-sm-3">
-                    <h class="mb-0">Name</h>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                    email                      
-                </div>
+                
             </div>
-            <ColoredLine color="grey" />
+            {members.map((member,index)=>{
+                    return (
+                        <div key={index}>
+                                <div class="row mt-2">
+                                    <div class="col-sm-3">
+                                        <h class="mb-0">{member.userFullname}</h>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {member.userEmail}                  
+                                    </div>
+                                </div>
+                                <ColoredLine color="grey" />
+                        </div>
+                    )
+                })} 
+
 
 
             {/* <div class="col-sm-3 mt-2">
