@@ -111,8 +111,9 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                                         return(
                                             <>
                                                 <button>
-                                                    {todo.title}<br></br>{todo.date} 
+                                                    {todo.title}<br></br>{todo.date}
                                                     {()=>setButtonPrinted(true)}
+                                                    
                                                 </button>
                                                 <div>
 
@@ -124,7 +125,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                                                                 setTrigger={closeedit}
                                                                 scheduleEvent={todo}
                                                                 title={todo.title}
-                                                            />     
+                                                                todo={todo}
+                                                        />     
                                                         </div>
                                                     </Popup>
 
@@ -160,6 +162,7 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                                                         setTrigger={closeedit}
                                                         scheduleEvent={todo}
                                                         title={todo.title}
+                                                        todo={todo}
                                                     />     
                                                 </div>
                                             </Popup>
@@ -192,6 +195,7 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                                                         setTrigger={closeedit}
                                                         scheduleEvent={todo}
                                                         title={todo.title}
+                                                        todo={todo}
                                                     />     
                                                 </div>
                                             </Popup>
@@ -241,6 +245,24 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         {todo.date}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-3">
+                                    <strong>Priority</strong>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                    {(()=>{
+                                        if (todo.HighPriority) {
+                                            return(<div>High</div>)
+                                        } 
+                                        else if (todo.MediumPriority) {
+                                            return(<div>Medium</div>)
+                                        }
+                                        else {
+                                            return(<div>Low</div>)
+                                        }
+                                    })()}
                                     </div>
                                 </div>
    

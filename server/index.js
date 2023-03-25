@@ -320,14 +320,17 @@ app.post('/eventedit', async (req, res) =>{
 });
 
 app.post('/taskedit', async (req, res) =>{
-    const {taskTitle, taskDescription, taskDate, username} = req.body;
+    const {taskTitle, taskDescription, taskDate, username,HighPriority,MediumPriority,LowPriority} = req.body;
     // console.log(req.body)
     try {
         const tasksDoc = await Task.findOneAndUpdate(
             {title: taskTitle, username: username},
             {
             description: taskDescription,
-            date: taskDate
+            date: taskDate,
+            HighPriority: HighPriority,
+            MediumPriority: MediumPriority,
+            LowPriority: LowPriority
             });
        // console.log(tasksDoc);
         res.json(tasksDoc);
@@ -500,7 +503,6 @@ app.get("/color/:username", async (req,res) => {
 });
 
 app.delete("/teamtaskdelete", async(req,res) => {
-    const {team} = req.body;
 
     console.log("entered")
 

@@ -25,9 +25,7 @@ function TodoList(props) {
         axios.get(`/tasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;
-            console.log(tasksGrabed);
             tasksGrabed.sort((a,b)=> (a.date<b.date) ? -1 : 1);
-            console.log(tasksGrabed);
             setTodos(tasksGrabed);
         })
     }, [])
@@ -44,22 +42,11 @@ function TodoList(props) {
         newTask.sort((a,b)=> (a.date<b.date) ? -1 : 1);
         setTodos(newTask)
         setClick(false)
-        console.log(todo)
     }
 
     async function removeTodo(task) {
-        console.log([...todos])
         // const toDel = [...todos].filter(todo=>todo.id === task.id);
         const removeArray = [...todos].filter(todo => todo.id !== task.id)
-        console.log(task.title);
-        // try {
-        //     await axios.delete("/personaltaskdelete", {
-        //         title:task.title
-        //     });
-        // } catch (e) {
-        //     alert("Task wasn't deleted")
-        // }
-
         setTodos(removeArray)
     }
 
@@ -77,7 +64,6 @@ function TodoList(props) {
             if(todo.id===id){
                 todo.isComplete = !todo.isComplete
             }
-            console.log(todo)
             return todo
         })
         setTodos(updatedTodos)
@@ -85,7 +71,6 @@ function TodoList(props) {
 
     const clicked = e => {
         setClick(true)
-        console.log(click)
     }
 
     function processFilters(pastDue, seven, ascending, descending) {
