@@ -66,7 +66,7 @@ function AddTeamMember(props) {
             </>
         )
     }
-
+//popup for invite
     return(props.trigger) ? (
         
             <div className="card-body">
@@ -95,7 +95,7 @@ function AddTeamMember(props) {
                         value={description}
                     />
                     </div> 
-                    <button>Submit</button>
+                    <button>Submit</button> 
  
                 </form>
                 <button className="close" onClick={()=> props.setTrigger()}>

@@ -51,16 +51,13 @@ function AuthRoutes() {
   const loggedInUser = localStorage.getItem("userid");
   console.log(loggedInUser);
   
-  const navigate = useNavigate();
 
   // useEffect(() => {
   //   if (!isLoggedIn) {
   //     navigate('/login', { replace: true });
   //   }
   // }, [loggedInUser, navigate]);
-  if (!isLoggedIn) {
-    navigate('/login');
-  }
+
 
   return (
     <Routes>
