@@ -20,11 +20,14 @@ function TodoList(props) {
     const [pastDue, setPastDue] = useState(false);
 
     useEffect( () => {
+        console.clear();
         const username = localStorage.getItem('userid');
         axios.get(`/tasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;
-            // console.log(tasksGrabed);
+            console.log(tasksGrabed);
+            tasksGrabed.sort((a,b)=> (a.date<b.date) ? -1 : 1);
+            console.log(tasksGrabed);
             setTodos(tasksGrabed);
         })
     }, [])
@@ -38,6 +41,7 @@ function TodoList(props) {
         // const newTasks = [todo, ...todos]
         // setTodos(newTasks)
         const newTask = [todo, ...todos]
+        newTask.sort((a,b)=> (a.date<b.date) ? -1 : 1);
         setTodos(newTask)
         setClick(false)
         console.log(todo)
@@ -143,7 +147,6 @@ function TodoList(props) {
             setTrigger={()=>setClick(false)}
         />
         <Todo 
-            // todos={todos}
             todos={todos}
             completeTodo={completeTodo}
             removeTodo={removeTodo}

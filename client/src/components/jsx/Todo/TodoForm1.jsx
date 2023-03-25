@@ -11,6 +11,11 @@ export function TodoForm(props) {
         date:""
     })
     const [repeating, setRepeating] = useState(false);
+    const [priority, setPriority] = useState({
+        high: false,
+        medium: false,
+        low: true
+    })
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -21,7 +26,10 @@ export function TodoForm(props) {
             description: description,
             date: input.date,
             user: localStorage.getItem("userid"),
-            repeating: repeating
+            repeating: repeating,
+            highpriority: priority.high,
+            mediumpriority: priority.medium,
+            lowpriority: priority.low
         }
 
         try {
@@ -150,6 +158,32 @@ export function TodoForm(props) {
                         onClick={()=>setRepeating(false)}
                     />No
                 </label>
+                <br></br>
+                Priority Rank
+                <br></br>
+                <label>
+                    <input
+                        type={'radio'}
+                        checked={priority.high}
+                        onClick={()=>setPriority({high: true, medium: false, low: false})}
+                    />High
+                </label>
+                     
+                <label>
+                    <input
+                        type={'radio'}
+                        checked={priority.medium}
+                        onClick={()=>setPriority({high: false, medium: true, low: false})}
+                    />Medium
+                </label>
+                <label>
+                    <input
+                        type={'radio'}
+                        checked={priority.low}
+                        onClick={()=>setPriority({high: false, medium: false, low: true})}
+                    />Low
+                </label>
+                
                 <br></br>
                     <button className='todo-button'>Add</button>
                     <button type="button" onClick={()=> props.setTrigger(false)}>Cancel</button>

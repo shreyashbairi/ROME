@@ -6,7 +6,9 @@ const TodoSchema = new Schema({
   description: String,
   date: Date,
   username: String,
-  priority: Number,
+  HighPriority: Boolean,
+  MediumPriority: Boolean,
+  LowPriority: Boolean,
   repeating: Boolean
 });
 
