@@ -7,11 +7,12 @@ import Popup from 'reactjs-popup'
 import TodoEdit from './TodoEdit'
 import '../../css/Todo.css';
 
-function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending,setTodos}) {
+function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriority,setTodos}) {
     const [show, setShow] = useState(false);
     const [edit, setEdit] = useState(false);
     const [color, setColor] = useState('black');
     const [buttonPrinted, setButtonPrinted] = useState(false);
+    const [origTodos, setOrigTodos] = useState([...todos])
     
 
     var currentDate = () => {
@@ -89,8 +90,20 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
         )
     }
 
+    
+
     return (
         <div>
+            {(()=>{
+                if (bypriority) {
+                    todos.sort((a,b)=>
+                        (a.HighPriority) ? -1 :
+                        (a.MediumPriority && b.LowPriority) ? -1 :
+                        1
+                    )
+                    return(<></>)
+                } 
+            })()}
             {todos.map((todo,index)=>{
                 return(
                     <div key = {index} class="task">
@@ -176,7 +189,42 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                                         </div>
                                     </>
                                     )
-                                    } else if (!pastDue && !seven) {
+                                    } else if (!pastDue && !seven && bypriority) {
+                                        {/* list only past due */}
+                                        return(
+                                        <>
+                                            {(()=>{
+
+                                            })()}
+                                            <button className={!seven && pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
+                                                {todo.title}<br></br>{todo.date}
+                                                {()=>setButtonPrinted(true)}
+                                            </button>
+                                            <div>
+    
+                                                <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
+                                                    onOpen={openedit} position="right center" nested modal>
+                                                    <div class="card">
+                                                    <TodoEdit 
+                                                            trigger={edit}
+                                                            setTrigger={closeedit}
+                                                            scheduleEvent={todo}
+                                                            title={todo.title}
+                                                            todo={todo}
+                                                        />     
+                                                    </div>
+                                                </Popup>
+                                        
+                                                <div>
+                                                    <AiFillCloseCircle
+                                                        onClick={()=>removeTodo(todo)}
+                                                    />
+                                                </div>
+    
+                                            </div>
+                                        </>
+                                        )
+                                    } else if (!pastDue && !seven && !bypriority) {
 
                                     {/* default list all */}
                                     return(
@@ -283,7 +331,9 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, ascending
                 )
             })}
 
+        {()=>setTodos(origTodos)}
         </div>
+        
     )
 }
 

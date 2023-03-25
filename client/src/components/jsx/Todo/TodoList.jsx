@@ -15,9 +15,11 @@ function TodoList(props) {
         description:String,
         date:Object
     }])
-    const [seven, setSeven] = useState(false);
-    const [ascending, setAscending] = useState(false);
-    const [pastDue, setPastDue] = useState(false);
+    const [filters, setFilters] = useState({
+        seven: false,
+        pastDue: false,
+        bypriority: false
+    })
 
     useEffect( () => {
         console.clear();
@@ -74,11 +76,6 @@ function TodoList(props) {
     }
 
     function processFilters(pastDue, seven, ascending, descending) {
-        console.log("entered");
-        console.log(pastDue);
-        console.log(seven);
-        console.log(ascending);
-        console.log(descending);
     }
 
   return (
@@ -95,27 +92,45 @@ function TodoList(props) {
                 </div>
                 <form 
                     class="focus-body"
-                    onSubmit={processFilters(pastDue, seven, ascending)}
+                    onSubmit={processFilters(filters.pastDue, filters.seven)}
                 >
                     {/* {teamBoxes.map((item, index) => {
                         return ( */}
                         <div className="checkbox-container">
                             <input
-                            type="checkbox"
+                            type="radio"
                             name="teams"
                             // value={}
-                            onChange={()=>setPastDue(!pastDue)}
+                            onChange={()=>setFilters({pastDue:true, seven:false, bypriority:false})}
                             />
                             <label style={{}}>Past Due</label>
                         </div>
                         <div className="checkbox-container">
                             <input
-                            type="checkbox"
+                            type="radio"
                             name="teams"
                             // value={}
-                            onChange={()=>setSeven(!seven)}
+                            onChange={()=>setFilters({pastDue:false,seven:true,bypriority:false})}
                             />
                             <label style={{}}>Next 7 Days</label>
+                        </div>
+                        <div className="checkbox-container">
+                            <input
+                            type="radio"
+                            name="teams"
+                            // value={}
+                            onChange={()=>setFilters({pastDue:false,seven:false,bypriority:true})}
+                            />
+                            <label style={{}}>Decreasing Priority</label>
+                        </div>
+                        <div className="checkbox-container">
+                            <input
+                            type="radio"
+                            name="teams"
+                            // value={}
+                            onChange={()=>setFilters({pastDue:false,seven:false,bypriority:false})}
+                            />
+                            <label style={{}}>None</label>
                         </div>
                         {/* );
                     })} */}
@@ -136,9 +151,9 @@ function TodoList(props) {
             completeTodo={completeTodo}
             removeTodo={removeTodo}
             editTask={editTask}
-            seven={seven}
-            ascending={ascending}
-            pastDue={pastDue}
+            seven={filters.seven}
+            pastDue={filters.pastDue}
+            bypriority={filters.bypriority}
             setTodos={setTodos}
 
         />
