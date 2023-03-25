@@ -12,7 +12,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
     const [edit, setEdit] = useState(false);
     const [color, setColor] = useState('black');
     const [buttonPrinted, setButtonPrinted] = useState(false);
-    const [origTodos, setOrigTodos] = useState([...todos])
+    const copy = [...todos]
+    const [mapping, setMapping] = useState([...copy])
     
 
     var currentDate = () => {
@@ -102,6 +103,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                         1
                     )
                     return(<></>)
+                } else {
+                    todos.sort((a,b)=> (a.date<b.date) ? -1 : 1);
                 } 
             })()}
             {todos.map((todo,index)=>{
@@ -189,42 +192,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                         </div>
                                     </>
                                     )
-                                    } else if (!pastDue && !seven && bypriority) {
-                                        {/* list only past due */}
-                                        return(
-                                        <>
-                                            {(()=>{
-
-                                            })()}
-                                            <button className={!seven && pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
-                                                {todo.title}<br></br>{todo.date}
-                                                {()=>setButtonPrinted(true)}
-                                            </button>
-                                            <div>
-    
-                                                <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
-                                                    onOpen={openedit} position="right center" nested modal>
-                                                    <div class="card">
-                                                    <TodoEdit 
-                                                            trigger={edit}
-                                                            setTrigger={closeedit}
-                                                            scheduleEvent={todo}
-                                                            title={todo.title}
-                                                            todo={todo}
-                                                        />     
-                                                    </div>
-                                                </Popup>
-                                        
-                                                <div>
-                                                    <AiFillCloseCircle
-                                                        onClick={()=>removeTodo(todo)}
-                                                    />
-                                                </div>
-    
-                                            </div>
-                                        </>
-                                        )
-                                    } else if (!pastDue && !seven && !bypriority) {
+                                    
+                                    } else if (!pastDue && !seven) {
 
                                     {/* default list all */}
                                     return(
@@ -330,8 +299,6 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                     
                 )
             })}
-
-        {()=>setTodos(origTodos)}
         </div>
         
     )
