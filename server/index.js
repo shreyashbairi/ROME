@@ -191,7 +191,7 @@ app.get("/teams/:username", async (req,res) => {
         for (let i = 0; i < teamNameList.length; i++) {
             const newTeam = await Team.findOne({team: teamNameList[i]});
             teams.push(newTeam);
-        }1
+        }
         res.json(teams);
     } catch (e){
         res.status(422).json(e);    
