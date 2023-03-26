@@ -427,25 +427,21 @@ app.get("/getUser/:username", async (req,res) => {
 });
 
 app.post("/editprofile", async (req,res) => {
-    const {username, cbirthday, cphone, caddress, cnotification} = req.body;
+    const {username, cbirthday, cphone, caddress, cnotification,cColor} = req.body;
     try {
-        //console.log(req.body);
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {
                 userBirthday: new Date(cbirthday),
-                // userNotification: cnotification
         });
     } catch (e) {
         res.status(422).json(e); 
     }
     try {
-        //console.log(req.body);
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {
                 userPhone: cphone,
-                // userNotification: cnotification
         });
     } catch (e) {
         res.status(422).json(e); 
@@ -456,11 +452,24 @@ app.post("/editprofile", async (req,res) => {
             {userUserName: username},
             {
                 userAddress: caddress,
-                // userNotification: cnotification
         });
     } catch (e) {
         res.status(422).json(e); 
     }
+
+    try {
+        //console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                userColor: cColor,
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+
+
+
 });
 
 app.post("/resetpassword", async (req,res) => {

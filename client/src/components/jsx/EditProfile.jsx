@@ -4,7 +4,7 @@ import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { GithubPicker } from "react-color";
+import Select from 'react-select'
 
 
 function EditProfile (){
@@ -14,14 +14,19 @@ function EditProfile (){
   const [caddress, setcAddress] = useState("")
   const [cnotification, setcNotification] = useState("")
   const [redirect, setRedirect] = useState(false);
-  const [color, setColor] = useState("")
+  const [cColor, setColor] =useState("");
+  const [color,setcolor] = useState("");
+
 
   useEffect( () => {
     const username = localStorage.getItem("userid")
     axios.get(`/profile/${username}`)
     .then(res => {
       setProfile(res.data);
-      // console.log(setProfile);
+    })
+    axios.get(`/color/${username}`)
+    .then (res => {
+        setcolor(res.data);
     })
   }, []);
   async function handleSubmit(e) {
@@ -30,75 +35,25 @@ function EditProfile (){
     // console.log("i tried");
     e.preventDefault();
     const username = localStorage.getItem("userid");
-    // console.log("phonnumber:")
-    // console.log(cphone);
-    // axios.put('/editprofile', {username, cbirthday, cphone, caddress, cnotification});
     try {
       axios.post('/editprofile', {
         username,
         cbirthday,
         cphone,
         caddress,
-        cnotification
+        cnotification,
+        cColor
       });
       setRedirect(true);
     } catch (e) {
       alert("Profile Update Failed")
     }
+
+
 }
 if (redirect) {
   return <Navigate to={'/profile'}/>
 }
-  // const [profile, setProfile] = useState([{
-  //   birthday: Date,
-  //   phone: String,
-  //   address: String,
-  //   notification: Boolean,
-  // }])
-  
-
-
- 
-  // axios.get('/profileName',localStorage.getItem("userid")).then(Response =>{
-  //   setName(Response.data);
-  // })
-  // axios.get('/profileEmail',localStorage.getItem("userid")).then(Response =>{
-  //   setEmail(Response.data);
-  // })
-
-//   axios.get('/profileBirthday',localStorage.getItem("userid")).then(Response =>{
-//     setBirthday(Response.data);
-// s  })
-//   axios.get('/profilePhone',localStorage.getItem("userid")).then(Response =>{
-//     setPhone(Response.data);
-
-//   })
-//   axios.get('/profileAddress',localStorage.getItem("userid")).then(Response =>{
-//     setAddress(Response.data);
-
-//   })
-//   axios.get('/profileNotification',localStorage.getItem("userid")).then(Response =>{
-//     setNotification(Response.data);
-//   })
-
-
-  // const handleBirthday = (e) => {
-  //   setcBirthday(e.target.value);
-  // }
-  // const handlePhone = (e) => {
-  //   setcPhone(e.target.value);
-  // }
-  // const handleAddress = (e) => {
-  //   setcAddress(e.target.value);
-  // }
-  // const handleNotification = (e) => {
-  //   setcNotification(e.target.value);
-  // }
-
-  
-
- 
-
   const ColoredLine = ({ color }) => (
     <hr
         style={{
@@ -266,12 +221,15 @@ if (redirect) {
                           <h class="mb-0">Theme</h>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                        <GithubPicker 
-                        width="13vw"
-                         onChange={(color) => {
-                            setColor(color.hex);}}
-                        value={color}
-                     />
+                        <input type="color" id="head" name="head"
+                        value={color} onChange={e =>{ setColor(e.target.value); setcolor(e.target.value)}} />
+                        {/* <select style={{backgroundColor: color}} onChange={e => setColor(e.target.value)} >
+                              
+                          <option value="#0d6efd" style={{backgroundColor: "#0d6efd"}}>Blue</option>
+                          <option value="#ff00004d" style={{backgroundColor: "#ff00004d"}}>Pink</option>
+                          <option value="#91D5C1" style={{backgroundColor: "#91D5C1"}}>Green</option>
+                        </select> */}
+
                         </div>
                       </div>
                       <ColoredLine color="grey" />
@@ -295,8 +253,3 @@ if (redirect) {
 }
 
 export default EditProfile;
-
-
-
-{/*https://retool.com/blog/building-a-react-navbar/ 
-https://codingbeautydev.com/blog/react-get-input-value-on-button-click/*/}

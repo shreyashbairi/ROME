@@ -10,6 +10,8 @@ import Popup from "reactjs-popup";
 function TodoList(props) {
     // const [todos,setTodos] = useState([]);
     const [click, setClick] = useState(false);
+    const [color,setColor] = useState("");
+
     const [todos, setTodos] = useState([{
         title:String,
         description:String,
@@ -29,6 +31,10 @@ function TodoList(props) {
             const tasksGrabed = res.data;
             tasksGrabed.sort((a,b)=> (a.date<b.date) ? -1 : 1);
             setTodos(tasksGrabed);
+        })
+        axios.get(`/color/${username}`)
+        .then (res => {
+            setColor(res.data);
         })
     }, [])
 
@@ -79,9 +85,9 @@ function TodoList(props) {
     }
 
   return (
-    <div id="container">
+    <div  id="container">
 
-        <h1 id='header'>
+        <h1 style={{backgroundColor: color}} id='header'>
             Your Tasks
 
             <Popup trigger={  <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

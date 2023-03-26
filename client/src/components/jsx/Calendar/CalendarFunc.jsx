@@ -27,7 +27,8 @@ export default function CalendarFunc (props) {
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
     const [teams, setTeams] = useState([]);
     const [focusTeams, setFocusTeams] = useState([]);
-    
+    const [color,setColor] = useState("");
+
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
@@ -71,6 +72,10 @@ export default function CalendarFunc (props) {
             }
             setEvents([...events, ...elapsedEvent])
         });
+        axios.get(`/color/${username}`)
+        .then (res => {
+            setColor(res.data);
+        })
         axios.get(`/getUser/${username}`)
         .then(res => {
             let userProfile = res.data;
@@ -256,7 +261,7 @@ export default function CalendarFunc (props) {
 
             <div class="Calendar-container">
 
-                <div class="Calendar-header">
+                <div style={{backgroundColor: color}}  class="Calendar-header">
                     <div class="header-left">
                     <button type="button" class="btn btn-secondary" onClick={previousWeek}>&#60;</button>
                     <button type="button" class="btn btn-secondary" onClick={nextWeek}>&#62;</button>

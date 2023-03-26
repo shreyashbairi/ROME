@@ -20,7 +20,7 @@ function DefaultLayout () {
     const [buttonPop, setButtonPop] = useState(false);
     const [joinPop, setJoinPop] = useState(false);
     const [isLoggedIn] = useState(false);
-    const [color,setColor] = useState('');
+    const [color,setColor] = useState("");
     const {user,setUser} = useContext(UserContext);
 
     const [teams, setTeams] = useState([{

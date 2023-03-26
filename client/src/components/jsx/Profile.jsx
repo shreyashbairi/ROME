@@ -9,12 +9,18 @@ import axios from "axios";
 function Profile (){
   // const [email, setEmail] = useState("")
   const [userProfile, setProfile] = useState({});
+  const [cColor, setColor] =useState("");
+
   useEffect( () => {
     const username = localStorage.getItem("userid")
     axios.get(`/profile/${username}`)
     .then(res => {
       setProfile(res.data);
       // console.log(setProfile);
+    })
+    axios.get(`/color/${username}`)
+    .then (res => {
+        setColor(res.data);
     })
   }, []);
 
@@ -166,8 +172,9 @@ function Profile (){
                       <div class="col-sm-3">
                         <h class="mb-0">Theme</h>
                       </div>
-                      <div class="col-sm-9 text-secondary">
-                        
+
+                      <div style={{backgroundColor: cColor}} class="col-1 ">
+
                       </div>
                     </div>
                     <ColoredLine color="grey" />
