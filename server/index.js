@@ -589,10 +589,12 @@ app.post('/invitenotification', async (req, res) =>{
 
 
 app.post('/addteammember', async (req, res) => {
-    const { invitedUser, descriptionSent, inviter } = req.body;
+    const { invitedUser, descriptionSent, inviter, inviterTeamName, inviterTeamID } = req.body;
     console.log(invitedUser);
     console.log(descriptionSent);
     console.log(inviter);
+    //console.log(inviterTeamName);
+    //console.log(inviterTeamID);
     try {
       const _existingUser = await User.findOne({userUserName: invitedUser});
       if (!_existingUser) {
@@ -611,6 +613,8 @@ app.post('/addteammember', async (req, res) => {
                 touser: invitedUser,
                 type: "Invite",
                 description: descriptionSent,
+                teamName: inviterTeamName,
+                //teamID: inviterTeamID,
             });
         res.json(notification);
 

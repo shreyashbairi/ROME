@@ -10,6 +10,7 @@ import TeamCalendar from "./Calendar/TeamCalendar"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
 import axios from "axios";
 
+
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
     const [addTeam, setAddTeam] = useState(false);
@@ -169,6 +170,7 @@ function TeamHome() {
                                     trigger={AddEvent}
                                     setTrigger={closeAdd}
                                     // scheduleEvent={this.scheduleEvent}
+
                                 />     
                             </div>
                 </ Popup>

@@ -8,6 +8,7 @@ axios.defaults.baseURL = 'http://localhost:8000';
 
 function AddTeamMember(props) {
     const [name, setName] = useState("")
+    let teams = [];
     const [description, setDescription] = useState("")
     const [data, setData] = useState({
         name: {name},
@@ -19,11 +20,19 @@ function AddTeamMember(props) {
         const invitedUser = name;
         const descriptionSent = description;
         const inviter = localStorage.getItem("userid");
+        axios.get(`/teams/${inviter}`).then(res => {
+            teams = res.data;
+            console.log("These teams have been grabbed from" + inviter + ". The teams are" + JSON.stringify(teams));
+
+        })
+        //console.log("The teamID is " + teamID);
         try {
             const {inviteInfo} = await axios.post('/addteammember',{
               invitedUser,
               descriptionSent,
-              inviter
+              inviter,
+              teams, 
+              //teamID
             });
             alert("Invitation Sent!");
           } catch (e){
