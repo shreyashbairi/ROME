@@ -99,10 +99,10 @@
   border: 1px solid #000000;
 }
 
-.calendar-day:hover {
-  /* background-color: rgba(0,0,0,.10); */
+/* .calendar-day:hover {
+  background-color: rgba(0,0,0,.10);
   background-color: #6561d19c;
-}
+} */
 
 
 .calendar-day p {
