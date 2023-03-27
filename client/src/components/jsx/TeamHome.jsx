@@ -17,6 +17,7 @@ function TeamHome() {
     const [bodyViewName, setBodyViewName] = useState("Todo");
     const [managerBool, setManagerBool] = useState(false);
     const [color,setColor] = useState('');
+    const [memberName, setMemberName] = useState();
     const [members, setMembers] = useState([{
         userFullname: String,
         userEmail: String,
@@ -80,17 +81,26 @@ function TeamHome() {
             }}
         />
     );
+
+    const memberCalendar = (member) => {
+        const username = localStorage.getItem('userid');
+        if (managerBool && member.userUserName != username) {
+            changePersonalCalendar(member.userFullname);
+            setMemberName(member.userUserName);
+        }
+
+    }
     
-    const changePersonalCalendar = () => {
+    const changePersonalCalendar = (fullName) => {
         setBodyView(3);
-        setBodyViewName("Calendar");
+        setBodyViewName(`${fullName}'s Calendar`);
     }
 
 
     const changeBody = () => {
         if (bodyView == 0 && managerBool) {
             setBodyView(1);
-            setBodyViewName("Calendar");
+            setBodyViewName("Team Calendar");
         } else if (managerBool) {
             setBodyView(0);
             setBodyViewName("Todo");
@@ -104,7 +114,9 @@ function TeamHome() {
         teamBody = <TeamCalendar />
         // teamBody = <TeamMemberCalendar />
     } else if (managerBool) {
-        teamBody = <TeamMemberCalendar />
+        teamBody = <TeamMemberCalendar
+                        username={memberName}
+                   />
     }
     
     return (
@@ -169,9 +181,9 @@ function TeamHome() {
                         <div key={index}>
                                 <div class="row mt-2">
                                     <div class="col-sm-3">
-                                        <h class="mb-0">{member.userFullname}</h>
+                                        <h class="mb-0" onClick={() => memberCalendar(member)}>{member.userFullname}</h>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
+                                    <div class="col-sm-9 text-secondary" onClick={() => memberCalendar(member)}>
                                         {member.userEmail}                  
                                     </div>
                                 </div>

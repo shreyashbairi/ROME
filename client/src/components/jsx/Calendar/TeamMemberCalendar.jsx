@@ -29,7 +29,7 @@ export default function TeamMemberCalendar (props) {
     const [focusTeams, setFocusTeams] = useState([]);
 
     useEffect( () => {
-        const username = localStorage.getItem('userid');
+        const username = props.username;
         axios.get(`/events/${username}`)
         .then(res => {
             // console.log(res.data)
