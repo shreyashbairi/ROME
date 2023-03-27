@@ -48,7 +48,8 @@ function CalendarDays(props) {
             name: "NA",
             top: false,
             date: (new Date(firstDayOfWeek)),
-            color: "#f1f1f1"
+            color: "#f1f1f1",
+            type: "user"
         }
         // console.log(hour.date);
         for (let j = 0; j < props.events.length; j++) {
@@ -59,7 +60,12 @@ function CalendarDays(props) {
                 // console.log(props.events[j].date);
                 // console.log(hour.date);
                 hour.selected = true;
-                hour.color = props.events[j].color;
+                if (props.events[j].type === "team") {
+                    hour.type = "team"
+                    hour.color = props.events[j].color;
+                } else {
+                    hour.color = props.events[j].color;
+                }
                 if (props.events[j].top) {
                     hour.top = true;
                     hour.name = props.events[j].title;
@@ -101,7 +107,8 @@ function CalendarDays(props) {
                     //     <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     // </div>
                     <div className={"calendar-hour" + 
-                        (props.viewMode === 5 ? " work-hour" : " full-hour")} 
+                        (props.viewMode === 5 ? " work-hour" : " full-hour") 
+                        } 
                         style={{backgroundColor: hour.color}}>
                         <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     </div>

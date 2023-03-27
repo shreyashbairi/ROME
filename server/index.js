@@ -215,6 +215,12 @@ app.get("/events/:username", async (req,res) => {
         // console.log(req.params.username);
         const events = await Event.find({ usernameid: req.params.username })
         // console.log(events);
+        const user = await User.findOne({userUserName: req.params.username});
+        const teamNameList = user.userTeamList;
+        for (let i = 0; i < teamNameList.length; i++) {
+            const teamEvents = await TeamEvent.find({team: teamNameList[i]});
+            events.push(...teamEvents);
+        }
         res.json(events);
     } catch (e){
         // console.log(e)

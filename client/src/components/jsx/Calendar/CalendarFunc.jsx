@@ -48,7 +48,8 @@ export default function CalendarFunc (props) {
                     description: eventsGrabed[i].description,
                     teamName: eventsGrabed[i].teamName,
                     teamID: eventsGrabed[i].teamID,
-                    color: eventsGrabed[i]. color
+                    color: eventsGrabed[i]. color,
+                    type: eventsGrabed[i].type
                 };
                 // console.log(newElapsedEvent);
                 if (newElapsedEvent.endTime === 1) {
@@ -65,7 +66,8 @@ export default function CalendarFunc (props) {
                         top: topHour,
                         title: newElapsedEvent.title,
                         color: newElapsedEvent.color,
-                        teamName: newElapsedEvent.teamName 
+                        teamName: newElapsedEvent.teamName,
+                        type: newElapsedEvent.type
                     }; 
                     elapsedEvent.push(newevent)
                 }
@@ -151,7 +153,8 @@ export default function CalendarFunc (props) {
                 top: topHour,
                 title: newElapsedEvent.title,
                 color: newElapsedEvent.color,
-                teamName: newElapsedEvent.teamName 
+                teamName: newElapsedEvent.teamName,
+                type: newElapsedEvent.type
             }; 
             elapsedEvent.push(newevent)
         }
@@ -174,7 +177,8 @@ export default function CalendarFunc (props) {
                 top: topHour,
                 title: newElapsedEvent.title,
                 color: newElapsedEvent.color,
-                teamName: newElapsedEvent.teamName
+                teamName: newElapsedEvent.teamName,
+                type: newElapsedEvent.type
             }; 
             elapsedEvent.push(newevent)
         }

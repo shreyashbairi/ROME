@@ -14,7 +14,7 @@ const AddEvent = (props) => {
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
     const [eventLabel, setEventLabel] = useState("");
-    const [teamName, setTeamName] = useState("");
+    const [teamName, setTeamName] = useState("personal");
     const [localTeams, setLocalTeams] = useState([]);
     // const [teamID, setTeamID] = useState(0);
 
@@ -41,7 +41,8 @@ const AddEvent = (props) => {
             description: eventDescription,
             teamName: teamName,
             teamID: -1,
-            color: "gray"
+            color: "gray",
+            type: "user"
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
         let exists = false;
@@ -151,7 +152,7 @@ const AddEvent = (props) => {
                 onChange={e => setEventDescription(e.target.value)} required />
             </div>
         </div>
-        <div class="row mt-3">
+        {/* <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Team</strong>
             </div>
@@ -164,7 +165,7 @@ const AddEvent = (props) => {
                 value={teamName} 
                 onChange={e => setTeamName(e.target.value)} required />
             </div>
-        </div>
+        </div> */}
         <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Date</strong>
