@@ -147,12 +147,12 @@ app.post('/teamsubmit', async (req, res) =>{
             color: color,
             members: members 
         });
-        const user = await User.findOne({ username: username })
+        const user = await User.findOne({ userUserName: username })
         // console.log(user);
         // console.log(user.userTeamList);
         const newUserTeamList = [...user.userTeamList, ...userTeamList];
         const userDoc = await User.findOneAndUpdate(
-            { username: username },
+            { userUserName: username },
             { userTeamList: newUserTeamList }
         );
         res.json(teamDoc);
