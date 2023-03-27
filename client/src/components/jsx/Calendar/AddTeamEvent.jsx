@@ -44,7 +44,8 @@ const AddTeamEvent = (props) => {
             description: eventDescription,
             teamName: props.teamName,
             teamID: -1,
-            color: teamItem.color
+            color: teamItem.color,
+            type: "team"
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
         if (newElapsedEvent.startTime > newElapsedEvent.endTime) {

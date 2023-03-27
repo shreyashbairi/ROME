@@ -157,6 +157,7 @@ export default function TeamCalendar (props) {
     }
 
     const scheduleEvent = (newElapsedEvent) => {
+        // console.log("scheduleteamevent");
         const elapsedEvent = [];
         if (newElapsedEvent.endTime === 1) {
             newElapsedEvent.endTime = 25;
@@ -172,7 +173,8 @@ export default function TeamCalendar (props) {
                 top: topHour,
                 title: newElapsedEvent.title,
                 color: newElapsedEvent.color,
-                teamName: newElapsedEvent.teamName
+                teamName: newElapsedEvent.teamName,
+                type: newElapsedEvent.type
             }; 
             elapsedEvent.push(newevent)
         }
