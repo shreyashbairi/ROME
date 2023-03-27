@@ -1,7 +1,7 @@
 import "../../css/TeamCalendar.css";
 import React, {Component} from 'react';
 import TeamCalendarDays from "./TeamCalendarDays";
-import AddEvent from "./AddEvent";
+import AddTeamEvent from "./AddTeamEvent";
 import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
 import { useState, useEffect } from "react";
@@ -48,7 +48,8 @@ export default function TeamCalendar (props) {
                     description: eventsGrabed[i].description,
                     teamName: eventsGrabed[i].teamName,
                     teamID: eventsGrabed[i].teamID,
-                    color: eventsGrabed[i]. color
+                    color: eventsGrabed[i]. color,
+                    type: eventsGrabed[i].type
                 };
                 // console.log(newElapsedEvent);
                 if (newElapsedEvent.endTime === 1) {
@@ -65,7 +66,8 @@ export default function TeamCalendar (props) {
                         top: topHour,
                         title: newElapsedEvent.title,
                         color: newElapsedEvent.color,
-                        teamName: newElapsedEvent.teamName 
+                        teamName: newElapsedEvent.teamName,
+                        type: newElapsedEvent.type
                     }; 
                     elapsedEvent.push(newevent)
                 }
@@ -268,11 +270,12 @@ export default function TeamCalendar (props) {
                     <Popup class="addevent" trigger={<button type="button" class="btn btn-secondary" onClick={grabTeams}>Add Events</button>} open={show}
                     onOpen={openform} position="right center" nested modal>
                         <div class="card">
-                        <AddEvent  
+                        <AddTeamEvent  
                                 trigger={show}
                                 setTrigger={closeform}
                                 scheduleEvent={scheduleEvent}
                                 teams={teams}
+                                teamName={localStorage.getItem("team")}
                                 setTeams={setTeams}
                             />     
                         </div>

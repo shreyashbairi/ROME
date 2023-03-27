@@ -8,6 +8,7 @@ const User = require('./models/User.js');
 const Team = require('./models/Team.js');
 const Events = require('./models/Events.js');
 const Event = require('./models/Event.js');
+const TeamEvent = require('./models/TeamEvent.js');
 const Notification = require('./models/Notification.js');
 
 const Task = require('./models/ToDoSchema.js');
@@ -199,6 +200,15 @@ app.get("/teams/:username", async (req,res) => {
     }
 });
 
+app.get("/getteam/:teamname", async (req,res) => {
+    try{
+        const team = await Team.findOne({team: req.params.teamname});
+        res.json(team);
+    } catch (e){
+        res.status(422).json(e);    
+    }
+});
+
 app.get("/events/:username", async (req,res) => {
     // console.log(req.params.username);
     try{
@@ -213,7 +223,7 @@ app.get("/events/:username", async (req,res) => {
 });
 
 app.get("/fullteamevents/:teamname", async (req,res) => {
-    console.log(req.params.teamname);
+    // console.log(req.params.teamname);
     try{
         // console.log(req.params.username);
         const team = await Team.findOne({team: req.params.teamname});
@@ -226,6 +236,8 @@ app.get("/fullteamevents/:teamname", async (req,res) => {
             events.push(...newEvents);
             // console.log("here1");
         }
+        const teamEvents = await TeamEvent.find({teamName: req.params.teamname});
+        events.push(...teamEvents);
         // console.log("here");
         // res.json(members);
         // const events = await Event.find({ usernameid: req.params.username })
@@ -267,7 +279,28 @@ app.post('/eventsave', async (req, res) =>{
             description: newDescription,
             teamName: newTeamName,
             teamID: newTeamID,
-            color: newColor
+            color: newColor,
+            type: "user"
+            });
+        res.json(eventsDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
+
+app.post('/teameventsave', async (req, res) =>{
+    const {newDate, newStartTime, newEndTime, newTitle, newDescription, newTeamName, newTeamID, newColor} = req.body;
+    try {
+        const eventsDoc = await TeamEvent.create(
+            { date: newDate,
+            startTime: newStartTime,
+            endTime: newEndTime,
+            title: newTitle,
+            description: newDescription,
+            teamName: newTeamName,
+            teamID: newTeamID,
+            color: newColor,
+            type: "team"
             });
         res.json(eventsDoc);
     } catch (e) {
