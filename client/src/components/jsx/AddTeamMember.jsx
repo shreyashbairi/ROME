@@ -16,43 +16,45 @@ function AddTeamMember(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const username = localStorage.getItem("userid");
+        const invitedUser = name;
+        const descriptionSent = description;
+        const inviter = localStorage.getItem("userid");
         try {
-            await axios.post('/teamsubmit',{
-              name,
-              description,
-              username
+            const {inviteInfo} = await axios.post('/addteammember',{
+              invitedUser,
+              descriptionSent,
+              inviter
             });
-            alert("Team Successfully Created.");
+            alert("Invitation Sent!");
           } catch (e){
-            alert('Team Creation Failed. Please try again later.')
+            alert('Error sending invite. User not found.')
           }
-        props.onSubmit({
-            name: name,
-            description: description
-        });
+        // props.onSubmit({
+        //     name: name,
+        //     description: description
+        // });
         props.setTrigger(false);
         setName("");
         setDescription("");
     }
 
-    const handleName = (e) => {
-        setName(e.target.value);
-        // console.log(team);
-        const newdata = {...data}
-        newdata[e.target.id]=e.target.value
-        setData(newdata)
-        console.log(newdata)
-    }
+    // const handleName = (e) => {
+    //     setName(e.target.value);
+    //     // console.log(team);
+    //     const newdata = {...data}
+    //     newdata[e.target.id]=e.target.value
+    //     setData(newdata)
+    //     //console.log(newdata)
+    // }
 
-    const handleDescription = (e) => {
-        setDescription(e.target.value);
-        console.log(description);
-        const newdata = {...data}
-        newdata[e.target.id]=e.target.value
-        setData(newdata)
-        console.log(newdata)
-    }
+    // const handleDescription = (e) => {
+    //     setDescription(e.target.value);
+    //     console.log(description);
+    //     const newdata = {...data}
+    //     newdata[e.target.id]=e.target.value
+    //     setData(newdata)
+    //     //console.log(newdata)
+    // }
 
     const openTeamPage = e => {
         return (
@@ -81,7 +83,7 @@ function AddTeamMember(props) {
                             id="team"
                             placeholder="Name"
                             type="text"
-                            onChange={handleName}
+                            onChange={e => setName(e.target.value)}
                             value={name}
                         />
                     </div>
@@ -91,7 +93,7 @@ function AddTeamMember(props) {
                         placeholder="Description"
                         type="text"
                         className="description-box"
-                        onChange={handleDescription}
+                        onChange={e => setDescription(e.target.value)}
                         value={description}
                     />
                     </div> 

@@ -549,6 +549,52 @@ app.post('/invitenotification', async (req, res) =>{
 
 
 
+app.post('/addteammember', async (req, res) => {
+    const { invitedUser, descriptionSent, inviter } = req.body;
+    console.log(invitedUser);
+    console.log(descriptionSent);
+    console.log(inviter);
+    try {
+      const _existingUser = await User.findOne({userUserName: invitedUser});
+      if (!_existingUser) {
+        console.log(_existingUser);
+        console.log("User does not exist.");  
+      } 
+      else if (_existingUser.userUserName === inviter){
+        res.status(422).json({error: "You cannot invite yourself to a team."});
+      }
+      else {
+        console.log(_existingUser);
+        console.log("User exists.");
+        const notification = await Notification.create(
+            {
+                fromuser: inviter,
+                touser: invitedUser,
+                type: "Invite",
+                description: descriptionSent,
+            });
+        res.json(notification);
+
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
+    
+    // if (_existingUser) {
+    //     const notification = await Notification.create(
+    //         {
+    //             fromuser: inviter,
+    //             touser: invitedUser,
+    //             type: "Invite",
+    //             description: descriptionSent,
+    //         });
+    //     res.json(notification);
+    // }
+    // else {
+    //     res.status(422).json(e);
+    // }
 
 
   
