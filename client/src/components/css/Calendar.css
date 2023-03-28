@@ -97,10 +97,10 @@
   border: 1px solid #000000;
 }
 
-.calendar-day:hover {
-  /* background-color: rgba(0,0,0,.10); */
+/* .calendar-day:hover {
+  background-color: rgba(0,0,0,.10);
   background-color: #6561d19c;
-}
+} */
 
 
 .calendar-day p {
@@ -132,10 +132,9 @@
   border: 1px solid #000000;
 }
 
-.calendar-hour:hover {
-  /* background-color: rgba(0,0,0,.10); */
+/* .calendar-hour:hover {
   background-color: #6561d19c;
-}
+} */
 
 .calendar-hour p {
   text-align: center;
@@ -151,12 +150,12 @@
 }
 
 .scheduled {
-  background-color: rgb(29, 155, 209);
+  background-color: rgb(209, 71, 29);
 }
 
-.scheduled:hover {
+/* .scheduled:hover {
   background-color: rgba(111, 187, 220, 0.681);
-}
+} */
 
 .addevent {
   border-radius: .25rem !important;

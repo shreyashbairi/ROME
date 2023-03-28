@@ -6,7 +6,7 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
-const AddEvent = (props) => {
+const AddTeamEvent = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
@@ -14,19 +14,22 @@ const AddEvent = (props) => {
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
     const [eventLabel, setEventLabel] = useState("");
-    const [teamName, setTeamName] = useState("personal");
+    // const [teamName, setTeamName] = useState("");
+    const [teamItem, setTeamItem] = useState("");
     const [localTeams, setLocalTeams] = useState([]);
     // const [teamID, setTeamID] = useState(0);
 
     useEffect( () => { 
         // console.log("ATTEMPT MADE");
         const username = localStorage.getItem('userid');
-        axios.get(`/teams/${username}`)
+        const teamname = props.teamName;
+        axios.get(`/getteam/${teamname}`)
         .then (res => {
-            const teamsGrabed = res.data;
+            const teamGrabed = res.data;
+            setTeamItem(teamGrabed);
             // console.log(teamsGrabed);
-            setLocalTeams(teamsGrabed);
-            props.setTeams(teamsGrabed);
+            // setLocalTeams(teamsGrabed);
+            // props.setTeams(teamsGrabed);
         });
         // console.log(localTeams);
     }, []);
@@ -39,58 +42,33 @@ const AddEvent = (props) => {
             endTime: parseInt(eventEndTime.substring(0,2)),
             title: eventTitle,
             description: eventDescription,
-            teamName: teamName,
+            teamName: props.teamName,
             teamID: -1,
-            color: "gray",
-            type: "user"
+            color: teamItem.color,
+            type: "team"
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
-        let exists = false;
-        let teamIndex = -1;
-        if (teamName === "Personal" || teamName === "personal") {
-            exists = true;
-            newElapsedEvent.color = "#1D9BD1";
-            newElapsedEvent.teamName = "Personal"
-        } else {
-            //console.log(teamName);
-            for (let i = 0; i < props.teams.length; i++) {
-                //console.log(props.teams[i].team);
-                if (props.teams[i].team === teamName) {
-                    exists = true;
-                    teamIndex = i;
-                    newElapsedEvent.color = props.teams[i].color;
-                    break;
-                }
-            }
-        }
-        if (!exists) {
-            alert("Team Does Not Exist.")
-        } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
+        if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
         } else {
             props.scheduleEvent(newElapsedEvent);
             props.setTrigger();
-            const curusername = localStorage.getItem("userid");
             const newDate = newElapsedEvent.date;
             const newStartTime = newElapsedEvent.startTime;
             const newEndTime = newElapsedEvent.endTime;
             const newTitle = newElapsedEvent.title;
             const newDescription = newElapsedEvent.description;
-            if (teamIndex != -1) {
-                newElapsedEvent.id =  props.teams[teamIndex].teamId;
-            }
             const newTeamName = newElapsedEvent.teamName;
             const newTeamID = newElapsedEvent.teamID;
             const newColor = newElapsedEvent.color;
             
             try {
-                await axios.post('/eventsave', {
+                await axios.post('/teameventsave', {
                     newDate, 
                     newStartTime, 
                     newEndTime, 
                     newTitle, 
                     newDescription, 
-                    curusername,
                     newTeamName,
                     newTeamID,
                     newColor
@@ -122,7 +100,7 @@ const AddEvent = (props) => {
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
-        <h2>Add Events</h2>
+        <h2>Add Team Events</h2>
         <form autoComplete="off" onSubmit={handleEventSubmit}>
         <div class="row mt-3">
             <div class="col-sm-3">
@@ -221,4 +199,4 @@ const AddEvent = (props) => {
 }
 
 
-export default AddEvent
+export default AddTeamEvent

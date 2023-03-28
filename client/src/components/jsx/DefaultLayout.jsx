@@ -22,6 +22,7 @@ function DefaultLayout () {
     const [isLoggedIn] = useState(false);
     const [color,setColor] = useState("");
     const {user,setUser} = useContext(UserContext);
+    const [inviterName, setInviterName] = useState('');
 
     const [teams, setTeams] = useState([{
         teamID: Number,
@@ -94,7 +95,7 @@ function DefaultLayout () {
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  >
-                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">invite from Chiho sOng</button>} nested modal>
+                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">invite from {inviterName}</button>} nested modal>
                             <div classname="loginpopup">
                                         <div class="formPopup" id="popupForm">
                                         <h2>Invite from</h2>

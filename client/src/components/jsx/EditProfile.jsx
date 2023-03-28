@@ -4,7 +4,7 @@ import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import Select from 'react-select'
+//import Select from 'react-select'
 
 
 function EditProfile (){

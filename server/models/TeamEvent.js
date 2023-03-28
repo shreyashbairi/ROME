@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
-const EventSchema = new Schema({
-    usernameid: String,
+const TeamEventSchema = new Schema({
     date: Date,
     startTime: Number,
     endTime: Number,
@@ -14,6 +13,6 @@ const EventSchema = new Schema({
     type: String
 });
 
-const EventModel = mongoose.model('Event', EventSchema);
+const TeamEventModel = mongoose.model('TeamEvent', TeamEventSchema);
 
-module.exports = EventModel;
+module.exports = TeamEventModel;

@@ -53,18 +53,28 @@ function CalendarDays(props) {
         // console.log(hour.date);
         for (let j = 0; j < props.events.length; j++) {
             if (props.events[j].time === hour.time && props.events[j].date.getDate() === hour.date.getDate() 
-                && props.events[j].teamName === "Personal"
+                // && props.events[j].teamName === "Personal"
                 //&& props.events[j].getMonth() === hour.date.getMonth()
                 //&& props.events[j].getFullyear() === hour.date.getFullyear()
                 ) { //not is used as bandaid TODO fix
                 // console.log(props.events[j].date);
                 // console.log(hour.date);
-                hour.selected = true;
-                hour.color = "gray";
-                if (props.events[j].top) {
-                    // hour.top = true;
-                    hour.name = props.events[j].title;
+                if (props.events[j].teamName === "Personal") {
+                    hour.selected = true;
+                    hour.color = "gray";
+                    if (props.events[j].top) {
+                        // hour.top = true;
+                        hour.name = props.events[j].title;
+                    }
+                } else if (props.events[j].type === "team") {
+                    hour.color = props.events[j].color;
+                    hour.selected = true;
+                    if (props.events[j].top) {
+                        hour.top = true;
+                        hour.name = props.events[j].title;
+                    }
                 }
+               
             }
         }
         if (props.viewMode == 5) {
