@@ -1,5 +1,8 @@
 import React, {useState} from "react"
 import  { AiFillCloseCircle } from 'react-icons/ai'
+import Popup from "reactjs-popup";
+import TeamAddNewWorking from "./TeamAddNewWorking";
+
 
 function TeamProgressList({started,setStarted,removeTodoFromProg,newWorker}) {
 
@@ -15,7 +18,8 @@ function TeamProgressList({started,setStarted,removeTodoFromProg,newWorker}) {
                             <br/>
                             Currently Working: 
                             <br/>
-                            <button>Add New Working Member</button>
+                            <TeamAddNewWorking/>
+
                         </button>
                             
                             
