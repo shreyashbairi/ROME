@@ -93,6 +93,7 @@ function TeamHome() {
     }
     
     const changePersonalCalendar = (fullName) => {
+        console.log("START HERE");
         setBodyView(3);
         setBodyViewName(`${fullName}'s Calendar`);
     }

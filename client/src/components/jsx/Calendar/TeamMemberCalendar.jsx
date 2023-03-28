@@ -1,5 +1,6 @@
 import "../../css/TeamCalendar.css";
 import React, {Component} from 'react';
+import TeamCalendarDays from "./TeamCalendarDays";
 import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
 import EditEvent from "./EditEvent";
@@ -34,6 +35,8 @@ export default function TeamMemberCalendar (props) {
         .then(res => {
             // console.log(res.data)
             const eventsGrabed = res.data;
+            console.log("member events grabed");
+            console.log(eventsGrabed);
             // console.log(eventsGrabed.length)
             const elapsedEvent = [];
             for (let i = 0; i < eventsGrabed.length; i++) {
@@ -46,9 +49,10 @@ export default function TeamMemberCalendar (props) {
                     description: eventsGrabed[i].description,
                     teamName: eventsGrabed[i].teamName,
                     teamID: eventsGrabed[i].teamID,
-                    color: eventsGrabed[i]. color
+                    color: eventsGrabed[i]. color,
+                    type: eventsGrabed[i].type
                 };
-                // console.log(newElapsedEvent);
+                console.log(newElapsedEvent);
                 if (newElapsedEvent.endTime === 1) {
                     newElapsedEvent.endTime = 25;
                 }
@@ -63,35 +67,38 @@ export default function TeamMemberCalendar (props) {
                         top: topHour,
                         title: newElapsedEvent.title,
                         color: newElapsedEvent.color,
-                        teamName: newElapsedEvent.teamName 
+                        teamName: newElapsedEvent.teamName,
+                        type: newElapsedEvent.type
                     }; 
                     elapsedEvent.push(newevent)
                 }
             }
             setEvents([...events, ...elapsedEvent])
+            console.log("member events");
+            console.log(events);
         });
-        axios.get(`/getViewMode/${username}`)
-        .then(res => {
-            let userProfile = res.data;
-            // console.log(userProfile);
-            // console.log(userProfile.userViewMode);
-            let userViewMode = userProfile.userViewMode;
-            // console.log(userViewMode);
-            userProfile = null;
-            if (userViewMode == 5) {
-                setViewMode(5);
-                setViewModeString("Work Week");
-                setCurWeekdays(workWeekdays);
-            } else {
-                setViewMode(7);
-                setViewModeString("Week");
-                setCurWeekdays(weekdays);
-            }
-        });
+        // axios.get(`/getViewMode/${username}`)
+        // .then(res => {
+        //     let userProfile = res.data;
+        //     // console.log(userProfile);
+        //     // console.log(userProfile.userViewMode);
+        //     let userViewMode = userProfile.userViewMode;
+        //     // console.log(userViewMode);
+        //     userProfile = null;
+        //     if (userViewMode == 5) {
+        //         setViewMode(5);
+        //         setViewModeString("Work Week");
+        //         setCurWeekdays(workWeekdays);
+        //     } else {
+        //         setViewMode(7);
+        //         setViewModeString("Week");
+        //         setCurWeekdays(weekdays);
+        //     }
+        // });
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            console.log(teamsGrabed);
+            //console.log(teamsGrabed);
             setTeams(teamsGrabed);
         });
       }, [] )
@@ -128,29 +135,30 @@ export default function TeamMemberCalendar (props) {
         setEvents([...events, newevent])
     }
 
-    const editEvent = (newElapsedEvent) => {
-        //removeEvents(newElapsedEvent);
-        const elapsedEvent = [];
-        if (newElapsedEvent.endTime === 1) {
-            newElapsedEvent.endTime = 25;
-        }
-        for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
-            let topHour = false;
-            if (i === newElapsedEvent.startTime) {
-                topHour = true;
-            }
-            const newevent = {
-                date: newElapsedEvent.date,
-                time: i,
-                top: topHour,
-                title: newElapsedEvent.title,
-                color: newElapsedEvent.color,
-                teamName: newElapsedEvent.teamName 
-            }; 
-            elapsedEvent.push(newevent)
-        }
-        setEvents([...events, ...elapsedEvent])
-    }
+    // const editEvent = (newElapsedEvent) => {
+    //     //removeEvents(newElapsedEvent);
+    //     const elapsedEvent = [];
+    //     if (newElapsedEvent.endTime === 1) {
+    //         newElapsedEvent.endTime = 25;
+    //     }
+    //     for (let i = newElapsedEvent.startTime; i < newElapsedEvent.endTime; i++) {
+    //         let topHour = false;
+    //         if (i === newElapsedEvent.startTime) {
+    //             topHour = true;
+    //         }
+    //         const newevent = {
+    //             date: newElapsedEvent.date,
+    //             time: i,
+    //             top: topHour,
+    //             title: newElapsedEvent.title,
+    //             color: newElapsedEvent.color,
+    //             teamName: newElapsedEvent.teamName ,
+    //             tpye: new ElapsedEve
+    //         }; 
+    //         elapsedEvent.push(newevent)
+    //     }
+    //     setEvents([...events, ...elapsedEvent])
+    // }
 
     const scheduleEvent = (newElapsedEvent) => {
         const elapsedEvent = [];
@@ -168,7 +176,8 @@ export default function TeamMemberCalendar (props) {
                 top: topHour,
                 title: newElapsedEvent.title,
                 color: newElapsedEvent.color,
-                teamName: newElapsedEvent.teamName
+                teamName: newElapsedEvent.teamName,
+                type: newElapsedEvent.type
             }; 
             elapsedEvent.push(newevent)
         }
@@ -272,7 +281,9 @@ export default function TeamMemberCalendar (props) {
                                 scheduleEvent={scheduleEvent}
                                 teams={teams}
                                 setTeams={setTeams}
-                            />     
+                                user={props.username}
+                                team={localStorage.getItem("team")}
+                        />     
                         </div>
                     </ Popup>
 
@@ -315,7 +326,7 @@ export default function TeamMemberCalendar (props) {
                                 })
                             }
                             </div>
-                            <CalendarDays 
+                            <TeamCalendarDays 
                                 day={currentDay} 
                                 changeCurrentDay={changeCurrentDay} 
                                 events={events} 

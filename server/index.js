@@ -217,10 +217,14 @@ app.get("/events/:username", async (req,res) => {
         // console.log(events);
         const user = await User.findOne({userUserName: req.params.username});
         const teamNameList = user.userTeamList;
+        // console.log(teamNameList);
         for (let i = 0; i < teamNameList.length; i++) {
-            const teamEvents = await TeamEvent.find({team: teamNameList[i]});
+            const teamEvents = await TeamEvent.find({teamName: teamNameList[i]});
+            // console.log(teamEvents); 
             events.push(...teamEvents);
         }
+        // console.log("EVENTS");
+        // console.log(events);
         res.json(events);
     } catch (e){
         // console.log(e)
@@ -239,7 +243,12 @@ app.get("/fullteamevents/:teamname", async (req,res) => {
         for (let i = 0; i < usernameList.length; i++) {
             const newEvents = await Event.find({usernameid: usernameList[i]});
             // console.log(newEvents);
-            events.push(...newEvents);
+            for(let j =0; j < newEvents.length; j++) {
+                if( newEvents[j].type === "user") {
+                    events.push(newEvents[j]);
+                }
+            }
+            // events.push(...newEvents);
             // console.log("here1");
         }
         const teamEvents = await TeamEvent.find({teamName: req.params.teamname});
@@ -274,7 +283,7 @@ app.get("/getmanager/:teamname", async (req,res) => {
 //in AddEvent
 app.post('/eventsave', async (req, res) =>{
     const {newDate, newStartTime, newEndTime, newTitle, newDescription, 
-           curusername, newTeamName, newTeamID, newColor} = req.body;
+           curusername, newTeamName, newTeamID, newColor, newType} = req.body;
     try {
         const eventsDoc = await Event.create(
             { usernameid: curusername,
@@ -286,7 +295,7 @@ app.post('/eventsave', async (req, res) =>{
             teamName: newTeamName,
             teamID: newTeamID,
             color: newColor,
-            type: "user"
+            type: newType
             });
         res.json(eventsDoc);
     } catch (e) {

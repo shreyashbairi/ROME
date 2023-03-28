@@ -14,22 +14,22 @@ const AddEvent = (props) => {
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
     const [eventLabel, setEventLabel] = useState("");
-    const [teamName, setTeamName] = useState("personal");
+    const [teamName, setTeamName] = useState(props.team);
     const [localTeams, setLocalTeams] = useState([]);
     // const [teamID, setTeamID] = useState(0);
 
-    useEffect( () => { 
-        // console.log("ATTEMPT MADE");
-        const username = localStorage.getItem('userid');
-        axios.get(`/teams/${username}`)
-        .then (res => {
-            const teamsGrabed = res.data;
-            // console.log(teamsGrabed);
-            setLocalTeams(teamsGrabed);
-            props.setTeams(teamsGrabed);
-        });
-        // console.log(localTeams);
-    }, []);
+    // useEffect( () => { 
+    //     // console.log("ATTEMPT MADE");
+    //     const username = props.username;
+    //     axios.get(`/teams/${username}`)
+    //     .then (res => {
+    //         const teamsGrabed = res.data;
+    //         // console.log(teamsGrabed);
+    //         setLocalTeams(teamsGrabed);
+    //         props.setTeams(teamsGrabed);
+    //     });
+    //     // console.log(localTeams);
+    // }, []);
 
     async function handleEventSubmit (e) {
         e.preventDefault();
@@ -51,6 +51,7 @@ const AddEvent = (props) => {
             exists = true;
             newElapsedEvent.color = "#1D9BD1";
             newElapsedEvent.teamName = "Personal"
+            newElapsedEvent.type = "user"
         } else {
             //console.log(teamName);
             for (let i = 0; i < props.teams.length; i++) {
@@ -59,6 +60,7 @@ const AddEvent = (props) => {
                     exists = true;
                     teamIndex = i;
                     newElapsedEvent.color = props.teams[i].color;
+                    newElapsedEvent.type = "team"
                     break;
                 }
             }
@@ -70,7 +72,7 @@ const AddEvent = (props) => {
         } else {
             props.scheduleEvent(newElapsedEvent);
             props.setTrigger();
-            const curusername = localStorage.getItem("userid");
+            const curusername = props.user;
             const newDate = newElapsedEvent.date;
             const newStartTime = newElapsedEvent.startTime;
             const newEndTime = newElapsedEvent.endTime;
@@ -82,6 +84,7 @@ const AddEvent = (props) => {
             const newTeamName = newElapsedEvent.teamName;
             const newTeamID = newElapsedEvent.teamID;
             const newColor = newElapsedEvent.color;
+            const newType = newElapsedEvent.type;
             
             try {
                 await axios.post('/eventsave', {
@@ -93,7 +96,8 @@ const AddEvent = (props) => {
                     curusername,
                     newTeamName,
                     newTeamID,
-                    newColor
+                    newColor,
+                    newType
                 });
                 alert('Event Saved');
             } catch (e) {
