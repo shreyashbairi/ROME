@@ -32,6 +32,8 @@ const AddTeamEvent = (props) => {
             // props.setTeams(teamsGrabed);
         });
         // console.log(localTeams);
+        console.log("props events");
+        console.log(props.events);
     }, []);
 
     async function handleEventSubmit (e) {
@@ -50,8 +52,13 @@ const AddTeamEvent = (props) => {
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
         let conflicts = false;
         let teamConflict = false;
+        // console.log("props events");
+        // console.log(props.events);
         for (let i = 0; i < props.events.length; i++) {
-            if (props.events[i].date == newElapsedEvent.date) {
+            // console.log((new Date(props.events[i].date)).getDate())
+            // console.log(newElapsedEvent.date.getDate())
+            // console.log((new Date(props.events[i].date)).getDate() === newElapsedEvent.date.getDate())
+            if ((new Date(props.events[i].date)).getDate() === newElapsedEvent.date.getDate()) {
                 if (props.events[i].startTime <= newElapsedEvent.endTime ||
                     props.events[i].endTime >= newElapsedEvent.startTime)
                     conflicts = true;

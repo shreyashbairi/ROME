@@ -27,6 +27,7 @@ export default function TeamCalendar (props) {
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
     const [teams, setTeams] = useState([]);
     const [focusTeams, setFocusTeams] = useState([]);
+    const [fullEvents, setFullEvents] = useState([]);
 
     useEffect( () => {
         const username = localStorage.getItem('userid');
@@ -73,6 +74,7 @@ export default function TeamCalendar (props) {
                 }
             }
             setEvents([...events, ...elapsedEvent])
+            setFullEvents(eventsGrabed);
         });
         axios.get(`/getUser/${username}`)
         .then(res => {
@@ -279,7 +281,7 @@ export default function TeamCalendar (props) {
                                 teams={teams}
                                 teamName={localStorage.getItem("team")}
                                 setTeams={setTeams}
-                                events={events} 
+                                events={fullEvents} 
                             />     
                         </div>
                     </ Popup>
