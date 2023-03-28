@@ -1,11 +1,7 @@
 import React, {useState} from "react"
 import  { AiFillCloseCircle } from 'react-icons/ai'
 
-function TeamProgressList({started,setStarted,removeTodoFromProg}) {
-
-    function newWorker(todo,event) {
-        todo.workers=[event.target.value,...todo.workers];
-    }
+function TeamProgressList({started,setStarted,removeTodoFromProg,members, newWorker}) {
 
     return (
         <div>
@@ -19,16 +15,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                             <br/>
                             Currently Working: 
                             <br/>
-                            <form
-                                // onSubmit={()=>newWorker(todo)}
-                            >
-                                <select 
-                                    // value={this.state.value}
-                                >
-                                    <option value="none">Make a Selection</option>
-                                    <option value="Sample Worker">Sample Worker</option>
-                                </select>
-                            </form>
+                            <button>Add New Working Member</button>
                         </button>
                             
                             

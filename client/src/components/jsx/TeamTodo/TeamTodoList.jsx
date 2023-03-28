@@ -10,6 +10,8 @@ import {BsFillTrashFill} from 'react-icons/bs'
 
 export default function TeamTodoList(props) {
 
+    const[teamMembers,setTeamMembers] = useState([]);
+
     const[started, setStarted] = useState([{
         title: String,
         description: String,
@@ -57,6 +59,12 @@ export default function TeamTodoList(props) {
             const tasksGrabed = res.data;
             console.log(tasksGrabed);
             loadTasks(tasksGrabed);
+        })
+        axios.get(`members/${team}`)
+        .then(res => {
+            const memberList = res.data;
+            console.log(memberList);
+            setTeamMembers(memberList);
         })
     },[])
 
@@ -222,6 +230,7 @@ export default function TeamTodoList(props) {
             started={started}
             setStarted={setStarted}
             removeTodoFromProg={removeTodoFromProg}
+            members={teamMembers}
         />
 
         <br></br>
