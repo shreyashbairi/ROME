@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import  { AiFillCloseCircle } from 'react-icons/ai'
 
-function TeamProgressList({started,setStarted,removeTodoFromProg,members, newWorker}) {
+function TeamProgressList({started,setStarted,removeTodoFromProg,newWorker}) {
 
     return (
         <div>

@@ -204,6 +204,26 @@ export default function TeamTodoList(props) {
         
     }
 
+    async function newWorker(task, memberUserName) {
+        const exists = teamMembers.some((member) => member === memberUserName)
+
+        if (!exists) {
+            alert("This username does not exist in this team");
+        } else {
+
+            try {
+                await axios.post('/assignMemberToTask', {
+                    team: localStorage.getItem("team"),
+                    task: task,
+                    member:memberUserName
+                });
+            } catch (e) {
+                alert("Member could not be added at this time")
+            }
+
+        }
+    }
+
   return (
     <div id="container">
 
@@ -230,7 +250,7 @@ export default function TeamTodoList(props) {
             started={started}
             setStarted={setStarted}
             removeTodoFromProg={removeTodoFromProg}
-            members={teamMembers}
+            newWorker={newWorker}
         />
 
         <br></br>

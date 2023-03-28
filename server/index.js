@@ -624,6 +624,25 @@ app.post('/addteammember', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+app.post('/assignMemberToTask',async (req,res) => {
+    const {team, task, member} = req.body;
+
+    try {
+
+        const taskToUpdate = TeamTask.findOne({team: team, task: task})
+        TeamTask.findOneAndUpdate(
+            {team: team, task: task},
+            {workers: [member, ...taskToUpdate.workers]}
+        );
+
+        console.log(res.json)
+
+    } catch(e) {
+        console.error(e);
+        res.status(500).json()
+    }
+})
     
     // if (_existingUser) {
     //     const notification = await Notification.create(
