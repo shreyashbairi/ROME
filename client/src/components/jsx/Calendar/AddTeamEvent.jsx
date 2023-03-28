@@ -48,34 +48,61 @@ const AddTeamEvent = (props) => {
             type: "team"
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
+        let conflicts = false;
+        let teamConflict = false;
+        for (let i = 0; i < props.events.length; i++) {
+            if (props.events[i].date == newElapsedEvent.date) {
+                if (props.events[i].startTime <= newElapsedEvent.endTime ||
+                    props.events[i].endTime >= newElapsedEvent.startTime)
+                    conflicts = true;
+                    if (props.events[i].type === "team") {
+                        teamConflict = true;
+                    }
+                    break;
+            }
+        }
         if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
         } else {
-            props.scheduleEvent(newElapsedEvent);
-            props.setTrigger();
-            const newDate = newElapsedEvent.date;
-            const newStartTime = newElapsedEvent.startTime;
-            const newEndTime = newElapsedEvent.endTime;
-            const newTitle = newElapsedEvent.title;
-            const newDescription = newElapsedEvent.description;
-            const newTeamName = newElapsedEvent.teamName;
-            const newTeamID = newElapsedEvent.teamID;
-            const newColor = newElapsedEvent.color;
-            
-            try {
-                await axios.post('/teameventsave', {
-                    newDate, 
-                    newStartTime, 
-                    newEndTime, 
-                    newTitle, 
-                    newDescription, 
-                    newTeamName,
-                    newTeamID,
-                    newColor
-                });
-                alert('Event Saved');
-            } catch (e) {
-                alert('Event Failed to Save');
+            let override = false;
+            if (conflicts && teamConflict) {
+                alert("Event conflict with another team event");
+            } else if (conflicts && !teamConflict) {
+                alert("Event conflicts with personal time");
+                //dialog box that allows overridng
+                //if () { //overide
+                //  overide = true;
+                //}
+            } else {
+                override = true;
+            }
+            if(override) {
+                props.scheduleEvent(newElapsedEvent);
+                props.setTrigger();
+                const newDate = newElapsedEvent.date;
+                const newStartTime = newElapsedEvent.startTime;
+                const newEndTime = newElapsedEvent.endTime;
+                const newTitle = newElapsedEvent.title;
+                const newDescription = newElapsedEvent.description;
+                const newTeamName = newElapsedEvent.teamName;
+                const newTeamID = newElapsedEvent.teamID;
+                const newColor = newElapsedEvent.color;
+                
+                try {
+                    await axios.post('/teameventsave', {
+                        newDate, 
+                        newStartTime, 
+                        newEndTime, 
+                        newTitle, 
+                        newDescription, 
+                        newTeamName,
+                        newTeamID,
+                        newColor
+                    });
+                    alert('Event Saved');
+                } catch (e) {
+                    alert('Event Failed to Save');
+                }
             }
         } 
     }

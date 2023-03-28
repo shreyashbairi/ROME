@@ -279,6 +279,7 @@ export default function TeamCalendar (props) {
                                 teams={teams}
                                 teamName={localStorage.getItem("team")}
                                 setTeams={setTeams}
+                                events={events} 
                             />     
                         </div>
                     </ Popup>

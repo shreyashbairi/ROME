@@ -282,6 +282,8 @@ export default function CalendarFunc (props) {
                                 scheduleEvent={scheduleEvent}
                                 teams={teams}
                                 setTeams={setTeams}
+                                team={"personal"}
+                                user={localStorage.getItem("userid")}
                             />     
                         </div>
                     </ Popup>
@@ -295,8 +297,8 @@ export default function CalendarFunc (props) {
                                 editEvent={editEvent}
                                 events={events}
                                 teams={teams}
-                                user={localStorage.getItem("userid")}
                                 team={"personal"}
+                                user={localStorage.getItem("userid")}
                             />     
                         </div>
                     </ Popup>
