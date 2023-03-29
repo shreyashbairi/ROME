@@ -73,20 +73,6 @@ export default function TeamTodoList(props) {
         let started = [];
         let todos = [];
 
-        // for (i=0;i<tasksGrabed.length;i++) {
-        //     task=tasksGrabed[i];
-        //     if (task.complete === true) {
-        //         setCompletes([task,...completes]);
-        //         console.log(task.title + " complete");
-        //         console.log(completes);
-        //     } else if (task.started === true) {
-        //         setStarted([task,...started]);
-        //         console.log(task.title + " started");
-        //     } else {
-        //         setTodos([task,...todos]);
-        //         console.log(task.title + " todos");
-        //     }
-        // }
         tasksGrabed.forEach((element)=> {
             if (element.complete === true) {
                 completes.push(element);
@@ -250,7 +236,7 @@ export default function TeamTodoList(props) {
             started={started}
             setStarted={setStarted}
             removeTodoFromProg={removeTodoFromProg}
-            newWorker={newWorker}
+            teamMembers={teamMembers}
         />
 
         <br></br>
