@@ -559,6 +559,18 @@ app.get("/color/:username", async (req,res) => {
     }
 });
 
+app.get("/userteamtasks/:user", async (req,res) => {
+    console.log("entered")
+    try{
+        const tasks = await TeamTask.find({workers: {$in: [req.params.user] }})
+        console.log(tasks)
+        res.json(tasks)
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
+
 app.delete("/teamtaskdelete", async(req,res) => {
 
     console.log("entered")
