@@ -8,6 +8,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
 
     const[teamMembers,setTeamMembers] = useState([]);
     const [name, setName] = useState("");
+    const [manager, setManager] = useState("");
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,6 +23,11 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
         .then(res => {
             const memberList = res.data;
             setTeamMembers(memberList);
+        })
+        axios.get(`getmanager/${team}`)
+        .then(res=>{
+            const currmanager = res.data;
+            setManager(currmanager);
         })
     },[])
 
@@ -87,6 +93,19 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                         </ Popup>
 
                         </div>
+
+                        {(()=>{
+                            const user = localStorage.getItem("userid");
+                            console.log(user);
+                            console.log(manager);
+                            if (user === manager.userUserName) {
+                                return(
+                                    <button>Edit</button>
+                                )
+                            }
+                        })()}
+
+                        <br></br>
 
                         <AiFillCloseCircle 
                             onClick={()=>removeTodoFromProg(todo)}
