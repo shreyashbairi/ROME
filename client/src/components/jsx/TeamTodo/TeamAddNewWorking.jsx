@@ -12,11 +12,13 @@ function TeamAddNewWorking(props, {task}) {
 
     const[teamMembers,setTeamMembers] = useState([]);
     const [name, setName] = useState("");
+    const [show, setShow] = useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
         
         // props.setTrigger(false);
+        closeform();
         setName("");
     }
 
@@ -54,16 +56,24 @@ function TeamAddNewWorking(props, {task}) {
         //     }
 
         // }
+        }
+
+    
+
+    const openform = () => {
+        setShow(true);
+    };
+
+    const closeform = () => {
+        setShow(false);
     }
 
 //popup for invite
     return (
         
         
-        <Popup class="detailedTask" trigger={<button>Add New Working Member</button>} nested modal>
-
-
-
+            <Popup class="Addteam" trigger={<button type="button" >Add New Working Member</button>} open={show}
+            onOpen={openform} position="right center" nested modal>
                 <div className="card-body">
 
                     <h3>Add Worker</h3>
