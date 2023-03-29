@@ -418,7 +418,7 @@ app.post('/teamtasksave', async (req, res) =>{
             username: user,
             complete: complete,
             started:started,
-            workers:workers,
+            workers:[],
             team:team
             });
         res.json(teamTaskDoc);
@@ -636,16 +636,17 @@ app.post('/addteammember', async (req, res) => {
 
 app.post('/assignMemberToTask',async (req,res) => {
     const {team, task, member} = req.body;
+    console.log(task.title)
 
     try {
 
-        const taskToUpdate = TeamTask.findOne({team: team, task: task})
-        TeamTask.findOneAndUpdate(
-            {team: team, task: task},
-            {workers: [member, ...taskToUpdate.workers]}
+        const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
+        console.log(taskToUpdate.title)
+        const mem = [member, ...taskToUpdate.workers]
+        await TeamTask.findOneAndUpdate(
+            {title: task.title, team: team},
+            {workers: mem}
         );
-
-        console.log(res.json)
 
     } catch(e) {
         console.error(e);

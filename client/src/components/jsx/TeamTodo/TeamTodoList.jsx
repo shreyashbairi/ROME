@@ -10,7 +10,7 @@ import {BsFillTrashFill} from 'react-icons/bs'
 
 export default function TeamTodoList(props) {
 
-    const[teamMembers,setTeamMembers] = useState([]);
+    
 
     const[started, setStarted] = useState([{
         title: String,
@@ -53,18 +53,10 @@ export default function TeamTodoList(props) {
 
     useEffect( () => {
         const team = localStorage.getItem('team');
-        console.log(team);
         axios.get(`/teamTasks/${team}`)
         .then(res => {
             const tasksGrabed = res.data;
-            console.log(tasksGrabed);
             loadTasks(tasksGrabed);
-        })
-        axios.get(`members/${team}`)
-        .then(res => {
-            const memberList = res.data;
-            console.log(memberList);
-            setTeamMembers(memberList);
         })
     },[])
 
@@ -98,12 +90,10 @@ export default function TeamTodoList(props) {
         const newTask = [todo, ...todos]
         setTodos(newTask)
         setClick(false)
-        console.log(todo)
     }
 
     async function removeTodo(todo) {
         completeTodo(todo.id)
-        console.log(todo.id)
         const removeArray = [...todos].filter(todoCheck => todoCheck.id !== todo.id)
 
         try {
@@ -124,9 +114,6 @@ export default function TeamTodoList(props) {
 
     async function removeTodoFromProg(todo) {
         completeTodoProgs(todo.id)
-        console.log("in remove")
-        console.log(todo.id)
-        console.log(started)
         const removeArray = [...started].filter(todoCheck => todoCheck.id !== todo.id)
 
         try {
@@ -175,39 +162,16 @@ export default function TeamTodoList(props) {
 
     const clicked = e => {
         setClick(true)
-        console.log(click)
     }
 
     async function deleteArchive() {
-        console.log("hi");
 
         try {
             await axios.delete('/teamtaskdelete', {});
         } catch (e) {
             alert("Team Tasks didn't delete properly")
         }
-        console.log("check db");
         
-    }
-
-    async function newWorker(task, memberUserName) {
-        const exists = teamMembers.some((member) => member === memberUserName)
-
-        if (!exists) {
-            alert("This username does not exist in this team");
-        } else {
-
-            try {
-                await axios.post('/assignMemberToTask', {
-                    team: localStorage.getItem("team"),
-                    task: task,
-                    member:memberUserName
-                });
-            } catch (e) {
-                alert("Member could not be added at this time")
-            }
-
-        }
     }
 
   return (
@@ -236,7 +200,6 @@ export default function TeamTodoList(props) {
             started={started}
             setStarted={setStarted}
             removeTodoFromProg={removeTodoFromProg}
-            teamMembers={teamMembers}
         />
 
         <br></br>
