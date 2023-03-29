@@ -607,6 +607,27 @@ app.post('/invitenotification', async (req, res) =>{
     }
 });
 
+app.post('/acceptmember', async (req, res) => {
+    const {username, teamname} = req.body;
+    try {
+        const user = User.findOne({userUserName: username});
+        const newUserTeamList = [...user.userTeamList, teamname]
+        const userDoc = User.findOneAndUpdate(
+            {userUserName: username},
+            {userTeamList: newUserTeamList}
+        );
+        const team = Team.findOne({team: teamname});
+        const newTeamMemberList = [...team.members, username];
+        const teamDoc = Team.findOneAndUpdate(
+            {team: teamname},
+            {members: newTeamMemberList}
+        );
+        res.json(userDoc);
+    } catch (e) {
+        console.error(e);
+        res.status(422).json(e);  
+    }
+})
 
 
 app.post('/addteammember', async (req, res) => {
