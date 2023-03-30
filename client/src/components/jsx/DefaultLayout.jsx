@@ -151,38 +151,11 @@ function DefaultLayout () {
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  >
-                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">{displayNotif.type} from {displayNotif.fromuser}</button>} nested modal>
-                            {/* <div classname="loginpopup">
-                                        <div class="formPopup" id="popupForm">
-                                        <h2>Invite from</h2>
-                                        <form autoComplete="off" onSubmit={handleInvite}>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-3">
-                                            <strong>Title</strong>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                {}
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-3">
-                                            <strong>Description</strong>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                {}
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn">Submit</button>
-                                        </form>
-                                        </div>
-                            </div> */}
                             <InviteResponse 
                                 notif={notif}
-                            />
-                            </ Popup>
-                            
-
-
+                                type={displayNotif.type}
+                                fromuser={displayNotif.fromuser}
+                            />                            
                     </ Popup>
 
          
