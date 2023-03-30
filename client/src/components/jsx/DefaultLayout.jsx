@@ -105,22 +105,22 @@ function DefaultLayout () {
         navigate("/Welcome")
     }
 
-    async function handleInvite (e) {
+
+
+    const handleInvite = async (e) => {
         e.preventDefault();
         console.log("here");
         // const teamname = notif[0].teamName;
-        const teamname ="";
         const username = localStorage.getItem("userid");
-        // const teamname = responseTeam;
-        // if (response == 0) {
-        //     console.log("posting");
-        //     await axios.post('/acceptmember', {
-        //         username,
-        //         teamname
-        //     });
-        // }
-    }
-
+        const teamname = responseTeam;
+        if (response == 0) {
+            console.log("posting");
+            await axios.post('/acceptmember', {
+                username,
+                teamname
+            });
+        }
+      };
 
 
     const handlelogout = async (e) => {
