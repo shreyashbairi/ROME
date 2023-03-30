@@ -35,6 +35,15 @@ function DefaultLayout () {
             teamName: String,
         }
     ]);
+    const [displayNotif, setDisplayNotif] = useState([
+        {
+            fromuser: String,
+            touser: String,
+            description: String,
+            type: String,
+            teamName: String,
+        }
+    ]);
 
     const [teams, setTeams] = useState([{
         teamID: Number,
@@ -61,6 +70,17 @@ function DefaultLayout () {
             setNotif(notificationsGrabed);
             // console.log("notif");
             // console.log(notif);
+            if (notificationsGrabed.length == 0) {
+                setDisplayNotif({
+                    fromuser: "",
+                    touser: "",
+                    description: "",
+                    type: "",
+                    teamName: "",
+                })
+            } else {
+                setDisplayNotif(notificationsGrabed[0]);
+            }
         });
     }, [] )
 
@@ -116,6 +136,7 @@ function DefaultLayout () {
         localStorage.setItem('team', team.team)
     };
 
+
     return (
         <>
         
@@ -130,7 +151,7 @@ function DefaultLayout () {
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  >
-                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">invite from {}</button>} nested modal>
+                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">{displayNotif.type} from {displayNotif.fromuser}</button>} nested modal>
                             {/* <div classname="loginpopup">
                                         <div class="formPopup" id="popupForm">
                                         <h2>Invite from</h2>
