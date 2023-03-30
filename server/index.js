@@ -560,10 +560,8 @@ app.get("/color/:username", async (req,res) => {
 });
 
 app.get("/userteamtasks/:user", async (req,res) => {
-    console.log("entered")
     try{
         const tasks = await TeamTask.find({workers: {$in: [req.params.user] }})
-        console.log(tasks)
         res.json(tasks)
     } catch (e){
         // console.log(e);
@@ -653,7 +651,9 @@ app.post('/assignMemberToTask',async (req,res) => {
     try {
 
         const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
-        console.log(taskToUpdate.title)
+        if (taskToUpdate.workers.includes(member)) {
+            res.status(58).json()
+        }
         const mem = [member, ...taskToUpdate.workers]
         await TeamTask.findOneAndUpdate(
             {title: task.title, team: team},

@@ -47,7 +47,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                     member:memberUserName
                 });
             } catch (e) {
-                alert("Member could not be added at this time")
+                alert("Member already added to task.")
             }
 
         }
