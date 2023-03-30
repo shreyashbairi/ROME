@@ -16,25 +16,24 @@ function JoinTeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        alert(team);
-        const username = localStorage.getItem("userid");
+        // alert(team);
+        const fromuser = localStorage.getItem("userid");
         const teamID = Math.floor(Math.random()*10000);
+        const teamName = team;
         try {
-            // await axios.post('/teamsubmit',{
-            //   teamID,
-            //   team,
-            //   description,
-            //   username
-            // });
-            alert("Team Successfully Created.");
-          } catch (e){
-            alert('Team Creation Failed. Please try again later.')
-          }
-        props.onSubmit({
-            teamID: teamID,
-            team: team,
-            description: description
-        });
+            await axios.post('/requestteam',{
+              fromuser,
+              teamName
+            });
+            alert("Request sent");
+        } catch (e){
+            alert('Team Request Failed')
+        }
+        // props.onSubmit({
+        //     teamID: teamID,
+        //     team: team,
+        //     description: description
+        // });
         props.setTrigger(false);
         setTeam("");
         setDescription("");

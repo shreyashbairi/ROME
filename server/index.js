@@ -709,17 +709,21 @@ app.post('/addteammember', async (req, res) => {
 });
 
 app.post('/requestteam', async (req, res) => {
-    const {description, fromuser, teamName} = req.body;
+    const {fromuser, teamName} = req.body;
     try {
-        const team = Team.findOne({team: teamName});
+        const team = await Team.findOne({team: teamName});
+        console.log("DEBUG");
+        console.log(team);
         const manager = team.managerid;
+        console.log(team.mangaerid);
         const notification = await Notification.create({
             fromuser: fromuser,
             touser: manager,
-            description: description,
+            description: "Request",
             type: "Request",
             teamName: teamName
         })
+        res.json(notification);
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: 'Internal server error' });
