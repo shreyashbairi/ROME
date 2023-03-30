@@ -1,5 +1,5 @@
 import React from "react";
-import "../../css/TeamPop.css";
+import "../css/TeamPop.css";
 import { useState,useEffect } from "react";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -8,7 +8,7 @@ import Popup from "reactjs-popup";
 
 axios.defaults.baseURL = 'http://localhost:8000';
 
-function InviteResponse(props, {task}) {
+function InviteResponse(props) {
 
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
@@ -47,10 +47,10 @@ function InviteResponse(props, {task}) {
 
 //popup for invite
     return (
+        <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"  open={show} onOpen={openform}>{props.type} from {props.fromuser}</button>} nested modal>   
         
-        
-            <Popup class="Addteam" trigger={<button type="button" >InviteResponse</button>} open={show}
-            onOpen={openform} position="right center" nested modal>
+            {/* <Popup class="Addteam" trigger={<button type="button" >InviteResponse</button>} open={show}
+            onOpen={openform} position="right center" nested modal> */}
                 <div className="card-body">
 
                     <h3>Invite Response</h3>
