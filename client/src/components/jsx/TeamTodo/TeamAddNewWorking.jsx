@@ -24,6 +24,7 @@ function TeamAddNewWorking(props, {task}) {
 
     useEffect( () => {
         const team = localStorage.getItem('team');
+        try {
         axios.get(`members/${team}`)
         .then(res => {
             const memberList = res.data;
@@ -31,6 +32,9 @@ function TeamAddNewWorking(props, {task}) {
             console.log(memberList)
             setTeamMembers(memberList);
         })
+        } catch(e) {
+            alert("You entered an incorrect username or the user is already assigned to the task")
+        }
     },[])
 
     async function newWorker(memberUserName) {

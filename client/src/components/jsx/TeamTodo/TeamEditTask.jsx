@@ -8,7 +8,7 @@ import Popup from "reactjs-popup";
 
 axios.defaults.baseURL = 'http://localhost:8000';
 
-function TeamEditTask(props, {task}) {
+function TeamEditTask({task}) {
 
     const[teamMembers,setTeamMembers] = useState([]);
     const [name, setName] = useState("");
@@ -39,7 +39,26 @@ function TeamEditTask(props, {task}) {
         setShow(true);
     };
 
-    const closeform = () => {
+    async function closeform(){
+
+        console.log("in close form")
+
+        const toPost = {
+            task: task,
+            username: name,
+            team: localStorage.getItem('team')
+        }
+
+        try {
+            await axios.post('/removeWorker', 
+                toPost
+            );
+            alert('Worker successfully removed');
+        } catch (e) {
+            alert('Worker not assigned to task');
+        }
+        
+
         setShow(false);
     }
 
@@ -47,11 +66,11 @@ function TeamEditTask(props, {task}) {
     return (
         
         
-            <Popup class="Addteam" trigger={<button type="button" >Edit</button>} open={show}
+            <Popup class="Addteam" trigger={<button type="button" >Remove Working Member</button>} open={show}
             onOpen={openform} position="right center" nested modal>
                 <div className="card-body">
 
-                    <h3>Edit Task</h3>
+                    <h3>Member to Remove</h3>
                     <form 
                         id="new-team-form"
                         onSubmit={handleSubmit}
@@ -65,7 +84,7 @@ function TeamEditTask(props, {task}) {
                                 value={name}
                             />
                         </div>
-                        <button onClick={()=>closeform}>Add</button> 
+                        <button onClick={()=>closeform}>Remove</button> 
     
                     </form>
 

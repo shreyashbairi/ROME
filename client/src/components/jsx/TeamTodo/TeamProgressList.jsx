@@ -48,7 +48,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                     member:memberUserName
                 });
             } catch (e) {
-                alert("Member could not be added at this time")
+                alert("Member already added to task.")
             }
 
         }
@@ -97,11 +97,12 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
 
                         {(()=>{
                             const user = localStorage.getItem("userid");
-                            console.log(user);
-                            console.log(manager);
+                            
                             if (user === manager.userUserName) {
                                 return(
-                                    <TeamEditTask/>
+                                    <TeamEditTask
+                                        task={todo}
+                                    />
                                 )
                             }
                         })()}

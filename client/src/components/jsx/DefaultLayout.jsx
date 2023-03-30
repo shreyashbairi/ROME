@@ -82,7 +82,7 @@ function DefaultLayout () {
                 setDisplayNotif(notificationsGrabed[0]);
             }
         });
-    }, [] )
+    }, [] );
 
     const newTeamButton = () => {
         setButtonPop(true);

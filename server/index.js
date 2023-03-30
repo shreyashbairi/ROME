@@ -556,10 +556,8 @@ app.get("/color/:username", async (req,res) => {
 });
 
 app.get("/userteamtasks/:user", async (req,res) => {
-    console.log("entered")
     try{
         const tasks = await TeamTask.find({workers: {$in: [req.params.user] }})
-        console.log(tasks)
         res.json(tasks)
     } catch (e){
         // console.log(e);
@@ -627,15 +625,15 @@ app.post('/invitenotification', async (req, res) =>{
 app.post('/acceptmember', async (req, res) => {
     const {username, teamname} = req.body;
     try {
-        const user = User.findOne({userUserName: username});
+        const user = await User.findOne({userUserName: username});
         const newUserTeamList = [...user.userTeamList, teamname]
-        const userDoc = User.findOneAndUpdate(
+        const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {userTeamList: newUserTeamList}
         );
-        const team = Team.findOne({team: teamname});
+        const team = await Team.findOne({team: teamname});
         const newTeamMemberList = [...team.members, username];
-        const teamDoc = Team.findOneAndUpdate(
+        const teamDoc = await Team.findOneAndUpdate(
             {team: teamname},
             {members: newTeamMemberList}
         );
@@ -648,20 +646,37 @@ app.post('/acceptmember', async (req, res) => {
 
 app.post('/removemember', async (req,res) => {
     const {username, teamname} = req.body;
+    console.log(username);
+    console.log(teamname);
     try {
-        const user = User.findOne({userUserName: username});
-        const i = user.userTeamList.indexOf(teamname);
-        const newUserTeamList = user.userTeamList.splice(i,1);
-        const userDoc = User.findOneAndUpdate(
+        const user = await User.findOne({userUserName: username});
+        // let index = -1;
+        let newUserTeamList =[]
+        for (let i = 0; i < user.userTeamList.length; i++) {
+            if (user.userTeamList[i] !== teamname) {
+                newUserTeamList.push(user.userTeamList[i])
+            }
+        }
+        // let newUserTeamList = user.userTeamList;
+        // if (index != -1) {
+        //     newUserTeamList = user.userTeamList.splice(index,1);
+        // }
+        const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {userTeamList: newUserTeamList}
         );
-        const team = Team.findOne({team: teamname});
-        const j = team.members.indexOf(teamname);
-        const newTeamMemberList = user.members.splice(j,1);
-        const teamDoc = Team.findOneAndUpdate(
+        const team = await Team.findOne({team: teamname});
+        let newMemberList =[]
+        for (let i = 0; i < team.members.length; i++) {
+            if (team.members[i] !== username) {
+                newMemberList.push(team.members[i])
+            }
+        }
+        // const j = team.members.indexOf(teamname);
+        // const newTeamMemberList = user.members.splice(j,1);
+        const teamDoc = await Team.findOneAndUpdate(
             {team: teamname},
-            {members: newTeamMemberList}
+            {members: newMemberList}
         );
         res.json(userDoc);  
     } catch (e) {
@@ -715,7 +730,7 @@ app.post('/requestteam', async (req, res) => {
         console.log("DEBUG");
         console.log(team);
         const manager = team.managerid;
-        console.log(team.mangaerid);
+        // console.log(team.mangaerid);
         const notification = await Notification.create({
             fromuser: fromuser,
             touser: manager,
@@ -730,6 +745,27 @@ app.post('/requestteam', async (req, res) => {
     }
 });
 
+app.post('/assignMemberToTask',async (req,res) => {
+    const {team, task, member} = req.body;
+    console.log(task.title)
+
+    try {
+        const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
+        console.log(taskToUpdate.title)
+        if (taskToUpdate.workers.includes(member)) {
+            res.status(58).json()
+        }
+        const mem = [member, ...taskToUpdate.workers]
+        await TeamTask.findOneAndUpdate(
+            {title: task.title, team: team},
+            {workers: mem}
+        );
+
+    } catch(e) {
+        console.error(e);
+        res.status(500).json()
+    }
+});
 
 app.get('/notifications/:username', async (req,res) => {
     try{
@@ -744,6 +780,28 @@ app.get('/notifications/:username', async (req,res) => {
         res.status(422).json(e);    
     }
 });
+
+app.post('/removeworker',async(req,res)=> {
+    const {task, username, team} = req.body;
+    
+    try {
+        const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
+        if (!taskToUpdate.workers.includes(username)) {
+            res.status(58).json()
+        }
+
+        const mem = taskToUpdate.workers;
+
+        const newWorkers = [...mem].filter(user => user !== username)
+        await TeamTask.findOneAndUpdate(
+            {title: task.title, team: team},
+            {workers: newWorkers}
+        );
+
+    } catch (e) {
+        res.status(422).json(e);
+    }
+})
     
     // if (_existingUser) {
     //     const notification = await Notification.create(

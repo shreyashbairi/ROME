@@ -3,6 +3,7 @@ import axios from 'axios'
 
 function PersonalTeamTodo() {
     const [tasks, setTasks] = useState([]);
+    const [color,setColor] = useState("");
 
     useEffect( () => {
         console.clear();
@@ -13,11 +14,19 @@ function PersonalTeamTodo() {
             tasksGrabed.sort((a,b)=> (a.date<b.date) ? -1 : 1);
             setTasks(tasksGrabed);
         })
+        axios.get(`/color/${username}`)
+        .then (res => {
+            setColor(res.data);
+        })
     }, [])
 
     
     return (
         <div>
+            <h1 style={{backgroundColor: color}} id='header'>
+                Your Tasks
+            </h1>
+            
             {tasks.map((task)=> {
                 return (<div>{task.title}</div>)
             })}
