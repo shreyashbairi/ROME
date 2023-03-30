@@ -8,7 +8,7 @@ import Popup from "reactjs-popup";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
-import  { AiFillBell } from 'react-icons/ai'
+import  { AiFillBell,AiFillCheckCircle,AiFillCloseCircle } from 'react-icons/ai'
 import Cookies from 'js-cookie';
 import InviteResponse from "./InviteResponse";
 
@@ -112,14 +112,16 @@ function DefaultLayout () {
         const teamname ="";
         const username = localStorage.getItem("userid");
         // const teamname = responseTeam;
-        if (response == 0) {
-            console.log("posting");
-            await axios.post('/acceptmember', {
-                username,
-                teamname
-            });
-        }
+        // if (response == 0) {
+        //     console.log("posting");
+        //     await axios.post('/acceptmember', {
+        //         username,
+        //         teamname
+        //     });
+        // }
     }
+
+
 
     const handlelogout = async (e) => {
         await axios.post('/logout');
@@ -150,14 +152,17 @@ function DefaultLayout () {
                     <div>  
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
-                    </button>  }  >
-                    <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" >{displayNotif.type} from {displayNotif.fromuser}</button>}>   
+                    </button>  }  > 
+                    <div>invite from alskdfjlsakdj
+                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"onClick={()=> handleInvite()}>
+                    <AiFillCheckCircle/>
+                    </button>  
+                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <AiFillCloseCircle/>                     </button>  
+                    </div>
+
                     
-                  
-                    </ Popup>
-
-
-                      
+                            
                     </ Popup>
 
          

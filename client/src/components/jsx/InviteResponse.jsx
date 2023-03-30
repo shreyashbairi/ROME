@@ -17,6 +17,7 @@ function InviteResponse(props) {
         alert("HI");
         const username = localStorage.getItem("userid");
         const teamname = props.notif.teamName;
+        
         try {
             await axios.post('/acceptmember', {
                 username,
