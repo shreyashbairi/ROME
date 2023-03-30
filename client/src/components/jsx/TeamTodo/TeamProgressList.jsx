@@ -66,32 +66,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                         </button>
                         <br></br>
                             
-                        <Popup class="detailedTask" trigger={<button>Add New Working Member</button>} nested modal>
-
-                            <div className="card-body">
-
-                                <h3>Add Worker</h3>
-                                <form 
-                                    id="new-team-form"
-                                    onSubmit={handleSubmit}
-                                > 
-                                    <div class="col-sm-9 text-secondary mt-5">
-                                        <input
-                                            id="team"
-                                            placeholder="username"
-                                            type="text"
-                                            onChange={e => setName(e.target.value)}
-                                            value={name}
-                                        />
-                                    </div>
-                                    <button onClick={()=>newWorker(name, todo)}>Add</button> 
-
-                                </form>
-
-                                
-                            </div>
-
-                        </ Popup>
+                        
 
                         </div>
 
@@ -100,9 +75,37 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                             
                             if (user === manager.userUserName) {
                                 return(
+                                    <>
+                                    <Popup class="detailedTask" trigger={<button>Add New Working Member</button>} nested modal>
+
+<div className="card-body">
+
+    <h3>Add Worker</h3>
+    <form 
+        id="new-team-form"
+        onSubmit={handleSubmit}
+    > 
+        <div class="col-sm-9 text-secondary mt-5">
+            <input
+                id="team"
+                placeholder="username"
+                type="text"
+                onChange={e => setName(e.target.value)}
+                value={name}
+            />
+        </div>
+        <button onClick={()=>newWorker(name, todo)}>Add</button> 
+
+    </form>
+
+    
+</div>
+
+</ Popup>
                                     <TeamEditTask
                                         task={todo}
                                     />
+                                    </>
                                 )
                             }
                         })()}
