@@ -14,9 +14,10 @@ function InviteResponse(props) {
     const [show, setShow] = useState(false);
 
     async function handleSubmit(e) {
-        e.preventDefault();
+        alert("HI");
         const username = localStorage.getItem("userid");
         const teamname = props.notif.teamName;
+        
         try {
             await axios.post('/acceptmember', {
                 username,
@@ -47,33 +48,18 @@ function InviteResponse(props) {
 
 //popup for invite
     return (
-        <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false"  open={show} onOpen={openform}>{props.type} from {props.fromuser}</button>} nested modal>   
         
-            {/* <Popup class="Addteam" trigger={<button type="button" >InviteResponse</button>} open={show}
-            onOpen={openform} position="right center" nested modal> */}
+
                 <div className="card-body">
 
                     <h3>Invite Response</h3>
-                    <form 
-                        id="new-team-form"
-                        onSubmit={handleSubmit}
-                    > 
-                        <div class="col-sm-9 text-secondary mt-5">
-                            <input
-                                id="team"
-                                placeholder="username"
-                                type="text"
-                                onChange={e => setName(e.target.value)}
-                                value={name}
-                            />
-                        </div>
-                        <button>Add</button> 
+
+                    <button onClick={()=> handleSubmit()}>Accept</button> 
+
     
-                    </form>
 
                     
                 </div>
-            </ Popup>
 
     );
 

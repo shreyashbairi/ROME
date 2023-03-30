@@ -8,7 +8,7 @@ import Popup from "reactjs-popup";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
-import  { AiFillBell } from 'react-icons/ai'
+import  { AiFillBell,AiFillCheckCircle,AiFillCloseCircle } from 'react-icons/ai'
 import Cookies from 'js-cookie';
 import InviteResponse from "./InviteResponse";
 
@@ -105,21 +105,31 @@ function DefaultLayout () {
         navigate("/Welcome")
     }
 
-    async function handleInvite (e) {
-        e.preventDefault();
+
+
+    const handleInvite = async (e) => {
         console.log("here");
-        // const teamname = notif[0].teamName;
-        const teamname ="";
+        const teamname = displayNotif.teamName;
         const username = localStorage.getItem("userid");
         // const teamname = responseTeam;
-        if (response == 0) {
-            console.log("posting");
-            await axios.post('/acceptmember', {
-                username,
-                teamname
-            });
-        }
-    }
+        await axios.post('/acceptmember', {
+            username, teamname
+        })
+      };
+
+      const handleDecline = async (e) => {
+        console.log("here");
+        // const teamname = notif[0].teamName;
+        // const username = localStorage.getItem("userid");
+        // const teamname = responseTeam;
+        // if (response == 0) {
+        //     console.log("posting");
+        //     await axios.post('/acceptmember', {
+        //         username,
+        //         teamname
+        //     });
+        // }
+      };
 
     const handlelogout = async (e) => {
         await axios.post('/logout');
@@ -150,12 +160,17 @@ function DefaultLayout () {
                     <div>  
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
-                    </button>  }  >
-                            <InviteResponse 
-                                notif={notif}
-                                type={displayNotif.type}
-                                fromuser={displayNotif.fromuser}
-                            />                            
+                    </button>  }  > 
+                    <div>{displayNotif.type} from {displayNotif.fromuser}
+                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite()}>
+                    <AiFillCheckCircle/>
+                    </button>  
+                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline()}>
+                    <AiFillCloseCircle/>                     </button>  
+                    </div>
+
+                    
+                            
                     </ Popup>
 
          
