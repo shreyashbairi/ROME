@@ -84,7 +84,7 @@ function TeamEditTask({task}) {
                                 value={name}
                             />
                         </div>
-                        <button onClick={()=>closeform}>Add</button> 
+                        <button onClick={()=>closeform}>Remove</button> 
     
                     </form>
 
