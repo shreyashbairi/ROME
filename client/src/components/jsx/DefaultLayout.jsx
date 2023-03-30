@@ -88,8 +88,8 @@ function DefaultLayout () {
     async function handleInvite (e) {
         e.preventDefault();
         console.log("here");
-        const teamname = notif[0].teamName;
-        // const teamname ="";
+        // const teamname = notif[0].teamName;
+        const teamname ="";
         const username = localStorage.getItem("userid");
         // const teamname = responseTeam;
         if (response == 0) {
@@ -130,7 +130,7 @@ function DefaultLayout () {
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  >
-                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">invite from {notif[0].fromuser}</button>} nested modal>
+                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">invite from {}</button>} nested modal>
                             {/* <div classname="loginpopup">
                                         <div class="formPopup" id="popupForm">
                                         <h2>Invite from</h2>

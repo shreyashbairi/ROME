@@ -16,6 +16,7 @@ function JoinTeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        alert(team);
         const username = localStorage.getItem("userid");
         const teamID = Math.floor(Math.random()*10000);
         try {
