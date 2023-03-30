@@ -767,7 +767,7 @@ app.post('/assignMemberToTask',async (req,res) => {
     }
 });
 
-pp.get('/notifications/:username', async (req,res) => {
+app.get('/notifications/:username', async (req,res) => {
     try{
         console.log("got to backend");
         const notification = await Notification.find({ touser: req.params.username })
