@@ -624,8 +624,12 @@ app.post('/invitenotification', async (req, res) =>{
 
 app.post('/acceptmember', async (req, res) => {
     const {username, teamname} = req.body;
+    console.log("acceptmember");
+    console.log(username);
+    console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
+        console.log(user);
         const newUserTeamList = [...user.userTeamList, teamname]
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},

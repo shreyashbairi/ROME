@@ -108,20 +108,28 @@ function DefaultLayout () {
 
 
     const handleInvite = async (e) => {
-        e.preventDefault();
         console.log("here");
-        // const teamname = notif[0].teamName;
+        const teamname = displayNotif.teamName;
         const username = localStorage.getItem("userid");
-        const teamname = responseTeam;
-        if (response == 0) {
-            console.log("posting");
-            await axios.post('/acceptmember', {
-                username,
-                teamname
-            });
-        }
+        // const teamname = responseTeam;
+        await axios.post('/acceptmember', {
+            username, teamname
+        })
       };
 
+      const handleDecline = async (e) => {
+        console.log("here");
+        // const teamname = notif[0].teamName;
+        // const username = localStorage.getItem("userid");
+        // const teamname = responseTeam;
+        // if (response == 0) {
+        //     console.log("posting");
+        //     await axios.post('/acceptmember', {
+        //         username,
+        //         teamname
+        //     });
+        // }
+      };
 
     const handlelogout = async (e) => {
         await axios.post('/logout');
@@ -153,11 +161,11 @@ function DefaultLayout () {
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  > 
-                    <div>invite from alskdfjlsakdj
+                    <div>{displayNotif.type} from {displayNotif.fromuser}
                     <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite()}>
                     <AiFillCheckCircle/>
                     </button>  
-                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline()}>
                     <AiFillCloseCircle/>                     </button>  
                     </div>
 
