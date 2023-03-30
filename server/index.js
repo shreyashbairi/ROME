@@ -780,6 +780,28 @@ app.get('/notifications/:username', async (req,res) => {
         res.status(422).json(e);    
     }
 });
+
+app.post('/removeworker',async(req,res)=> {
+    const {task, username, team} = req.body;
+    
+    try {
+        const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
+        if (!taskToUpdate.workers.includes(username)) {
+            res.status(58).json()
+        }
+
+        const mem = taskToUpdate.workers;
+
+        const newWorkers = [...mem].filter(user => user !== username)
+        await TeamTask.findOneAndUpdate(
+            {title: task.title, team: team},
+            {workers: newWorkers}
+        );
+
+    } catch (e) {
+        res.status(422).json(e);
+    }
+})
     
     // if (_existingUser) {
     //     const notification = await Notification.create(

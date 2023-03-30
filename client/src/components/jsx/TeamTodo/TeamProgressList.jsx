@@ -97,11 +97,12 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
 
                         {(()=>{
                             const user = localStorage.getItem("userid");
-                            console.log(user);
-                            console.log(manager);
+                            
                             if (user === manager.userUserName) {
                                 return(
-                                    <TeamEditTask/>
+                                    <TeamEditTask
+                                        task={todo}
+                                    />
                                 )
                             }
                         })()}
