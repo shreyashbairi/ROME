@@ -555,7 +555,7 @@ app.get("/color/:username", async (req,res) => {
     }
 });
 
-pp.get("/userteamtasks/:user", async (req,res) => {
+app.get("/userteamtasks/:user", async (req,res) => {
     console.log("entered")
     try{
         const tasks = await TeamTask.find({workers: {$in: [req.params.user] }})
@@ -646,6 +646,30 @@ app.post('/acceptmember', async (req, res) => {
     }
 })
 
+app.post('/removemember', async (req,res) => {
+    const {username, teamname} = req.body;
+    try {
+        const user = User.findOne({userUserName: username});
+        const i = user.userTeamList.indexOf(teamname);
+        const newUserTeamList = user.userTeamList.splice(i,1);
+        const userDoc = User.findOneAndUpdate(
+            {userUserName: username},
+            {userTeamList: newUserTeamList}
+        );
+        const team = Team.findOne({team: teamname});
+        const j = team.members.indexOf(teamname);
+        const newTeamMemberList = user.members.splice(j,1);
+        const teamDoc = Team.findOneAndUpdate(
+            {team: teamname},
+            {members: newTeamMemberList}
+        );
+        res.json(userDoc);  
+    } catch (e) {
+        console.error(e);
+        res.status(422).json(e);
+    }
+});
+
 
 
 app.post('/addteammember', async (req, res) => {
@@ -678,6 +702,24 @@ app.post('/addteammember', async (req, res) => {
         res.json(notification);
 
       }
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/requestteam', async (req, res) => {
+    const {description, fromuser, teamName} = req.body;
+    try {
+        const team = Team.findOne({team: teamName});
+        const manager = team.managerid;
+        const notification = await Notification.create({
+            fromuser: fromuser,
+            touser: manager,
+            description: description,
+            type: "Request",
+            teamName: teamName
+        })
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: 'Internal server error' });
