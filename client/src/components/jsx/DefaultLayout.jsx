@@ -10,6 +10,7 @@ import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
 import  { AiFillBell } from 'react-icons/ai'
 import Cookies from 'js-cookie';
+import InviteResponse from "./InviteResponse";
 
 //import { UserContext } from "./UserContext";
 
@@ -23,6 +24,26 @@ function DefaultLayout () {
     const [color,setColor] = useState("");
     const {user,setUser} = useContext(UserContext);
     const [inviterName, setInviterName] = useState('');
+    const [response, setResponse] = useState(0);
+    const [responseTeam, setResponsTeam] = useState("");
+    const [notif, setNotif] = useState([
+        {
+            fromuser: String,
+            touser: String,
+            description: String,
+            type: String,
+            teamName: String,
+        }
+    ]);
+    const [displayNotif, setDisplayNotif] = useState([
+        {
+            fromuser: String,
+            touser: String,
+            description: String,
+            type: String,
+            teamName: String,
+        }
+    ]);
 
     const [teams, setTeams] = useState([{
         teamID: Number,
@@ -35,15 +56,33 @@ function DefaultLayout () {
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            console.log(teamsGrabed);
+            // console.log(teamsGrabed);
             setTeams(teamsGrabed);
         })
         axios.get(`/color/${username}`)
         .then (res => {
             setColor(res.data);
-        })
-
-    }, [] )
+        });
+        axios.get(`/notifications/${username}`)
+        .then (res => {
+            const notificationsGrabed = res.data;
+            console.log(notificationsGrabed);
+            setNotif(notificationsGrabed);
+            // console.log("notif");
+            // console.log(notif);
+            if (notificationsGrabed.length == 0) {
+                setDisplayNotif({
+                    fromuser: "",
+                    touser: "",
+                    description: "",
+                    type: "",
+                    teamName: "",
+                })
+            } else {
+                setDisplayNotif(notificationsGrabed[0]);
+            }
+        });
+    }, [] );
 
     const newTeamButton = () => {
         setButtonPop(true);
@@ -66,7 +105,23 @@ function DefaultLayout () {
         navigate("/Welcome")
     }
 
-    const handlelogout = async () => {
+    async function handleInvite (e) {
+        e.preventDefault();
+        console.log("here");
+        // const teamname = notif[0].teamName;
+        const teamname ="";
+        const username = localStorage.getItem("userid");
+        // const teamname = responseTeam;
+        if (response == 0) {
+            console.log("posting");
+            await axios.post('/acceptmember', {
+                username,
+                teamname
+            });
+        }
+    }
+
+    const handlelogout = async (e) => {
         await axios.post('/logout');
         console.log(user);
         setUser(null);
@@ -80,6 +135,7 @@ function DefaultLayout () {
         console.log("Changing team")
         localStorage.setItem('team', team.team)
     };
+
 
     return (
         <>
@@ -95,36 +151,11 @@ function DefaultLayout () {
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  >
-                            <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">invite from {inviterName}</button>} nested modal>
-                            <div classname="loginpopup">
-                                        <div class="formPopup" id="popupForm">
-                                        <h2>Invite from</h2>
-                                        <form autoComplete="off" >
-                                        <div class="row mt-3">
-                                            <div class="col-sm-3">
-                                            <strong>Title</strong>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                Name
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-3">
-                                            <strong>Description</strong>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                Description
-
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn">Submit</button>
-                                        </form>
-                                        </div>
-                            </div>
-                            </ Popup>
-                            
-
-
+                            <InviteResponse 
+                                notif={notif}
+                                type={displayNotif.type}
+                                fromuser={displayNotif.fromuser}
+                            />                            
                     </ Popup>
 
          

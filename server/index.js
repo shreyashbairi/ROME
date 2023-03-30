@@ -217,14 +217,10 @@ app.get("/events/:username", async (req,res) => {
         // console.log(events);
         const user = await User.findOne({userUserName: req.params.username});
         const teamNameList = user.userTeamList;
-        // console.log(teamNameList);
         for (let i = 0; i < teamNameList.length; i++) {
             const teamEvents = await TeamEvent.find({teamName: teamNameList[i]});
-            // console.log(teamEvents); 
             events.push(...teamEvents);
         }
-        // console.log("EVENTS");
-        // console.log(events);
         res.json(events);
     } catch (e){
         // console.log(e)
@@ -243,8 +239,8 @@ app.get("/fullteamevents/:teamname", async (req,res) => {
         for (let i = 0; i < usernameList.length; i++) {
             const newEvents = await Event.find({usernameid: usernameList[i]});
             // console.log(newEvents);
-            for(let j =0; j < newEvents.length; j++) {
-                if( newEvents[j].type === "user") {
+            for (let j =0; j< newEvents.length; j++){
+                if (newEvents[j].type === "user") {
                     events.push(newEvents[j]);
                 }
             }
@@ -418,7 +414,7 @@ app.post('/teamtasksave', async (req, res) =>{
             username: user,
             complete: complete,
             started:started,
-            workers:[],
+            workers:workers, //TODO might have made a merge conflict Erin plz check
             team:team
             });
         res.json(teamTaskDoc);
@@ -569,6 +565,26 @@ app.get("/userteamtasks/:user", async (req,res) => {
     }
 });
 
+app.post('/assignMemberToTask',async (req,res) => {
+    const {team, task, member} = req.body;
+    console.log(task.title)
+
+    try {
+
+        const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
+        console.log(taskToUpdate.title)
+        const mem = [member, ...taskToUpdate.workers]
+        await TeamTask.findOneAndUpdate(
+            {title: task.title, team: team},
+            {workers: mem}
+        );
+
+    } catch(e) {
+        console.error(e);
+        res.status(500).json()
+    }
+});
+
 app.delete("/teamtaskdelete", async(req,res) => {
 
     console.log("entered")
@@ -606,9 +622,73 @@ app.post('/invitenotification', async (req, res) =>{
 });
 
 
+app.post('/acceptmember', async (req, res) => {
+    const {username, teamname} = req.body;
+    try {
+        const user = await User.findOne({userUserName: username});
+        const newUserTeamList = [...user.userTeamList, teamname]
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {userTeamList: newUserTeamList}
+        );
+        const team = await Team.findOne({team: teamname});
+        const newTeamMemberList = [...team.members, username];
+        const teamDoc = await Team.findOneAndUpdate(
+            {team: teamname},
+            {members: newTeamMemberList}
+        );
+        res.json(userDoc);
+    } catch (e) {
+        console.error(e);
+        res.status(422).json(e);  
+    }
+})
+
+app.post('/removemember', async (req,res) => {
+    const {username, teamname} = req.body;
+    console.log(username);
+    console.log(teamname);
+    try {
+        const user = await User.findOne({userUserName: username});
+        // let index = -1;
+        let newUserTeamList =[]
+        for (let i = 0; i < user.userTeamList.length; i++) {
+            if (user.userTeamList[i] !== teamname) {
+                newUserTeamList.push(user.userTeamList[i])
+            }
+        }
+        // let newUserTeamList = user.userTeamList;
+        // if (index != -1) {
+        //     newUserTeamList = user.userTeamList.splice(index,1);
+        // }
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {userTeamList: newUserTeamList}
+        );
+        const team = await Team.findOne({team: teamname});
+        let newMemberList =[]
+        for (let i = 0; i < team.members.length; i++) {
+            if (team.members[i] !== username) {
+                newMemberList.push(team.members[i])
+            }
+        }
+        // const j = team.members.indexOf(teamname);
+        // const newTeamMemberList = user.members.splice(j,1);
+        const teamDoc = await Team.findOneAndUpdate(
+            {team: teamname},
+            {members: newMemberList}
+        );
+        res.json(userDoc);  
+    } catch (e) {
+        console.error(e);
+        res.status(422).json(e);
+    }
+});
+
+
 
 app.post('/addteammember', async (req, res) => {
-    const { invitedUser, descriptionSent, inviter, inviterTeamName, inviterTeamID } = req.body;
+    const { invitedUser, descriptionSent, inviter, inviterTeamName} = req.body;
     console.log(invitedUser);
     console.log(descriptionSent);
     console.log(inviter);
@@ -633,11 +713,32 @@ app.post('/addteammember', async (req, res) => {
                 type: "Invite",
                 description: descriptionSent,
                 teamName: inviterTeamName,
-                //teamID: inviterTeamID,
             });
         res.json(notification);
 
       }
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/requestteam', async (req, res) => {
+    const {fromuser, teamName} = req.body;
+    try {
+        const team = await Team.findOne({team: teamName});
+        console.log("DEBUG");
+        console.log(team);
+        const manager = team.managerid;
+        // console.log(team.mangaerid);
+        const notification = await Notification.create({
+            fromuser: fromuser,
+            touser: manager,
+            description: "Request",
+            type: "Request",
+            teamName: teamName
+        })
+        res.json(notification);
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: 'Internal server error' });
@@ -649,8 +750,8 @@ app.post('/assignMemberToTask',async (req,res) => {
     console.log(task.title)
 
     try {
-
         const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
+        console.log(taskToUpdate.title)
         if (taskToUpdate.workers.includes(member)) {
             res.status(58).json()
         }
@@ -664,7 +765,21 @@ app.post('/assignMemberToTask',async (req,res) => {
         console.error(e);
         res.status(500).json()
     }
-})
+});
+
+pp.get('/notifications/:username', async (req,res) => {
+    try{
+        console.log("got to backend");
+        const notification = await Notification.find({ touser: req.params.username })
+        // console.log(tasks);
+        console.log(notification);
+        res.json(notification);
+        
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
     
     // if (_existingUser) {
     //     const notification = await Notification.create(
@@ -691,6 +806,6 @@ app.post('/assignMemberToTask',async (req,res) => {
 
 
 //listener
-const server = app.listen(port, ()=>console.log(`Server is running on ${port}`))
+const server = app.listen(port, ()=>console.log(`Server is running on ${port}`));
 
 //routes (Note to Team: Requires extra installation from react-router-dom)

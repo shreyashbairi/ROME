@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
 axios.defaults.baseURL = 'http://localhost:8000';
 
-function AddTeamMember(props) {
+function RemoveTeamMember(props) {
     const [name, setName] = useState("")
     let teams = [];
     const [description, setDescription] = useState("")
@@ -17,28 +17,26 @@ function AddTeamMember(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const invitedUser = name;
-        const descriptionSent = description;
-        const inviter = localStorage.getItem("userid");
-        const inviterTeamName = localStorage.getItem("team");
+        const username = name;
+        // const descriptionSent = description;
+        // const inviter = localStorage.getItem("userid");
+        const teamname = localStorage.getItem("team");
         //const teamID = localStorage.getItem("teamID");
-        console.log("The inviter is " + inviter);
+        // console.log("The inviter is " + inviter);
         // console.log("The team is " + team);
         // console.log("The teamID is " + teamID);
-        axios.get(`/teams/${inviter}`).then(res => {
-            teams = res.data;
-            console.log("These teams have been grabbed from" + inviter + ". The teams are" + JSON.stringify(teams));
+        // axios.get(`/teams/${inviter}`).then(res => {
+        //     teams = res.data;
+        //     console.log("These teams have been grabbed from" + inviter + ". The teams are" + JSON.stringify(teams));
 
-        })
+        // })
         //console.log("The teamID is " + teamID);
         try {
-            const {inviteInfo} = await axios.post('/addteammember',{
-              invitedUser,
-              descriptionSent,
-              inviter,
-              inviterTeamName, 
+            await axios.post('/removemember',{
+              username,
+              teamname
             });
-            alert("Invitation Sent!");
+            alert("User Removed!");
           } catch (e){
             alert('Error sending invite. User not found.')
           }
@@ -86,7 +84,7 @@ function AddTeamMember(props) {
         
             <div className="card-body">
 
-                <h3>Send Invites</h3>
+                <h3>Remove user</h3>
                 <form 
                     id="new-team-form"
                     onSubmit={handleSubmit}
@@ -100,7 +98,7 @@ function AddTeamMember(props) {
                             value={name}
                         />
                     </div>
-                    <div class="col-sm-9 text-secondary mt-4">
+                    {/* <div class="col-sm-9 text-secondary mt-4">
                     <textarea
                         id="description"
                         placeholder="Description"
@@ -109,7 +107,7 @@ function AddTeamMember(props) {
                         onChange={e => setDescription(e.target.value)}
                         value={description}
                     />
-                    </div> 
+                    </div>  */}
                     <button>Submit</button> 
  
                 </form>
@@ -124,4 +122,4 @@ function AddTeamMember(props) {
 
 }
 
-export default AddTeamMember
+export default RemoveTeamMember

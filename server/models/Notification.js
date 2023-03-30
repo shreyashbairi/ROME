@@ -7,7 +7,6 @@ const NotificationSchema = new Schema({
     description: String,
     type: String,
     teamName: String,
-    //teamID: String,
 });
 
 const EventModel = mongoose.model('Notification', NotificationSchema);

@@ -3,6 +3,7 @@ import  { AiFillCloseCircle } from 'react-icons/ai'
 import TeamAddNewWorking from './TeamAddNewWorking'
 import Popup from "reactjs-popup";
 import axios from 'axios';
+import TeamEditTask from "./TeamEditTask";
 
 function TeamProgressList({started,setStarted,removeTodoFromProg}) {
 
@@ -100,7 +101,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                             console.log(manager);
                             if (user === manager.userUserName) {
                                 return(
-                                    <button>Edit</button>
+                                    <TeamEditTask/>
                                 )
                             }
                         })()}

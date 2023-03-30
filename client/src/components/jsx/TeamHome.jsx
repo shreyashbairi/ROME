@@ -6,6 +6,7 @@ import AddEvent from "./Calendar/AddEvent"
 import { useState, useEffect } from "react"
 import TeamTodoList from "./TeamTodo/TeamTodoList"
 import AddTeamMember from "./AddTeamMember"
+import RemoveTeamMember from "./RemoveTeamMember"
 import TeamCalendar from "./Calendar/TeamCalendar"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
 import axios from "axios";
@@ -14,6 +15,7 @@ import axios from "axios";
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
     const [addTeam, setAddTeam] = useState(false);
+    const [removeTeam, setRemoveTeam] = useState(false);
     const [bodyView, setBodyView] = useState(0);
     const [bodyViewName, setBodyViewName] = useState("Todo");
     const [managerBool, setManagerBool] = useState(false);
@@ -63,6 +65,14 @@ function TeamHome() {
 
     const openAdd = () => {
         setAddTeam(true);
+    }
+
+    const closeRemove = () => {
+        setRemoveTeam(false);
+    }
+
+    const openRemove = () => {
+        setRemoveTeam(true);
     }
 
     // alert("You are entering as a manager");
@@ -160,16 +170,28 @@ function TeamHome() {
         </div>  */}
    
         <div class="members">
-            <div style={{backgroundColor: color}} className="top">
-                members
-                    
+            <div style={{backgroundColor: color}} className="top">   
                 {managerBool ?                 
-                <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary">  </button>} open={addTeam}
+                <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary"></button>} open={addTeam}
                         onOpen={openAdd} position="right center" nested modal>
                             <div class="card">
                             <AddTeamMember 
                                     trigger={AddEvent}
                                     setTrigger={closeAdd}
+                                    // scheduleEvent={this.scheduleEvent}
+
+                                />     
+                            </div>
+                </ Popup>
+                  : null}
+                members
+                {managerBool ?                 
+                <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary"></button>} open={removeTeam}
+                        onOpen={openRemove} position="right center" nested modal>
+                            <div class="card">
+                            <RemoveTeamMember 
+                                    trigger={AddEvent}
+                                    setTrigger={closeRemove}
                                     // scheduleEvent={this.scheduleEvent}
 
                                 />     
