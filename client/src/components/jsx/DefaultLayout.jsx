@@ -151,11 +151,13 @@ function DefaultLayout () {
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  >
-                            <InviteResponse 
-                                notif={notif}
-                                type={displayNotif.type}
-                                fromuser={displayNotif.fromuser}
-                            />                            
+                    <Popup trigger={  <button type="button" class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" >{displayNotif.type} from {displayNotif.fromuser}</button>}>   
+                    
+                  
+                    </ Popup>
+
+
+                      
                     </ Popup>
 
          
