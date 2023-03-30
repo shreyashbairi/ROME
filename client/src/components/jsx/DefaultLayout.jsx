@@ -154,7 +154,7 @@ function DefaultLayout () {
                         <AiFillBell/>
                     </button>  }  > 
                     <div>invite from alskdfjlsakdj
-                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"onClick={()=> handleInvite()}>
+                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite()}>
                     <AiFillCheckCircle/>
                     </button>  
                     <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
