@@ -218,7 +218,7 @@ app.get("/events/:username", async (req,res) => {
         const user = await User.findOne({userUserName: req.params.username});
         const teamNameList = user.userTeamList;
         for (let i = 0; i < teamNameList.length; i++) {
-            const teamEvents = await TeamEvent.find({team: teamNameList[i]});
+            const teamEvents = await TeamEvent.find({teamName: teamNameList[i]});
             events.push(...teamEvents);
         }
         res.json(events);
@@ -279,7 +279,7 @@ app.get("/getmanager/:teamname", async (req,res) => {
 //in AddEvent
 app.post('/eventsave', async (req, res) =>{
     const {newDate, newStartTime, newEndTime, newTitle, newDescription, 
-           curusername, newTeamName, newTeamID, newColor} = req.body;
+           curusername, newTeamName, newTeamID, newColor, newType} = req.body;
     try {
         const eventsDoc = await Event.create(
             { usernameid: curusername,
@@ -291,7 +291,7 @@ app.post('/eventsave', async (req, res) =>{
             teamName: newTeamName,
             teamID: newTeamID,
             color: newColor,
-            type: "user"
+            type: newType
             });
         res.json(eventsDoc);
     } catch (e) {
@@ -414,7 +414,7 @@ app.post('/teamtasksave', async (req, res) =>{
             username: user,
             complete: complete,
             started:started,
-            workers:workers,
+            workers:workers, //TODO might have made a merge conflict Erin plz check
             team:team
             });
         res.json(teamTaskDoc);
@@ -555,6 +555,38 @@ app.get("/color/:username", async (req,res) => {
     }
 });
 
+pp.get("/userteamtasks/:user", async (req,res) => {
+    console.log("entered")
+    try{
+        const tasks = await TeamTask.find({workers: {$in: [req.params.user] }})
+        console.log(tasks)
+        res.json(tasks)
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
+    }
+});
+
+app.post('/assignMemberToTask',async (req,res) => {
+    const {team, task, member} = req.body;
+    console.log(task.title)
+
+    try {
+
+        const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
+        console.log(taskToUpdate.title)
+        const mem = [member, ...taskToUpdate.workers]
+        await TeamTask.findOneAndUpdate(
+            {title: task.title, team: team},
+            {workers: mem}
+        );
+
+    } catch(e) {
+        console.error(e);
+        res.status(500).json()
+    }
+});
+
 app.delete("/teamtaskdelete", async(req,res) => {
 
     console.log("entered")
@@ -592,6 +624,29 @@ app.post('/invitenotification', async (req, res) =>{
 });
 
 
+app.post('/acceptmember', async (req, res) => {
+    const {username, teamname} = req.body;
+    try {
+        const user = User.findOne({userUserName: username});
+        const newUserTeamList = [...user.userTeamList, teamname]
+        const userDoc = User.findOneAndUpdate(
+            {userUserName: username},
+            {userTeamList: newUserTeamList}
+        );
+        const team = Team.findOne({team: teamname});
+        const newTeamMemberList = [...team.members, username];
+        const teamDoc = Team.findOneAndUpdate(
+            {team: teamname},
+            {members: newTeamMemberList}
+        );
+        res.json(userDoc);
+    } catch (e) {
+        console.error(e);
+        res.status(422).json(e);  
+    }
+})
+
+
 
 app.post('/addteammember', async (req, res) => {
     const { invitedUser, descriptionSent, inviter, inviterTeamName} = req.body;
@@ -619,7 +674,6 @@ app.post('/addteammember', async (req, res) => {
                 type: "Invite",
                 description: descriptionSent,
                 teamName: inviterTeamName,
-                //teamID: inviterTeamID,
             });
         res.json(notification);
 
