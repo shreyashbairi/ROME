@@ -627,15 +627,15 @@ app.post('/invitenotification', async (req, res) =>{
 app.post('/acceptmember', async (req, res) => {
     const {username, teamname} = req.body;
     try {
-        const user = User.findOne({userUserName: username});
+        const user = await User.findOne({userUserName: username});
         const newUserTeamList = [...user.userTeamList, teamname]
-        const userDoc = User.findOneAndUpdate(
+        const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {userTeamList: newUserTeamList}
         );
-        const team = Team.findOne({team: teamname});
+        const team = await Team.findOne({team: teamname});
         const newTeamMemberList = [...team.members, username];
-        const teamDoc = Team.findOneAndUpdate(
+        const teamDoc = await Team.findOneAndUpdate(
             {team: teamname},
             {members: newTeamMemberList}
         );
@@ -648,20 +648,37 @@ app.post('/acceptmember', async (req, res) => {
 
 app.post('/removemember', async (req,res) => {
     const {username, teamname} = req.body;
+    console.log(username);
+    console.log(teamname);
     try {
-        const user = User.findOne({userUserName: username});
-        const i = user.userTeamList.indexOf(teamname);
-        const newUserTeamList = user.userTeamList.splice(i,1);
-        const userDoc = User.findOneAndUpdate(
+        const user = await User.findOne({userUserName: username});
+        // let index = -1;
+        let newUserTeamList =[]
+        for (let i = 0; i < user.userTeamList.length; i++) {
+            if (user.userTeamList[i] !== teamname) {
+                newUserTeamList.push(user.userTeamList[i])
+            }
+        }
+        // let newUserTeamList = user.userTeamList;
+        // if (index != -1) {
+        //     newUserTeamList = user.userTeamList.splice(index,1);
+        // }
+        const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
             {userTeamList: newUserTeamList}
         );
-        const team = Team.findOne({team: teamname});
-        const j = team.members.indexOf(teamname);
-        const newTeamMemberList = user.members.splice(j,1);
-        const teamDoc = Team.findOneAndUpdate(
+        const team = await Team.findOne({team: teamname});
+        let newMemberList =[]
+        for (let i = 0; i < team.members.length; i++) {
+            if (team.members[i] !== username) {
+                newMemberList.push(team.members[i])
+            }
+        }
+        // const j = team.members.indexOf(teamname);
+        // const newTeamMemberList = user.members.splice(j,1);
+        const teamDoc = await Team.findOneAndUpdate(
             {team: teamname},
-            {members: newTeamMemberList}
+            {members: newMemberList}
         );
         res.json(userDoc);  
     } catch (e) {
@@ -715,7 +732,7 @@ app.post('/requestteam', async (req, res) => {
         console.log("DEBUG");
         console.log(team);
         const manager = team.managerid;
-        console.log(team.mangaerid);
+        // console.log(team.mangaerid);
         const notification = await Notification.create({
             fromuser: fromuser,
             touser: manager,
