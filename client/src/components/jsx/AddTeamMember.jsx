@@ -20,6 +20,11 @@ function AddTeamMember(props) {
         const invitedUser = name;
         const descriptionSent = description;
         const inviter = localStorage.getItem("userid");
+        const inviterTeamName = localStorage.getItem("team");
+        //const teamID = localStorage.getItem("teamID");
+        console.log("The inviter is " + inviter);
+        // console.log("The team is " + team);
+        // console.log("The teamID is " + teamID);
         axios.get(`/teams/${inviter}`).then(res => {
             teams = res.data;
             console.log("These teams have been grabbed from" + inviter + ". The teams are" + JSON.stringify(teams));
@@ -31,8 +36,7 @@ function AddTeamMember(props) {
               invitedUser,
               descriptionSent,
               inviter,
-              teams, 
-              //teamID
+              inviterTeamName, 
             });
             alert("Invitation Sent!");
           } catch (e){

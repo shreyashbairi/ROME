@@ -217,14 +217,10 @@ app.get("/events/:username", async (req,res) => {
         // console.log(events);
         const user = await User.findOne({userUserName: req.params.username});
         const teamNameList = user.userTeamList;
-        // console.log(teamNameList);
         for (let i = 0; i < teamNameList.length; i++) {
-            const teamEvents = await TeamEvent.find({teamName: teamNameList[i]});
-            // console.log(teamEvents); 
+            const teamEvents = await TeamEvent.find({team: teamNameList[i]});
             events.push(...teamEvents);
         }
-        // console.log("EVENTS");
-        // console.log(events);
         res.json(events);
     } catch (e){
         // console.log(e)
@@ -243,8 +239,8 @@ app.get("/fullteamevents/:teamname", async (req,res) => {
         for (let i = 0; i < usernameList.length; i++) {
             const newEvents = await Event.find({usernameid: usernameList[i]});
             // console.log(newEvents);
-            for(let j =0; j < newEvents.length; j++) {
-                if( newEvents[j].type === "user") {
+            for (let j =0; j< newEvents.length; j++){
+                if (newEvents[j].type === "user") {
                     events.push(newEvents[j]);
                 }
             }
@@ -283,7 +279,7 @@ app.get("/getmanager/:teamname", async (req,res) => {
 //in AddEvent
 app.post('/eventsave', async (req, res) =>{
     const {newDate, newStartTime, newEndTime, newTitle, newDescription, 
-           curusername, newTeamName, newTeamID, newColor, newType} = req.body;
+           curusername, newTeamName, newTeamID, newColor} = req.body;
     try {
         const eventsDoc = await Event.create(
             { usernameid: curusername,
@@ -295,7 +291,7 @@ app.post('/eventsave', async (req, res) =>{
             teamName: newTeamName,
             teamID: newTeamID,
             color: newColor,
-            type: newType
+            type: "user"
             });
         res.json(eventsDoc);
     } catch (e) {
@@ -418,7 +414,7 @@ app.post('/teamtasksave', async (req, res) =>{
             username: user,
             complete: complete,
             started:started,
-            workers:[],
+            workers:workers,
             team:team
             });
         res.json(teamTaskDoc);
@@ -559,18 +555,6 @@ app.get("/color/:username", async (req,res) => {
     }
 });
 
-app.get("/userteamtasks/:user", async (req,res) => {
-    console.log("entered")
-    try{
-        const tasks = await TeamTask.find({workers: {$in: [req.params.user] }})
-        console.log(tasks)
-        res.json(tasks)
-    } catch (e){
-        // console.log(e);
-        res.status(422).json(e);    
-    }
-});
-
 app.delete("/teamtaskdelete", async(req,res) => {
 
     console.log("entered")
@@ -607,31 +591,10 @@ app.post('/invitenotification', async (req, res) =>{
     }
 });
 
-app.post('/acceptmember', async (req, res) => {
-    const {username, teamname} = req.body;
-    try {
-        const user = User.findOne({userUserName: username});
-        const newUserTeamList = [...user.userTeamList, teamname]
-        const userDoc = User.findOneAndUpdate(
-            {userUserName: username},
-            {userTeamList: newUserTeamList}
-        );
-        const team = Team.findOne({team: teamname});
-        const newTeamMemberList = [...team.members, username];
-        const teamDoc = Team.findOneAndUpdate(
-            {team: teamname},
-            {members: newTeamMemberList}
-        );
-        res.json(userDoc);
-    } catch (e) {
-        console.error(e);
-        res.status(422).json(e);  
-    }
-})
 
 
 app.post('/addteammember', async (req, res) => {
-    const { invitedUser, descriptionSent, inviter, inviterTeamName, inviterTeamID } = req.body;
+    const { invitedUser, descriptionSent, inviter, inviterTeamName} = req.body;
     console.log(invitedUser);
     console.log(descriptionSent);
     console.log(inviter);
@@ -667,25 +630,20 @@ app.post('/addteammember', async (req, res) => {
     }
 });
 
-app.post('/assignMemberToTask',async (req,res) => {
-    const {team, task, member} = req.body;
-    console.log(task.title)
 
-    try {
-
-        const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
-        console.log(taskToUpdate.title)
-        const mem = [member, ...taskToUpdate.workers]
-        await TeamTask.findOneAndUpdate(
-            {title: task.title, team: team},
-            {workers: mem}
-        );
-
-    } catch(e) {
-        console.error(e);
-        res.status(500).json()
+app.get('/notifications/:username', async (req,res) => {
+    try{
+        console.log("got to backend");
+        const notification = await Notification.find({ touser: req.params.username })
+        // console.log(tasks);
+        console.log(notification);
+        res.json(notification);
+        
+    } catch (e){
+        // console.log(e);
+        res.status(422).json(e);    
     }
-})
+});
     
     // if (_existingUser) {
     //     const notification = await Notification.create(
@@ -712,6 +670,6 @@ app.post('/assignMemberToTask',async (req,res) => {
 
 
 //listener
-const server = app.listen(port, ()=>console.log(`Server is running on ${port}`))
+const server = app.listen(port, ()=>console.log(`Server is running on ${port}`));
 
 //routes (Note to Team: Requires extra installation from react-router-dom)
