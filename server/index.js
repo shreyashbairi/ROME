@@ -461,8 +461,10 @@ app.post("/saveViewMode", async (req,res) => {
 
 app.get("/getUser/:username", async (req,res) => {
     try{
-        const user = await User.findOne({ username: req.params.username })
-        // console.log(user);
+        console.log("GETUSER");
+        console.log(req.params.username);
+        const user = await User.findOne({ userUserName: req.params.username })
+        console.log(user);
         res.json(user);
     } catch (e){
         // console.log(e);
@@ -567,12 +569,12 @@ app.get("/userteamtasks/:user", async (req,res) => {
 
 app.post('/assignMemberToTask',async (req,res) => {
     const {team, task, member} = req.body;
-    console.log(task.title)
+    // console.log(task.title)
 
     try {
 
         const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
-        console.log(taskToUpdate.title)
+        // console.log(taskToUpdate.title)
         const mem = [member, ...taskToUpdate.workers]
         await TeamTask.findOneAndUpdate(
             {title: task.title, team: team},
@@ -587,7 +589,7 @@ app.post('/assignMemberToTask',async (req,res) => {
 
 app.delete("/teamtaskdelete", async(req,res) => {
 
-    console.log("entered")
+    // console.log("entered")
 
     TeamTask.deleteMany({complete: true}, function(err) {
     });
@@ -596,7 +598,7 @@ app.delete("/teamtaskdelete", async(req,res) => {
 app.delete("/personaltaskdelete", async(req,res) => {
     const {title} = req.body;
 
-    console.log(title);
+    // console.log(title);
 
     Task.deleteOne({title:title}, function(err) {
     });
@@ -624,9 +626,9 @@ app.post('/invitenotification', async (req, res) =>{
 
 app.post('/acceptmember', async (req, res) => {
     const {username, teamname} = req.body;
-    console.log("acceptmember");
-    console.log(username);
-    console.log(teamname);
+    // console.log("acceptmember");
+    // console.log(username);
+    // console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
         console.log(user);
@@ -650,8 +652,8 @@ app.post('/acceptmember', async (req, res) => {
 
 app.post('/removemember', async (req,res) => {
     const {username, teamname} = req.body;
-    console.log(username);
-    console.log(teamname);
+    // console.log(username);
+    // console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
         // let index = -1;
@@ -693,23 +695,23 @@ app.post('/removemember', async (req,res) => {
 
 app.post('/addteammember', async (req, res) => {
     const { invitedUser, descriptionSent, inviter, inviterTeamName} = req.body;
-    console.log(invitedUser);
-    console.log(descriptionSent);
-    console.log(inviter);
+    // console.log(invitedUser);
+    // console.log(descriptionSent);
+    // console.log(inviter);
     //console.log(inviterTeamName);
     //console.log(inviterTeamID);
     try {
       const _existingUser = await User.findOne({userUserName: invitedUser});
       if (!_existingUser) {
-        console.log(_existingUser);
-        console.log("User does not exist.");  
+        // console.log(_existingUser);
+        // console.log("User does not exist.");  
       } 
       else if (_existingUser.userUserName === inviter){
         res.status(422).json({error: "You cannot invite yourself to a team."});
       }
       else {
-        console.log(_existingUser);
-        console.log("User exists.");
+        // console.log(_existingUser);
+        // console.log("User exists.");
         const notification = await Notification.create(
             {
                 fromuser: inviter,
@@ -731,8 +733,8 @@ app.post('/requestteam', async (req, res) => {
     const {fromuser, teamName} = req.body;
     try {
         const team = await Team.findOne({team: teamName});
-        console.log("DEBUG");
-        console.log(team);
+        // console.log("DEBUG");
+        // console.log(team);
         const manager = team.managerid;
         // console.log(team.mangaerid);
         const notification = await Notification.create({
@@ -751,11 +753,11 @@ app.post('/requestteam', async (req, res) => {
 
 app.post('/assignMemberToTask',async (req,res) => {
     const {team, task, member} = req.body;
-    console.log(task.title)
+    // console.log(task.title)
 
     try {
         const taskToUpdate = await TeamTask.findOne({title: task.title, team: team})
-        console.log(taskToUpdate.title)
+        // console.log(taskToUpdate.title)
         if (taskToUpdate.workers.includes(member)) {
             res.status(58).json()
         }
@@ -773,10 +775,10 @@ app.post('/assignMemberToTask',async (req,res) => {
 
 app.get('/notifications/:username', async (req,res) => {
     try{
-        console.log("got to backend");
+        // console.log("got to backend");
         const notification = await Notification.find({ touser: req.params.username })
         // console.log(tasks);
-        console.log(notification);
+        // console.log(notification);
         res.json(notification);
         
     } catch (e){

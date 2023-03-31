@@ -81,7 +81,7 @@ export default function CalendarFunc (props) {
         axios.get(`/getUser/${username}`)
         .then(res => {
             let userProfile = res.data;
-            // console.log(userProfile);
+            console.log(userProfile);
             // console.log(userProfile.userViewMode);
             let userViewMode = userProfile.userViewMode;
             // console.log(userViewMode);
@@ -198,8 +198,8 @@ export default function CalendarFunc (props) {
                     username,
                     tempViewMode
                 })
-                console.log(username);
-                console.log(tempViewMode);
+                // console.log(username);
+                // console.log(tempViewMode);
                 // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
@@ -214,8 +214,8 @@ export default function CalendarFunc (props) {
                     username,
                     tempViewMode
                 })
-                console.log(username);
-                console.log(tempViewMode);
+                // console.log(username);
+                // console.log(tempViewMode);
                 // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
