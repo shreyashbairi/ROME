@@ -109,12 +109,18 @@ function DefaultLayout () {
 
     const handleInvite = async (e) => {
         console.log("here");
-        const username = localStorage.getItem("userid");
+        console.log(displayNotif.type);
+        let username; 
         if (displayNotif.type === "Request") {
             username = displayNotif.fromuser;
+        } else {
+            username = localStorage.getItem("userid");
         }
         const teamname = displayNotif.teamName;
         // const teamname = responseTeam;
+        console.log("Accept");
+        console.log(teamname);
+        console.log(username);
         await axios.post('/acceptmember', {
             username, teamname
         })
