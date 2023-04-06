@@ -1,0 +1,31 @@
+.messenger-page {
+    width: 94vw;
+    height: 100vh;
+    margin-left:6vw;
+    position: fixed;
+    /* align-items: left; */
+}
+
+.chat {
+    padding: 1px;
+    height: 87%;
+    margin-left: 0;
+    margin-top: 0.2%;
+}
+.new-chat {
+    padding: 0;
+    height: 5%;
+    margin-left: 0;
+    margin-top: 0.2%;
+}
+
+.convo-sidebar {
+    margin-top: 10px;
+    padding: 1;
+    width: 80px;
+    background-color: #34c7c2;
+    position: fixed;
+    height: 90%;
+    overflow: auto;
+    border-radius: .25rem;
+}

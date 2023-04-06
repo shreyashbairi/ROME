@@ -164,9 +164,13 @@ function DefaultLayout () {
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="pic d-inline-block align-text-top" />
                     Rome
                     </a>
-                    
+
+                   
                     {/* PAGENAME */}
                     <div>  
+                    <a class="navbar-brand" href="/messenger"> 
+                            <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
+                    </a>
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <AiFillBell/>
                     </button>  }  > 
@@ -184,7 +188,7 @@ function DefaultLayout () {
 
          
                         <a class="navbar-brand" href="/profile"> 
-<img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
+                            <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
                         </a>
                         <a class="navbar-brand" href="/" onClick={handlelogout}> 
                             logout
