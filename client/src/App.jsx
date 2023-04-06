@@ -18,6 +18,7 @@ import Profile from './components/jsx/Profile';
 import EditProfile from './components/jsx/EditProfile';
 import MainPage from './components/jsx/MainPage';
 import DefaultLayout from './components/jsx/DefaultLayout';
+import Messenger from './components/jsx/Mesenger';
 import axios from 'axios';
 import AddEvent from './components/jsx/Calendar/AddEvent';
 import { useState, useContext } from 'react';
@@ -72,12 +73,15 @@ function AuthRoutes() {
       </Route>
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/profile" element={isLoggedIn === 'true' ? <Profile /> : <Navigate to="/login" />}/>
+          <Route path='/messenger' element={isLoggedIn === 'true' ? <Messenger /> : <Navigate to="/login" />}/>
           <Route path="/main" element={isLoggedIn === 'true' ? <MainPage /> : <Navigate to="/login" />}/>
           <Route path="/editprofile" element={isLoggedIn === 'true' ? <EditProfile /> : <Navigate to="/login" />}/>
           <Route path="/calendar" element={isLoggedIn === 'true' ? <CalendarFunc /> : <Navigate to="/login" />}/>
           <Route path="/todo" element={isLoggedIn === 'true' ? <TodoList /> : <Navigate to="/login" />}/>
           <Route path="/add" element={isLoggedIn === 'true' ? <AddEvent /> : <Navigate to="/login" />}/>
           <Route path='/team/:team' element={isLoggedIn === 'true' ? <TeamHome /> : <Navigate to="/login" />}/>
+          <Route path='/team/:team' element={isLoggedIn === 'true' ? <TeamHome /> : <Navigate to="/login" />}/>
+          
         </Route>
       : null;
     </Routes>

@@ -133,8 +133,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                                 </button>
                                                 <div>
 
-                                                    <Popup class="editTask" trigger={ <button>edit</button>} open={edit}
-                                                        onOpen={openedit} position="right center" nested modal>
+                                                    <Popup class="editTask" trigger={ <button>edit</button>}
+                                                         position="right center">
                                                         <div class="card">
                                                         <TodoEdit 
                                                                 trigger={edit}

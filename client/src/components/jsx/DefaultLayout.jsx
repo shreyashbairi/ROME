@@ -52,11 +52,11 @@ function DefaultLayout () {
     }])
 
     useEffect( () => {
+        console.log("BYE")
         const username = localStorage.getItem("userid");
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            // console.log(teamsGrabed);
             setTeams(teamsGrabed);
         })
         axios.get(`/color/${username}`)
@@ -65,23 +65,11 @@ function DefaultLayout () {
         });
         axios.get(`/notifications/${username}`)
         .then (res => {
-            const notificationsGrabed = res.data;
-            console.log(notificationsGrabed);
-            setNotif(notificationsGrabed);
-            // console.log("notif");
-            // console.log(notif);
-            if (notificationsGrabed.length == 0) {
-                setDisplayNotif({
-                    fromuser: "",
-                    touser: "",
-                    description: "",
-                    type: "",
-                    teamName: "",
-                })
-            } else {
-                setDisplayNotif(notificationsGrabed[0]);
-            }
+            setNotif(res.data);
         });
+
+        console.log(notif);
+        console.log()
     }, [] );
 
     const newTeamButton = () => {
@@ -98,17 +86,23 @@ function DefaultLayout () {
         }
         const withNew = [newTeam,...teams]
         setTeams(withNew)
-        console.log(teams)
     } 
     
     const goWelcome = () => {
         navigate("/Welcome")
     }
-
+    const ColoredLine = ({ color }) => (
+        <hr
+            style={{
+                color: color,
+                backgroundColor: color,
+                height: 1
+            }}
+        />
+    );
 
 
     const handleInvite = async (e) => {
-        console.log("here");
         console.log(displayNotif.type);
         let username; 
         if (displayNotif.type === "Request") {
@@ -118,16 +112,12 @@ function DefaultLayout () {
         }
         const teamname = displayNotif.teamName;
         // const teamname = responseTeam;
-        console.log("Accept");
-        console.log(teamname);
-        console.log(username);
         await axios.post('/acceptmember', {
             username, teamname
         })
       };
 
       const handleDecline = async (e) => {
-        console.log("here");
         // const teamname = notif[0].teamName;
         // const username = localStorage.getItem("userid");
         // const teamname = responseTeam;
@@ -142,7 +132,6 @@ function DefaultLayout () {
 
     const handlelogout = async (e) => {
         await axios.post('/logout');
-        console.log(user);
         setUser(null);
         localStorage.setItem('userid', "");
         localStorage.setItem('isLoggedIn', 'false'); 
@@ -164,19 +153,32 @@ function DefaultLayout () {
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="pic d-inline-block align-text-top" />
                     Rome
                     </a>
-                    
+
+                   
                     {/* PAGENAME */}
                     <div>  
+                    <a class="navbar-brand" href="/messenger"> 
+                            <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
+                    </a>
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <AiFillBell/>
-                    </button>  }  > 
-                    <div>{displayNotif.type} from {displayNotif.fromuser}
-                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite()}>
-                    <AiFillCheckCircle/>
-                    </button>  
-                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline()}>
-                    <AiFillCloseCircle/>                     </button>  
-                    </div>
+                        <AiFillBell/> </button>  }  > 
+                        {notif.map((notiff, index)=>{
+                                    return (       
+                                        <div key={index}> 
+                                            <div>{notiff.type} from {notiff.fromuser}
+                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite()}>
+                                                <AiFillCheckCircle/> </button>  
+                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline()}>
+                                                <AiFillCloseCircle/>                     </button>  
+                                            </div>
+                                            <ColoredLine color="grey" />
+
+                                        </ div>
+            
+                                    )
+                        })} 
+
+
 
                     
                             
@@ -184,7 +186,7 @@ function DefaultLayout () {
 
          
                         <a class="navbar-brand" href="/profile"> 
-<img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
+                            <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
                         </a>
                         <a class="navbar-brand" href="/" onClick={handlelogout}> 
                             logout
