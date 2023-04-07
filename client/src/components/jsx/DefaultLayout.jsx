@@ -26,6 +26,15 @@ function DefaultLayout () {
     const [inviterName, setInviterName] = useState('');
     const [response, setResponse] = useState(0);
     const [responseTeam, setResponsTeam] = useState("");
+    let username = "";
+    try{
+        username = user.userUserName;
+    }
+    catch{
+        navigate('/login');
+    }
+    //const username = user.userUserName;
+    console.log("username in deflayout is: " + username);
     const [notif, setNotif] = useState([
         {
             fromuser: String,
@@ -53,7 +62,7 @@ function DefaultLayout () {
 
     useEffect( () => {
         console.log("BYE")
-        const username = localStorage.getItem("userid");
+        
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
@@ -133,8 +142,7 @@ function DefaultLayout () {
     const handlelogout = async (e) => {
         await axios.post('/logout');
         setUser(null);
-        localStorage.setItem('userid', "");
-        localStorage.setItem('isLoggedIn', 'false'); 
+        //localStorage.setItem('userid', "");
         Cookies.remove("token");
         navigate("/Welcome");
       };
@@ -203,7 +211,6 @@ function DefaultLayout () {
                     return (
                         <div key={index}>
                             <div key={team.teamID}>
-                                {/* {localStorage.setItem('team', team.team)} */}
                                     <Link to={`/team/${team.team}`} onClick={()=>changeTeam(team)}>{team.team}</Link>
                                     {/* <button onClick={switchTeam}>{team.team}</button> */}
                             </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import "../css/TeamPop.css";
 import { useState } from "react";
+import { UserContext } from "./UserContext";
+import { useContext } from "react";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
@@ -9,6 +11,7 @@ axios.defaults.baseURL = 'http://localhost:8000';
 function AddTeamMember(props) {
     const [name, setName] = useState("")
     let teams = [];
+    const { user } = useContext(UserContext);
     const [description, setDescription] = useState("")
     const [data, setData] = useState({
         name: {name},
@@ -19,8 +22,10 @@ function AddTeamMember(props) {
         e.preventDefault();
         const invitedUser = name;
         const descriptionSent = description;
-        const inviter = localStorage.getItem("userid");
-        const inviterTeamName = localStorage.getItem("team");
+        const inviter = user.userUserName;
+        console.log("The inviter is " + inviter);
+        const inviterTeamName = user.userTeamName;
+        console.log("The inviterTeamName is " + inviterTeamName);
         //const teamID = localStorage.getItem("teamID");
         console.log("The inviter is " + inviter);
         // console.log("The team is " + team);

@@ -8,7 +8,7 @@ function PersonalTodo() {
     const [color,setColor] = useState("");
 
     useEffect( () => {
-        console.clear();
+       // console.clear();
         const username = localStorage.getItem('userid');
         axios.get(`/color/${username}`)
         .then (res => {

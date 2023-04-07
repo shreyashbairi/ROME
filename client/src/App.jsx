@@ -26,23 +26,11 @@ import TeamHome from './components/jsx/TeamHome';
 import { UserContextProvider } from './components/jsx/UserContext';
 import { Navigate} from 'react-router-dom';
 import { UserContext } from './components/jsx/UserContext';
-// import { TeamContext } from './components/jsx/TeamContextProvider';
+
 import { Redirect } from "react-router-dom";
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.withCredentials = true;
-//TODO delete below
-//import Todo from "./components/jsx/Todo/TodoTest"
 
-// function PrivateRoute({ element, ...rest }) {
-//   const loggedInUser = localStorage.getItem('user');
-
-//   return (
-//     <Route
-//       {...rest}
-//       element={loggedInUser ? element : <Navigate to="/login" replace />}
-//     />
-//   );
-// }
 
 function AuthRoutes() {
   

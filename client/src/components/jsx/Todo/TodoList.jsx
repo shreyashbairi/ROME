@@ -24,7 +24,7 @@ function TodoList(props) {
     })
 
     useEffect( () => {
-        console.clear();
+        //console.clear();
         const username = localStorage.getItem('userid');
         axios.get(`/tasks/${username}`)
         .then(res => {
