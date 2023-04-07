@@ -4,12 +4,12 @@ import './App.css';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 //components
+import Login from './components/jsx/Login';
 import TodoList from './components/jsx/Todo/TodoList';
 import ResetPassword from './components/jsx/ResetPassword';
 import ForgotPassword from './components/jsx/ForgotPassword';
 import Layout from './components/jsx/Layout';
 import Welcome from './components/jsx/Welcome';
-import Login from './components/jsx/Login';
 import Signup from './components/jsx/Signup';
 import Calendar from './components/jsx/Calendar/Calendar';
 import CalendarTest from './components/jsx/Calendar/CalendarTest';
@@ -45,12 +45,14 @@ axios.defaults.withCredentials = true;
 // }
 
 function AuthRoutes() {
-   
+  
 
-  const isLoggedIn =localStorage.getItem('isLoggedIn');
-  console.log(isLoggedIn);
-  const loggedInUser = localStorage.getItem("userid");
-  console.log(loggedInUser);
+  const { user } = useContext(UserContext);
+  let loggedInUser = null;
+  if(user !== null){
+    loggedInUser = user.userUserName; 
+  }
+  console.log("logged in user is:" + loggedInUser);
   
   const navigate = useNavigate();
   // useEffect(() => {
@@ -58,9 +60,9 @@ function AuthRoutes() {
   //     navigate('/login', { replace: true });
   //   }
   // }, [loggedInUser, navigate]);
-  if (!isLoggedIn) {
-    navigate('/login');
-  }
+  // if (!isLoggedIn) {
+  //   navigate('/login');
+  // }
 
   return (
     <Routes>
@@ -72,15 +74,15 @@ function AuthRoutes() {
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Route>
         <Route path="/" element={<DefaultLayout />}>
-          <Route path="/profile" element={isLoggedIn === 'true' ? <Profile /> : <Navigate to="/login" />}/>
-          <Route path='/messenger' element={isLoggedIn === 'true' ? <Messenger /> : <Navigate to="/login" />}/>
-          <Route path="/main" element={isLoggedIn === 'true' ? <MainPage /> : <Navigate to="/login" />}/>
-          <Route path="/editprofile" element={isLoggedIn === 'true' ? <EditProfile /> : <Navigate to="/login" />}/>
-          <Route path="/calendar" element={isLoggedIn === 'true' ? <CalendarFunc /> : <Navigate to="/login" />}/>
-          <Route path="/todo" element={isLoggedIn === 'true' ? <TodoList /> : <Navigate to="/login" />}/>
-          <Route path="/add" element={isLoggedIn === 'true' ? <AddEvent /> : <Navigate to="/login" />}/>
-          <Route path='/team/:team' element={isLoggedIn === 'true' ? <TeamHome /> : <Navigate to="/login" />}/>
-          <Route path='/team/:team' element={isLoggedIn === 'true' ? <TeamHome /> : <Navigate to="/login" />}/>
+          <Route path="/profile" element={user !== null ? <Profile /> : <Navigate to="/login" />}/>
+          <Route path='/messenger' element={user !== null  ? <Messenger /> : <Navigate to="/login" />}/>
+          <Route path="/main" element={user !== null ? <MainPage /> : <Navigate to="/login" />}/>
+          <Route path="/editprofile" element={user !== null  ? <EditProfile /> : <Navigate to="/login" />}/>
+          <Route path="/calendar" element={user !== null  ? <CalendarFunc /> : <Navigate to="/login" />}/>
+          <Route path="/todo" element={user !== null  ? <TodoList /> : <Navigate to="/login" />}/>
+          <Route path="/add" element={user !== null  ? <AddEvent /> : <Navigate to="/login" />}/>
+          <Route path='/team/:team' element={user !== null  ? <TeamHome /> : <Navigate to="/login" />}/>
+          <Route path='/team/:team' element={user !== null  ? <TeamHome /> : <Navigate to="/login" />}/>
           
         </Route>
       : null;

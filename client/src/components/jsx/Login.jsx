@@ -5,13 +5,12 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import '../css/Login.css';
 import { Navigate } from "react-router-dom";
+
 function Login() {
   const [userUserName, setUserUserName] = useState("");
   const [userPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { setUser } = useContext(UserContext);
-
   async function HandleSubmit(e) {
     e.preventDefault();
     try {
@@ -22,8 +21,7 @@ function Login() {
         //TODO: set the user context
         localStorage.setItem('userid', userUserName);
         setRedirect(true); // Set the redirect state to true
-        setIsLoggedIn(true);
-        localStorage.setItem('isLoggedIn', 'true');
+       // setIsLoggedIn(true);
       } else {
         alert('User not found');
       }
@@ -79,4 +77,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Login;
