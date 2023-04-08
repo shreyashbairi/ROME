@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { UserContext } from '../UserContext'
 import TodoForm from './TodoForm1'
 import Todo from './Todo'
 import {AiFillPlusCircle , AiFillFilter} from 'react-icons/ai'
@@ -11,7 +12,7 @@ function TodoList(props) {
     // const [todos,setTodos] = useState([]);
     const [click, setClick] = useState(false);
     const [color,setColor] = useState("");
-
+    const {user, setUser} = useContext(UserContext);
     const [todos, setTodos] = useState([{
         title:String,
         description:String,
@@ -25,7 +26,7 @@ function TodoList(props) {
 
     useEffect( () => {
         //console.clear();
-        const username = localStorage.getItem('userid');
+        const username = user.userUsername;
         axios.get(`/tasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;

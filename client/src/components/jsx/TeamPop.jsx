@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/TeamPop.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
@@ -9,6 +10,7 @@ axios.defaults.baseURL = 'http://localhost:8000';
 
 function TeamPop(props) {
     const [team, setTeam] = useState("")
+    const { user } = useContext(UserContext);
     const [description, setDescription] = useState("")
     const [color, setColor] = useState("")
     const [data, setData] = useState({
@@ -46,7 +48,7 @@ function TeamPop(props) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const username = localStorage.getItem("userid");
+        const username = user.userUserName;
         const teamID = Math.floor(Math.random()*10000);
         const members = [username];
         const userTeamList = [team];

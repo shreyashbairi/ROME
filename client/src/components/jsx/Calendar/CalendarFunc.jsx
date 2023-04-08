@@ -4,7 +4,8 @@ import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
 import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../UserContext";
 import axios from "axios";
 import EventFocus from "./EventFocus";
 
@@ -28,10 +29,11 @@ export default function CalendarFunc (props) {
     const [teams, setTeams] = useState([]);
     const [focusTeams, setFocusTeams] = useState([]);
     const [color,setColor] = useState("");
+    const {user} = useContext(UserContext);
 
 
     useEffect( () => {
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         axios.get(`/events/${username}`)
         .then(res => {
             // console.log(res.data)
@@ -106,7 +108,7 @@ export default function CalendarFunc (props) {
 
     const grabTeams = () => {
         console.log("ATTEMPT MADE");
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
@@ -186,7 +188,7 @@ export default function CalendarFunc (props) {
     }
 
     async function changeViewMode () {
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         let tempViewMode = 7;
         if (viewMode === 7) {
             setViewMode(5);
@@ -283,7 +285,7 @@ export default function CalendarFunc (props) {
                                 teams={teams}
                                 setTeams={setTeams}
                                 team={"personal"}
-                                user={localStorage.getItem("userid")}
+                                user={user.userUserName}
                             />     
                         </div>
                     </ Popup>
@@ -298,7 +300,7 @@ export default function CalendarFunc (props) {
                                 events={events}
                                 teams={teams}
                                 team={"personal"}
-                                user={localStorage.getItem("userid")}
+                                user={user.userUserName}
                             />     
                         </div>
                     </ Popup>

@@ -19,7 +19,6 @@ function Login() {
       if (data != null) {
         alert(`login successful. Hi ${userUserName}!`);
         //TODO: set the user context
-        localStorage.setItem('userid', userUserName);
         setRedirect(true); // Set the redirect state to true
        // setIsLoggedIn(true);
       } else {

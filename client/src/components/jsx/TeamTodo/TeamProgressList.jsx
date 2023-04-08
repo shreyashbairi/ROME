@@ -1,4 +1,7 @@
-import React, {useState,useEffect} from "react"
+import React, { useState, useEffect, useContext} from "react"
+import {useNavigate} from "react-router-dom";
+
+import { UserContext } from "../UserContext";
 import  { AiFillCloseCircle } from 'react-icons/ai'
 import TeamAddNewWorking from './TeamAddNewWorking'
 import Popup from "reactjs-popup";
@@ -7,9 +10,11 @@ import TeamEditTask from "./TeamEditTask";
 
 function TeamProgressList({started,setStarted,removeTodoFromProg}) {
 
+    const navigate = useNavigate();
     const[teamMembers,setTeamMembers] = useState([]);
     const [name, setName] = useState("");
     const [manager, setManager] = useState("");
+    const { user } = useContext(UserContext);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -71,9 +76,19 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
                         </div>
 
                         {(()=>{
-                            const user = localStorage.getItem("userid");
+                            let userCheck = "";
+                            try{
+                                userCheck = user.userUserName;
+                            }
+                            catch(e){
+                                //navigate to login
+                                userCheck = "";
+                                
+                                navigate("/login");
+
+                            }
                             
-                            if (user === manager.userUserName) {
+                            if (userCheck === manager.userUserName) {
                                 return(
                                     <>
                                     <Popup class="detailedTask" trigger={<button>Add New Working Member</button>} nested modal>

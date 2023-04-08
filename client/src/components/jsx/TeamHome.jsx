@@ -3,7 +3,8 @@ import "../css/TeamHome.css"
 import Popup from "reactjs-popup"
 import UpdateTask from "./UpdateTask"
 import AddEvent from "./Calendar/AddEvent"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import { UserContext } from "./UserContext"
 import TeamTodoList from "./TeamTodo/TeamTodoList"
 import AddTeamMember from "./AddTeamMember"
 import RemoveTeamMember from "./RemoveTeamMember"
@@ -14,6 +15,7 @@ import axios from "axios";
 
 function TeamHome() {
     const [show, setButtonPop] = useState(false);
+    const {user} = useContext(UserContext);
     const [addTeam, setAddTeam] = useState(false);
     const [removeTeam, setRemoveTeam] = useState(false);
     const [bodyView, setBodyView] = useState(0);
@@ -30,8 +32,7 @@ function TeamHome() {
     
     useEffect(() => {
         const teamname = localStorage.getItem('team');
-        const username = localStorage.getItem('userid');
-        //console.log(teamname);
+        const username = user.userUserName;
         axios.get(`getmanager/${teamname}`)
         .then(res => {
             const manager = res.data;
@@ -94,7 +95,7 @@ function TeamHome() {
     );
 
     const memberCalendar = (member) => {
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         if (managerBool && member.userUserName != username) {
             changePersonalCalendar(member.userFullname);
             setMemberName(member.userUserName);

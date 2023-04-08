@@ -1,18 +1,19 @@
 import React, {useState} from "react";
 import '../css/Profile.css';
 import EditProfile from "./EditProfile";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import axios from "axios";
-
+import { UserContext } from "./UserContext";
 
 
 function Profile (){
   // const [email, setEmail] = useState("")
   const [userProfile, setProfile] = useState({});
   const [cColor, setColor] =useState("");
+  const {user, setUser} = useContext(UserContext);
 
   useEffect( () => {
-    const username = localStorage.getItem("userid")
+    const username = user.userUserName;
     axios.get(`/profile/${username}`)
     .then(res => {
       setProfile(res.data);
@@ -24,15 +25,7 @@ function Profile (){
     })
   }, []);
 
-  // useEffect( () => {
-  //   const username = localStorage.getItem("userid")
-  //   axios.get(`/profile`,username)
-  //   .then(res => {
-  //     setname
-  //     setProfile(res.data);
-  //     console.log(setProfile);
-  //   })
-  // });
+
 
 
 

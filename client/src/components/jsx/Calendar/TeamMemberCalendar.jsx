@@ -5,10 +5,10 @@ import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
 import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "../UserContext";
 import EventFocus from "./EventFocus";
-
 
 
 export default function TeamMemberCalendar (props) {
@@ -28,7 +28,7 @@ export default function TeamMemberCalendar (props) {
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
     const [teams, setTeams] = useState([]);
     const [focusTeams, setFocusTeams] = useState([]);
-
+    const {user} = useContext(UserContext);
     useEffect( () => {
         const username = props.username;
         axios.get(`/events/${username}`)
@@ -105,7 +105,7 @@ export default function TeamMemberCalendar (props) {
 
     const grabTeams = () => {
         console.log("ATTEMPT MADE");
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
@@ -185,7 +185,7 @@ export default function TeamMemberCalendar (props) {
     }
 
     async function changeViewMode () {
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         let tempViewMode = 7;
         if (viewMode === 7) {
             setViewMode(5);

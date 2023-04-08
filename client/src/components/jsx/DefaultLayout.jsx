@@ -117,7 +117,7 @@ function DefaultLayout () {
         if (displayNotif.type === "Request") {
             username = displayNotif.fromuser;
         } else {
-            username = localStorage.getItem("userid");
+            username = user.userUserName;
         }
         const teamname = displayNotif.teamName;
         // const teamname = responseTeam;
@@ -128,7 +128,6 @@ function DefaultLayout () {
 
       const handleDecline = async (e) => {
         // const teamname = notif[0].teamName;
-        // const username = localStorage.getItem("userid");
         // const teamname = responseTeam;
         // if (response == 0) {
         //     console.log("posting");
@@ -142,7 +141,6 @@ function DefaultLayout () {
     const handlelogout = async (e) => {
         await axios.post('/logout');
         setUser(null);
-        //localStorage.setItem('userid', "");
         Cookies.remove("token");
         navigate("/Welcome");
       };

@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/TeamPop.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
@@ -13,11 +14,12 @@ function JoinTeamPop(props) {
         team: {team},
         description: {description}
     })
-
+    const { user } = useContext(UserContext);
+    
     async function handleSubmit(e) {
         e.preventDefault();
         // alert(team);
-        const fromuser = localStorage.getItem("userid");
+        const fromuser = user.userUserName;
         const teamID = Math.floor(Math.random()*10000);
         const teamName = team;
         try {

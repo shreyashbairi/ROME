@@ -1,5 +1,6 @@
 import '../../css/Todo.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from "../UserContext";
 import axios from 'axios';
 
 export function TeamTodoForm(props) {
@@ -10,6 +11,7 @@ export function TeamTodoForm(props) {
         description:"",
         date:""
     })
+    const { user } = useContext(UserContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -23,7 +25,7 @@ export function TeamTodoForm(props) {
             title: title,
             description: description,
             date: input.date,
-            user: localStorage.getItem("userid"),
+            user: user.userUserName,
             complete:false,
             started:false,
             workers:[],

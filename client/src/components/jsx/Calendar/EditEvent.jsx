@@ -1,6 +1,7 @@
 import React from "react";
 import "../../css/AddEvent.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../UserContext";
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
@@ -13,6 +14,7 @@ const EditEvent = (props) => {
     const [eventDate, setEventDate] = useState("");
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
+    const { user } = useContext(UserContext);
 
     async function handleEventEdit (e) {
         e.preventDefault();
@@ -46,7 +48,7 @@ const EditEvent = (props) => {
         } else {
             props.setTrigger();
             props.editEvent(newElapsedEvent);
-            const curusername = localStorage.getItem("userid");
+            const curusername = user.userUserName;
             const newDate = newElapsedEvent.date;
             const newStartTime = newElapsedEvent.startTime;
             const newEndTime = newElapsedEvent.endTime;

@@ -19,9 +19,7 @@ function RemoveTeamMember(props) {
         e.preventDefault();
         const username = name;
         // const descriptionSent = description;
-        // const inviter = localStorage.getItem("userid");
         const teamname = localStorage.getItem("team");
-        //const teamID = localStorage.getItem("teamID");
         // console.log("The inviter is " + inviter);
         // console.log("The team is " + team);
         // console.log("The teamID is " + teamID);

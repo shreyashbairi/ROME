@@ -42,24 +42,7 @@ function TeamAddNewWorking(props, {task}) {
         console.log(memberUserName);
         console.log(teamMembers);
         console.log(task)
-        // const exists = teamMembers.some((member) => member === memberUserName);
-        // console.log(exists)
 
-        // if (!exists) {
-        //     alert("This username does not exist in this team");
-        // } else {
-
-        //     try {
-        //         await axios.post('/assignMemberToTask', {
-        //             team: localStorage.getItem("team"),
-        //             task: task,
-        //             member:memberUserName
-        //         });
-        //     } catch (e) {
-        //         alert("Member could not be added at this time")
-        //     }
-
-        // }
         }
 
     

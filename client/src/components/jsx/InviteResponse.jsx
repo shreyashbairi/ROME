@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/TeamPop.css";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
+import { UserContext } from "./UserContext";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Popup from "reactjs-popup";
@@ -12,10 +13,11 @@ function InviteResponse(props) {
 
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
+    const { user } = useContext(UserContext);
 
     async function handleSubmit(e) {
         alert("HI");
-        const username = localStorage.getItem("userid");
+        const username = user.userUserName;
         const teamname = props.notif.teamName;
         
         try {

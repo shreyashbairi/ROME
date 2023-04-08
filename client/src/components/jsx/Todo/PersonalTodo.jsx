@@ -1,15 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import TodoList from './TodoList';
 import PersonalTeamTodo from './PersonalTeamTodo';
 import axios from 'axios';
+import {UserContext} from '../UserContext';
 
 function PersonalTodo() {
     const [type,setType] = useState("Personal");
     const [color,setColor] = useState("");
+    const {user, setUser} = useContext(UserContext);
 
     useEffect( () => {
        // console.clear();
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         axios.get(`/color/${username}`)
         .then (res => {
             setColor(res.data);

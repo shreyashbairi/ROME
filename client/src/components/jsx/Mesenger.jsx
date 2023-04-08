@@ -1,15 +1,16 @@
 import React from "react";
 import '../css/Messenger.css';
 import Talk from "talkjs";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import NewChatPop from "./NewChat";
-
+import { UserContext } from "./UserContext";
 
 
 function Messenger (){
   const chatboxEl = useRef();
+  const {user, setUser} = useContext(UserContext);
   const [talkLoaded, markTalkLoaded] = useState(false);
   const [userGot, markUserGot] = useState(false);
   const [ourCurUser, setOurCurUser] = useState({
@@ -25,7 +26,7 @@ function Messenger (){
 
   useEffect( () => {
     Talk.ready.then(() => markTalkLoaded(true));
-    const username = localStorage.getItem("userid");
+    const username = user.userUserName;
     axios.get(`/getUser/${username}`).then(res=>{
       setOurCurUser(res.data);
       markUserGot(true);

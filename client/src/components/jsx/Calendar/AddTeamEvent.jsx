@@ -1,6 +1,7 @@
 import React from "react";
 import "../../css/AddEvent.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../UserContext";
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
@@ -8,6 +9,7 @@ import 'reactjs-popup/dist/index.css';
 
 const AddTeamEvent = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
+    const {user} = useContext(UserContext);
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
     const [eventDate, setEventDate] = useState("");
@@ -21,7 +23,7 @@ const AddTeamEvent = (props) => {
 
     useEffect( () => { 
         // console.log("ATTEMPT MADE");
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         const teamname = props.teamName;
         axios.get(`/getteam/${teamname}`)
         .then (res => {

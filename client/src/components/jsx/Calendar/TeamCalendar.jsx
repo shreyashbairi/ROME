@@ -4,7 +4,8 @@ import TeamCalendarDays from "./TeamCalendarDays";
 import AddTeamEvent from "./AddTeamEvent";
 import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
+import { UserContext } from "../UserContext";
 import axios from "axios";
 import EventFocus from "./EventFocus";
 
@@ -28,9 +29,10 @@ export default function TeamCalendar (props) {
     const [teams, setTeams] = useState([]);
     const [focusTeams, setFocusTeams] = useState([]);
     const [fullEvents, setFullEvents] = useState([]);
+    const {user} = useContext(UserContext);
 
     useEffect( () => {
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         const teamname = localStorage.getItem('team');
         // const username = "will2"
         axios.get(`/fullteamevents/${teamname}`)
@@ -104,7 +106,7 @@ export default function TeamCalendar (props) {
 
     const grabTeams = () => {
         console.log("ATTEMPT MADE");
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
@@ -184,7 +186,7 @@ export default function TeamCalendar (props) {
     }
 
     async function changeViewMode () {
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         let tempViewMode = 7;
         if (viewMode === 7) {
             setViewMode(5);

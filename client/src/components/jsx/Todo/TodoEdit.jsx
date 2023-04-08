@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../UserContext";
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
@@ -15,11 +16,12 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
         MediumPriority: todo.MediumPriority,
         LowPriority: todo.LowPriority
     })
+    const { user } = useContext(UserContext);
 
     async function handleSubmit (e) {
         e.preventDefault();
         let exists = false;
-        const username = localStorage.getItem("userid");
+        const username = user.userUserName;
             setTrigger();
             const taskTitle=title;
             try {

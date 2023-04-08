@@ -1,13 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import {UserContext} from '../UserContext'
 import axios from 'axios'
 
 function PersonalTeamTodo() {
     const [tasks, setTasks] = useState([]);
     const [color,setColor] = useState("");
+    const {user, setUser} = useContext(UserContext);
 
     useEffect( () => {
         console.clear();
-        const username = localStorage.getItem('userid');
+        const username = user.userUserName;
         axios.get(`/userteamtasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;

@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import {UserContext} from './UserContext';
 import '../css/Profile.css';
 import axios from "axios";
 import { BsWindowSidebar } from "react-icons/bs";
@@ -16,10 +17,11 @@ function EditProfile (){
   const [redirect, setRedirect] = useState(false);
   const [cColor, setColor] =useState("");
   const [color,setcolor] = useState("");
+  const {user, setUser} = useContext(UserContext);
 
 
   useEffect( () => {
-    const username = localStorage.getItem("userid")
+    const username = user.userUserName;
     axios.get(`/profile/${username}`)
     .then(res => {
       setProfile(res.data);
@@ -34,7 +36,7 @@ function EditProfile (){
     
     // console.log("i tried");
     e.preventDefault();
-    const username = localStorage.getItem("userid");
+    const username = user.userUserName;
     try {
       axios.post('/editprofile', {
         username,

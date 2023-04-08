@@ -1,5 +1,6 @@
 import '../../css/Todo.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from "../UserContext";
 import axios from 'axios';
 
 export function TodoForm(props) {
@@ -16,6 +17,7 @@ export function TodoForm(props) {
         medium: false,
         low: true
     })
+    const { user } = useContext(UserContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -25,7 +27,7 @@ export function TodoForm(props) {
             title: title,
             description: description,
             date: input.date,
-            user: localStorage.getItem("userid"),
+            user: user.userUserName,
             repeating: repeating,
             highpriority: priority.high,
             mediumpriority: priority.medium,

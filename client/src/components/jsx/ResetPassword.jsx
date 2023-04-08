@@ -1,5 +1,6 @@
 import React from "react"
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 import '../css/Login.css';
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
@@ -8,10 +9,12 @@ export default function (props) {
   const [userPassword,setPassword] = useState("");
   const [userPasswordConfirm,setPasswordConfirm] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const { user } = useContext(UserContext);
+
   function HandleSubmit (e) { 
     e.preventDefault();
     e.preventDefault();
-    const username = localStorage.getItem("userid");
+    const username = user.userUserName;
     // console.log("phonnumber:")
     // console.log(cphone);
     // axios.put('/editprofile', {username, cbirthday, cphone, caddress, cnotification});
