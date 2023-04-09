@@ -40,7 +40,7 @@ function Profile (){
 );
   return (
     
-    <div >
+    <div class="profile-page">
       <div class="container">
         <div class="main-body">
           <div class="row gutters-sm">
