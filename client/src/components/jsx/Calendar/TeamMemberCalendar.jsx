@@ -28,9 +28,11 @@ export default function TeamMemberCalendar (props) {
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
     const [teams, setTeams] = useState([]);
     const [focusTeams, setFocusTeams] = useState([]);
+    const [color,setColor] = useState("");
     const {user} = useContext(UserContext);
+
     useEffect( () => {
-        const username = props.username;
+        let username = props.username;
         axios.get(`/events/${username}`)
         .then(res => {
             // console.log(res.data)
@@ -72,30 +74,17 @@ export default function TeamMemberCalendar (props) {
             }
             setEvents([...events, ...elapsedEvent])
         });
-        // axios.get(`/getViewMode/${username}`)
-        // .then(res => {
-        //     let userProfile = res.data;
-        //     // console.log(userProfile);
-        //     // console.log(userProfile.userViewMode);
-        //     let userViewMode = userProfile.userViewMode;
-        //     // console.log(userViewMode);
-        //     userProfile = null;
-        //     if (userViewMode == 5) {
-        //         setViewMode(5);
-        //         setViewModeString("Work Week");
-        //         setCurWeekdays(workWeekdays);
-        //     } else {
-        //         setViewMode(7);
-        //         setViewModeString("Week");
-        //         setCurWeekdays(weekdays);
-        //     }
-        // });
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
             //console.log(teamsGrabed);
             setTeams(teamsGrabed);
         });
+        username = user.userUserName;
+        axios.get(`/color/${username}`)
+        .then (res => {
+            setColor(res.data);
+        })
       }, [] )
 
     const grabTeams = () => {
@@ -146,7 +135,7 @@ export default function TeamMemberCalendar (props) {
     //             title: newElapsedEvent.title,
     //             color: newElapsedEvent.color,
     //             teamName: newElapsedEvent.teamName ,
-    //             tpye: new ElapsedEve
+    //             type: newElapsedEvent.type
     //         }; 
     //         elapsedEvent.push(newevent)
     //     }
@@ -251,7 +240,7 @@ export default function TeamMemberCalendar (props) {
 
             <div class="Calendar-container">
 
-                <div class="Calendar-header-team">
+                <div style={{backgroundColor: color}}class="Calendar-header-team">
                     <div class="header-left">
                     <button type="button" class="btn btn-secondary" onClick={previousWeek}>&#60;</button>
                     <button type="button" class="btn btn-secondary" onClick={nextWeek}>&#62;</button>

@@ -2,7 +2,7 @@ import "../../css/TeamCalendar.css";
 import React, {Component} from 'react';
 import TeamCalendarDays from "./TeamCalendarDays";
 import AddTeamEvent from "./AddTeamEvent";
-import EditEvent from "./EditEvent";
+import EditTeamEvent from "./EditTeamEvent";
 import Popup from 'reactjs-popup';
 import { useState, useEffect,useContext } from "react";
 import { UserContext } from "../UserContext";
@@ -30,6 +30,7 @@ export default function TeamCalendar (props) {
     const [focusTeams, setFocusTeams] = useState([]);
     const [fullEvents, setFullEvents] = useState([]);
     const {user} = useContext(UserContext);
+    const [color, setColor] = useState("");
 
     useEffect( () => {
         const username = user.userUserName;
@@ -77,6 +78,10 @@ export default function TeamCalendar (props) {
             setEvents([...events, ...elapsedEvent])
             setFullEvents(eventsGrabed);
         });
+        axios.get(`/color/${username}`)
+        .then (res => {
+            setColor(res.data);
+        })
         axios.get(`/getUser/${username}`)
         .then(res => {
             let userProfile = res.data;
@@ -150,11 +155,18 @@ export default function TeamCalendar (props) {
                 top: topHour,
                 title: newElapsedEvent.title,
                 color: newElapsedEvent.color,
-                teamName: newElapsedEvent.teamName 
+                teamName: newElapsedEvent.teamName,
+                type: "team"
             }; 
             elapsedEvent.push(newevent)
         }
-        setEvents([...events, ...elapsedEvent])
+        const updatedEvents = [];
+        for (let i = 0; i < events.length; i++) {
+            if (events[i].title !== newElapsedEvent.title) {
+                updatedEvents.push(events[i])
+            }
+        }
+        setEvents([...updatedEvents, ...elapsedEvent]);
     }
 
     const scheduleEvent = (newElapsedEvent) => {
@@ -256,7 +268,7 @@ export default function TeamCalendar (props) {
 
             <div class="Calendar-container">
 
-                <div class="Calendar-header-team">
+                <div style={{backgroundColor: color}}class="Calendar-header-team">
                     <div class="header-left">
                     <button type="button" class="btn btn-secondary" onClick={previousWeek}>&#60;</button>
                     <button type="button" class="btn btn-secondary" onClick={nextWeek}>&#62;</button>
@@ -279,10 +291,10 @@ export default function TeamCalendar (props) {
                         </div>
                     </ Popup>
 
-                    {/* <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
+                    <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
                     onOpen={openEditform} position="right center" nested modal>
                         <div class="card">
-                        <EditEvent  
+                        <EditTeamEvent  
                                 trigger={showEdit}
                                 setTrigger={closeEditform}
                                 editEvent={editEvent}
@@ -290,7 +302,7 @@ export default function TeamCalendar (props) {
                                 teams={teams}
                             />     
                         </div>
-                    </ Popup> */}
+                    </ Popup>
 
                     <button type="button" class="btn btn-secondary" onClick={changeViewMode}>View</button>
                     </div>

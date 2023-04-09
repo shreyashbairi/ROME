@@ -362,6 +362,28 @@ app.post('/eventedit', async (req, res) =>{
         res.status(422).json(e);    
     }
 });
+app.post('/teameventedit', async (req, res) =>{
+    const {newDate, newStartTime, newEndTime, newTitle, newDescription, curusername, teamName, teamID, color} = req.body;
+    try {
+        const eventsDoc = await TeamEvent.findOneAndUpdate(
+            {title: newTitle , usernameid: curusername},
+            {
+            date: newDate,
+            startTime: newStartTime,
+            endTime: newEndTime,
+            description: newDescription,
+            teamName: teamName,
+            teamID: teamID,
+            color: color
+            });
+        // console.log(newTitle);
+        // console.log(curusername)
+        // console.log(eventsDoc);
+        res.json(eventsDoc);
+    } catch (e) {
+        res.status(422).json(e);    
+    }
+});
 
 app.post('/taskedit', async (req, res) =>{
     const {taskTitle, taskDescription, taskDate, username,HighPriority,MediumPriority,LowPriority} = req.body;

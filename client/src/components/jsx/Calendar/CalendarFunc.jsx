@@ -156,7 +156,13 @@ export default function CalendarFunc (props) {
             }; 
             elapsedEvent.push(newevent)
         }
-        setEvents([...events, ...elapsedEvent])
+        const updatedEvents = [];
+        for (let i = 0; i < events.length; i++) {
+            if (events[i].title !== newElapsedEvent.title) {
+                updatedEvents.push(events[i])
+            }
+        }
+        setEvents([...updatedEvents, ...elapsedEvent])
     }
 
     const scheduleEvent = (newElapsedEvent) => {
