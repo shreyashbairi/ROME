@@ -594,12 +594,12 @@ app.delete("/teamtaskdelete", async(req,res) => {
     });
 })
 
-app.delete("/personaltaskdelete/:title", async(req,res) => {
+app.delete("/personaltaskdelete/:title/:user", async(req,res) => {
     
 
     // console.log(title);
 
-    Task.deleteOne({title:req.params.title}, function(err) {
+    Task.deleteOne({title:req.params.title, username: req.params.user}, function(err) {
     });
 })
 

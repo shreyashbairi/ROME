@@ -60,7 +60,7 @@ function TodoList(props) {
         // setTodos(removeArray);
         // console.log(task.title);
         try {
-            await axios.delete(`/personaltaskdelete/${task.title}`, {});
+            await axios.delete(`/personaltaskdelete/${task.title}/${localStorage.getItem('userId')}`, {});
             alert("Task deleted")
         } catch (e) {
             alert("Team Tasks didn't delete properly")
