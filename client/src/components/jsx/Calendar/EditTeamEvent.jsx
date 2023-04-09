@@ -7,7 +7,7 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
-const EditEvent = (props) => {
+const EditTeamEvent = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
@@ -30,12 +30,12 @@ const EditEvent = (props) => {
         };
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
         let exists = false;
-        let team = false;
+        let team = true;
         let eventIndex = -1;
         for(let i = 0; i < props.events.length; i++) {
-            if (props.events[i].teamName !== 'Personal') {
-                team = true;
-            }else if (props.events[i].title === newElapsedEvent.title) {
+            if (props.events[i].teamName === 'Personal') {
+                team = false;
+            } else if (props.events[i].title === newElapsedEvent.title) {
                 exists = true;
                 newElapsedEvent.color = props.events[i].color;
                 newElapsedEvent.teamName = props.events[i].color;
@@ -44,9 +44,7 @@ const EditEvent = (props) => {
                 break;
             }
         }
-        if (team) {
-            alert("You can not edit a team event in your personal calendar.")
-        } else if (!exists) {
+        if (!exists) {
             alert("Event Title Does Not Exist")
         } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
@@ -63,7 +61,7 @@ const EditEvent = (props) => {
             const teamID = props.events[eventIndex].teamID;
             const color = props.events[eventIndex].color;
             try {
-                await axios.post('/eventedit', {
+                await axios.post('/teameventedit', {
                     newDate, 
                     newStartTime, 
                     newEndTime, 
@@ -84,7 +82,7 @@ const EditEvent = (props) => {
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
-        <h2>Edit Event</h2>
+        <h2>Edit Team Event</h2>
         <form autoComplete="off" onSubmit={handleEventEdit}>
         <div class="row mt-3">
             <div class="col-sm-3">
@@ -169,4 +167,4 @@ const EditEvent = (props) => {
 }
 
 
-export default EditEvent
+export default EditTeamEvent

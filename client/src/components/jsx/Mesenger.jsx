@@ -69,7 +69,6 @@ function Messenger (){
     const inbox = talkSession.createInbox();
     inbox.select(newConvo);
     inbox.mount(chatboxEl.current);
-    alert(otherUser);
   }
 
   const handleNewChat = () => {
