@@ -9,7 +9,8 @@ const TodoSchema = new Schema({
   HighPriority: Boolean,
   MediumPriority: Boolean,
   LowPriority: Boolean,
-  repeating: Boolean
+  repeating: Boolean,
+  reminder: Boolean
 });
 
 const Task = mongoose.model('Task', TodoSchema);

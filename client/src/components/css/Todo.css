@@ -25,13 +25,9 @@
 
 .Description {
     padding-left: .5cm;
-    color: rgb(78, 70, 70);
 }
 
-.New_Task {
-    border: solid;
-    width: 25vw;
-}
+
 
 .task-add-button {
     align-items: left;

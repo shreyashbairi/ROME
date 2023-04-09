@@ -18,9 +18,13 @@ export function TodoForm(props) {
         low: true
     })
     const { user } = useContext(UserContext);
+    const [reminder, setReminder] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        if (title !== "") {
+            if ((reminder && Date.parse(input.date)) || !reminder) {
 
         const newTask = {
             id: Math.floor(Math.random()*10000),
@@ -31,7 +35,8 @@ export function TodoForm(props) {
             repeating: repeating,
             highpriority: priority.high,
             mediumpriority: priority.medium,
-            lowpriority: priority.low
+            lowpriority: priority.low,
+            reminder: reminder
         }
 
         try {
@@ -61,6 +66,13 @@ export function TodoForm(props) {
             date:""
         })
         setRepeating(false);
+        setReminder(false);
+        setPriority({high: false, medium: false, low: true})
+    }else {
+        alert("To receive a reminder, you must set a deadline");
+    }} else {
+        alert("Please add a title to make a new task")
+    }
     };
     
 
@@ -84,6 +96,10 @@ export function TodoForm(props) {
         setInputs(newTasks)
     }
 
+    const reminderClicked = (e) => {
+        setReminder(!reminder);
+    }
+
 
     return (props.trigger) ? (
             <form 
@@ -104,6 +120,7 @@ export function TodoForm(props) {
                             name="title"
 
                         />
+                        <br/>
                         <textarea
                             placeholder={description}
                             value={description}
@@ -111,7 +128,9 @@ export function TodoForm(props) {
                             id="description"
                             name="description"
                         />
+                        <br/>
                         <input name="date" onChange={changeDate} id="date" type="date" placeholder={input.date}></input>
+                        <br/>
                         <button className='todo-button'>Add</button>
                         
                     </>
@@ -128,6 +147,7 @@ export function TodoForm(props) {
                         name="title"
 
                     />
+                    <br/>
                     <textarea
                         placeholder='Description'
                         value={description}
@@ -135,6 +155,7 @@ export function TodoForm(props) {
                         id="description"
                         name="description"
                     />
+                    <br/>
                     <input name="date" onChange={changeDate} id="date" type="date"></input>
                     <br></br>
                 Repeating?
@@ -147,7 +168,6 @@ export function TodoForm(props) {
                         checked={repeating}
                     />Yes
                 </label>
-                     
                 <label>
                     <input
                         type={'radio'}
@@ -181,6 +201,12 @@ export function TodoForm(props) {
                         onClick={()=>setPriority({high: false, medium: false, low: true})}
                     />Low
                 </label>
+                    <br/>
+                Check to receive reminder: <input 
+                    type="checkbox" 
+                    onClick={()=>setReminder(!reminder)}
+                    checked={reminder}
+                    ></input>
                 
                 <br></br>
                     <button className='todo-button'>Add</button>
