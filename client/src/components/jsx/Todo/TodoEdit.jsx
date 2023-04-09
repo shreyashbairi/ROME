@@ -9,8 +9,8 @@ import 'reactjs-popup/dist/index.css';
 function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
     const [popupOpened, setPopupOpened] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
-    const [taskDescription, setTaskDescription] = useState("");
-    const [taskDate, setTaskDate] = useState(todo.date);
+    const [taskDescription, setTaskDescription] = useState(todo.description);
+    const [taskDate, setTaskDate] = useState((todo.date) ? todo.date : "");
     const [priority, setPriority] = useState({
         HighPriority: todo.HighPriority,
         MediumPriority: todo.MediumPriority,
