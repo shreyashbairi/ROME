@@ -16,8 +16,6 @@ export function TeamTodoForm(props) {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        console.log(localStorage.getItem('team'))
-        console.log("should have printed")
         const team = localStorage.getItem('team');
 
         const newTask = {
@@ -48,7 +46,6 @@ export function TeamTodoForm(props) {
             date: input.date
         });
 
-        console.log(props)
 
         setTitle("");
         setDescription("");
@@ -64,7 +61,6 @@ export function TeamTodoForm(props) {
         const newTasks = {...input}
         newTasks[e.target.id]=e.target.value
         setInputs(newTasks)
-        console.log(input)
     }
 
     const descriptionChange = (e) => {
@@ -72,14 +68,12 @@ export function TeamTodoForm(props) {
         const newTasks = {...input}
         newTasks[e.target.id]=e.target.value
         setInputs(newTasks)
-        console.log(input)
     }
 
     const changeDate = (e) => {
         const newTasks = {...input}
         newTasks[e.target.id]=e.target.value
         setInputs(newTasks)
-        console.log(input)
     }
 
 

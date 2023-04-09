@@ -37,7 +37,6 @@ export default function TeamCalendar (props) {
         // const username = "will2"
         axios.get(`/fullteamevents/${teamname}`)
         .then(res => {
-            console.log(res.data)
             const eventsGrabed = res.data;
             // console.log(eventsGrabed.length)
             const elapsedEvent = [];
@@ -105,12 +104,10 @@ export default function TeamCalendar (props) {
       }, [] )
 
     const grabTeams = () => {
-        console.log("ATTEMPT MADE");
         const username = user.userUserName;
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            console.log(teamsGrabed);
             setTeams(teamsGrabed);
         });
     }
@@ -198,8 +195,6 @@ export default function TeamCalendar (props) {
                     username,
                     tempViewMode
                 })
-                console.log(username);
-                console.log(tempViewMode);
                 // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
@@ -214,8 +209,6 @@ export default function TeamCalendar (props) {
                     username,
                     tempViewMode
                 })
-                console.log(username);
-                console.log(tempViewMode);
                 // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
@@ -231,8 +224,6 @@ export default function TeamCalendar (props) {
 
     const nextWeek = () => {
         setCurrentDay(new Date(currentDay.setDate(currentDay.getDate() + 7)));
-        console.log("Event0");
-        console.log(events[0].date);
     }
     
     const previousWeek = () => {

@@ -40,7 +40,6 @@ function AuthRoutes() {
   if(user !== null){
     loggedInUser = user.userUserName; 
   }
-  console.log("logged in user is:" + loggedInUser);
   
   const navigate = useNavigate();
   // useEffect(() => {

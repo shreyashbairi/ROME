@@ -47,16 +47,13 @@ function JoinTeamPop(props) {
         const newdata = {...data}
         newdata[e.target.id]=e.target.value
         setData(newdata)
-        console.log(newdata)
     }
 
     const handleDescription = (e) => {
         setDescription(e.target.value);
-        console.log(description);
         const newdata = {...data}
         newdata[e.target.id]=e.target.value
         setData(newdata)
-        console.log(newdata)
     }
 
     const openTeamPage = e => {

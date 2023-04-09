@@ -26,7 +26,8 @@ function TodoList(props) {
 
     useEffect( () => {
         //console.clear();
-        const username = user.userUsername;
+        // const username = user.userUsername;
+        const username = localStorage.getItem('userId');
         axios.get(`/tasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;

@@ -20,12 +20,10 @@ function TodoForm(props) {
 
     const inputChange = (e) => {
         setText(e.target.value)
-        console.log(text)
     }
 
     const descriptionChange = (e) => {
         setDescription(e.target.value)
-        console.log(description)
     }
 
     return (props.trigger) ? (

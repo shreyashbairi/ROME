@@ -437,7 +437,6 @@ app.get("/tasks/:username", async (req,res) => {
 app.get("/teamTasks/:team", async (req,res) => {
     try{
         const tasks = await TeamTask.find({ team: req.params.team })
-        console.log(tasks);
         res.json(tasks);
     } catch (e){
         // console.log(e);
@@ -461,10 +460,7 @@ app.post("/saveViewMode", async (req,res) => {
 
 app.get("/getUser/:username", async (req,res) => {
     try{
-        console.log("GETUSER");
-        console.log(req.params.username);
         const user = await User.findOne({ userUserName: req.params.username })
-        console.log(user);
         res.json(user);
     } catch (e){
         // console.log(e);
@@ -631,7 +627,6 @@ app.post('/acceptmember', async (req, res) => {
     // console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
-        console.log(user);
         const newUserTeamList = [...user.userTeamList, teamname]
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},

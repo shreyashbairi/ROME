@@ -57,7 +57,6 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
     }
 
     const displayIcon = (todo) => {
-        console.log(todo)
         if (!todo.title || /^\s*$/.test(todo.title)) {
             return;
         }
@@ -69,8 +68,6 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
     }
 
     function displayDetails(date, description) {
-        console.log(date)
-        console.log(description)
         if(!description || /^\s*$/.test(description)) {
             description="no discription"
         }

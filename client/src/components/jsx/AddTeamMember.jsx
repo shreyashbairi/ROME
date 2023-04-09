@@ -27,7 +27,6 @@ function AddTeamMember(props) {
 
         axios.get(`/teams/${inviter}`).then(res => {
             teams = res.data;
-            console.log("These teams have been grabbed from" + inviter + ". The teams are" + JSON.stringify(teams));
 
         })
         //console.log("The teamID is " + teamID);

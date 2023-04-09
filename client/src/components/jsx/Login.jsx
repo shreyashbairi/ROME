@@ -16,6 +16,7 @@ function Login() {
     try {
       const { data } = await axios.post('/login', { userUserName, userPassword });
       setUser(data);
+      localStorage.setItem('userId',userUserName);
       if (data != null) {
         alert(`login successful. Hi ${userUserName}!`);
         //TODO: set the user context

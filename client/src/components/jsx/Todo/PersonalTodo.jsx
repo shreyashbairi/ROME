@@ -19,7 +19,6 @@ function PersonalTodo() {
     }, [])
 
     function changeType() {
-        console.log(type)
         if (type === "Personal") {
             setType("Team Tasks");
         } else {

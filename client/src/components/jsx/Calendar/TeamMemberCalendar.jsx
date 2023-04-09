@@ -35,8 +35,6 @@ export default function TeamMemberCalendar (props) {
         .then(res => {
             // console.log(res.data)
             const eventsGrabed = res.data;
-            console.log("member events grabed");
-            console.log(eventsGrabed);
             // console.log(eventsGrabed.length)
             const elapsedEvent = [];
             for (let i = 0; i < eventsGrabed.length; i++) {
@@ -52,7 +50,6 @@ export default function TeamMemberCalendar (props) {
                     color: eventsGrabed[i]. color,
                     type: eventsGrabed[i].type
                 };
-                console.log(newElapsedEvent);
                 if (newElapsedEvent.endTime === 1) {
                     newElapsedEvent.endTime = 25;
                 }
@@ -74,8 +71,6 @@ export default function TeamMemberCalendar (props) {
                 }
             }
             setEvents([...events, ...elapsedEvent])
-            console.log("member events");
-            console.log(events);
         });
         // axios.get(`/getViewMode/${username}`)
         // .then(res => {
@@ -104,12 +99,10 @@ export default function TeamMemberCalendar (props) {
       }, [] )
 
     const grabTeams = () => {
-        console.log("ATTEMPT MADE");
         const username = user.userUserName;
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            console.log(teamsGrabed);
             setTeams(teamsGrabed);
         });
     }
@@ -197,8 +190,6 @@ export default function TeamMemberCalendar (props) {
                     username,
                     tempViewMode
                 })
-                console.log(username);
-                console.log(tempViewMode);
                 // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
@@ -213,8 +204,6 @@ export default function TeamMemberCalendar (props) {
                     username,
                     tempViewMode
                 })
-                console.log(username);
-                console.log(tempViewMode);
                 // alert("Viewmode Saved");
             } catch (e) {
                 alert('ViewMode Failed to Save');
@@ -230,8 +219,6 @@ export default function TeamMemberCalendar (props) {
 
     const nextWeek = () => {
         setCurrentDay(new Date(currentDay.setDate(currentDay.getDate() + 7)));
-        console.log("Event0");
-        console.log(events[0].date);
     }
     
     const previousWeek = () => {

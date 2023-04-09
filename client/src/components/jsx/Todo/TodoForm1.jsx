@@ -52,7 +52,6 @@ export function TodoForm(props) {
 
 
 
-        console.log(props)
 
         setTitle("");
         setDescription("");
@@ -70,7 +69,6 @@ export function TodoForm(props) {
         const newTasks = {...input}
         newTasks[e.target.id]=e.target.value
         setInputs(newTasks)
-        console.log(input)
     }
 
     const descriptionChange = (e) => {
@@ -78,14 +76,12 @@ export function TodoForm(props) {
         const newTasks = {...input}
         newTasks[e.target.id]=e.target.value
         setInputs(newTasks)
-        console.log(input)
     }
 
     const changeDate = (e) => {
         const newTasks = {...input}
         newTasks[e.target.id]=e.target.value
         setInputs(newTasks)
-        console.log(input)
     }
 
 

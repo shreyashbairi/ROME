@@ -27,8 +27,6 @@ function TeamEditTask({task}) {
         axios.get(`members/${team}`)
         .then(res => {
             const memberList = res.data;
-            console.log("members")
-            console.log(memberList)
             setTeamMembers(memberList);
         })
     },[])
@@ -40,8 +38,6 @@ function TeamEditTask({task}) {
     };
 
     async function closeform(){
-
-        console.log("in close form")
 
         const toPost = {
             task: task,

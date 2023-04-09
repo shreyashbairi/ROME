@@ -20,7 +20,6 @@ function MainPage (){
     const enterTeam = (team, index) => {
         //  console.log(team, index)
          //route to team page localhost:3000/team/{index}/
-         console.log(team.team,index)
     }
 
   return (

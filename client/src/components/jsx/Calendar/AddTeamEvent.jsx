@@ -34,8 +34,6 @@ const AddTeamEvent = (props) => {
             // props.setTeams(teamsGrabed);
         });
         // console.log(localTeams);
-        console.log("props events");
-        console.log(props.events);
     }, []);
 
     async function handleEventSubmit (e) {

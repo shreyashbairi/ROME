@@ -28,7 +28,6 @@ function TeamTodo({todos,removeTodo,editTask, started, setStarted,setTodos}) {
     }
 
     const displayIcon = (todo) => {
-        console.log(todo)
         if (!todo.title || /^\s*$/.test(todo.title)) {
             return;
         }
@@ -40,8 +39,6 @@ function TeamTodo({todos,removeTodo,editTask, started, setStarted,setTodos}) {
     }
 
     function displayDetails(date, description) {
-        console.log(date)
-        console.log(description)
         if(!description || /^\s*$/.test(description)) {
             description="no discription"
         }

@@ -28,8 +28,6 @@ function TeamAddNewWorking(props, {task}) {
         axios.get(`members/${team}`)
         .then(res => {
             const memberList = res.data;
-            console.log("members")
-            console.log(memberList)
             setTeamMembers(memberList);
         })
         } catch(e) {
@@ -38,10 +36,6 @@ function TeamAddNewWorking(props, {task}) {
     },[])
 
     async function newWorker(memberUserName) {
-        console.log("entered");
-        console.log(memberUserName);
-        console.log(teamMembers);
-        console.log(task)
 
         }
 

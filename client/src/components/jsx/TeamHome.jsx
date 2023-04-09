@@ -37,7 +37,6 @@ function TeamHome() {
         .then(res => {
             const manager = res.data;
             const managername = manager.userUserName;
-            console.log(managername);
             if (managername === username) {
                 setManagerBool(true);
             } else {
@@ -50,9 +49,6 @@ function TeamHome() {
             const mem = res.data;
             //console.log(res.data);
             setMembers(mem);
-            console.log("HERE");
-            
-            console.log(mem);
         })
         axios.get(`/color/${username}`)
         .then (res => {
@@ -104,7 +100,6 @@ function TeamHome() {
     }
     
     const changePersonalCalendar = (fullName) => {
-        console.log("START HERE");
         setBodyView(3);
         setBodyViewName(`${fullName}'s Calendar`);
     }

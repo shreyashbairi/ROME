@@ -83,7 +83,6 @@ export default function CalendarFunc (props) {
         axios.get(`/getUser/${username}`)
         .then(res => {
             let userProfile = res.data;
-            console.log(userProfile);
             // console.log(userProfile.userViewMode);
             let userViewMode = userProfile.userViewMode;
             // console.log(userViewMode);
@@ -101,18 +100,15 @@ export default function CalendarFunc (props) {
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            console.log(teamsGrabed);
             setTeams(teamsGrabed);
         });
       }, [] )
 
     const grabTeams = () => {
-        console.log("ATTEMPT MADE");
         const username = user.userUserName;
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
-            console.log(teamsGrabed);
             setTeams(teamsGrabed);
         });
     }
@@ -233,8 +229,6 @@ export default function CalendarFunc (props) {
 
     const nextWeek = () => {
         setCurrentDay(new Date(currentDay.setDate(currentDay.getDate() + 7)));
-        console.log("Event0");
-        console.log(events[0].date);
     }
     
     const previousWeek = () => {

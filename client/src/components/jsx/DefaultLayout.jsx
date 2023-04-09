@@ -34,7 +34,6 @@ function DefaultLayout () {
         navigate('/login');
     }
     //const username = user.userUserName;
-    console.log("username in deflayout is: " + username);
     const [notif, setNotif] = useState([
         {
             fromuser: String,
@@ -61,7 +60,6 @@ function DefaultLayout () {
     }])
 
     useEffect( () => {
-        console.log("BYE")
         
         axios.get(`/teams/${username}`)
         .then (res => {
@@ -77,8 +75,6 @@ function DefaultLayout () {
             setNotif(res.data);
         });
 
-        console.log(notif);
-        console.log()
     }, [] );
 
     const newTeamButton = () => {
@@ -112,7 +108,6 @@ function DefaultLayout () {
 
 
     const handleInvite = async (e) => {
-        console.log(displayNotif.type);
         let username; 
         if (displayNotif.type === "Request") {
             username = displayNotif.fromuser;
@@ -146,7 +141,6 @@ function DefaultLayout () {
       };
 
     function changeTeam(team) {
-        console.log("Changing team")
         localStorage.setItem('team', team.team)
     };
 
