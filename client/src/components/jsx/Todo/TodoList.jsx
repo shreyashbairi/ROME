@@ -16,7 +16,7 @@ function TodoList(props) {
     const [todos, setTodos] = useState([{
         title:String,
         description:String,
-        date:Object
+        date:Date
     }])
     const [filters, setFilters] = useState({
         seven: false,
@@ -27,7 +27,9 @@ function TodoList(props) {
     useEffect( () => {
         //console.clear();
         // const username = user.userUsername;
-        const username = localStorage.getItem('userId');
+        // console.log(user.userUserName);
+        // const username = localStorage.getItem('userId');
+        const username=user.userUserName;
         axios.get(`/tasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;

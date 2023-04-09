@@ -10,12 +10,13 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
     const [popupOpened, setPopupOpened] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
-    const [taskDate, setTaskDate] = useState("");
+    const [taskDate, setTaskDate] = useState(todo.date);
     const [priority, setPriority] = useState({
         HighPriority: todo.HighPriority,
         MediumPriority: todo.MediumPriority,
         LowPriority: todo.LowPriority
     })
+    const [reminder, setReminder] = useState(todo.reminder);
     const { user } = useContext(UserContext);
 
     async function handleSubmit (e) {
@@ -32,7 +33,8 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
                     username,
                     HighPriority: priority.HighPriority,
                     MediumPriority: priority.MediumPriority,
-                    LowPriority: priority.LowPriority
+                    LowPriority: priority.LowPriority,
+                    reminder: reminder
                 });
                 alert('Task Saved');
             } catch (e) {
@@ -84,7 +86,7 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
                 type="date" 
                 class="form-control" 
                 id="eventdate"  
-                value={taskDate}
+                value={taskDate.split("T")[0]}
                 onChange={e => setTaskDate(e.target.value)} required />
             </div>
         </div>
@@ -116,6 +118,17 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
                     onClick={()=>setPriority({HighPriority:false,MediumPriority:false,LowPriority:true})}
                 />Low
             </label>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-sm-3">
+               <strong>Set a reminder</strong>
+            </div>
+            <input
+                type="checkbox"
+                checked={reminder}
+                onClick={()=>setReminder(!reminder)}
+            ></input>
         </div>
 
 

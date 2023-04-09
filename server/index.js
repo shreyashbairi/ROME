@@ -364,7 +364,7 @@ app.post('/eventedit', async (req, res) =>{
 });
 
 app.post('/taskedit', async (req, res) =>{
-    const {taskTitle, taskDescription, taskDate, username,HighPriority,MediumPriority,LowPriority} = req.body;
+    const {taskTitle, taskDescription, taskDate, username,HighPriority,MediumPriority,LowPriority, reminder} = req.body;
     // console.log(req.body)
     try {
         const tasksDoc = await Task.findOneAndUpdate(
@@ -374,7 +374,8 @@ app.post('/taskedit', async (req, res) =>{
             date: taskDate,
             HighPriority: HighPriority,
             MediumPriority: MediumPriority,
-            LowPriority: LowPriority
+            LowPriority: LowPriority,
+            reminder: reminder
             });
        // console.log(tasksDoc);
         res.json(tasksDoc);
@@ -461,10 +462,8 @@ app.post("/saveViewMode", async (req,res) => {
 
 app.get("/getUser/:username", async (req,res) => {
     try{
-        console.log("GETUSER");
-        console.log(req.params.username);
         const user = await User.findOne({ userUserName: req.params.username })
-        console.log(user);
+      
         res.json(user);
     } catch (e){
         // console.log(e);
@@ -582,7 +581,6 @@ app.post('/assignMemberToTask',async (req,res) => {
         );
 
     } catch(e) {
-        console.error(e);
         res.status(500).json()
     }
 });
@@ -631,7 +629,7 @@ app.post('/acceptmember', async (req, res) => {
     // console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
-        console.log(user);
+        
         const newUserTeamList = [...user.userTeamList, teamname]
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},

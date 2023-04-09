@@ -124,7 +124,15 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                         return(
                                             <>
                                                 <button>
-                                                    {todo.title}<br></br>{todo.date}
+                                                {todo.title}<br></br>
+                                                
+                                                {(()=>{
+                                                    if (Date.parse(todo.date)) {
+                                                        return (<div>{todo.date.split("T")[0]}</div>)
+                                                    
+                                                    }
+                                                })()}
+
                                                     {()=>setButtonPrinted(true)}
                                                     
                                                 </button>
@@ -162,7 +170,15 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                     return(
                                     <>
                                         <button className={!seven && pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
-                                            {todo.title}<br></br>{todo.date}
+                                        {todo.title}<br></br>
+                                        
+                                        {(()=>{
+                                                if (Date.parse(todo.date)) {
+                                                    return (<div>{todo.date.split("T")[0]}</div>)
+                                                
+                                                }
+                                        })()}
+
                                             {()=>setButtonPrinted(true)}
                                         </button>
                                         <div>
@@ -196,7 +212,16 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                     return(
                                     <>
                                         <button className={!seven && !pastDue && (todo.date != null && todo.date < new Date().toISOString().substring(0,10)) ? 'red' : null}>
-                                            {todo.title}<br></br>{todo.date}
+                                            {todo.title}<br></br>
+                                            
+                                            {(()=>{
+                                                if (Date.parse(todo.date)) {
+                                                    return (<div>{todo.date.split("T")[0]}</div>)
+                                                
+                                                }
+                                            })()}
+
+
                                             {()=>setButtonPrinted(true)}
                                         </button>
                                         <div>
