@@ -56,8 +56,15 @@ function TodoList(props) {
 
     async function removeTodo(task) {
         // const toDel = [...todos].filter(todo=>todo.id === task.id);
-        const removeArray = [...todos].filter(todo => todo.id !== task.id)
-        setTodos(removeArray)
+        // const removeArray = [...todos].filter(todo => todo.id !== task.id)
+        // setTodos(removeArray);
+        // console.log(task.title);
+        try {
+            await axios.delete(`/personaltaskdelete/${task.title}`, {});
+            alert("Task deleted")
+        } catch (e) {
+            alert("Team Tasks didn't delete properly")
+        }
     }
 
     const editTask = (id, newValue) => {

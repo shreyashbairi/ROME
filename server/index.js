@@ -460,7 +460,10 @@ app.post("/saveViewMode", async (req,res) => {
 
 app.get("/getUser/:username", async (req,res) => {
     try{
+        console.log("GETUSER");
+        console.log(req.params.username);
         const user = await User.findOne({ userUserName: req.params.username })
+        console.log(user);
         res.json(user);
     } catch (e){
         // console.log(e);
@@ -591,12 +594,12 @@ app.delete("/teamtaskdelete", async(req,res) => {
     });
 })
 
-app.delete("/personaltaskdelete", async(req,res) => {
-    const {title} = req.body;
+app.delete("/personaltaskdelete/:title", async(req,res) => {
+    
 
     // console.log(title);
 
-    Task.deleteOne({title:title}, function(err) {
+    Task.deleteOne({title:req.params.title}, function(err) {
     });
 })
 
@@ -627,6 +630,7 @@ app.post('/acceptmember', async (req, res) => {
     // console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
+        console.log(user);
         const newUserTeamList = [...user.userTeamList, teamname]
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
