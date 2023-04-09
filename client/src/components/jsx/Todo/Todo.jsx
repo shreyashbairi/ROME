@@ -304,6 +304,21 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                     })()}
                                     </div>
                                 </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-3">
+                                    <strong>Reminder Set</strong>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                    {(()=>{
+                                        if (todo.reminder) {
+                                            return(<div>True</div>)
+                                        }
+                                        else {
+                                            return(<div>False</div>)
+                                        }
+                                    })()}
+                                    </div>
+                                </div>
    
                             </div>
                                 
