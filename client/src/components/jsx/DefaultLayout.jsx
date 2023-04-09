@@ -8,7 +8,7 @@ import Popup from "reactjs-popup";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
-import  { AiFillBell,AiFillCheckCircle,AiFillCloseCircle } from 'react-icons/ai'
+import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle } from 'react-icons/ai'
 import Cookies from 'js-cookie';
 import InviteResponse from "./InviteResponse";
 
@@ -26,6 +26,7 @@ function DefaultLayout () {
     const [inviterName, setInviterName] = useState('');
     const [response, setResponse] = useState(0);
     const [responseTeam, setResponsTeam] = useState("");
+    const [isnotif, setIsnotif] = useState(false);
     let username = "";
     try{
         username = user.userUserName;
@@ -73,7 +74,15 @@ function DefaultLayout () {
         axios.get(`/notifications/${username}`)
         .then (res => {
             setNotif(res.data);
+            if(res.data.length == 0){
+                setIsnotif(false);
+            }else{
+                setIsnotif(true);
+            }
         });
+
+
+
 
     }, [] );
 
@@ -161,11 +170,11 @@ function DefaultLayout () {
                             <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
                     </a>
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <AiFillBell/> </button>  }  > 
+                    {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  }  > 
                         {notif.map((notiff, index)=>{
                                     return (       
                                         <div key={index}> 
-                                            <div>{notiff.type} from {notiff.fromuser}
+                                            <div>{notiff.type}  {notiff.fromuser}
                                                 <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite()}>
                                                 <AiFillCheckCircle/> </button>  
                                                 <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline()}>

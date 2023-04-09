@@ -736,7 +736,7 @@ app.post('/addteammember', async (req, res) => {
             {
                 fromuser: inviter,
                 touser: invitedUser,
-                type: "Invite",
+                type: "Invite from ",
                 description: descriptionSent,
                 teamName: inviterTeamName,
             });
@@ -761,7 +761,7 @@ app.post('/requestteam', async (req, res) => {
             fromuser: fromuser,
             touser: manager,
             description: "Request",
-            type: "Request",
+            type: "Request from ",
             teamName: teamName
         })
         res.json(notification);
