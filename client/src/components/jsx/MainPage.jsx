@@ -1,9 +1,9 @@
 import React from "react";
-import Todo from "./Todo/Todo";
+import Todo from "./Todo/PersonalTodo/Todo";
 import '../css/MainPage.css'
 import Calendar from "./Calendar/Calendar";
 import AddEvent from "./Calendar/AddEvent";
-import TodoList from "./Todo/TodoList";
+import TodoList from "./Todo/PersonalTodo/TodoList";
 import CalendarTest from "./Calendar/CalendarTest";
 import CalendarFunc from "./Calendar/CalendarFunc"
 // import  {useNavigate} from "react-router-dom";
@@ -11,7 +11,7 @@ import { useState } from "react";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import {Link} from 'react-router-dom'
-import PersonalTodo from "./Todo/PersonalTodo";
+import PersonalTodo from "./Todo/PersonalTodo.jsx";
 
 
 function MainPage (){

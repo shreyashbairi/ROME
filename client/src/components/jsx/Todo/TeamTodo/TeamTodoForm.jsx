@@ -1,6 +1,6 @@
-import '../../css/Todo.css';
+import '../../../css/Todo.css';
 import React, { useState, useContext } from 'react';
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 import axios from 'axios';
 
 export function TeamTodoForm(props) {

@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 //components
 import Login from './components/jsx/Login';
-import TodoList from './components/jsx/Todo/TodoList';
+import TodoList from './components/jsx/Todo/PersonalTodo/TodoList';
 import ResetPassword from './components/jsx/ResetPassword';
 import ForgotPassword from './components/jsx/ForgotPassword';
 import Layout from './components/jsx/Layout';

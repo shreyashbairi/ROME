@@ -3,8 +3,8 @@ import TodoForm from './TeamTodoForm'
 import TeamTodo from './TeamTodo'
 import {AiFillPlusCircle} from 'react-icons/ai'
 import TeamCompleteList from './TeamCompleteList';
-import TeamProgressList from './TeamProgressList';
-import "../../css/TeamHome.css"
+import TeamProgressList from '../TeamTodo/TeamProgressList';
+import "../../../css/TeamHome.css"
 import axios from 'axios';
 import {BsFillTrashFill} from 'react-icons/bs'
 

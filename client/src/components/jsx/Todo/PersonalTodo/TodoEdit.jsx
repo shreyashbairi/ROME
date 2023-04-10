@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
@@ -25,20 +25,25 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
         const username = user.userUserName;
             setTrigger();
             const taskTitle=title;
-            try {
-                await axios.post('/taskedit', {
-                    taskTitle,
-                    taskDescription,
-                    taskDate,
-                    username,
-                    HighPriority: priority.HighPriority,
-                    MediumPriority: priority.MediumPriority,
-                    LowPriority: priority.LowPriority,
-                    reminder: reminder
-                });
-                alert('Task Saved');
-            } catch (e) {
-                alert('Task Failed to Save');
+            console.log(taskDate)
+            if (reminder && taskDate) {
+                try {
+                    await axios.post('/taskedit', {
+                        taskTitle,
+                        taskDescription,
+                        taskDate,
+                        username,
+                        HighPriority: priority.HighPriority,
+                        MediumPriority: priority.MediumPriority,
+                        LowPriority: priority.LowPriority,
+                        reminder: reminder
+                    });
+                    alert('Task Saved');
+                } catch (e) {
+                    alert('Task Failed to Save');
+                }
+            } else {
+                alert("To set a reminder, you must assign a deadline to the task");
             }
     } 
 
@@ -74,7 +79,7 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
                 id="eventdescription"  
                 placeholder="Description" 
                 value={taskDescription} 
-                onChange={e => setTaskDescription(e.target.value)} required />
+                onChange={e => setTaskDescription(e.target.value)} />
             </div>
         </div>
         <div class="row mt-3">
@@ -87,7 +92,7 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
                 class="form-control" 
                 id="eventdate"  
                 value={taskDate.split("T")[0]}
-                onChange={e => setTaskDate(e.target.value)} required />
+                onChange={e => setTaskDate(e.target.value)} />
             </div>
         </div>
         <div class="row mt-3">

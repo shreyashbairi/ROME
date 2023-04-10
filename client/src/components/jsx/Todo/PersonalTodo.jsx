@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
-import TodoList from './TodoList';
-import PersonalTeamTodo from './PersonalTeamTodo';
+import TodoList from './PersonalTodo/TodoList';
+import PersonalTeamTodo from './PersonalTodo/PersonalTeamTodo';
 import axios from 'axios';
 import {UserContext} from '../UserContext';
 

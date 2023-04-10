@@ -1,6 +1,6 @@
-import '../../css/Todo.css';
+import '../../../css/Todo.css';
 import React, { useState, useContext } from 'react';
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 import axios from 'axios';
 
 export function TodoForm(props) {
@@ -157,25 +157,6 @@ export function TodoForm(props) {
                     />
                     <br/>
                     <input name="date" onChange={changeDate} id="date" type="date"></input>
-                    <br></br>
-                Repeating?
-                <br></br>
-                <label>
-                    <input
-                        type={'radio'}
-                        value={false}
-                        onClick={()=>setRepeating(true)}
-                        checked={repeating}
-                    />Yes
-                </label>
-                <label>
-                    <input
-                        type={'radio'}
-                        value={true}
-                        checked={!repeating}
-                        onClick={()=>setRepeating(false)}
-                    />No
-                </label>
                 <br></br>
                 Priority Rank
                 <br></br>

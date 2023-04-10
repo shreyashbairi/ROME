@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {UserContext} from '../UserContext'
+import {UserContext} from '../../UserContext'
 import axios from 'axios'
 
 function PersonalTeamTodo() {
@@ -30,7 +30,13 @@ function PersonalTeamTodo() {
             </h1>
             
             {tasks.map((task)=> {
-                return (<div>{task.title}</div>)
+                return (
+                    <div>
+                        <input type="checkbox"></input>
+                        {task.title}
+
+                    </div>
+                )
             })}
         </div>
     )

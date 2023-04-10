@@ -1,5 +1,5 @@
 import React from "react";
-import "../../css/TeamPop.css";
+import "../../../css/TeamPop.css";
 import { useState,useEffect } from "react";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';

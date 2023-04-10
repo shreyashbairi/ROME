@@ -5,7 +5,7 @@ import TodoForm from './TodoForm1'
 import {BsThreeDots} from 'react-icons/bs'
 import Popup from 'reactjs-popup'
 import TodoEdit from './TodoEdit'
-import '../../css/Todo.css';
+import '../../../css/Todo.css';
 
 function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriority,setTodos}) {
     const [show, setShow] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext} from "react"
 import {useNavigate} from "react-router-dom";
 
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 import  { AiFillCloseCircle } from 'react-icons/ai'
 import TeamAddNewWorking from './TeamAddNewWorking'
 import Popup from "reactjs-popup";
