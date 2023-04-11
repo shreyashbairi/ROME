@@ -615,6 +615,14 @@ app.delete("/teamtaskdelete", async(req,res) => {
     });
 })
 
+app.delete("/deletenotification/:fromuser/:touser/:type/:description/:teamname", async(req,res) => {
+
+    console.log("entered")
+    // teamName:nteamname, type:ntype, description:ndescription fromuser:nfromuser, 
+    Notification.deleteOne({touser:ntouser }, function(err) {
+    });
+})
+
 app.delete("/personaltaskdelete/:title/:user", async(req,res) => {
     
 

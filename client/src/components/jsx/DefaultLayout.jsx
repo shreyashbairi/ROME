@@ -44,15 +44,6 @@ function DefaultLayout () {
             teamName: String,
         }
     ]);
-    const [displayNotif, setDisplayNotif] = useState([
-        {
-            fromuser: String,
-            touser: String,
-            description: String,
-            type: String,
-            teamName: String,
-        }
-    ]);
 
     const [teams, setTeams] = useState([{
         teamID: Number,
@@ -115,20 +106,60 @@ function DefaultLayout () {
         />
     );
 
+    
 
-    const handleInvite = async (e) => {
-        let username; 
-        if (displayNotif.type === "Request") {
-            username = displayNotif.fromuser;
-        } else {
+    async function handleInvite(pro){
+        let username = pro.fromuser; 
+        let touser = pro.touser;
+        let fromuser = pro.fromuser;
+        let teamname = pro.teamName;
+        let type = pro.type;
+        let description = pro.description;
+        console.log("hi"   );
+        console.log(username);
+        
+        if (pro.type === "Request from " || pro.type === "Invite from ") {
+            username = pro.fromuser;
+            teamname = pro.teamName;
+            await axios.post('/acceptmember', {
+                username, teamname
+            })
+            
+        } else if(pro.type === "Invite from ") {
             username = user.userUserName;
         }
-        const teamname = displayNotif.teamName;
+        console.log("h/I");
+        await axios.delete(`/deletenotification/${pro.fromuser}/${pro.touser}/${pro.type}/${pro.description}/${pro.teamName}`, {});
+
+        // axios.delete(`/deletenotification/${task.title}`,{
+        //     fromuser,touser,type,description,teamname
+        // })
+        axios.get(`/notifications/${username}`)
+        .then (res => {
+            setNotif(res.data);
+            if(res.data.length == 0){
+                setIsnotif(false);
+            }else{
+                setIsnotif(true);
+            }
+        });
         // const teamname = responseTeam;
-        await axios.post('/acceptmember', {
-            username, teamname
-        })
+
       };
+
+    //   async function handleDecline(pro){
+    //     let touser = pro.touser;
+    //     let fromuser = pro.fromuser;
+    //     let teamname = pro.teamName;
+    //     let type = pro.type;
+    //     let description = pro.description;
+
+
+    //     await axios.delete('/deletenotification',{
+    //         fromuser,touser,type,description,teamname
+    //     })
+
+    //   };
 
       const handleDecline = async (e) => {
         // const teamname = notif[0].teamName;
@@ -142,6 +173,7 @@ function DefaultLayout () {
         // }
       };
 
+    
     const handlelogout = async (e) => {
         await axios.post('/logout');
         setUser(null);
@@ -152,6 +184,8 @@ function DefaultLayout () {
     function changeTeam(team) {
         localStorage.setItem('team', team.team)
     };
+
+
 
 
     return (
@@ -175,9 +209,9 @@ function DefaultLayout () {
                                     return (       
                                         <div key={index}> 
                                             <div>{notiff.type}  {notiff.fromuser}
-                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite()}>
+                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
                                                 <AiFillCheckCircle/> </button>  
-                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline()}>
+                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
                                                 <AiFillCloseCircle/>                     </button>  
                                             </div>
                                             <ColoredLine color="grey" />
