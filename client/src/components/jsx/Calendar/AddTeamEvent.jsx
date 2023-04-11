@@ -38,10 +38,23 @@ const AddTeamEvent = (props) => {
 
     async function handleEventSubmit (e) {
         e.preventDefault();
+        let validTime = true;
+        let tempStart = parseInt(eventStartTime.substring(0,2));
+        let tempEnd = parseInt(eventEndTime.substring(0,2));
+        if (tempEnd == 0) {
+            tempEnd = 24;
+        } else if (tempEnd == 1) {
+            tempEnd = 25;
+        }
+        if (tempStart == 0) {
+            validTime = false;
+        } else if (tempEnd < tempStart) {
+            validTime = false;
+        } 
         const newElapsedEvent = { //grab from user with pop up 
             date: new Date(eventDate),
-            startTime: parseInt(eventStartTime.substring(0,2)),
-            endTime: parseInt(eventEndTime.substring(0,2)),
+            startTime: tempStart,
+            endTime: tempEnd,
             title: eventTitle,
             description: eventDescription,
             teamName: props.teamName,
@@ -59,16 +72,39 @@ const AddTeamEvent = (props) => {
             // console.log(newElapsedEvent.date.getDate())
             // console.log((new Date(props.events[i].date)).getDate() === newElapsedEvent.date.getDate())
             if ((new Date(props.events[i].date)).getDate() === newElapsedEvent.date.getDate()) {
-                if (props.events[i].startTime <= newElapsedEvent.endTime ||
-                    props.events[i].endTime >= newElapsedEvent.startTime)
+                if (
+                        (
+                            (
+                                props.events[i].startTime <= newElapsedEvent.startTime &&
+                                props.events[i].endTime >= newElapsedEvent.startTime
+                            ) ||
+                            (   
+                                props.events[i].startTime <= newElapsedEvent.endTime &&
+                                props.events[i].endTime >= newElapsedEvent.endTime
+                            )
+                        ) || 
+                        ( 
+                            (
+                                props.events[i].startTime <= newElapsedEvent.endTime &&
+                                props.events[i].startTime >= newElapsedEvent.startTime
+                            ) ||
+                            (
+                                props.events[i].endTime <= newElapsedEvent.endTime &&
+                                props.events[i].endTime >= newElapsedEvent.startTime
+                            )
+                        )
+                    ) {
+                    // console.log(props.events[i])
+                    // console.log(newElapsedEvent)
                     conflicts = true;
                     if (props.events[i].type === "team") {
                         teamConflict = true;
                     }
                     break;
+                }
             }
         }
-        if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
+        if (!validTime) {
             alert("Enter Valid Times");
         } else {
             let override = false;

@@ -7,7 +7,7 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
-const EditEvent = (props) => {
+const EventDetails = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
@@ -15,26 +15,15 @@ const EditEvent = (props) => {
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
     const { user } = useContext(UserContext);
+    // alert(props.eventDetails.top)
+
 
     async function handleEventEdit (e) {
         e.preventDefault();
-        let validTime = true;
-        let tempStart = parseInt(eventStartTime.substring(0,2));
-        let tempEnd = parseInt(eventEndTime.substring(0,2));
-        if (tempEnd == 0) {
-            tempEnd = 24;
-        } else if (tempEnd == 1) {
-            tempEnd = 25;
-        }
-        if (tempStart == 0) {
-            validTime = false;
-        } else if (tempEnd < tempStart) {
-            validTime = false;
-        } 
         const newElapsedEvent = { //grab from user with pop up 
             date: new Date(eventDate),
-            startTime: tempStart,
-            endTime: tempEnd,
+            startTime: parseInt(eventStartTime.substring(0,2)),
+            endTime: parseInt(eventEndTime.substring(0,2)),
             title: eventTitle,
             description: eventDescription,
             teamName: props.event,
@@ -48,9 +37,8 @@ const EditEvent = (props) => {
         for(let i = 0; i < props.events.length; i++) {
             if (props.events[i].teamName !== 'Personal') {
                 team = true;
-            } else if (props.events[i].title === newElapsedEvent.title) {
+            }else if (props.events[i].title === newElapsedEvent.title) {
                 exists = true;
-                team = false;
                 newElapsedEvent.color = props.events[i].color;
                 newElapsedEvent.teamName = props.events[i].color;
                 newElapsedEvent.teamID = props.events[i].teamID;
@@ -62,7 +50,7 @@ const EditEvent = (props) => {
             alert("You can not edit a team event in your personal calendar.")
         } else if (!exists) {
             alert("Event Title Does Not Exist")
-        } else if (!validTime) {
+        } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
             alert("Enter Valid Times");
         } else {
             props.setTrigger();
@@ -98,20 +86,13 @@ const EditEvent = (props) => {
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
-        <h2>Edit Event</h2>
-        <form autoComplete="off" onSubmit={handleEventEdit}>
+        <h2>Event Details</h2>
         <div class="row mt-3">
             <div class="col-sm-3">
-               <strong>Existing Title</strong>
+               <strong>Title</strong>
             </div>
             <div class="col-sm-9 text-secondary">
-                <input 
-                type="event" 
-                class="form-control" 
-                id="eventtitle"  
-                placeholder="Title"
-                value={eventTitle}
-                onChange={e => setEventTitle(e.target.value)} required />
+                {props.eventDetails.title}
             </div>
         </div>
         <div class="row mt-3">
@@ -119,13 +100,7 @@ const EditEvent = (props) => {
                <strong>Description</strong>
             </div>
             <div class="col-sm-9 text-secondary">
-                <input 
-                type="description" 
-                class="form-control" 
-                id="eventdescription"  
-                placeholder="Description" 
-                value={eventDescription} 
-                onChange={e => setEventDescription(e.target.value)} required />
+                {props.eventDetails.description}
             </div>
         </div>
         <div class="row mt-3">
@@ -133,12 +108,7 @@ const EditEvent = (props) => {
                <strong>Date</strong>
             </div>
             <div class="col-sm-9 text-secondary">
-                <input 
-                type="date" 
-                class="form-control" 
-                id="eventdate"  
-                value={eventDate}
-                onChange={e => setEventDate(e.target.value)} required />
+                {props.eventDetails.date.split("T")[0]}
             </div>
         </div>
         <div class="row mt-3">
@@ -146,12 +116,8 @@ const EditEvent = (props) => {
                <strong>Start time</strong>
             </div>
             <div class="col-sm-9 text-secondary">
-                <input 
-                type="time" 
-                class="form-control" 
-                id="eventstarttime"  
-                value={eventStartTime}
-                onChange={e => setEventStartTime(e.target.value)} required />
+                {props.eventDetails.startTime < 12 ? props.eventDetails.startTime + "am" : 
+                (Number(props.eventDetails.startTime) - 12 == 0 ? 12 : Number(props.eventDetails.startTime) - 12) + "pm"}
             </div>
 
         </div>
@@ -161,19 +127,13 @@ const EditEvent = (props) => {
                <strong>End time</strong>
             </div>
             <div class="col-sm-9 text-secondary">
-                <input 
-                type="time" 
-                class="form-control" 
-                id="eventendtime" 
-                value={eventEndTime}
-                onChange={e => setEventEndTime(e.target.value)} required />
+                {props.eventDetails.endTime < 12 ? props.eventDetails.endTime + "am" : 
+                (Number(props.eventDetails.endTime) - 12 == 0 ? 12 : Number(props.eventDetails.endTime) - 12) + "pm"}
             </div>
             </div>
 
             
 
-        <button type="submit" class="btn">Submit</button>
-        </form>
         <button type="Cancel" class="btn cancel" onClick={()=> props.setTrigger()}>Cancel</button>
         </div>
       </div>
@@ -183,4 +143,4 @@ const EditEvent = (props) => {
 }
 
 
-export default EditEvent
+export default EventDetails

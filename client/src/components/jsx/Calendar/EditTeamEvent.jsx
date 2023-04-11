@@ -18,10 +18,23 @@ const EditTeamEvent = (props) => {
 
     async function handleEventEdit (e) {
         e.preventDefault();
+        let validTime = true;
+        let tempStart = parseInt(eventStartTime.substring(0,2));
+        let tempEnd = parseInt(eventEndTime.substring(0,2));
+        if (tempEnd == 0) {
+            tempEnd = 24;
+        } else if (tempEnd == 1) {
+            tempEnd = 25;
+        }
+        if (tempStart == 0) {
+            validTime = false;
+        } else if (tempEnd < tempStart) {
+            validTime = false;
+        } 
         const newElapsedEvent = { //grab from user with pop up 
             date: new Date(eventDate),
-            startTime: parseInt(eventStartTime.substring(0,2)),
-            endTime: parseInt(eventEndTime.substring(0,2)),
+            startTime: tempStart,
+            endTime: tempEnd,
             title: eventTitle,
             description: eventDescription,
             teamName: props.event,
@@ -31,49 +44,102 @@ const EditTeamEvent = (props) => {
         newElapsedEvent.date.setDate(newElapsedEvent.date.getDate() + 1);
         let exists = false;
         let team = true;
+        let conflicts = false;
+        let teamConflict = false;
         let eventIndex = -1;
-        for(let i = 0; i < props.events.length; i++) {
-            if (props.events[i].teamName === 'Personal') {
+        for(let j = 0; j < props.events.length; j++) {
+            if (props.events[j].teamName === 'Personal') {
                 team = false;
-            } else if (props.events[i].title === newElapsedEvent.title) {
+            } else if (props.events[j].title === newElapsedEvent.title) {
                 exists = true;
-                newElapsedEvent.color = props.events[i].color;
-                newElapsedEvent.teamName = props.events[i].color;
-                newElapsedEvent.teamID = props.events[i].teamID;
-                eventIndex = i;
+                team = true;
+                newElapsedEvent.color = props.events[j].color;
+                newElapsedEvent.teamName = props.events[j].teamName;
+                newElapsedEvent.teamID = props.events[j].teamID;
+                eventIndex = j;
                 break;
             }
         }
-        if (!exists) {
+        for (let i = 0; i < props.events.length; i++) {
+            if ((new Date(props.events[i].date)).getDate() === newElapsedEvent.date.getDate()) {
+                console.log(props.events[i])
+                console.log(newElapsedEvent)  
+                if (
+                        (
+                            (
+                                props.events[i].startTime <= newElapsedEvent.startTime &&
+                                props.events[i].endTime >= newElapsedEvent.startTime
+                            ) ||
+                            (   
+                                props.events[i].startTime <= newElapsedEvent.endTime &&
+                                props.events[i].endTime >= newElapsedEvent.endTime
+                            )
+                        ) || 
+                        ( 
+                            (
+                                props.events[i].startTime <= newElapsedEvent.endTime &&
+                                props.events[i].startTime >= newElapsedEvent.startTime
+                            ) ||
+                            (
+                                props.events[i].endTime <= newElapsedEvent.endTime &&
+                                props.events[i].endTime >= newElapsedEvent.startTime
+                            )
+                        )
+                    ) {
+                    conflicts = true;
+                    if (props.events[i].type === "team") {
+                        teamConflict = true;
+                    }
+                    break;
+                }
+            }
+        }
+        if (!team) {
+            alert("There was an error. You can not edit this event")
+        } else if (!exists) {
             alert("Event Title Does Not Exist")
-        } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
+        } else if (!validTime) {
             alert("Enter Valid Times");
         } else {
-            props.setTrigger();
-            props.editEvent(newElapsedEvent);
-            const curusername = user.userUserName;
-            const newDate = newElapsedEvent.date;
-            const newStartTime = newElapsedEvent.startTime;
-            const newEndTime = newElapsedEvent.endTime;
-            const newTitle = newElapsedEvent.title;
-            const newDescription = newElapsedEvent.description;
-            const teamName = props.events[eventIndex].teamName;
-            const teamID = props.events[eventIndex].teamID;
-            const color = props.events[eventIndex].color;
-            try {
-                await axios.post('/teameventedit', {
-                    newDate, 
-                    newStartTime, 
-                    newEndTime, 
-                    newTitle, 
-                    newDescription, 
-                    curusername,
-                    teamName,
-                    teamID,
-                    color
-                });
-            } catch (e) {
-                alert("Event did not Update")
+            let override = false;
+            if (conflicts && teamConflict) {
+                alert("Event conflict with another team event");
+            } else if (conflicts && !teamConflict) {
+                alert("Event conflicts with personal time");
+                //dialog box that allows overridng
+                //if () { //overide
+                //  overide = true;
+                //}
+            } else {
+                override = true;
+            }
+            if (override) {
+                props.setTrigger();
+                props.editEvent(newElapsedEvent);
+                const curusername = user.userUserName;
+                const newDate = newElapsedEvent.date;
+                const newStartTime = newElapsedEvent.startTime;
+                const newEndTime = newElapsedEvent.endTime;
+                const newTitle = newElapsedEvent.title;
+                const newDescription = newElapsedEvent.description;
+                const teamName = props.events[eventIndex].teamName;
+                const teamID = props.events[eventIndex].teamID;
+                const color = props.events[eventIndex].color;
+                try {
+                    await axios.post('/teameventedit', {
+                        newDate, 
+                        newStartTime, 
+                        newEndTime, 
+                        newTitle, 
+                        newDescription, 
+                        curusername,
+                        teamName,
+                        teamID,
+                        color
+                    });
+                } catch (e) {
+                    alert("Event did not Update")
+                }
             }
         } 
     }

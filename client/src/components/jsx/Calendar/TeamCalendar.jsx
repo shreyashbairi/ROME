@@ -298,7 +298,7 @@ export default function TeamCalendar (props) {
                                 trigger={showEdit}
                                 setTrigger={closeEditform}
                                 editEvent={editEvent}
-                                events={events}
+                                events={fullEvents}
                                 teams={teams}
                             />     
                         </div>

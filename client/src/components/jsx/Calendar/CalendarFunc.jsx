@@ -8,6 +8,7 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import EventFocus from "./EventFocus";
+import EventDetails from "./EventDetails";
 
 
 
@@ -23,6 +24,7 @@ export default function CalendarFunc (props) {
     const [events, setEvents] = useState([]);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
     const [viewMode, setViewMode] = useState(7);
     const [viewModeString, setViewModeString] = useState("Week");
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
@@ -30,6 +32,8 @@ export default function CalendarFunc (props) {
     const [focusTeams, setFocusTeams] = useState([]);
     const [color,setColor] = useState("");
     const {user} = useContext(UserContext);
+    const [hourDetails, setHourDetails] = useState();
+    const [fullEvents, setFullEvents] = useState([]);
 
 
     useEffect( () => {
@@ -75,6 +79,7 @@ export default function CalendarFunc (props) {
                 }
             }
             setEvents([...events, ...elapsedEvent])
+            setFullEvents(eventsGrabed);
         });
         axios.get(`/color/${username}`)
         .then (res => {
@@ -258,6 +263,24 @@ export default function CalendarFunc (props) {
         setShowEdit(false);
     }
 
+    const openDetails = (hour) => {
+        console.log(hour.name);
+        console.log(fullEvents);
+        let tempEvent;
+        for (let i = 0; i < fullEvents.length; i++) {
+            if (hour.name === fullEvents[i].title) {
+                tempEvent = fullEvents[i];
+                break;
+            }
+        }
+        setHourDetails(tempEvent);
+        setShowDetails(true);
+    };
+
+    const closeDetails = () => {
+        setShowDetails(false);
+    }
+
     const handleFocus = (teamSelected) => {
         setFocusTeams(teamSelected);
     }
@@ -338,7 +361,21 @@ export default function CalendarFunc (props) {
                                 scheduleEventHour={scheduleEventHour} 
                                 viewMode={viewMode}
                                 focusTeams={focusTeams}
+                                openEditform={openEditform}
+                                openDetails={openDetails}
                             />
+                            <Popup open={showDetails} onClose={closeDetails}> 
+                                <EventDetails  
+                                    trigger={showDetails}
+                                    setTrigger={closeDetails}
+                                    editEvent={editEvent}
+                                    events={events}
+                                    teams={teams}
+                                    team={"personal"}
+                                    user={user.userUserName}
+                                    eventDetails={hourDetails}
+                                />     
+                            </Popup>
                         </div>
                     </div>
                 </div>

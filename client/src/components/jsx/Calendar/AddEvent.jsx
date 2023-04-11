@@ -33,10 +33,23 @@ const AddEvent = (props) => {
 
     async function handleEventSubmit (e) {
         e.preventDefault();
+        let validTime = true;
+        let tempStart = parseInt(eventStartTime.substring(0,2));
+        let tempEnd = parseInt(eventEndTime.substring(0,2));
+        if (tempEnd == 0) {
+            tempEnd = 24;
+        } else if (tempEnd == 1) {
+            tempEnd = 25;
+        }
+        if (tempStart == 0) {
+            validTime = false;
+        } else if (tempEnd < tempStart) {
+            validTime = false;
+        } 
         const newElapsedEvent = { //grab from user with pop up 
             date: new Date(eventDate),
-            startTime: parseInt(eventStartTime.substring(0,2)),
-            endTime: parseInt(eventEndTime.substring(0,2)),
+            startTime: tempStart,
+            endTime: tempEnd,
             title: eventTitle,
             description: eventDescription,
             teamName: teamName,
@@ -67,7 +80,7 @@ const AddEvent = (props) => {
         }
         if (!exists) {
             alert("Team Does Not Exist.")
-        } else if (newElapsedEvent.startTime > newElapsedEvent.endTime) {
+        } else if (!validTime) {
             alert("Enter Valid Times");
         } else {
             props.scheduleEvent(newElapsedEvent);
