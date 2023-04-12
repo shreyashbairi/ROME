@@ -8,6 +8,7 @@ import Popup from "reactjs-popup";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
+import LeaveTeamPop from "./LeaveTeamPop";
 import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle } from 'react-icons/ai'
 import Cookies from 'js-cookie';
 import InviteResponse from "./InviteResponse";
@@ -276,7 +277,16 @@ function DefaultLayout () {
                             />   
                         </div>
                     </ Popup>
-
+                    <Popup trigger={<button type="button" class="btn btn-secondary">  LeaveTeam  </button>} 
+                        open={joinPop} onOpen={joinButton} position="right center" nested modal >
+                        <div class="card">
+                            <LeaveTeamPop
+                                trigger={JoinTeamPop} 
+                                setTrigger={setJoinPop}
+                                // onSubmit={}
+                            />   
+                        </div>
+                    </ Popup>
 
                 <div>
 
