@@ -8,7 +8,11 @@ function CalendarDays(props) {
     let amountHours = 168;
     let currentTimes = [];
 
-
+    const handleDetails = (hour) => {
+        if (hour.selected && hour.color !== "gray") {
+            props.openDetails(hour);
+        }
+    }
     
     for (let day = 0; day < 7; day++) {
         if (day === 0) {
@@ -69,6 +73,7 @@ function CalendarDays(props) {
                 } else if (props.events[j].type === "team") {
                     hour.color = props.events[j].color;
                     hour.selected = true;
+                    hour.name = props.events[j].title;
                     if (props.events[j].top) {
                         hour.top = true;
                         hour.name = props.events[j].title;
@@ -113,7 +118,7 @@ function CalendarDays(props) {
                     // </div>
                     <div className={"calendar-hour" + 
                         (props.viewMode === 5 ? " work-hour" : " full-hour")} 
-                        style={{backgroundColor: hour.color}}>
+                        style={{backgroundColor: hour.color}} onClick = {() => handleDetails(hour)}>
                         <p>{hour.selected && hour.top ? hour.name : ""}</p>
                     </div>
                 )

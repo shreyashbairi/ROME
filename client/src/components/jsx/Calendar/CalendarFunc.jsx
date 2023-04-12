@@ -35,6 +35,7 @@ export default function CalendarFunc (props) {
     const [hourDetails, setHourDetails] = useState();
     const [fullEvents, setFullEvents] = useState([]);
     const [fromDetails, setFromDetails] = useState(false);
+    const atTeamCal = false;
 
 
     useEffect( () => {
@@ -391,6 +392,7 @@ export default function CalendarFunc (props) {
                                     user={user.userUserName}
                                     eventDetails={hourDetails}
                                     editFromDetails={editFromDetails}
+                                    atTeamCal={atTeamCal}
                                 />     
                             </Popup>
                         </div>

@@ -151,9 +151,9 @@ const EventDetails = (props) => {
             
 
         <button type="Cancel" class="btn cancel" onClick={()=> props.setTrigger()}>Cancel</button>
-        {props.eventDetails.type !== "team" ? 
+        {!props.atTeamCal ? (props.eventDetails.type !== "team" ? 
         <button type="Cancel" class="btn cancel" onClick={()=> props.editFromDetails(props.eventDetails)}>Edit Event</button> :
-        ""}
+        "") : <button type="Cancel" class="btn cancel" onClick={()=> props.editFromDetails(props.eventDetails)}>Edit Event</button>}
         </div>
       </div>
 

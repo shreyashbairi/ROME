@@ -8,6 +8,7 @@ import { useState, useEffect,useContext } from "react";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import EventFocus from "./EventFocus";
+import EventDetails from "./EventDetails";
 
 
 
@@ -23,6 +24,7 @@ export default function TeamCalendar (props) {
     const [events, setEvents] = useState([]);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
     const [viewMode, setViewMode] = useState(7);
     const [viewModeString, setViewModeString] = useState("Week");
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
@@ -31,6 +33,9 @@ export default function TeamCalendar (props) {
     const [fullEvents, setFullEvents] = useState([]);
     const {user} = useContext(UserContext);
     const [color, setColor] = useState("");
+    const [hourDetails, setHourDetails] = useState();
+    const [fromDetails, setFromDetails] = useState(false);
+    const atTeamCal = true;
 
     useEffect( () => {
         const username = user.userUserName;
@@ -257,11 +262,42 @@ export default function TeamCalendar (props) {
 
     const closeEditform = () => {
         setShowEdit(false);
+        setFromDetails(false);
+    }
+
+    const openDetails = (hour) => {
+        console.log(hour.name);
+        console.log(fullEvents);
+        let tempEvent;
+        for (let i = 0; i < fullEvents.length; i++) {
+            if (hour.name === fullEvents[i].title) {
+                tempEvent = fullEvents[i];
+                break;
+            }
+        }
+        console.log(tempEvent)
+        setHourDetails(tempEvent);
+        setShowDetails(true);
+    };
+
+    const closeDetails = () => {
+        setShowDetails(false);
     }
 
     const handleFocus = (teamSelected) => {
         setFocusTeams(teamSelected);
     }
+
+    const editFromDetails = (eventDet) => {
+        if (eventDet.type === "team") {
+            setFromDetails(true);
+            closeDetails();
+            openEditform();
+        } else {
+            alert("You can not edit personal events.")
+        }
+    }
+    
     
     return (
         <>
@@ -292,7 +328,7 @@ export default function TeamCalendar (props) {
                     </ Popup>
 
                     <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
-                    onOpen={openEditform} position="right center" nested modal>
+                    onClose={closeEditform} onOpen={openEditform} position="right center" nested modal>
                         <div class="card">
                         <EditTeamEvent  
                                 trigger={showEdit}
@@ -300,6 +336,10 @@ export default function TeamCalendar (props) {
                                 editEvent={editEvent}
                                 events={fullEvents}
                                 teams={teams}
+                                eventDetails={hourDetails}
+                                setEventDetails={setHourDetails}
+                                fromDetails={fromDetails}
+                                setFromDetails={setFromDetails}
                             />     
                         </div>
                     </ Popup>
@@ -337,7 +377,22 @@ export default function TeamCalendar (props) {
                                 scheduleEventHour={scheduleEventHour} 
                                 viewMode={viewMode}
                                 focusTeams={focusTeams}
+                                openEditform={openEditform}
+                                openDetails={openDetails}
                             />
+                            <Popup open={showDetails} onClose={closeDetails}> 
+                                <EventDetails  
+                                    trigger={showDetails}
+                                    setTrigger={closeDetails}
+                                    editEvent={editEvent}
+                                    events={events}
+                                    teams={teams}
+                                    user={user.userUserName}
+                                    eventDetails={hourDetails}
+                                    editFromDetails={editFromDetails}
+                                    atTeamCal={atTeamCal}
+                                />     
+                            </Popup>
                         </div>
                     </div>
                 </div>
