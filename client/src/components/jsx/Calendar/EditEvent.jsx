@@ -9,15 +9,23 @@ import 'reactjs-popup/dist/index.css';
 
 const EditEvent = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
-    const [eventTitle, setEventTitle] = useState("");
-    const [eventDescription, setEventDescription] = useState("");
-    const [eventDate, setEventDate] = useState("");
-    const [eventStartTime, setEventStartTime] = useState("");
-    const [eventEndTime, setEventEndTime] = useState("");
+    const [eventTitle, setEventTitle] = useState(props.fromDetails ? props.eventDetails.title : "");
+    const [eventDescription, setEventDescription] = useState(props.fromDetails ? props.eventDetails.description : "");
+    const [eventDate, setEventDate] = useState(props.fromDetails ? 
+        new Date(new Date(props.eventDetails.date) - 1).toJSON().split("T")[0] : "");
+    const [eventStartTime, setEventStartTime] = useState(props.fromDetails ? 
+        (props.eventDetails.startTime < 10 ? "0" + props.eventDetails.startTime +":00" : 
+        (props.eventDetails.startTime < 24 ? props.eventDetails.startTime + ":00" :
+        (props.eventDetails.startTime == 24 ? "00:00" : "01:00"))): "");
+    const [eventEndTime, setEventEndTime] = useState(props.fromDetails ? 
+        (props.eventDetails.endTime < 10 ? "0" + props.eventDetails.endTime +":00" : 
+        (props.eventDetails.endTime < 24 ? props.eventDetails.endTime + ":00" :
+        (props.eventDetails.endTime == 24 ? "00:00" : "01:00"))): "");
     const { user } = useContext(UserContext);
 
     async function handleEventEdit (e) {
         e.preventDefault();
+        // console.log(eventStartTime)
         let validTime = true;
         let tempStart = parseInt(eventStartTime.substring(0,2));
         let tempEnd = parseInt(eventEndTime.substring(0,2));
@@ -66,6 +74,8 @@ const EditEvent = (props) => {
             alert("Enter Valid Times");
         } else {
             props.setTrigger();
+            props.setFromDetails(false);
+            props.setEventDetails({});
             props.editEvent(newElapsedEvent);
             const curusername = user.userUserName;
             const newDate = newElapsedEvent.date;
@@ -93,13 +103,14 @@ const EditEvent = (props) => {
             }
         } 
     }
-    
+
     return (props.trigger) ? (
 <>
     <div class="loginpopup">
         <div class="formPopup" id="popupForm">
         <h2>Edit Event</h2>
         <form autoComplete="off" onSubmit={handleEventEdit}>
+        { !props.fromDetails ?
         <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Existing Title</strong>
@@ -114,6 +125,7 @@ const EditEvent = (props) => {
                 onChange={e => setEventTitle(e.target.value)} required />
             </div>
         </div>
+        : ""}
         <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Description</strong>

@@ -34,6 +34,7 @@ export default function CalendarFunc (props) {
     const {user} = useContext(UserContext);
     const [hourDetails, setHourDetails] = useState();
     const [fullEvents, setFullEvents] = useState([]);
+    const [fromDetails, setFromDetails] = useState(false);
 
 
     useEffect( () => {
@@ -261,11 +262,12 @@ export default function CalendarFunc (props) {
 
     const closeEditform = () => {
         setShowEdit(false);
+        setFromDetails(false);
     }
 
     const openDetails = (hour) => {
-        console.log(hour.name);
-        console.log(fullEvents);
+        // console.log(hour.name);
+        // console.log(fullEvents);
         let tempEvent;
         for (let i = 0; i < fullEvents.length; i++) {
             if (hour.name === fullEvents[i].title) {
@@ -283,6 +285,16 @@ export default function CalendarFunc (props) {
 
     const handleFocus = (teamSelected) => {
         setFocusTeams(teamSelected);
+    }
+
+    const editFromDetails = (eventDet) => {
+        if (eventDet.type != "team") {
+            setFromDetails(true);
+            closeDetails();
+            openEditform();
+        } else {
+            alert("You can not edit team events.")
+        }
     }
     
     return (
@@ -314,7 +326,7 @@ export default function CalendarFunc (props) {
                     </ Popup>
 
                     <Popup class="editevent" trigger={<button type="button" class="btn btn-secondary">Edit Event</button>} open={showEdit}
-                    onOpen={openEditform} position="right center" nested modal>
+                    onClose={closeEditform} onOpen={openEditform} position="right center" nested modal>
                         <div class="card">
                         <EditEvent  
                                 trigger={showEdit}
@@ -324,6 +336,10 @@ export default function CalendarFunc (props) {
                                 teams={teams}
                                 team={"personal"}
                                 user={user.userUserName}
+                                eventDetails={hourDetails}
+                                setEventDetails={setHourDetails}
+                                fromDetails={fromDetails}
+                                setFromDetails={setFromDetails}
                             />     
                         </div>
                     </ Popup>
@@ -374,6 +390,7 @@ export default function CalendarFunc (props) {
                                     team={"personal"}
                                     user={user.userUserName}
                                     eventDetails={hourDetails}
+                                    editFromDetails={editFromDetails}
                                 />     
                             </Popup>
                         </div>

@@ -16,7 +16,7 @@ const EventDetails = (props) => {
     const [eventEndTime, setEventEndTime] = useState("");
     const { user } = useContext(UserContext);
     // alert(props.eventDetails.top)
-
+    // console.log(props.eventDetails)
 
     async function handleEventEdit (e) {
         e.preventDefault();
@@ -85,7 +85,7 @@ const EventDetails = (props) => {
     return (props.trigger) ? (
 <>
     <div class="loginpopup">
-        <div class="formPopup" id="popupForm">
+        <div class="event-details" id="popupForm">
         <h2>Event Details</h2>
         <div class="row mt-3">
             <div class="col-sm-3">
@@ -93,6 +93,14 @@ const EventDetails = (props) => {
             </div>
             <div class="col-sm-9 text-secondary">
                 {props.eventDetails.title}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm-3">
+               <strong>Team</strong>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                {props.eventDetails.teamName}
             </div>
         </div>
         <div class="row mt-3">
@@ -108,7 +116,7 @@ const EventDetails = (props) => {
                <strong>Date</strong>
             </div>
             <div class="col-sm-9 text-secondary">
-                {props.eventDetails.date.split("T")[0]}
+                {new Date(new Date(props.eventDetails.date) - 1).toJSON().split("T")[0]}
             </div>
         </div>
         <div class="row mt-3">
@@ -116,8 +124,12 @@ const EventDetails = (props) => {
                <strong>Start time</strong>
             </div>
             <div class="col-sm-9 text-secondary">
-                {props.eventDetails.startTime < 12 ? props.eventDetails.startTime + "am" : 
-                (Number(props.eventDetails.startTime) - 12 == 0 ? 12 : Number(props.eventDetails.startTime) - 12) + "pm"}
+            {props.eventDetails.startTime < 12 ? props.eventDetails.startTime + "am" : 
+                (Number(props.eventDetails.startTime) - 12 >= 12 ? 
+                ((Number(props.eventDetails.startTime) - 12) == 12 ? 
+                ((Number(props.eventDetails.startTime) - 12) + "am" ): "1am") : 
+                ((Number(props.eventDetails.startTime) - 12) == 0 ? 12 : 
+                (Number(props.eventDetails.startTime) - 12)) + "pm")}
             </div>
 
         </div>
@@ -128,13 +140,20 @@ const EventDetails = (props) => {
             </div>
             <div class="col-sm-9 text-secondary">
                 {props.eventDetails.endTime < 12 ? props.eventDetails.endTime + "am" : 
-                (Number(props.eventDetails.endTime) - 12 == 0 ? 12 : Number(props.eventDetails.endTime) - 12) + "pm"}
+                (Number(props.eventDetails.endTime) - 12 >= 12 ? 
+                ((Number(props.eventDetails.endTime) - 12) == 12 ? 
+                ((Number(props.eventDetails.endTime) - 12) + "am" ): "1am") : 
+                ((Number(props.eventDetails.endTime) - 12) == 0 ? 12 : 
+                (Number(props.eventDetails.endTime) - 12)) + "pm")}
             </div>
             </div>
 
             
 
         <button type="Cancel" class="btn cancel" onClick={()=> props.setTrigger()}>Cancel</button>
+        {props.eventDetails.type !== "team" ? 
+        <button type="Cancel" class="btn cancel" onClick={()=> props.editFromDetails(props.eventDetails)}>Edit Event</button> :
+        ""}
         </div>
       </div>
 
