@@ -684,6 +684,10 @@ app.post('/acceptmember', async (req, res) => {
             {team: teamname},
             {members: newTeamMemberList}
         );
+
+        
+
+        
         res.json(userDoc);
     } catch (e) {
         console.error(e);
@@ -732,15 +736,41 @@ app.post('/removemember', async (req,res) => {
     }
 });
 
+app.post('/addpoke', async (req, res) => {
+    const { invitedUser, descriptionSent, inviter, inviterTeamName} = req.body;
+
+    try {
+      const _existingUser = await User.findOne({userUserName: invitedUser});
+      if (!_existingUser) {
+        // console.log(_existingUser);
+        // console.log("User does not exist.");  
+      } 
+      else if (_existingUser.userUserName === inviter){
+        res.status(422).json({error: "You cannot poke yourself"});
+      }
+      else {
+
+        const notification = await Notification.create(
+            {
+                fromuser: inviter,
+                touser: invitedUser,
+                type: "Poke from ",
+                description: descriptionSent,
+                teamName: inviterTeamName,
+            });
+        res.json(notification);
+
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
 app.post('/addteammember', async (req, res) => {
     const { invitedUser, descriptionSent, inviter, inviterTeamName} = req.body;
-    // console.log(invitedUser);
-    // console.log(descriptionSent);
-    // console.log(inviter);
-    //console.log(inviterTeamName);
-    //console.log(inviterTeamID);
+
     try {
       const _existingUser = await User.findOne({userUserName: invitedUser});
       if (!_existingUser) {
@@ -751,8 +781,7 @@ app.post('/addteammember', async (req, res) => {
         res.status(422).json({error: "You cannot invite yourself to a team."});
       }
       else {
-        // console.log(_existingUser);
-        // console.log("User exists.");
+
         const notification = await Notification.create(
             {
                 fromuser: inviter,
@@ -769,6 +798,8 @@ app.post('/addteammember', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+
 
 app.post('/requestteam', async (req, res) => {
     const {fromuser, teamName} = req.body;

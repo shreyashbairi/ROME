@@ -9,8 +9,10 @@ import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
 import LeaveTeamPop from "./LeaveTeamPop";
-import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle,AiFillSetting } from 'react-icons/ai'
+import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle,AiFillSetting } from 'react-icons/ai';
+import {FaHandPointRight} from 'react-icons/fa';
 import Cookies from 'js-cookie';
+import AddPoke from "./AddPoke";
 import InviteResponse from "./InviteResponse";
 
 //import { UserContext } from "./UserContext";
@@ -26,6 +28,8 @@ function DefaultLayout () {
     const [inviterName, setInviterName] = useState('');
     const [response, setResponse] = useState(0);
     const [responseTeam, setResponsTeam] = useState("");
+    const [poke, setAddPoke] = useState(false);
+
     const [isnotif, setIsnotif] = useState(false);
     let username = "";
     try{
@@ -103,6 +107,13 @@ function DefaultLayout () {
             }}
         />
     );
+    const closePoke = () => {
+        setAddPoke(false);
+    }
+
+    const openPoke = () => {
+        setAddPoke(true);
+    }
 
     async function handleInvite(pro){
         let touser = pro.touser;
@@ -118,7 +129,6 @@ function DefaultLayout () {
         } else if(pro.type === "Invite from ") {
             username = user.userUserName;
         }
-        console.log("h/I");
         axios.delete(`/deletenotification/${id}`,{})
         axios.get(`/notifications/${touser}`)
         .then (res => {
@@ -164,16 +174,27 @@ function DefaultLayout () {
 
     return (
         <>
-
             <nav style={{backgroundColor: color}} class="navbar navbar-light mt-1 rounded">
                 <a class="navbar-brand" href="/main">
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="pic d-inline-block align-text-top" />
                     Rome
                 </a>                   
                 <div>  
+                    
+
                     <a class="navbar-brand" href="/messenger"> 
                         <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
                     </a>
+
+                    <Popup class="addpoke" trigger={<button type="button" class="notif"><FaHandPointRight /></button>} open={poke}
+                            onOpen={openPoke} position="right center" nested modal>
+                                <div class="card">
+                                <AddPoke
+                                    trigger={poke}
+                                    setTrigger={closePoke}
+                                    />     
+                                </div>
+                    </ Popup>
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  } contentStyle={{ width: '300px' } } > 
                         {notif.map((notiff, index)=>{
@@ -183,36 +204,27 @@ function DefaultLayout () {
                                         <div class="card">
                                             <div class="card-body">
                                                 {notiff.type}  {notiff.fromuser}
-                                                    <ColoredLine color="grey" />
-                                                        <div class="row">
-                                                            <div class="col-sm-3">
-                                                                <h class="mb-0">Team Name</h>
-                                                            </div>
-                                                            <div class="col-sm-9 text-secondary">
-                                                                {notiff.teamName}
-                                                            </div>
-                                                        </div> 
-                                                        <ColoredLine color="grey" />
-                                                        <div class="row">
-                                                            <div class="col-sm-3">
-                                                                <h class="mb-0">Description</h>
-                                                            </div>
-                                                            <div class="col-sm-9 text-secondary">
-                                                                {notiff.description}
-                                                            </div>
-                                                        </div> 
-                                                        <ColoredLine color="grey" />
-
-                                                        <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
-                                                            <AiFillCheckCircle/> 
-                                                        </button>  
-                                                        <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
-                                                            <AiFillCloseCircle/>                     
-                                                        </button>  
+                                                <ColoredLine color="grey" />
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h class="mb-0">Team Name</h>
                                                     </div>
-                                                </div>
-                                               
-
+                                                    <div class="col-sm-9 text-secondary">
+                                                        {notiff.teamName}
+                                                    </div>
+                                                </div> 
+                                                <ColoredLine color="grey" />
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h class="mb-0">Description</h>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        {notiff.description}
+                                                    </div>
+                                                </div> 
+                                                <ColoredLine color="grey" /> 
+                                            </div>
+                                        </div>
                                     </Popup>
                                     <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
                                         <AiFillCheckCircle/> 
