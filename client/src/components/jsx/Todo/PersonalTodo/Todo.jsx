@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import  { AiFillCloseCircle } from 'react-icons/ai'
 import { TiEdit } from 'react-icons/ti'
 import TodoForm from './TodoForm1'
@@ -6,6 +6,8 @@ import {BsThreeDots} from 'react-icons/bs'
 import Popup from 'reactjs-popup'
 import TodoEdit from './TodoEdit'
 import '../../../css/Todo.css';
+import { UserContext } from '../../UserContext'
+import axios from 'axios'
 
 function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriority,setTodos}) {
     const [show, setShow] = useState(false);
@@ -14,7 +16,7 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
     const [buttonPrinted, setButtonPrinted] = useState(false);
     const copy = [...todos]
     const [mapping, setMapping] = useState([...copy])
-    
+    const {user, setUser} = useContext(UserContext);
 
     var currentDate = () => {
         let date = new Date();
@@ -82,10 +84,19 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
         alert(description)
     }
 
-    function test() {
-        return(
-            <div>test</div>
-        )
+    async function checkDate() {
+        var date = new Date().toISOString().substring(0,10);
+        console.log(date);
+
+        todos.forEach(async (task)=>{
+            const approaching_task = {
+                task: task,
+                user: user.userUserName
+            }
+            if (task.date !== null && task.date.split('T')[0] === date){
+                await axios.post('/createtaskreminder', approaching_task);
+            }
+        })
     }
 
     
@@ -102,7 +113,10 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                     return(<></>)
                 } else {
                     todos.sort((a,b)=> (a.date<b.date) ? -1 : 1);
-                } 
+                }
+
+                checkDate();
+                 
             })()}
             {todos.map((todo,index)=>{
                 return(

@@ -20,5 +20,6 @@ Invite
 Request
 Join
 Poke
+task-reminder
 
 */

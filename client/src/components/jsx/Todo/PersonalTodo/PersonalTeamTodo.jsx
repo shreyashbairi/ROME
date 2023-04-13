@@ -8,7 +8,6 @@ function PersonalTeamTodo() {
     const {user, setUser} = useContext(UserContext);
 
     useEffect( () => {
-        console.clear();
         const username = user.userUserName;
         axios.get(`/userteamtasks/${username}`)
         .then(res => {
@@ -25,7 +24,6 @@ function PersonalTeamTodo() {
 
     async function edit_status(task){
         try {
-            console.log(task)
             await axios.post('/teamtaskedit', {
                 title:task.title,
                 description:task.description,

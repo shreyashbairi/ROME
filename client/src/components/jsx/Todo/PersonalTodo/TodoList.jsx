@@ -40,6 +40,8 @@ function TodoList(props) {
         .then (res => {
             setColor(res.data);
         })
+
+        
     }, [])
 
     const addTodo = todo => {
