@@ -22,6 +22,24 @@ function PersonalTeamTodo() {
         })
     }, [])
 
+
+    async function edit_status(task){
+        try {
+            console.log(task)
+            await axios.post('/teamtaskedit', {
+                title:task.title,
+                description:task.description,
+                date:task.date,
+                started:false,
+                complete:true,
+                workers:[]
+            });
+            alert("Task Updated in Team");
+        } catch (e) {
+            alert("Team Task did not Update")
+        }
+    }
+
     
     return (
         <div>
@@ -32,7 +50,7 @@ function PersonalTeamTodo() {
             {tasks.map((task)=> {
                 return (
                     <div>
-                        <input type="checkbox"></input>
+                        <input type="checkbox" onClick={()=>edit_status(task)}></input>
                         {task.title}
 
                     </div>

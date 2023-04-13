@@ -102,7 +102,8 @@ export default function TeamTodoList(props) {
                 description:todo.description,
                 date:todo.date,
                 started:false,
-                complete:true
+                complete:true,
+                workers:[]
                 
             });
         } catch (e) {
@@ -122,7 +123,8 @@ export default function TeamTodoList(props) {
                 description:todo.description,
                 date:todo.date,
                 started:false,
-                complete:true
+                complete:true,
+                workers: []
                 
             });
         } catch (e) {

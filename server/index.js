@@ -321,13 +321,14 @@ app.post('/teameventsave', async (req, res) =>{
 
 
 app.post('/teamtaskedit', async (req, res) =>{
-    const {title, description, date, started,complete} = req.body;
+    const {title, description, date, started,complete, workers} = req.body;
     try {
         const teamTasksDoc = await TeamTask.findOneAndUpdate(
             {title: title , description:description, date:date},
             {
             started:started,
-            complete:complete
+            complete:complete,
+            workers:workers
             });
         // console.log(newTitle);
         // console.log(curusername)
