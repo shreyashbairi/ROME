@@ -330,6 +330,7 @@ app.post('/teamtaskedit', async (req, res) =>{
             complete:complete,
             workers:workers
             });
+   
         // console.log(newTitle);
         // console.log(curusername)
         // console.log(eventsDoc);
@@ -619,7 +620,6 @@ app.delete("/teamtaskdelete", async(req,res) => {
 
 
 app.delete("/deletenotification/:id", async(req,res) => {
-    console.log("hi");
     Notification.deleteOne({_id:req.params.id}, function(err) {
 
 

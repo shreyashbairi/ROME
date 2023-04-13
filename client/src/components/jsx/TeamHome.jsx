@@ -225,7 +225,7 @@ function TeamHome() {
         </div>
         <div class="teamchat">
             <div style={{backgroundColor: color}} className="top">
-                chat
+                Anouncement
             </div>
         </div>
         
