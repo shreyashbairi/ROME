@@ -116,7 +116,17 @@ function DefaultLayout () {
         let type = pro.type;
         let description = pro.description;
         console.log("hi"   );
-        console.log(username);
+        console.log(touser);
+        console.log(fromuser);
+
+        console.log(description);
+
+        console.log(type);
+
+        console.log(teamname);
+
+
+
         
         if (pro.type === "Request from " || pro.type === "Invite from ") {
             username = pro.fromuser;
@@ -129,7 +139,8 @@ function DefaultLayout () {
             username = user.userUserName;
         }
         console.log("h/I");
-        await axios.delete(`/deletenotification/${pro.fromuser}/${pro.touser}/${pro.type}/${pro.description}/${pro.teamName}`, {});
+        axios.delete(`/deletenoti/${teamname}/${pro.touser}}/${pro.type}`,{})
+
 
         // axios.delete(`/deletenotification/${task.title}`,{
         //     fromuser,touser,type,description,teamname
@@ -155,9 +166,9 @@ function DefaultLayout () {
     //     let description = pro.description;
 
 
-    //     await axios.delete('/deletenotification',{
-    //         fromuser,touser,type,description,teamname
-    //     })
+        // await axios.delete('/deletenotification',{
+        //     fromuser,touser,type,description,teamname
+        // })
 
     //   };
 

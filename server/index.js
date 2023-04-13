@@ -615,13 +615,32 @@ app.delete("/teamtaskdelete", async(req,res) => {
     });
 })
 
-app.delete("/deletenotification/:fromuser/:touser/:type/:description/:teamname", async(req,res) => {
 
-    console.log("entered")
-    // teamName:nteamname, type:ntype, description:ndescription fromuser:nfromuser, 
-    Notification.deleteOne({touser:ntouser }, function(err) {
+
+app.delete("/deletenoti/:teamName/:touser/:type", async(req,res) => {
+    console.log("touser");
+
+    console.log(req.params.touser);
+    console.log("team");
+    console.log(req.params.teamName);
+    console.log("type");
+
+    console.log(req.params.type);
+
+
+
+    console.log("entereddeletenoti");
+
+    Notification.deleteOne({teamName:req.params.teamName}, function(err) {
     });
+
+    //  teamName:req.params.touser, type:req.params.type
+
 })
+
+
+
+
 
 app.delete("/personaltaskdelete/:title/:user", async(req,res) => {
     
