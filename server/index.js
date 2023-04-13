@@ -321,7 +321,7 @@ app.post('/teameventsave', async (req, res) =>{
 
 
 app.post('/teamtaskedit', async (req, res) =>{
-    const {title, description, date, started,complete, workers} = req.body;
+    const {title, description, date, started,complete, workers,team} = req.body;
     try {
         const teamTasksDoc = await TeamTask.findOneAndUpdate(
             {title: title , description:description, date:date},

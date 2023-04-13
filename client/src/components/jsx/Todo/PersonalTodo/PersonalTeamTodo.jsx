@@ -32,7 +32,8 @@ function PersonalTeamTodo() {
                 date:task.date,
                 started:false,
                 complete:true,
-                workers:[]
+                workers:[],
+                team:task.team
             });
             alert("Task Updated in Team");
         } catch (e) {
