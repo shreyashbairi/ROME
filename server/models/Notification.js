@@ -14,3 +14,11 @@ const NotificationSchema = new Schema({
 const EventModel = mongoose.model('Notification', NotificationSchema);
 
 module.exports = EventModel;
+/*
+types:
+Invite
+Request
+Join
+Poke
+
+*/
