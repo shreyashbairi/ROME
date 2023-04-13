@@ -9,7 +9,7 @@ import axios from "axios";
 import { UserContext } from "./UserContext";
 import JoinTeamPop from "./JoinTeamPop";
 import LeaveTeamPop from "./LeaveTeamPop";
-import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle } from 'react-icons/ai'
+import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle,AiFillSetting } from 'react-icons/ai'
 import Cookies from 'js-cookie';
 import InviteResponse from "./InviteResponse";
 
@@ -17,7 +17,6 @@ import InviteResponse from "./InviteResponse";
 
 function DefaultLayout () {
     //const user = useContext(UserContext);
-
     const navigate = useNavigate();
     const [buttonPop, setButtonPop] = useState(false);
     const [joinPop, setJoinPop] = useState(false);
@@ -53,8 +52,7 @@ function DefaultLayout () {
         description: String
     }])
 
-    useEffect( () => {
-        
+    useEffect( () => { 
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
@@ -74,8 +72,6 @@ function DefaultLayout () {
                 setIsnotif(true);
             }
         });
-
-
 
     }, [] );
 
@@ -108,30 +104,11 @@ function DefaultLayout () {
         />
     );
 
-    
-
     async function handleInvite(pro){
         let touser = pro.touser;
-        let fromuser = pro.fromuser;
         let teamname = pro.teamName;
-        let type = pro.type;
         let id = pro._id;
-        console.log(id);
-        let description = pro.description;
-        console.log("hi"   );
-        console.log(touser);
-        console.log(fromuser);
-
-        console.log(description);
-
-        console.log(type);
-
-        console.log(teamname);
-
-
-
-        
-        if (pro.type === "Request from " || pro.type === "Invite from ") {
+            if (pro.type === "Request from " || pro.type === "Invite from ") {
             username = pro.fromuser;
             teamname = pro.teamName;
             await axios.post('/acceptmember', {
@@ -143,8 +120,6 @@ function DefaultLayout () {
         }
         console.log("h/I");
         axios.delete(`/deletenotification/${id}`,{})
-
-
         axios.get(`/notifications/${touser}`)
         .then (res => {
             setNotif(res.data);
@@ -154,7 +129,6 @@ function DefaultLayout () {
                 setIsnotif(true);
             }
         });
-        // const teamname = responseTeam;
 
       };
 
@@ -177,7 +151,6 @@ function DefaultLayout () {
       };
 
 
-    
     const handlelogout = async (e) => {
         await axios.post('/logout');
         setUser(null);
@@ -189,40 +162,68 @@ function DefaultLayout () {
         localStorage.setItem('team', team.team)
     };
 
-
-
-
     return (
         <>
-        
+
             <nav style={{backgroundColor: color}} class="navbar navbar-light mt-1 rounded">
-                    <a class="navbar-brand" href="/main">
+                <a class="navbar-brand" href="/main">
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="pic d-inline-block align-text-top" />
                     Rome
-                    </a>
-
-                   
-                    {/* PAGENAME */}
-                    <div>  
+                </a>                   
+                <div>  
                     <a class="navbar-brand" href="/messenger"> 
-                            <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
+                        <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
                     </a>
                     <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  }  > 
+                    {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  } contentStyle={{ width: '300px' } } > 
                         {notif.map((notiff, index)=>{
-                                    return (       
-                                        <div key={index}> 
-                                            <div>{notiff.type}  {notiff.fromuser}
-                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
-                                                <AiFillCheckCircle/> </button>  
-                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
-                                                <AiFillCloseCircle/>                     </button>  
-                                            </div>
-                                            <ColoredLine color="grey" />
+                            return (       
+                                <div key={index}> 
+                                    <Popup trigger={<button class="notif"> {notiff.type}  {notiff.fromuser} </button>} nested modal >
+                                        <div class="card">
+                                            <div class="card-body">
+                                                {notiff.type}  {notiff.fromuser}
+                                                    <ColoredLine color="grey" />
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h class="mb-0">Team Name</h>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                {notiff.teamName}
+                                                            </div>
+                                                        </div> 
+                                                        <ColoredLine color="grey" />
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h class="mb-0">Description</h>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                {notiff.description}
+                                                            </div>
+                                                        </div> 
+                                                        <ColoredLine color="grey" />
 
-                                        </ div>
+                                                        <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
+                                                            <AiFillCheckCircle/> 
+                                                        </button>  
+                                                        <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
+                                                            <AiFillCloseCircle/>                     
+                                                        </button>  
+                                                    </div>
+                                                </div>
+                                               
+
+                                    </Popup>
+                                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
+                                        <AiFillCheckCircle/> 
+                                    </button>  
+                                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
+                                        <AiFillCloseCircle/>                     
+                                    </button>  
+                                    <ColoredLine color="grey" />
+                                </ div>
             
-                                    )
+                                )
                         })} 
 
 
@@ -232,14 +233,15 @@ function DefaultLayout () {
                     </ Popup>
 
          
-                        <a class="navbar-brand" href="/profile"> 
-                            <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" />
-                        </a>
-                        <a class="navbar-brand" href="/" onClick={handlelogout}> 
-                            logout
-                        </a>
+                    <a class="navbar-brand" href="/profile"> 
+                        <AiFillSetting />
+                            {/* <img src="https://cdn-icons-png.flaticon.com/512/126/126472.png" alt="Logo" width="30" height="24" class="" /> */}
+                    </a>
+                    <a class="navbar-brand" href="/" onClick={handlelogout}> 
+                        logout
+                    </a>
 
-                    </div>
+                </div>
 
 
             </nav> 

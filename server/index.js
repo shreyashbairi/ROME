@@ -617,7 +617,8 @@ app.delete("/teamtaskdelete", async(req,res) => {
 
 
 
-app.delete("/deletenoti/:id", async(req,res) => {
+app.delete("/deletenotification/:id", async(req,res) => {
+    console.log("hi");
     Notification.deleteOne({_id:req.params.id}, function(err) {
 
 

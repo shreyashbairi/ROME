@@ -12,12 +12,18 @@
     }
 }
 
+
 .notification {
     border: none ;
     background-color: none;
     cursor: pointer;
 }
 
+.notif {
+    padding: 0;
+    border: none;
+    background: none;
+}
 .pic{
     margin-left: 10px;
 }
