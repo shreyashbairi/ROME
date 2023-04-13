@@ -9,7 +9,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../UserContext";
 import EventFocus from "./EventFocus";
-
+import EventDetails from "./EventDetails";
 
 export default function TeamMemberCalendar (props) {
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -23,6 +23,7 @@ export default function TeamMemberCalendar (props) {
     const [events, setEvents] = useState([]);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
     const [viewMode, setViewMode] = useState(7);
     const [viewModeString, setViewModeString] = useState("Week");
     const [curWeekdays, setCurWeekdays] = useState(weekdays);
@@ -30,6 +31,10 @@ export default function TeamMemberCalendar (props) {
     const [focusTeams, setFocusTeams] = useState([]);
     const [color,setColor] = useState("");
     const {user} = useContext(UserContext);
+    const [hourDetails, setHourDetails] = useState();
+    const [fromDetails, setFromDetails] = useState(false);
+    const [fullEvents, setFullEvents] = useState([]);
+    const atTeamCal = false;
 
     useEffect( () => {
         let username = props.username;
@@ -73,6 +78,7 @@ export default function TeamMemberCalendar (props) {
                 }
             }
             setEvents([...events, ...elapsedEvent])
+            setFullEvents(eventsGrabed);
         });
         axios.get(`/teams/${username}`)
         .then (res => {
@@ -231,6 +237,22 @@ export default function TeamMemberCalendar (props) {
         setShowEdit(false);
     }
 
+    const openDetails = (hour) => {
+        let tempEvent;
+        for (let i = 0; i < fullEvents.length; i++) {
+            if (hour.name === fullEvents[i].title) {
+                tempEvent = fullEvents[i];
+                break;
+            }
+        }
+        setHourDetails(tempEvent);
+        setShowDetails(true);
+    };
+
+    const closeDetails = () => {
+        setShowDetails(false);
+    }
+
     const handleFocus = (teamSelected) => {
         setFocusTeams(teamSelected);
     }
@@ -309,7 +331,20 @@ export default function TeamMemberCalendar (props) {
                                 scheduleEventHour={scheduleEventHour} 
                                 viewMode={viewMode}
                                 focusTeams={focusTeams}
+                                openEditform={openEditform}
+                                openDetails={openDetails}
                             />
+                            <Popup open={showDetails} onClose={closeDetails}> 
+                                <EventDetails  
+                                    trigger={showDetails}
+                                    setTrigger={closeDetails}
+                                    events={events}
+                                    teams={teams}
+                                    user={user.userUserName}
+                                    eventDetails={hourDetails}
+                                    atTeamCal={atTeamCal}
+                                />     
+                            </Popup>
                         </div>
                     </div>
                 </div>

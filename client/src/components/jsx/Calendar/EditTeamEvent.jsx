@@ -9,11 +9,18 @@ import 'reactjs-popup/dist/index.css';
 
 const EditTeamEvent = (props) => {
     const [popupOpened, setPopupOpened] = useState(false);
-    const [eventTitle, setEventTitle] = useState("");
-    const [eventDescription, setEventDescription] = useState("");
-    const [eventDate, setEventDate] = useState("");
-    const [eventStartTime, setEventStartTime] = useState("");
-    const [eventEndTime, setEventEndTime] = useState("");
+    const [eventTitle, setEventTitle] = useState(props.fromDetails ? props.eventDetails.title : "");
+    const [eventDescription, setEventDescription] = useState(props.fromDetails ? props.eventDetails.description : "");
+    const [eventDate, setEventDate] = useState(props.fromDetails ? 
+        new Date(new Date(props.eventDetails.date) - 1).toJSON().split("T")[0] : "");
+    const [eventStartTime, setEventStartTime] = useState(props.fromDetails ? 
+        (props.eventDetails.startTime < 10 ? "0" + props.eventDetails.startTime +":00" : 
+        (props.eventDetails.startTime < 24 ? props.eventDetails.startTime + ":00" :
+        (props.eventDetails.startTime == 24 ? "00:00" : "01:00"))): "");
+    const [eventEndTime, setEventEndTime] = useState(props.fromDetails ? 
+        (props.eventDetails.endTime < 10 ? "0" + props.eventDetails.endTime +":00" : 
+        (props.eventDetails.endTime < 24 ? props.eventDetails.endTime + ":00" :
+        (props.eventDetails.endTime == 24 ? "00:00" : "01:00"))): "");
     const { user } = useContext(UserContext);
 
     async function handleEventEdit (e) {
@@ -61,7 +68,8 @@ const EditTeamEvent = (props) => {
             }
         }
         for (let i = 0; i < props.events.length; i++) {
-            if ((new Date(props.events[i].date)).getDate() === newElapsedEvent.date.getDate()) {
+            if ((new Date(props.events[i].date)).getDate() === newElapsedEvent.date.getDate() &&
+                props.events[i].title !== newElapsedEvent.title) {
                 console.log(props.events[i])
                 console.log(newElapsedEvent)  
                 if (
@@ -150,6 +158,7 @@ const EditTeamEvent = (props) => {
         <div class="formPopup" id="popupForm">
         <h2>Edit Team Event</h2>
         <form autoComplete="off" onSubmit={handleEventEdit}>
+        { !props.fromDetails ?
         <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Existing Title</strong>
@@ -164,6 +173,7 @@ const EditTeamEvent = (props) => {
                 onChange={e => setEventTitle(e.target.value)} required />
             </div>
         </div>
+        : ""}
         <div class="row mt-3">
             <div class="col-sm-3">
                <strong>Description</strong>
