@@ -646,6 +646,26 @@ app.delete("/personaltaskdelete/:title/:user", async(req,res) => {
     });
 })
 
+app.post('/createtaskreminder', async (req,res)=>{
+    const {task, user} = req.body;
+
+    try{
+        const notification = await Notification.create(
+        {
+            fromuser: "",
+            touser: user,
+            type: "task-reminder",
+            description: task.description,
+            teamName: "Personal Tasks",
+            message:"The task "+task.title +" is due today.",
+            show: true,
+        });
+        res.json(notification);
+    } catch(e){
+        res.status(422).json(e);
+    }
+})
+
 app.post('/invitenotification', async (req, res) =>{
     const {newFromuser, newTouser, newType, newDescription, 
          newTeamName, newTeamID} = req.body;

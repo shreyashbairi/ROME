@@ -25,7 +25,6 @@ function PersonalTeamTodo() {
 
     async function edit_status(task){
         try {
-            console.log(task)
             await axios.post('/teamtaskedit', {
                 title:task.title,
                 description:task.description,

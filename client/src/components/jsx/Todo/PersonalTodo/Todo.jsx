@@ -82,12 +82,6 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
         alert(description)
     }
 
-    function test() {
-        return(
-            <div>test</div>
-        )
-    }
-
     
 
     return (

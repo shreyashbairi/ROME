@@ -40,7 +40,23 @@ function TodoList(props) {
         .then (res => {
             setColor(res.data);
         })
+
+        var date = new Date().toISOString().substring(0,10);
+
+        todos.forEach((task)=>{
+            const approaching_task = {
+                task: task,
+                user: username
+            }
+            if (task.date === date){
+                post(approaching_task);
+            }
+        })
     }, [])
+
+    async function post(approaching_task) {
+        await axios.post('/createtaskreminder', approaching_task);
+    }
 
     const addTodo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {
