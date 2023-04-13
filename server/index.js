@@ -658,7 +658,7 @@ app.post('/createtaskreminder', async (req,res)=>{
             description: task.description,
             teamName: "Personal Tasks",
             message:"The task "+task.title +" is due today.",
-            show: true,
+            show: false,
         });
         res.json(notification);
     } catch(e){
