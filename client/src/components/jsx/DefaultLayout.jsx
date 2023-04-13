@@ -38,6 +38,7 @@ function DefaultLayout () {
     //const username = user.userUserName;
     const [notif, setNotif] = useState([
         {
+            _id: String,
             fromuser: String,
             touser: String,
             description: String,
@@ -66,13 +67,13 @@ function DefaultLayout () {
         axios.get(`/notifications/${username}`)
         .then (res => {
             setNotif(res.data);
+            console.log(res.data);
             if(res.data.length == 0){
                 setIsnotif(false);
             }else{
                 setIsnotif(true);
             }
         });
-
 
 
 
@@ -110,11 +111,12 @@ function DefaultLayout () {
     
 
     async function handleInvite(pro){
-        let username = pro.fromuser; 
         let touser = pro.touser;
         let fromuser = pro.fromuser;
         let teamname = pro.teamName;
         let type = pro.type;
+        let id = pro._id;
+        console.log(id);
         let description = pro.description;
         console.log("hi"   );
         console.log(touser);
@@ -140,13 +142,10 @@ function DefaultLayout () {
             username = user.userUserName;
         }
         console.log("h/I");
-        axios.delete(`/deletenoti/${teamname}/${pro.touser}}/${pro.type}`,{})
+        axios.delete(`/deletenotification/${id}`,{})
 
 
-        // axios.delete(`/deletenotification/${task.title}`,{
-        //     fromuser,touser,type,description,teamname
-        // })
-        axios.get(`/notifications/${username}`)
+        axios.get(`/notifications/${touser}`)
         .then (res => {
             setNotif(res.data);
             if(res.data.length == 0){
@@ -159,31 +158,24 @@ function DefaultLayout () {
 
       };
 
-    //   async function handleDecline(pro){
-    //     let touser = pro.touser;
-    //     let fromuser = pro.fromuser;
-    //     let teamname = pro.teamName;
-    //     let type = pro.type;
-    //     let description = pro.description;
+      async function handleDecline(pro){
+        let touser = pro.touser;
+        let id = pro._id;
+        axios.delete(`/deletenotification/${id}`,{})
 
 
-        // await axios.delete('/deletenotification',{
-        //     fromuser,touser,type,description,teamname
-        // })
+        axios.get(`/notifications/${touser}`)
+        .then (res => {
+            setNotif(res.data);
+            if(res.data.length == 0){
+                setIsnotif(false);
+            }else{
+                setIsnotif(true);
+            }
+        });
 
-    //   };
-
-      const handleDecline = async (e) => {
-        // const teamname = notif[0].teamName;
-        // const teamname = responseTeam;
-        // if (response == 0) {
-        //     console.log("posting");
-        //     await axios.post('/acceptmember', {
-        //         username,
-        //         teamname
-        //     });
-        // }
       };
+
 
     
     const handlelogout = async (e) => {

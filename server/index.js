@@ -617,22 +617,15 @@ app.delete("/teamtaskdelete", async(req,res) => {
 
 
 
-app.delete("/deletenoti/:teamName/:touser/:type", async(req,res) => {
-    console.log("touser");
-
-    console.log(req.params.touser);
-    console.log("team");
-    console.log(req.params.teamName);
-    console.log("type");
-
-    console.log(req.params.type);
+app.delete("/deletenoti/:id", async(req,res) => {
+    Notification.deleteOne({_id:req.params.id}, function(err) {
 
 
 
-    console.log("entereddeletenoti");
-
-    Notification.deleteOne({teamName:req.params.teamName}, function(err) {
     });
+
+    // Notification.deleteOne({teamName:req.params.teamName, touser:req.params.touser, type:params.type}, function(err) {
+    // });
 
     //  teamName:req.params.touser, type:req.params.type
 
