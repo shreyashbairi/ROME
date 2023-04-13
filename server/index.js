@@ -657,6 +657,7 @@ app.post('/invitenotification', async (req, res) =>{
                 description: newDescription,
                 teamName: newTeamName,
                 teamID: newTeamID,
+                show: true,
             });
         res.json(notification);
     } catch (e) {
@@ -666,10 +667,10 @@ app.post('/invitenotification', async (req, res) =>{
 
 
 app.post('/acceptmember', async (req, res) => {
-    const {username, teamname} = req.body;
+    const {username, teamname, manager} = req.body;
     // console.log("acceptmember");
     // console.log(username);
-    // console.log(teamname);
+    console.log(manager);
     try {
         const user = await User.findOne({userUserName: username});
         
@@ -684,6 +685,16 @@ app.post('/acceptmember', async (req, res) => {
             {team: teamname},
             {members: newTeamMemberList}
         );
+        const notification = await Notification.create(
+            {
+                fromuser: "",
+                touser: manager,
+                type: "Join",
+                description: "",
+                teamName: teamname,
+                message: username + " has joined " + teamname,
+                show: false,
+            });
 
         
 
@@ -754,9 +765,11 @@ app.post('/addpoke', async (req, res) => {
             {
                 fromuser: inviter,
                 touser: invitedUser,
-                type: "Poke from ",
+                type: "Poke",
                 description: descriptionSent,
                 teamName: inviterTeamName,
+                message: inviter + " has poked you",
+                show: false,
             });
         res.json(notification);
 
@@ -786,9 +799,11 @@ app.post('/addteammember', async (req, res) => {
             {
                 fromuser: inviter,
                 touser: invitedUser,
-                type: "Invite from ",
+                type: "Invite",
                 description: descriptionSent,
                 teamName: inviterTeamName,
+                message: inviter + " sent invite for you to join " + inviterTeamName,
+                show: true,
             });
         res.json(notification);
 
@@ -813,8 +828,10 @@ app.post('/requestteam', async (req, res) => {
             fromuser: fromuser,
             touser: manager,
             description: "Request",
-            type: "Request from ",
-            teamName: teamName
+            type: "Request",
+            teamName: teamName,
+            message: "Request to join " + teamName + " from " + fromuser,
+            show: true,
         })
         res.json(notification);
     } catch (e) {

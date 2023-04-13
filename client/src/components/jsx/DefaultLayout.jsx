@@ -38,7 +38,6 @@ function DefaultLayout () {
     catch{
         navigate('/login');
     }
-    //const username = user.userUserName;
     const [notif, setNotif] = useState([
         {
             _id: String,
@@ -47,6 +46,8 @@ function DefaultLayout () {
             description: String,
             type: String,
             teamName: String,
+            message: String,
+            show: Boolean,
         }
     ]);
 
@@ -119,15 +120,15 @@ function DefaultLayout () {
         let touser = pro.touser;
         let teamname = pro.teamName;
         let id = pro._id;
-            if (pro.type === "Request from " || pro.type === "Invite from ") {
+            if (pro.type === "Request" || pro.type === "Invite") {
             username = pro.fromuser;
             teamname = pro.teamName;
+            let manager = pro.fromuser;
             await axios.post('/acceptmember', {
-                username, teamname
+                username, teamname, manager
             })
             
-        } else if(pro.type === "Invite from ") {
-            username = user.userUserName;
+        } else if(pro.type === "Poke") {
         }
         axios.delete(`/deletenotification/${id}`,{})
         axios.get(`/notifications/${touser}`)
@@ -180,30 +181,24 @@ function DefaultLayout () {
                     Rome
                 </a>                   
                 <div>  
-                    
-
-                    <a class="navbar-brand" href="/messenger"> 
-                        <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
-                    </a>
-
-                    <Popup class="addpoke" trigger={<button type="button" class="notif"><FaHandPointRight /></button>} open={poke}
-                            onOpen={openPoke} position="right center" nested modal>
-                                <div class="card">
-                                <AddPoke
-                                    trigger={poke}
-                                    setTrigger={closePoke}
-                                    />     
-                                </div>
-                    </ Popup>
-                    <Popup trigger={  <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  } contentStyle={{ width: '300px' } } > 
+                <Popup class="addpoke" trigger={<button type="button" class="notif"><FaHandPointRight /></button>} open={poke}
+                onOpen={openPoke} position="right center" nested modal>
+                    <div class="card">
+                        <AddPoke
+                            trigger={poke}
+                            setTrigger={closePoke}
+                        />     
+                    </div>
+                </ Popup>
+                <Popup trigger={  <button type="button" class="btn "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  } contentStyle={{ width: '350px' } } > 
                         {notif.map((notiff, index)=>{
                             return (       
                                 <div key={index}> 
-                                    <Popup trigger={<button class="notif"> {notiff.type}  {notiff.fromuser} </button>} nested modal >
+                                    <Popup trigger={<button class="notif"> {notiff.message} </button>} nested modal >
                                         <div class="card">
                                             <div class="card-body">
-                                                {notiff.type}  {notiff.fromuser}
+                                                {notiff.type}
                                                 <ColoredLine color="grey" />
                                                 <div class="row">
                                                     <div class="col-sm-3">
@@ -226,16 +221,23 @@ function DefaultLayout () {
                                             </div>
                                         </div>
                                     </Popup>
-                                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
-                                        <AiFillCheckCircle/> 
-                                    </button>  
-                                    <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
-                                        <AiFillCloseCircle/>                     
-                                    </button>  
+                                    <div>
+                                        {notiff.show ? 
+                                            <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
+                                                <AiFillCheckCircle/> 
+                                            </button>  
+                                        : null}
+
+
+                                        <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
+                                            <AiFillCloseCircle/>                     
+                                        </button>  
+                                    </div>
+
                                     <ColoredLine color="grey" />
                                 </ div>
             
-                                )
+                            )
                         })} 
 
 
@@ -243,6 +245,12 @@ function DefaultLayout () {
                     
                             
                     </ Popup>
+                    <a class="navbar-brand" href="/messenger"> 
+                        <img src="https://icons.veryicon.com/png/o/miscellaneous/sibyl/icon-message-square.png" alt="Logo" width="30" height="24" class="" />
+                    </a>
+
+
+
 
          
                     <a class="navbar-brand" href="/profile"> 
