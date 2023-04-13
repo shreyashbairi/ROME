@@ -210,15 +210,8 @@ if (redirect) {
                         </div>
                       </div>
                       <ColoredLine color="grey" />                   */}
+             
                       <div class="row">
-                        <div class="col-sm-3">
-                          <h class="mb-0">Email Notification</h>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          
-                        </div>
-                      </div>
-                      <ColoredLine color="grey" />                  <div class="row">
                         <div class="col-sm-3">
                           <h class="mb-0">Theme</h>
                         </div>
@@ -235,12 +228,42 @@ if (redirect) {
                         </div>
                       </div>
                       <ColoredLine color="grey" />
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h class="mb-0">Notification</h>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <div>
+                            Join message
+                            <label class="switch">
+                              <input type="checkbox" name="Join"/>
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                          <div>
+                            Poke
+                            <label class="switch">
+                              <input type="checkbox" name="Poke"/>
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                          <div>
+                            HIASDF
+                            <label class="switch">
+                              <input type="checkbox"/>
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+
+  
+                        </div>
+                      </div>
+                      <ColoredLine color="grey" />     
                         <div class="row">
 
                         <div class="col-sm-12">
                           <button class="submit">submit</button>
                       </div>
-
                     </div>
                   </form>
                 </div>

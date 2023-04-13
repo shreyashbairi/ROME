@@ -321,7 +321,7 @@ app.post('/teameventsave', async (req, res) =>{
 
 
 app.post('/teamtaskedit', async (req, res) =>{
-    const {title, description, date, started,complete, workers} = req.body;
+    const {title, description, date, started,complete, workers,team} = req.body;
     try {
         const teamTasksDoc = await TeamTask.findOneAndUpdate(
             {title: title , description:description, date:date},
@@ -330,6 +330,7 @@ app.post('/teamtaskedit', async (req, res) =>{
             complete:complete,
             workers:workers
             });
+   
         // console.log(newTitle);
         // console.log(curusername)
         // console.log(eventsDoc);
@@ -619,7 +620,6 @@ app.delete("/teamtaskdelete", async(req,res) => {
 
 
 app.delete("/deletenotification/:id", async(req,res) => {
-    console.log("hi");
     Notification.deleteOne({_id:req.params.id}, function(err) {
 
 
@@ -644,6 +644,26 @@ app.delete("/personaltaskdelete/:title/:user", async(req,res) => {
 
     Task.deleteOne({title:req.params.title, username: req.params.user}, function(err) {
     });
+})
+
+app.post('/createtaskreminder', async (req,res)=>{
+    const {task, user} = req.body;
+
+    try{
+        const notification = await Notification.create(
+        {
+            fromuser: "",
+            touser: user,
+            type: "task-reminder",
+            description: task.description,
+            teamName: "Personal Tasks",
+            message:"The task "+task.title +" is due today.",
+            show: false,
+        });
+        res.json(notification);
+    } catch(e){
+        res.status(422).json(e);
+    }
 })
 
 app.post('/invitenotification', async (req, res) =>{
