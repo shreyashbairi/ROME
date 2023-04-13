@@ -22,6 +22,7 @@ function DefaultLayout () {
     const navigate = useNavigate();
     const [buttonPop, setButtonPop] = useState(false);
     const [joinPop, setJoinPop] = useState(false);
+    const [leavePop, setLeavePop] = useState(false);
     const [isLoggedIn] = useState(false);
     const [color,setColor] = useState("");
     const {user,setUser} = useContext(UserContext);
@@ -86,6 +87,10 @@ function DefaultLayout () {
 
     const joinButton = () => {
         setJoinPop(true);
+    }
+
+    const leaveButton = () => {
+        setLeavePop(true);
     }
 
     const addTeam = (newTeam) => {
@@ -303,11 +308,11 @@ function DefaultLayout () {
                         </div>
                     </ Popup>
                     <Popup trigger={<button type="button" class="btn btn-secondary">  LeaveTeam  </button>} 
-                        open={joinPop} onOpen={joinButton} position="right center" nested modal >
+                        open={leavePop} onOpen={leaveButton} position="right center" nested modal >
                         <div class="card">
                             <LeaveTeamPop
-                                trigger={JoinTeamPop} 
-                                setTrigger={setJoinPop}
+                                trigger={LeaveTeamPop} 
+                                setTrigger={setLeavePop}
                                 // onSubmit={}
                             />   
                         </div>
