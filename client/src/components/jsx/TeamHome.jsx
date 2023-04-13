@@ -10,7 +10,8 @@ import AddTeamMember from "./AddTeamMember"
 import RemoveTeamMember from "./RemoveTeamMember"
 import TeamCalendar from "./Calendar/TeamCalendar"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
-import axios from "axios";
+import axios from "axios"
+import CreateAnnoucements from "./CreateAnnoucements"
 
 
 function TeamHome() {
@@ -23,12 +24,14 @@ function TeamHome() {
     const [managerBool, setManagerBool] = useState(false);
     const [color,setColor] = useState('');
     const [memberName, setMemberName] = useState();
+    const [announcePop, setAnnoucePop] = useState(false);
     const [members, setMembers] = useState([{
         userFullname: String,
         userEmail: String,
         userUserName: String,
     }
     ]);
+
     
     useEffect(() => {
         const teamname = localStorage.getItem('team');
@@ -70,6 +73,14 @@ function TeamHome() {
 
     const openRemove = () => {
         setRemoveTeam(true);
+    }
+
+    const closeAnnouce = () => {
+        setAnnoucePop(false);
+    }
+
+    const openAnnouce = () => {
+        setAnnoucePop(true);
     }
 
     // alert("You are entering as a manager");
@@ -225,7 +236,20 @@ function TeamHome() {
         </div>
         <div class="teamchat">
             <div style={{backgroundColor: color}} className="top">
-                Anouncement
+                Announcement
+                {managerBool ?                 
+                <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary">Add</button>} open={announcePop}
+                        onOpen={openAnnouce} position="right center" nested modal>
+                            <div class="card">
+                            <CreateAnnoucements
+                                    trigger={AddEvent}
+                                    setTrigger={closeAnnouce}
+                                    // scheduleEvent={this.scheduleEvent}
+
+                                />     
+                            </div>
+                </ Popup>
+                  : null}
             </div>
         </div>
         

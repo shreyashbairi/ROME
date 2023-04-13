@@ -236,14 +236,14 @@ if (redirect) {
                           <div>
                             Join message
                             <label class="switch">
-                              <input type="checkbox"/>
+                              <input type="checkbox" name="Join"/>
                               <span class="slider round"></span>
                             </label>
                           </div>
                           <div>
                             Poke
                             <label class="switch">
-                              <input type="checkbox"/>
+                              <input type="checkbox" name="Poke"/>
                               <span class="slider round"></span>
                             </label>
                           </div>
