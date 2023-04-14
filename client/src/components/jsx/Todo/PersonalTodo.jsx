@@ -30,7 +30,7 @@ function PersonalTodo() {
         <div>
             <div style={{backgroundColor: color}}>
                 <br></br>
-            <button onClick={changeType}>{type}</button>
+            <button type="button" class="btn btn-secondary" onClick={changeType}>{type}</button>
             </div>
             {(()=>{
                 if (type === "Personal") {

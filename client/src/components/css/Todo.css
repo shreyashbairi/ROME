@@ -16,7 +16,8 @@
     text-align: center;
     padding: 2.5%;
     overflow-y: hidden;
-    border-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
 }
 
 #task_box {
