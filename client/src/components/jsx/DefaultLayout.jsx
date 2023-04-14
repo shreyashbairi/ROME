@@ -197,7 +197,7 @@ function DefaultLayout () {
                 </ Popup>
                 <Popup trigger={  <button type="button" class="btn "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  } contentStyle={{ width: '350px' } } > 
-                        {notif.map((notiff, index)=>{
+                        {notif.length != 0 ? notif.map((notiff, index)=>{
                             return (       
                                 <div key={index}> 
                                     <Popup trigger={<button class="notif"> {notiff.message} </button>} nested modal >
@@ -243,7 +243,7 @@ function DefaultLayout () {
                                 </ div>
             
                             )
-                        })} 
+                       }) : "You have no notifications"} 
 
 
 
