@@ -353,6 +353,7 @@ export default function CalendarFunc (props) {
                         <EventFocus 
                             teams = {teams}
                             handleFocus={handleFocus}
+                            personalColor={color}
                         />
                     </div>
                     <div class="time-sidebar">
@@ -380,6 +381,7 @@ export default function CalendarFunc (props) {
                                 focusTeams={focusTeams}
                                 openEditform={openEditform}
                                 openDetails={openDetails}
+                                personalColor={color}
                             />
                             <Popup open={showDetails} onClose={closeDetails}> 
                                 <EventDetails  

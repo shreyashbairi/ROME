@@ -74,7 +74,11 @@ function CalendarDays(props) {
                     hour.type = "team"
                     hour.color = props.events[j].color;
                 } else {
-                    hour.color = props.events[j].color;
+                    if (props.personalColor === "#0d6efd") {
+                        hour.color = props.events[j].color;
+                    } else {
+                        hour.color = props.personalColor;
+                    }
                 }
                 if (props.events[j].top) {
                     hour.top = true;

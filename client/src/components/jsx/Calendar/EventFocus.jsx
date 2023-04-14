@@ -8,9 +8,14 @@ import { useState, useEffect } from "react";
 export default function EventFocus (props) {
     const [teamSelected, setTeamSelected] = useState([]);
     let teamBoxes = [];
+    let tempColor = props.personalColor;
+    if (tempColor === "#0d6efd") {
+        tempColor = "#1D9BD1"
+    }
     teamBoxes.push({
         id: 0,
-        teamName: "Personal"
+        teamName: "Personal",
+        color: tempColor
     })
     for (let i = 0; i < props.teams.length; i++) {
         let teamBox = {
