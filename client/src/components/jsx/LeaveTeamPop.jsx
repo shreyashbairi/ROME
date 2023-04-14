@@ -19,17 +19,17 @@ function LeaveTeamPop(props) {
     async function handleSubmit(e) {
         e.preventDefault();
         // alert(team);
-        const fromuser = user.userUserName;
+        const username = user.userUserName;
         const teamID = Math.floor(Math.random()*10000);
-        const teamName = team;
+        const teamname = team;
         try {
-            await axios.post('/requestteam',{
-              fromuser,
-              teamName
+            await axios.post('/leaveteam',{
+              username,
+              teamname
             });
-            alert("Request sent");
+            alert("You have left " + teamname);
         } catch (e){
-            alert('Team Request Failed')
+            alert('You failed to leave ' + teamname)
         }
         // props.onSubmit({
         //     teamID: teamID,
