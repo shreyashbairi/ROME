@@ -10,7 +10,7 @@ const Events = require('./models/Events.js');
 const Event = require('./models/Event.js');
 const TeamEvent = require('./models/TeamEvent.js');
 const Notification = require('./models/Notification.js');
-
+const Annoucements = require('./models/Announcements.js');
 const Task = require('./models/ToDoSchema.js');
 const TeamTask=require('./models/TeamTask');
 const cookieParser = require('cookie-parser');
@@ -57,6 +57,27 @@ app.get('/test', (req, res) =>{
 //userDoc is new user created 
 //SHREY do not confuse the two
 //for signup
+
+app.post('/annoucements', async (req, res) => {    
+    const {title, teamname, description} = req.body;
+    console.log(title);
+    console.log(teamname);
+
+    console.log(description);
+
+    try{
+        const userDoc = await Annoucements.create({
+            title: title,
+            description: description,
+            teamName: teamname
+        });
+        res.status(201).json(userDoc);
+
+    } catch (e){
+    }
+
+});
+
 app.post('/signup', async (req, res) => {  
     const { userFullname, userEmail, userUserName, userPassword } = req.body;
     try {
@@ -817,6 +838,8 @@ app.post('/removemember', async (req,res) => {
         res.status(422).json(e);
     }
 });
+
+
 
 app.post('/addpoke', async (req, res) => {
     const { invitedUser, descriptionSent, inviter, inviterTeamName} = req.body;
