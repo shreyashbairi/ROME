@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { UserContext } from '../../UserContext'
+import { UserContext } from '../UserContext'
 import TodoForm from './TodoForm1'
 import Todo from './Todo'
 import {AiFillPlusCircle , AiFillFilter} from 'react-icons/ai'
@@ -16,7 +16,7 @@ function TodoList(props) {
     const [todos, setTodos] = useState([{
         title:String,
         description:String,
-        date:Date
+        date:Object
     }])
     const [filters, setFilters] = useState({
         seven: false,
@@ -26,9 +26,7 @@ function TodoList(props) {
 
     useEffect( () => {
         //console.clear();
-        // const username = user.userUsername;
-        // console.log(user.userUserName);
-        const username=user.userUserName;
+        const username = user.userUserName;
         axios.get(`/tasks/${username}`)
         .then(res => {
             const tasksGrabed = res.data;
@@ -39,8 +37,6 @@ function TodoList(props) {
         .then (res => {
             setColor(res.data);
         })
-
-        
     }, [])
 
     const addTodo = todo => {
@@ -59,15 +55,8 @@ function TodoList(props) {
 
     async function removeTodo(task) {
         // const toDel = [...todos].filter(todo=>todo.id === task.id);
-        // const removeArray = [...todos].filter(todo => todo.id !== task.id)
-        // setTodos(removeArray);
-        // console.log(task.title);
-        try {
-            await axios.delete(`/personaltaskdelete/${task.title}/${user.userUserName}`, {});
-            alert("Task deleted")
-        } catch (e) {
-            alert("Team Tasks didn't delete properly")
-        }
+        const removeArray = [...todos].filter(todo => todo.id !== task.id)
+        setTodos(removeArray)
     }
 
     const editTask = (id, newValue) => {

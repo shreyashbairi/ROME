@@ -1,7 +1,5 @@
-import TodoList from "./Todo/PersonalTodo/TodoList"
 import "../css/TeamHome.css"
 import Popup from "reactjs-popup"
-import UpdateTask from "./UpdateTask"
 import AddEvent from "./Calendar/AddEvent"
 import { useState, useEffect, useContext } from "react"
 import { UserContext } from "./UserContext"
@@ -9,12 +7,16 @@ import TeamTodoList from "./Todo/TeamTodo/TeamTodoList"
 import AddTeamMember from "./AddTeamMember"
 import RemoveTeamMember from "./RemoveTeamMember"
 import TeamCalendar from "./Calendar/TeamCalendar"
+import { TeamContext } from "./DefaultLayout"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
 import axios from "axios"
 import CreateAnnoucements from "./CreateAnnoucements"
+import { RxCross2 } from "react-icons/rx";
+
 
 
 function TeamHome() {
+    const teamname = useContext(TeamContext);
     const [show, setButtonPop] = useState(false);
     const {user} = useContext(UserContext);
     const [addTeam, setAddTeam] = useState(false);
@@ -31,11 +33,16 @@ function TeamHome() {
         userUserName: String,
     }
     ]);
-
-    
+    const [announcements, setAnnoucements] = useState([{
+        _id: String,
+        title: String,
+        description: String,
+        teamName: String,
+    }
+    ]);
     useEffect(() => {
-        const teamname = localStorage.getItem('team');
         const username = user.userUserName;
+        
         axios.get(`getmanager/${teamname}`)
         .then(res => {
             const manager = res.data;
@@ -53,11 +60,30 @@ function TeamHome() {
             //console.log(res.data);
             setMembers(mem);
         })
+        axios.get(`announcements/${teamname}`)
+        .then(res => {
+            const announ = res.data;
+            console.log(announ);
+            setAnnoucements(announ);
+        })
         axios.get(`/color/${username}`)
         .then (res => {
             setColor(res.data);
         })
     }, [])
+
+    async function deleteannoncement(pro){
+        let id = pro._id;
+        let teamname = localStorage.getItem('team');
+
+        axios.delete(`/deleteannoucements/${id}`,{});
+        axios.get(`announcements/${teamname}`)
+        .then(res => {
+            const announ = res.data;
+            console.log(announ);
+            setAnnoucements(announ);
+        })
+      };
     
     const closeAdd = () => {
         setAddTeam(false);
@@ -83,7 +109,6 @@ function TeamHome() {
         setAnnoucePop(true);
     }
 
-    // alert("You are entering as a manager");
     const closeform = () => {
         setButtonPop(false);
     }
@@ -137,7 +162,6 @@ function TeamHome() {
                         username={memberName}
                    />
     }
-    
     return (
         <div >
         <div class="todobefore"> 
@@ -182,12 +206,13 @@ function TeamHome() {
                 <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary"></button>} open={addTeam}
                         onOpen={openAdd} position="right center" nested modal>
                             <div class="card">
-                            <AddTeamMember 
-                                    trigger={AddEvent}
-                                    setTrigger={closeAdd}
-                                    // scheduleEvent={this.scheduleEvent}
-
-                                />     
+                            {user !== null && user.userTeamList.length > 0 && (
+  <AddTeamMember
+    trigger={AddEvent}
+    setTrigger={closeAdd}
+    // scheduleEvent={this.scheduleEvent}
+  />
+)}
                             </div>
                 </ Popup>
                   : null}
@@ -251,6 +276,21 @@ function TeamHome() {
                 </ Popup>
                   : null}
             </div>
+            {announcements.map((annou,index)=>{
+                    return (
+                        <div key={index}>
+                            {managerBool ? 
+                            <button type="button" class="delete" onClick={()=> deleteannoncement(annou)} > <RxCross2/> </button>
+                            : null
+                            }
+                            <div>
+                                {annou.title} 
+                            </div>
+                            {annou.description}
+                            <ColoredLine color="grey" />
+                        </div>
+                    )
+                })} 
         </div>
         
 

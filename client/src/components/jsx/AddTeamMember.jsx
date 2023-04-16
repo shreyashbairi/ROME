@@ -5,14 +5,19 @@ import { UserContext } from "./UserContext";
 import { useContext } from "react";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import TeamHome from "./TeamHome"
+import {TeamHome} from "./TeamHome"
+import { TeamContext }  from "./DefaultLayout";
+import { useSelector } from 'react-redux';
 axios.defaults.baseURL = 'http://localhost:8000';
+
 
 function AddTeamMember(props) {
     const [name, setName] = useState("")
     let teams = [];
     const { user } = useContext(UserContext);
     const [description, setDescription] = useState("")
+    const teamname = useContext(TeamContext);
+
     const [data, setData] = useState({
         name: {name},
         description: {description}
@@ -23,8 +28,9 @@ function AddTeamMember(props) {
         const invitedUser = name;
         const descriptionSent = description;
         const inviter = user.userUserName;
-        const inviterTeamName = localStorage.getItem("team");
-
+        let inviterTeamName;
+        console.log("the teamname in ATM is " + teamname);
+   
         axios.get(`/teams/${inviter}`).then(res => {
             teams = res.data;
 

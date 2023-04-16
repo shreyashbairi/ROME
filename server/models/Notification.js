@@ -22,5 +22,6 @@ Join
 Poke
 task-reminder
 Leave
+Annoucements
 
 */

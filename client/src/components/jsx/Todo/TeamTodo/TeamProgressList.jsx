@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext} from "react"
 import {useNavigate} from "react-router-dom";
 
 import { UserContext } from "../../UserContext";
+import { TeamContext } from "../../DefaultLayout";
 import  { AiFillCloseCircle } from 'react-icons/ai'
-import TeamAddNewWorking from './TeamAddNewWorking'
 import Popup from "reactjs-popup";
 import axios from 'axios';
 import TeamEditTask from "./TeamEditTask";
@@ -15,7 +15,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
     const [name, setName] = useState("");
     const [manager, setManager] = useState("");
     const { user } = useContext(UserContext);
-
+    const team = useContext(TeamContext);
     function handleSubmit(e) {
         e.preventDefault();
         
@@ -24,7 +24,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
     }
 
     useEffect( () => {
-        const team = localStorage.getItem('team');
+        
         axios.get(`members/${team}`)
         .then(res => {
             const memberList = res.data;
@@ -48,7 +48,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
 
             try {
                 await axios.post('/assignMemberToTask', {
-                    team: localStorage.getItem("team"),
+                    team: team,
                     task: task,
                     member:memberUserName
                 });

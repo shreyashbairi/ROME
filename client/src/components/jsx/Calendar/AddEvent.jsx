@@ -1,8 +1,8 @@
 import React from "react";
 import "../../css/AddEvent.css";
-import { useState, useEffect } from "react";
+import { useState} from "react";
+
 import axios from 'axios';
-import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
@@ -16,6 +16,7 @@ const AddEvent = (props) => {
     const [eventLabel, setEventLabel] = useState("");
     const [teamName, setTeamName] = useState(props.team);
     const [localTeams, setLocalTeams] = useState([]);
+
     // const [teamID, setTeamID] = useState(0);
 
     // useEffect( () => { 
@@ -32,6 +33,7 @@ const AddEvent = (props) => {
     // }, []);
 
     async function handleEventSubmit (e) {
+
         e.preventDefault();
         let validTime = true;
         let tempStart = parseInt(eventStartTime.substring(0,2));
@@ -113,6 +115,7 @@ const AddEvent = (props) => {
                     newType
                 });
                 alert('Event Saved');
+
             } catch (e) {
                 alert('Event Failed to Save');
             }

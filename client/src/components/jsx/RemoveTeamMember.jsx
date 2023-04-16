@@ -1,15 +1,20 @@
 import React from "react";
 import "../css/TeamPop.css";
 import { useState } from "react";
+import { useContext } from "react";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
+import { TeamContext }  from "./DefaultLayout";
+
+import { useSelector } from 'react-redux';
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function RemoveTeamMember(props) {
     const [name, setName] = useState("")
     let teams = [];
     const [description, setDescription] = useState("")
+    const teamname = useContext(TeamContext);
     const [data, setData] = useState({
         name: {name},
         description: {description}
@@ -19,7 +24,6 @@ function RemoveTeamMember(props) {
         e.preventDefault();
         const username = name;
         // const descriptionSent = description;
-        const teamname = localStorage.getItem("team");
         // console.log("The inviter is " + inviter);
         // console.log("The team is " + team);
         // console.log("The teamID is " + teamID);

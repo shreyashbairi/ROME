@@ -1,49 +1,41 @@
 import React from "react";
 import "../css/TeamPop.css";
 import { useState } from "react";
+import { useContext } from "react";
+import { TeamContext } from "./DefaultLayout";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function CreateAnnoucements(props) {
-    const [name, setName] = useState("")
+    const [title, setTitle] = useState("")
     let teams = [];
+    const teamname = useContext(TeamContext);
     const [description, setDescription] = useState("")
     const [data, setData] = useState({
-        name: {name},
+        name: {title},
         description: {description}
     })
 
     async function handleSubmit(e) {
+        console.log("HI");
         e.preventDefault();
-        const username = name;
-        // const descriptionSent = description;
-        const teamname = localStorage.getItem("team");
-        // console.log("The inviter is " + inviter);
-        // console.log("The team is " + team);
-        // console.log("The teamID is " + teamID);
-        // axios.get(`/teams/${inviter}`).then(res => {
-        //     teams = res.data;
-        //     console.log("These teams have been grabbed from" + inviter + ". The teams are" + JSON.stringify(teams));
-
-        // })
-        //console.log("The teamID is " + teamID);
+        console.log(title);
+        console.log(description);
         try {
-            await axios.post('/removemember',{
-              username,
-              teamname
+            await axios.post('/annoucements',{
+              title,
+              teamname,
+              description
             });
-            alert("User Removed!");
+            alert("Annoucement Created!");
           } catch (e){
-            alert('Error sending invite. User not found.')
+            alert('Annoucement Creation Failed')
           }
-        // props.onSubmit({
-        //     name: name,
-        //     description: description
-        // });
+
         props.setTrigger(false);
-        setName("");
+        setTitle("");
         setDescription("");
     }
 
@@ -90,13 +82,14 @@ function CreateAnnoucements(props) {
                     <div class="col-sm-9 text-secondary mt-5">
                         <input
                             id="team"
-                            placeholder="Name"
+                            placeholder="Title"
                             type="text"
-                            onChange={e => setName(e.target.value)}
-                            value={name}
+                            onChange={e => setTitle(e.target.value)}
+                            value={title}
                         />
                     </div>
-                    {/* <div class="col-sm-9 text-secondary mt-4">
+
+                    <div class="col-sm-9 text-secondary mt-4">
                     <textarea
                         id="description"
                         placeholder="Description"
@@ -105,7 +98,7 @@ function CreateAnnoucements(props) {
                         onChange={e => setDescription(e.target.value)}
                         value={description}
                     />
-                    </div>  */}
+                    </div> 
                     <button>Submit</button> 
  
                 </form>

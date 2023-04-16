@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import  { AiFillCloseCircle } from 'react-icons/ai'
-import { TiEdit } from 'react-icons/ti'
 import TodoForm from './TodoForm1'
-import {BsThreeDots} from 'react-icons/bs'
 import Popup from 'reactjs-popup'
 import TodoEdit from './TodoEdit'
 import '../../../css/Todo.css';

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../../css/TeamPop.css";
 import { useState,useEffect } from "react";
 import axios from 'axios';
+import { TeamContext } from "../../DefaultLayout";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Popup from "reactjs-popup";
 
@@ -13,6 +14,7 @@ function TeamAddNewWorking(props, {task}) {
     const[teamMembers,setTeamMembers] = useState([]);
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
+    const team = useContext(TeamContext);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -23,7 +25,6 @@ function TeamAddNewWorking(props, {task}) {
     }
 
     useEffect( () => {
-        const team = localStorage.getItem('team');
         try {
         axios.get(`members/${team}`)
         .then(res => {

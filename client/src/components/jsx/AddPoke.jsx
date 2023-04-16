@@ -3,13 +3,17 @@ import "../css/TeamPop.css";
 import { useState } from "react";
 import { UserContext } from "./UserContext";
 import { useContext } from "react";
+import { TeamContext }  from "./DefaultLayout";
 import axios from 'axios';
+import {FaHandPointRight} from 'react-icons/fa';
+
 // import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import TeamHome from "./TeamHome"
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function AddPoke(props) {
-    const [name, setName] = useState("")
+    const [name, setName] = useState("");
+    const teamName = useContext(TeamContext);
     let teams = [];
     const { user } = useContext(UserContext);
     const [description, setDescription] = useState("")
@@ -23,7 +27,7 @@ function AddPoke(props) {
         const invitedUser = name;
         const descriptionSent = description;
         const inviter = user.userUserName;
-        const inviterTeamName = localStorage.getItem("team");
+        const inviterTeamName = teamName;
 
         axios.get(`/teams/${inviter}`).then(res => {
             teams = res.data;
