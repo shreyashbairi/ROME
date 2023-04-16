@@ -23,12 +23,8 @@ function DefaultLayout () {
     const [buttonPop, setButtonPop] = useState(false);
     const [joinPop, setJoinPop] = useState(false);
     const [leavePop, setLeavePop] = useState(false);
-    const [isLoggedIn] = useState(false);
     const [color,setColor] = useState("");
     const {user,setUser} = useContext(UserContext);
-    const [inviterName, setInviterName] = useState('');
-    const [response, setResponse] = useState(0);
-    const [responseTeam, setResponsTeam] = useState("");
     const [poke, setAddPoke] = useState(false);
 
     const [isnotif, setIsnotif] = useState(false);
@@ -132,11 +128,11 @@ function DefaultLayout () {
             
         } else if(pro.type === "Poke") {
         }
-        axios.delete(`/deletenotification/${id}`,{})
+        axios.delete(`/deletenotification/${id}/${pro}`,{})
         axios.get(`/notifications/${touser}`)
         .then (res => {
             setNotif(res.data);
-            if(res.data.length == 0){
+            if(res.data.length === 0){
                 setIsnotif(false);
             }else{
                 setIsnotif(true);
@@ -145,7 +141,7 @@ function DefaultLayout () {
 
       };
 
-      async function handleDecline(pro){
+      function handleDecline(pro){
         let touser = pro.touser;
         let id = pro._id;
         axios.delete(`/deletenotification/${id}`,{})
@@ -154,7 +150,7 @@ function DefaultLayout () {
         axios.get(`/notifications/${touser}`)
         .then (res => {
             setNotif(res.data);
-            if(res.data.length == 0){
+            if(res.data.length === 0){
                 setIsnotif(false);
             }else{
                 setIsnotif(true);
@@ -194,7 +190,7 @@ function DefaultLayout () {
                 </ Popup>
                 <Popup trigger={  <button type="button" class="btn "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  } contentStyle={{ width: '350px' } } > 
-                        {notif.length != 0 ? notif.map((notiff, index)=>{
+                        {notif.length !== 0 ? notif.map((notiff, index)=>{
                             return (       
                                 <div key={index}> 
                                     <Popup trigger={<button class="notif"> {notiff.message} </button>} nested modal >
