@@ -31,6 +31,12 @@ function TeamHome() {
         userUserName: String,
     }
     ]);
+    const [announcements, setAnnoucements] = useState([{
+        title: String,
+        description: String,
+        teamName: String,
+    }
+    ]);
 
     
     useEffect(() => {
@@ -52,6 +58,11 @@ function TeamHome() {
             const mem = res.data;
             //console.log(res.data);
             setMembers(mem);
+        })
+        axios.get(`announcements/${teamname}`)
+        .then(res => {
+            const announ = res.data;
+            setAnnoucements(announ);
         })
         axios.get(`/color/${username}`)
         .then (res => {
@@ -83,7 +94,6 @@ function TeamHome() {
         setAnnoucePop(true);
     }
 
-    // alert("You are entering as a manager");
     const closeform = () => {
         setButtonPop(false);
     }
@@ -251,6 +261,15 @@ function TeamHome() {
                 </ Popup>
                   : null}
             </div>
+            {announcements.map((annou,index)=>{
+                    return (
+                        <div key={index}>
+                            <div>{annou.title}</div>
+                            {annou.description}
+                            <ColoredLine color="grey" />
+                        </div>
+                    )
+                })} 
         </div>
         
 

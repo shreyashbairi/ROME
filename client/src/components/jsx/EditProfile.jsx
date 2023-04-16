@@ -228,10 +228,16 @@ if (redirect) {
                         </div>
                       </div>
                       <ColoredLine color="grey" />
+                      
+
+
+
+
                       <div class="row">
                         <div class="col-sm-3">
                           <h class="mb-0">Notification</h>
                         </div>
+                        
                         <div class="col-sm-9 text-secondary">
                           <div>
                             Join message
@@ -248,7 +254,21 @@ if (redirect) {
                             </label>
                           </div>
                           <div>
-                            HIASDF
+                            Task reminder
+                            <label class="switch">
+                              <input type="checkbox"/>
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                          <div>
+                            Leave
+                            <label class="switch">
+                              <input type="checkbox"/>
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                          <div>
+                            Annoucements
                             <label class="switch">
                               <input type="checkbox"/>
                               <span class="slider round"></span>

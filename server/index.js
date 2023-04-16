@@ -60,17 +60,29 @@ app.get('/test', (req, res) =>{
 
 app.post('/annoucements', async (req, res) => {    
     const {title, teamname, description} = req.body;
-    console.log(title);
-    console.log(teamname);
-
-    console.log(description);
-
     try{
         const userDoc = await Annoucements.create({
             title: title,
             description: description,
             teamName: teamname
         });
+
+        const team = await Team.findOne({ team: teamname });
+        const manager = team.managerid;
+        const usernameList = team.members;
+        for (let i = 0; i < usernameList.length; i++) {
+            const notification = await Notification.create(
+                {
+                    fromuser: manager,
+                    touser: usernameList[i],
+                    type: "annoucements",
+                    description: description,
+                    teamName: teamname,
+                    message: manager + " has posted new annoucements in "+ teamname,
+                    show: false,
+                });
+            
+        }
         res.status(201).json(userDoc);
 
     } catch (e){
@@ -201,6 +213,15 @@ app.get("/members/:teamname", async (req,res) => {
         }
         //console.log(members);
         res.json(members);
+    } catch (e){
+        res.status(422).json(e);    
+    }
+});
+app.get("/announcements/:teamname", async (req,res) => {
+    try{
+        //console.log(req.params.teamname);
+        const annoucements = await Annoucements.find({ teamName: req.params.username })
+        res.json(annoucements);
     } catch (e){
         res.status(422).json(e);    
     }
