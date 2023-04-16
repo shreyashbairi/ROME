@@ -42,8 +42,24 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
                 } catch (e) {
                     alert('Task Failed to Save');
                 }
-            } else {
+            } else if (reminder){
                 alert("To set a reminder, you must assign a deadline to the task");
+            } else {
+                try {
+                    await axios.post('/taskedit', {
+                        taskTitle,
+                        taskDescription,
+                        taskDate,
+                        username,
+                        HighPriority: priority.HighPriority,
+                        MediumPriority: priority.MediumPriority,
+                        LowPriority: priority.LowPriority,
+                        reminder: reminder
+                    });
+                    alert('Task Saved');
+                } catch (e) {
+                    alert('Task Failed to Save');
+                }
             }
     } 
 

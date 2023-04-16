@@ -101,9 +101,6 @@ function DefaultLayout () {
         setTeams(withNew)
     } 
     
-    const goWelcome = () => {
-        navigate("/Welcome")
-    }
     const ColoredLine = ({ color }) => (
         <hr
             style={{

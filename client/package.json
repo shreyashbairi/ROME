@@ -23,6 +23,7 @@
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.2",
     "reactjs-popup": "^2.0.5",
+    "talkjs": "^0.15.9",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

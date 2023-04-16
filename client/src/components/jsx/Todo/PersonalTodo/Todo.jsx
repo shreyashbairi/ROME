@@ -18,24 +18,11 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
     const [mapping, setMapping] = useState([...copy])
     const {user, setUser} = useContext(UserContext);
 
-    var currentDate = () => {
-        let date = new Date();
-        return (date)
-    }
-
 
     const [change, setChange] = useState({
         id: null,
         value:''
     })
-
-    const openform = () => {
-        setShow(true);
-    };
-
-    const closeform = () => {
-        setShow(false);
-    }
 
     const openedit = () => {
         setEdit(true);
@@ -58,33 +45,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
         return <TodoForm change={change} onSubmit={submitUpdate}/>
     }
 
-    const displayIcon = (todo) => {
-        if (!todo.title || /^\s*$/.test(todo.title)) {
-            return;
-        }
-        return (
-            <AiFillCloseCircle
-                    onClick={()=>removeTodo(todo)}
-            />
-        )
-    }
-
-    function displayDetails(date, description) {
-        if(!description || /^\s*$/.test(description)) {
-            description="no discription"
-        }
-        // return(
-        //     <div>
-        //         {date}
-        //         <br>
-        //         </br>
-        //         {description}
-        //     </div>
-        // )
-        alert(description)
-    }
-
     async function checkDate() {
+        console.clear()
         var date = new Date().toISOString().substring(0,10);
         console.log(date);
 
@@ -93,7 +55,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                 task: task,
                 user: user.userUserName
             }
-            if (task.date !== null && task.date.split('T')[0] === date){
+            if ((task.date !== null && task.date.split('T')[0] === date) && task.reminder){
+                console.log(task)
                 await axios.post('/createtaskreminder', approaching_task);
             }
         })
