@@ -1,6 +1,6 @@
 import "../../css/Calendar.css";
-import React, {Component} from 'react';
-import { useState, useEffect } from "react";
+import React from 'react';
+import { useState } from "react";
 
 
 

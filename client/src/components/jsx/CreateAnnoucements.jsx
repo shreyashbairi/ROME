@@ -1,6 +1,8 @@
 import React from "react";
 import "../css/TeamPop.css";
 import { useState } from "react";
+import { useContext } from "react";
+import { TeamContext } from "./DefaultLayout";
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeamHome from "./TeamHome"
@@ -9,6 +11,7 @@ axios.defaults.baseURL = 'http://localhost:8000';
 function CreateAnnoucements(props) {
     const [title, setTitle] = useState("")
     let teams = [];
+    const teamname = useContext(TeamContext);
     const [description, setDescription] = useState("")
     const [data, setData] = useState({
         name: {title},
@@ -20,8 +23,6 @@ function CreateAnnoucements(props) {
         e.preventDefault();
         console.log(title);
         console.log(description);
-
-        const teamname = localStorage.getItem("team");
         try {
             await axios.post('/annoucements',{
               title,

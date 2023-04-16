@@ -1,7 +1,5 @@
-import TodoList from "./Todo/PersonalTodo/TodoList"
 import "../css/TeamHome.css"
 import Popup from "reactjs-popup"
-import UpdateTask from "./UpdateTask"
 import AddEvent from "./Calendar/AddEvent"
 import { useState, useEffect, useContext } from "react"
 import { UserContext } from "./UserContext"
@@ -9,12 +7,14 @@ import TeamTodoList from "./Todo/TeamTodo/TeamTodoList"
 import AddTeamMember from "./AddTeamMember"
 import RemoveTeamMember from "./RemoveTeamMember"
 import TeamCalendar from "./Calendar/TeamCalendar"
+import { TeamContext } from "./DefaultLayout"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
 import axios from "axios"
 import CreateAnnoucements from "./CreateAnnoucements"
 
 
 function TeamHome() {
+    const teamname = useContext(TeamContext);
     const [show, setButtonPop] = useState(false);
     const {user} = useContext(UserContext);
     const [addTeam, setAddTeam] = useState(false);
@@ -34,7 +34,6 @@ function TeamHome() {
 
     
     useEffect(() => {
-        const teamname = localStorage.getItem('team');
         const username = user.userUserName;
         axios.get(`getmanager/${teamname}`)
         .then(res => {
@@ -182,12 +181,13 @@ function TeamHome() {
                 <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary"></button>} open={addTeam}
                         onOpen={openAdd} position="right center" nested modal>
                             <div class="card">
-                            <AddTeamMember 
-                                    trigger={AddEvent}
-                                    setTrigger={closeAdd}
-                                    // scheduleEvent={this.scheduleEvent}
-
-                                />     
+                            {user !== null && user.userTeamList.length > 0 && (
+  <AddTeamMember
+    trigger={AddEvent}
+    setTrigger={closeAdd}
+    // scheduleEvent={this.scheduleEvent}
+  />
+)}
                             </div>
                 </ Popup>
                   : null}

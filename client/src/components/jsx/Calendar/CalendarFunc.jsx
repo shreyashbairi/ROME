@@ -1,5 +1,5 @@
 import "../../css/Calendar.css";
-import React, {Component} from 'react';
+import React from 'react';
 import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
 import EditEvent from "./EditEvent";

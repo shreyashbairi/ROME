@@ -1,9 +1,11 @@
 import '../../../css/Todo.css';
 import React, { useState, useContext } from 'react';
 import { UserContext } from "../../UserContext";
+import { TeamContext } from "../../DefaultLayout";
 import axios from 'axios';
 
 export function TeamTodoForm(props) {
+    const team = useContext(TeamContext);
     const [title,setTitle] = useState(props.change ? props.change.value : '');
     const [description,setDescription] = useState(props.change ? props.change.value : '');
     const [input, setInputs] = useState({
@@ -12,11 +14,9 @@ export function TeamTodoForm(props) {
         date:""
     })
     const { user } = useContext(UserContext);
-
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const team = localStorage.getItem('team');
 
         const newTask = {
             id: Math.floor(Math.random()*10000),

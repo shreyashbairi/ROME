@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import TodoForm from './TeamTodoForm'
 import TeamTodo from './TeamTodo'
 import {AiFillPlusCircle} from 'react-icons/ai'
+import { TeamContext } from '../../DefaultLayout';
 import TeamCompleteList from './TeamCompleteList';
 import TeamProgressList from '../TeamTodo/TeamProgressList';
 import "../../../css/TeamHome.css"
@@ -10,7 +11,7 @@ import {BsFillTrashFill} from 'react-icons/bs'
 
 export default function TeamTodoList(props) {
 
-    
+    const team = useContext(TeamContext);
 
     const[started, setStarted] = useState([{
         title: String,
@@ -52,7 +53,6 @@ export default function TeamTodoList(props) {
 
 
     useEffect( () => {
-        const team = localStorage.getItem('team');
         axios.get(`/teamTasks/${team}`)
         .then(res => {
             const tasksGrabed = res.data;

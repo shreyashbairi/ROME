@@ -142,8 +142,8 @@ app.get('/profile', (req, res) => {
             if(err) throw err;
             //grab latest info about user from db
             //send it back to client
-            const {userEmail, userUserName, _id} = await User.findById(userData.id);
-            res.json({userEmail, userUserName, _id}); 
+            const {userEmail, userUserName, _id, userTeamList} = await User.findById(userData.id);
+            res.json({userEmail, userUserName, _id, userTeamList}); 
         })
     } else {
         res.status(401).json('not authorized');

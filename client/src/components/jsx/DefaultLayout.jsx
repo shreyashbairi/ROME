@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { createContext } from 'react';
 import {Outlet, useNavigate} from "react-router-dom";
 import '../css/DefaultLayout.css'
 import { useState } from "react";
@@ -7,6 +8,7 @@ import TeamPop from "./TeamPop"
 import Popup from "reactjs-popup";
 import axios from "axios";
 import { UserContext } from "./UserContext";
+//import { TeamContext } from "./TeamContext";
 import JoinTeamPop from "./JoinTeamPop";
 import LeaveTeamPop from "./LeaveTeamPop";
 import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle,AiFillSetting } from 'react-icons/ai';
@@ -14,18 +16,23 @@ import {FaHandPointRight} from 'react-icons/fa';
 import Cookies from 'js-cookie';
 import AddPoke from "./AddPoke";
 import InviteResponse from "./InviteResponse";
+export const TeamContext = createContext(null);
 
 //import { UserContext } from "./UserContext";
 
 function DefaultLayout () {
     //const user = useContext(UserContext);
     const navigate = useNavigate();
+
     const [buttonPop, setButtonPop] = useState(false);
     const [joinPop, setJoinPop] = useState(false);
     const [leavePop, setLeavePop] = useState(false);
     const [isLoggedIn] = useState(false);
+    const [selectedTeam, setSelectedTeam] = useState(null);
+
     const [color,setColor] = useState("");
     const {user,setUser} = useContext(UserContext);
+    //const {teams, setTeams} = useContext(TeamContext);
     const [inviterName, setInviterName] = useState('');
     const [response, setResponse] = useState(0);
     const [responseTeam, setResponsTeam] = useState("");
@@ -55,7 +62,10 @@ function DefaultLayout () {
     const [teams, setTeams] = useState([{
         teamID: Number,
         team: String,
-        description: String
+        description: String,
+        managerid: String,  
+        color: String,
+        members: [String]
     }])
 
     useEffect( () => { 
@@ -172,10 +182,13 @@ function DefaultLayout () {
       };
 
     function changeTeam(team) {
-        localStorage.setItem('team', team.team)
+        setSelectedTeam(team.team);
+
+        
     };
 
     return (
+        <TeamContext.Provider value={selectedTeam}>
         <>
             <nav style={{backgroundColor: color}} class="navbar navbar-light mt-1 rounded">
                 <a class="navbar-brand" href="/main">
@@ -325,6 +338,7 @@ function DefaultLayout () {
             
             </div> 
         </>
+        </TeamContext.Provider>
     );
 };
 

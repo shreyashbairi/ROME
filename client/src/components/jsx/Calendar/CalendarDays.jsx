@@ -1,5 +1,4 @@
-import Popup from "reactjs-popup";
-import EditEvent from "./EditEvent";
+
 
 function CalendarDays(props) {
     // let firstDayOfMonth = new Date(props.day.getFullYear(), props.day.getMonth(), 1);

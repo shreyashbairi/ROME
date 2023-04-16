@@ -3,7 +3,6 @@ import "../../css/AddEvent.css";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../UserContext";
 import axios from 'axios';
-import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 

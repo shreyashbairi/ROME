@@ -10,6 +10,7 @@
   "author": "Erin Joy Kramer, William Quinn, Chiho Song, Shreyash Bairi",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -19,6 +20,8 @@
     "mongoose": "^6.9.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
-    "react-color": "^2.19.3"
+    "react-color": "^2.19.3",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1"
   }
 }

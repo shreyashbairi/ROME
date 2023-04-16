@@ -1,4 +1,7 @@
 import './App.css';
+import React from 'react';
+
+
 
 
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
@@ -26,6 +29,8 @@ import TeamHome from './components/jsx/TeamHome';
 import { UserContextProvider } from './components/jsx/UserContext';
 import { Navigate} from 'react-router-dom';
 import { UserContext } from './components/jsx/UserContext';
+import { TeamContext } from './components/jsx/TeamContext';
+import { TeamProvider } from './components/jsx/TeamContext';
 
 import { Redirect } from "react-router-dom";
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -42,14 +47,6 @@ function AuthRoutes() {
   }
   
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     navigate('/login', { replace: true });
-  //   }
-  // }, [loggedInUser, navigate]);
-  // if (!isLoggedIn) {
-  //   navigate('/login');
-  // }
 
   return (
     <Routes>
@@ -77,6 +74,9 @@ function AuthRoutes() {
   );
 }
 
+
+
+
 function App() {
   const [redirect, setRedirect] = useState(false);
   const [show,setShow] = useState(false);
@@ -86,9 +86,13 @@ function App() {
   return (
     <div className="App">
     <UserContextProvider>
+  
+        <TeamProvider>  
       <BrowserRouter>
         <AuthRoutes />
       </BrowserRouter>
+      </TeamProvider>
+      
     </UserContextProvider>
   </div>
   );

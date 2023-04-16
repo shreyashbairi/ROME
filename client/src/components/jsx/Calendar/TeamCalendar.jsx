@@ -1,5 +1,6 @@
 import "../../css/TeamCalendar.css";
-import React, {Component} from 'react';
+import { TeamContext } from "../DefaultLayout";
+import React from 'react';
 import TeamCalendarDays from "./TeamCalendarDays";
 import AddTeamEvent from "./AddTeamEvent";
 import EditTeamEvent from "./EditTeamEvent";
@@ -7,7 +8,6 @@ import Popup from 'reactjs-popup';
 import { useState, useEffect,useContext } from "react";
 import { UserContext } from "../UserContext";
 import axios from "axios";
-import EventFocus from "./EventFocus";
 import EventDetails from "./EventDetails";
 
 
@@ -35,11 +35,12 @@ export default function TeamCalendar (props) {
     const [color, setColor] = useState("");
     const [hourDetails, setHourDetails] = useState();
     const [fromDetails, setFromDetails] = useState(false);
+    const teamname = useContext(TeamContext);
+
     const atTeamCal = true;
 
     useEffect( () => {
         const username = user.userUserName;
-        const teamname = localStorage.getItem('team');
         // const username = "will2"
         axios.get(`/fullteamevents/${teamname}`)
         .then(res => {
@@ -320,7 +321,7 @@ export default function TeamCalendar (props) {
                                 setTrigger={closeform}
                                 scheduleEvent={scheduleEvent}
                                 teams={teams}
-                                teamName={localStorage.getItem("team")}
+                                teamName={teamname}
                                 setTeams={setTeams}
                                 events={fullEvents} 
                             />     

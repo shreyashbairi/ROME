@@ -1,14 +1,12 @@
 import "../../css/TeamCalendar.css";
-import React, {Component} from 'react';
+import React from 'react';
 import TeamCalendarDays from "./TeamCalendarDays";
-import CalendarDays from "./CalendarDays";
 import AddEvent from "./AddEvent";
-import EditEvent from "./EditEvent";
 import Popup from 'reactjs-popup';
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../UserContext";
-import EventFocus from "./EventFocus";
+import { TeamContext } from "../DefaultLayout";
 import EventDetails from "./EventDetails";
 
 export default function TeamMemberCalendar (props) {
@@ -34,6 +32,7 @@ export default function TeamMemberCalendar (props) {
     const [hourDetails, setHourDetails] = useState();
     const [fromDetails, setFromDetails] = useState(false);
     const [fullEvents, setFullEvents] = useState([]);
+    const teamName = useContext(TeamContext);
     const atTeamCal = false;
 
     useEffect( () => {
@@ -280,7 +279,7 @@ export default function TeamMemberCalendar (props) {
                                 teams={teams}
                                 setTeams={setTeams}
                                 user={props.username}
-                                team={localStorage.getItem("team")}
+                                team={teamName}
                         />     
                         </div>
                     </ Popup>
