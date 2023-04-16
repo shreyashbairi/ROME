@@ -620,11 +620,16 @@ app.delete("/teamtaskdelete", async(req,res) => {
 
 
 app.delete("/deletenotification/:id", async(req,res) => {
+    console.log("should be deleting");
+    console.log(req.params.id);
+
+    
     Notification.deleteOne({_id:req.params.id}, function(err) {
 
 
 
     });
+    
 
     // Notification.deleteOne({teamName:req.params.teamName, touser:req.params.touser, type:params.type}, function(err) {
     // });
@@ -647,6 +652,8 @@ app.delete("/personaltaskdelete/:title/:user", async(req,res) => {
 })
 
 app.post('/createtaskreminder', async (req,res)=>{
+    // console.clear();
+    console.log(req.method, req.path);
     const {task, user} = req.body;
 
     const temp = await Notification.findOne(
@@ -677,7 +684,9 @@ app.post('/createtaskreminder', async (req,res)=>{
     } catch(e){
         res.status(422).json(e);
     }
-}
+    } else {
+        console.log("already exists");
+    }
 })
 
 app.post('/invitenotification', async (req, res) =>{
