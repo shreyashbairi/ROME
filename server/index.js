@@ -60,6 +60,7 @@ app.get('/test', (req, res) =>{
 
 app.post('/annoucements', async (req, res) => {    
     const {title, teamname, description} = req.body;
+    console.log("hi");
     try{
         const userDoc = await Annoucements.create({
             title: title,
@@ -219,8 +220,8 @@ app.get("/members/:teamname", async (req,res) => {
 });
 app.get("/announcements/:teamname", async (req,res) => {
     try{
-        //console.log(req.params.teamname);
-        const annoucements = await Annoucements.find({ teamName: req.params.username })
+        const annoucements = await Annoucements.find({ teamName: req.params.teamname })
+
         res.json(annoucements);
     } catch (e){
         res.status(422).json(e);    
@@ -663,16 +664,12 @@ app.delete("/teamtaskdelete", async(req,res) => {
 
 app.delete("/deletenotification/:id", async(req,res) => {
     Notification.deleteOne({_id:req.params.id}, function(err) {
-
-
-
     });
+})
 
-    // Notification.deleteOne({teamName:req.params.teamName, touser:req.params.touser, type:params.type}, function(err) {
-    // });
-
-    //  teamName:req.params.touser, type:req.params.type
-
+app.delete("/deleteannoucements/:id", async(req,res) => {
+    Annoucements.deleteOne({_id:req.params.id}, function(err) {
+    });
 })
 
 
