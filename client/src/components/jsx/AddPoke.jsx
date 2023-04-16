@@ -5,6 +5,8 @@ import { UserContext } from "./UserContext";
 import { useContext } from "react";
 import { TeamContext }  from "./DefaultLayout";
 import axios from 'axios';
+import {FaHandPointRight} from 'react-icons/fa';
+
 // import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import TeamHome from "./TeamHome"
 axios.defaults.baseURL = 'http://localhost:8000';

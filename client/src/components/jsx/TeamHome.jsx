@@ -11,6 +11,8 @@ import { TeamContext } from "./DefaultLayout"
 import TeamMemberCalendar from "./Calendar/TeamMemberCalendar"
 import axios from "axios"
 import CreateAnnoucements from "./CreateAnnoucements"
+import { RxCross2 } from "react-icons/rx";
+
 
 
 function TeamHome() {
@@ -31,10 +33,16 @@ function TeamHome() {
         userUserName: String,
     }
     ]);
-
-    
+    const [announcements, setAnnoucements] = useState([{
+        _id: String,
+        title: String,
+        description: String,
+        teamName: String,
+    }
+    ]);
     useEffect(() => {
         const username = user.userUserName;
+        
         axios.get(`getmanager/${teamname}`)
         .then(res => {
             const manager = res.data;
@@ -52,11 +60,30 @@ function TeamHome() {
             //console.log(res.data);
             setMembers(mem);
         })
+        axios.get(`announcements/${teamname}`)
+        .then(res => {
+            const announ = res.data;
+            console.log(announ);
+            setAnnoucements(announ);
+        })
         axios.get(`/color/${username}`)
         .then (res => {
             setColor(res.data);
         })
     }, [])
+
+    async function deleteannoncement(pro){
+        let id = pro._id;
+        let teamname = localStorage.getItem('team');
+
+        axios.delete(`/deleteannoucements/${id}`,{});
+        axios.get(`announcements/${teamname}`)
+        .then(res => {
+            const announ = res.data;
+            console.log(announ);
+            setAnnoucements(announ);
+        })
+      };
     
     const closeAdd = () => {
         setAddTeam(false);
@@ -82,7 +109,6 @@ function TeamHome() {
         setAnnoucePop(true);
     }
 
-    // alert("You are entering as a manager");
     const closeform = () => {
         setButtonPop(false);
     }
@@ -136,7 +162,6 @@ function TeamHome() {
                         username={memberName}
                    />
     }
-    
     return (
         <div >
         <div class="todobefore"> 
@@ -251,6 +276,21 @@ function TeamHome() {
                 </ Popup>
                   : null}
             </div>
+            {announcements.map((annou,index)=>{
+                    return (
+                        <div key={index}>
+                            {managerBool ? 
+                            <button type="button" class="delete" onClick={()=> deleteannoncement(annou)} > <RxCross2/> </button>
+                            : null
+                            }
+                            <div>
+                                {annou.title} 
+                            </div>
+                            {annou.description}
+                            <ColoredLine color="grey" />
+                        </div>
+                    )
+                })} 
         </div>
         
 

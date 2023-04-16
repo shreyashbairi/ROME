@@ -8,7 +8,13 @@
   border-radius: .25rem;
   text-align: center;
 }
-
+.delete{
+  float: right;
+  padding: 0;
+  border: none;
+  background: none;  
+  
+}
 .top{
   height: 60px;
   font-size: large;
