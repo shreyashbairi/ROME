@@ -24,6 +24,7 @@ function PersonalTeamTodo() {
 
     async function edit_status(task){
         try {
+            let username = user.userUserName;
             await axios.post('/teamtaskedit', {
                 title:task.title,
                 description:task.description,
@@ -33,6 +34,12 @@ function PersonalTeamTodo() {
                 workers:[],
                 team:task.team
             });
+            await axios.post('completeteamtask', {
+                fromuser: username,
+                teamName: task.team,
+                description: task.description,
+                title: task.title
+            })
             alert("Task Updated in Team");
         } catch (e) {
             alert("Team Task did not Update")

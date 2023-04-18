@@ -539,7 +539,8 @@ app.get("/getUser/:username", async (req,res) => {
 });
 
 app.post("/editprofile", async (req,res) => {
-    const {username, cbirthday, cphone, caddress, cnotification,cColor} = req.body;
+    const {username, cbirthday, cphone, caddress, cnotification,cColor,join} = req.body;
+    console.log(join);
     try {
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
@@ -779,14 +780,14 @@ app.post('/acceptmember', async (req, res) => {
             });
 
         
-
-        
+       
         res.json(userDoc);
     } catch (e) {
         console.error(e);
         res.status(422).json(e);  
     }
 })
+
 
 app.post('/leaveteam', async (req,res) => {
     const {username, teamname} = req.body;
@@ -966,6 +967,31 @@ app.post('/requestteam', async (req, res) => {
             teamName: teamName,
             message: "Request to join " + teamName + " from " + fromuser,
             show: true,
+        })
+        res.json(notification);
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+app.post('/completeteamtask', async (req, res) => {
+    const {fromuser, teamName, description, title} = req.body;
+    try {
+        const team = await Team.findOne({team: teamName});
+        // console.log("DEBUG");
+        // console.log(team);
+        const manager = team.managerid;
+        // console.log(team.mangaerid);
+        const notification = await Notification.create({
+            fromuser: fromuser,
+            touser: manager,
+            description: description,
+            type: "Task-Reminder",
+            teamName: teamName,
+            message: fromuser + " has complete " + title,
+            show: false,
         })
         res.json(notification);
     } catch (e) {
