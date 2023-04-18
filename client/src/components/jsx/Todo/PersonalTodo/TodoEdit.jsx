@@ -6,7 +6,7 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
 
-function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
+function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo,setTodos,todos}) {
     const [popupOpened, setPopupOpened] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState(todo.description);
@@ -61,6 +61,21 @@ function TodoEdit({trigger,setTrigger,scheduleEvent,title,todo}) {
                     alert('Task Failed to Save');
                 }
             }
+
+            const editedTask= {
+                title:taskTitle,
+                description:taskDescription,
+                date:taskDate,
+                username:username,
+                HighPriority: priority.HighPriority,
+                MediumPriority: priority.MediumPriority,
+                LowPriority: priority.LowPriority,
+                reminder: reminder
+            }
+
+        const removeArray = [...todos].filter(task => task !== todo)
+        const editArr=[editedTask,...removeArray]
+        setTodos(editArr);
     } 
 
     

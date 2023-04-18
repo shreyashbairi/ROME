@@ -122,6 +122,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                                                 scheduleEvent={todo}
                                                                 title={todo.title}
                                                                 todo={todo}
+                                                                setTodos={setTodos}
+                                                                todos={todos}
                                                         />     
                                                         </div>
                                                     </Popup>
@@ -167,6 +169,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                                         scheduleEvent={todo}
                                                         title={todo.title}
                                                         todo={todo}
+                                                        setTodos={setTodos}
+                                                        todos={todos}
                                                     />     
                                                 </div>
                                             </Popup>
@@ -210,6 +214,8 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                                                         scheduleEvent={todo}
                                                         title={todo.title}
                                                         todo={todo}
+                                                        setTodos={setTodos}
+                                                        todos={todos}
                                                     />     
                                                 </div>
                                             </Popup>
