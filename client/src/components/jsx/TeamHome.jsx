@@ -42,7 +42,8 @@ function TeamHome() {
     ]);
     useEffect(() => {
         const username = user.userUserName;
-        
+        const teamname_ = teamname;
+        console.log("The team name is: " + teamname);
         axios.get(`getmanager/${teamname}`)
         .then(res => {
             const manager = res.data;

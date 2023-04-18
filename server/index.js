@@ -1032,27 +1032,7 @@ app.post('/removeworker',async(req,res)=> {
     }
 })
     
-    // if (_existingUser) {
-    //     const notification = await Notification.create(
-    //         {
-    //             fromuser: inviter,
-    //             touser: invitedUser,
-    //             type: "Invite",
-    //             description: descriptionSent,
-    //         });
-    //     res.json(notification);
-    // }
-    // else {
-    //     res.status(422).json(e);
-    // }
 
-
-  
-  
-
-
-
-//middleware
 
 
 

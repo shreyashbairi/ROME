@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { createContext } from 'react';
 import {Outlet, useNavigate} from "react-router-dom";
+import Cookies from 'js-cookie';
 import '../css/DefaultLayout.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,7 +14,6 @@ import JoinTeamPop from "./JoinTeamPop";
 import LeaveTeamPop from "./LeaveTeamPop";
 import  { AiFillBell,AiFillCheckCircle,AiOutlineBell,AiFillCloseCircle,AiFillSetting } from 'react-icons/ai';
 import {FaHandPointRight} from 'react-icons/fa';
-import Cookies from 'js-cookie';
 import AddPoke from "./AddPoke";
 import InviteResponse from "./InviteResponse";
 export const TeamContext = createContext(null);
@@ -28,7 +28,9 @@ function DefaultLayout () {
     const [joinPop, setJoinPop] = useState(false);
     const [leavePop, setLeavePop] = useState(false);
     const [isLoggedIn] = useState(false);
-    const [selectedTeam, setSelectedTeam] = useState(null);
+    const [selectedTeam, setSelectedTeam] = useState(
+        Cookies.get('team') || null
+      );
 
     const [color,setColor] = useState("");
     const {user,setUser} = useContext(UserContext);
@@ -155,11 +157,7 @@ function DefaultLayout () {
 
       };
 
-
-
-
-
-      function handleDecline(pro){
+      async function handleDecline(pro){
         let touser = pro.touser;
         let id = pro._id;
         axios.delete(`/deletenotification/${id}`,{})
@@ -187,7 +185,8 @@ function DefaultLayout () {
 
     function changeTeam(team) {
         setSelectedTeam(team.team);
-
+        Cookies.set('team', team.team);
+        console.log("selected team is " + selectedTeam + "team.team is " + team.team);
         
     };
 
@@ -294,6 +293,7 @@ function DefaultLayout () {
                                 {/* <a href={`/team/${team.team}`}>{team.team}</a> */}
                                     <Link to={`/team/${team.team}`} onClick={()=>changeTeam(team)}>{team.team}</Link>
                                     {/* <button onClick={switchTeam}>{team.team}</button> */}
+                                    
                             </div>
                         </div>
                     )
