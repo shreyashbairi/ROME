@@ -162,16 +162,23 @@ function DefaultLayout () {
         let id = pro._id;
         axios.delete(`/deletenotification/${id}`,{})
 
-
-        axios.get(`/notifications/${touser}`)
-        .then (res => {
-            setNotif(res.data);
-            if(res.data.length === 0){
-                setIsnotif(false);
-            }else{
-                setIsnotif(true);
+        let newNotif = [];
+        for (let i = 0; i < notif.length; i++) {
+            if (notif[i]._id !== pro._id) {
+                newNotif.push(notif[i])
             }
-        });
+        }
+        console.log(newNotif);
+        setNotif(newNotif);
+        // axios.get(`/notifications/${touser}`)
+        // .then (res => {
+        //     setNotif(res.data);
+        //     if(res.data.length === 0){
+        //         setIsnotif(false);
+        //     }else{
+        //         setIsnotif(true);
+        //     }
+        // });
 
       };
 
