@@ -34,7 +34,7 @@ function PersonalTeamTodo() {
                 workers:[],
                 team:task.team
             });
-            await axios.post('completeteamtask', {
+            await axios.post('/completeteamtask', {
                 fromuser: username,
                 teamName: task.team,
                 description: task.description,

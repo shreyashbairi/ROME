@@ -43,22 +43,22 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
         return <TodoForm change={change} onSubmit={submitUpdate}/>
     }
 
-    async function checkDate() {
-        //console.clear()
-        var date = new Date().toISOString().substring(0,10);
-        // console.log(date);
+    // async function checkDate() {
+    //     //console.clear()
+    //     var date = new Date().toISOString().substring(0,10);
+    //     // console.log(date);
 
-        todos.forEach(async (task)=>{
-            const approaching_task = {
-                task: task,
-                user: user.userUserName
-            }
-            if ((task.date !== null && (task.date.split('T')[0] === date)) && task.reminder){
-                console.log(task)
-                await axios.post('/createtaskreminder', approaching_task);
-            }
-        })
-    }
+    //     todos.forEach(async (task)=>{
+    //         const approaching_task = {
+    //             task: task,
+    //             user: user.userUserName
+    //         }
+    //         if ((task.date !== null && (task.date.split('T')[0] === date)) && task.reminder){
+    //             console.log(task)
+    //             await axios.post('/createtaskreminder', approaching_task);
+    //         }
+    //     })
+    // }
 
     
 
@@ -76,7 +76,7 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
                     todos.sort((a,b)=> (a.date<b.date) ? -1 : 1);
                 }
 
-                checkDate();
+                // checkDate();
                  
             })()}
             {todos.map((todo,index)=>{
