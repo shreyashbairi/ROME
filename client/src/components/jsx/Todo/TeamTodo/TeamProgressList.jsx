@@ -24,7 +24,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
     }
 
     useEffect( () => {
-        
+        const team = localStorage.getItem("team");
         axios.get(`members/${team}`)
         .then(res => {
             const memberList = res.data;
@@ -48,7 +48,7 @@ function TeamProgressList({started,setStarted,removeTodoFromProg}) {
 
             try {
                 await axios.post('/assignMemberToTask', {
-                    team: team,
+                    team: localStorage.getItem("team"),
                     task: task,
                     member:memberUserName
                 });

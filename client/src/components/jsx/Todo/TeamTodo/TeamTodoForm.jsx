@@ -16,7 +16,7 @@ export function TeamTodoForm(props) {
     const { user } = useContext(UserContext);
     async function handleSubmit(e) {
         e.preventDefault();
-
+        const team = localStorage.getItem("team");
 
         const newTask = {
             id: Math.floor(Math.random()*10000),

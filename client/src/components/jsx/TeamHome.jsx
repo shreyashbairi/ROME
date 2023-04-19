@@ -42,7 +42,7 @@ function TeamHome() {
     ]);
     useEffect(() => {
         const username = user.userUserName;
-        const teamname_ = teamname;
+        const teamname = localStorage.getItem("team");
         console.log("The team name is: " + teamname);
         axios.get(`getmanager/${teamname}`)
         .then(res => {
@@ -207,13 +207,12 @@ function TeamHome() {
                 <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary"></button>} open={addTeam}
                         onOpen={openAdd} position="right center" nested modal>
                             <div class="card">
-                            {user !== null && user.userTeamList.length > 0 && (
-  <AddTeamMember
-    trigger={AddEvent}
-    setTrigger={closeAdd}
-    // scheduleEvent={this.scheduleEvent}
-  />
-)}
+                            {/* {user !== null && user.userTeamList.length > 0 && ( */}
+                        <AddTeamMember
+                            trigger={AddEvent}
+                            setTrigger={closeAdd}
+                            // scheduleEvent={this.scheduleEvent}
+                        />
                             </div>
                 </ Popup>
                   : null}

@@ -74,6 +74,8 @@ function DefaultLayout () {
         axios.get(`/teams/${username}`)
         .then (res => {
             const teamsGrabed = res.data;
+            // console.log("GOT TEAMS");
+            // console.log(res.data);
             setTeams(teamsGrabed);
         })
         axios.get(`/color/${username}`)
@@ -83,7 +85,7 @@ function DefaultLayout () {
         axios.get(`/notifications/${username}`)
         .then (res => {
             setNotif(res.data);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.length == 0){
                 setIsnotif(false);
             }else{
@@ -131,29 +133,44 @@ function DefaultLayout () {
     }
 
     async function handleInvite(pro){
+        console.log(pro);
         let touser = pro.touser;
         let teamname = pro.teamName;
-        let id = pro._id;
+        let notifid = pro._id;
+        let manager;
             if (pro.type === "Request" || pro.type === "Invite") {
-            username = pro.fromuser;
-            teamname = pro.teamName;
-            let manager = pro.fromuser;
-            await axios.post('/acceptmember', {
-                username, teamname, manager
-            })
-            
+                if (pro.type === "Request") {
+                    username = pro.fromuser;
+                    manager = pro.touser;
+                    
+                } else {
+                    username = pro.touser;
+                    manager = pro.fromuser;
+                }
+                teamname = pro.teamName;
+                await axios.post('/acceptmember', {
+                    username, teamname, manager, notifid
+                }).then( res => {
+                    let newNotif = [];
+                    for (let i = 0; i < notif.length; i++) {
+                        if (notif[i]._id !== pro._id) {
+                            newNotif.push(notif[i])
+                        }
+                    }
+                    setNotif(newNotif);
+                })
         } else if(pro.type === "Poke") {
         }
-        axios.delete(`/deletenotification/${id}/${pro}`,{})
-        axios.get(`/notifications/${touser}`)
-        .then (res => {
-            setNotif(res.data);
-            if(res.data.length === 0){
-                setIsnotif(false);
-            }else{
-                setIsnotif(true);
-            }
-        });
+        // axios.delete(`/deletenotification/${id}`,{})
+        // axios.get(`/notifications/${touser}`)
+        // .then (res => {
+        //     setNotif(res.data);
+        //     if(res.data.length === 0){
+        //         setIsnotif(false);
+        //     }else{
+        //         setIsnotif(true);
+        //     }
+        // });
 
       };
 
@@ -168,7 +185,7 @@ function DefaultLayout () {
                 newNotif.push(notif[i])
             }
         }
-        console.log(newNotif);
+        //console.log(newNotif);
         setNotif(newNotif);
         // axios.get(`/notifications/${touser}`)
         // .then (res => {
@@ -191,6 +208,7 @@ function DefaultLayout () {
       };
 
     function changeTeam(team) {
+        localStorage.setItem('team', team.team);
         setSelectedTeam(team.team);
         Cookies.set('team', team.team);
         console.log("selected team is " + selectedTeam + "team.team is " + team.team);

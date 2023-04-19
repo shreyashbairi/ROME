@@ -25,6 +25,7 @@ function TeamAddNewWorking(props, {task}) {
     }
 
     useEffect( () => {
+        const team = localStorage.getItem("team");
         try {
         axios.get(`members/${team}`)
         .then(res => {

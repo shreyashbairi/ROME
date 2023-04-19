@@ -44,7 +44,7 @@ function Todo({todos,completeTodo,removeTodo,editTask, pastDue, seven, bypriorit
     }
 
     async function checkDate() {
-        console.clear()
+        //console.clear()
         var date = new Date().toISOString().substring(0,10);
         // console.log(date);
 

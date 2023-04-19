@@ -16,7 +16,8 @@ function AddTeamMember(props) {
     let teams = [];
     const { user } = useContext(UserContext);
     const [description, setDescription] = useState("")
-    const teamname = useContext(TeamContext);
+    // const teamname = useContext(TeamContext);
+    const teamname = localStorage.getItem("team");
 
     const [data, setData] = useState({
         name: {name},
@@ -28,7 +29,7 @@ function AddTeamMember(props) {
         const invitedUser = name;
         const descriptionSent = description;
         const inviter = user.userUserName;
-        let inviterTeamName;
+        let inviterTeamName = teamname;
         console.log("the teamname in ATM is " + teamname);
    
         axios.get(`/teams/${inviter}`).then(res => {

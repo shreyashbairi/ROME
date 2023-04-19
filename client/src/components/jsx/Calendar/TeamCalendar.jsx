@@ -35,13 +35,14 @@ export default function TeamCalendar (props) {
     const [color, setColor] = useState("");
     const [hourDetails, setHourDetails] = useState();
     const [fromDetails, setFromDetails] = useState(false);
-    const teamname = useContext(TeamContext);
+    // const teamname = useContext(TeamContext);
 
     const atTeamCal = true;
 
     useEffect( () => {
         const username = user.userUserName;
         // const username = "will2"
+        const teamname = localStorage.getItem("team");
         axios.get(`/fullteamevents/${teamname}`)
         .then(res => {
             const eventsGrabed = res.data;
@@ -321,7 +322,7 @@ export default function TeamCalendar (props) {
                                 setTrigger={closeform}
                                 scheduleEvent={scheduleEvent}
                                 teams={teams}
-                                teamName={teamname}
+                                teamName={localStorage.getItem("team")}
                                 setTeams={setTeams}
                                 events={fullEvents} 
                             />     

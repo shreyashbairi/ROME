@@ -27,7 +27,8 @@ function AddPoke(props) {
         const invitedUser = name;
         const descriptionSent = description;
         const inviter = user.userUserName;
-        const inviterTeamName = teamName;
+        // const inviterTeamName = teamName;
+        const inviterTeamName = localStorage.getItem("team")
 
         axios.get(`/teams/${inviter}`).then(res => {
             teams = res.data;

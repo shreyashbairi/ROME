@@ -23,6 +23,7 @@ function RemoveTeamMember(props) {
     async function handleSubmit(e) {
         e.preventDefault();
         const username = name;
+        const teamname = localStorage.getItem("team");
         // const descriptionSent = description;
         // console.log("The inviter is " + inviter);
         // console.log("The team is " + team);

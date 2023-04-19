@@ -24,6 +24,7 @@ function TeamEditTask({task}) {
     }
 
     useEffect( () => {
+        const team = localStorage.getItem("team");
         axios.get(`members/${team}`)
         .then(res => {
             const memberList = res.data;
@@ -42,7 +43,7 @@ function TeamEditTask({task}) {
         const toPost = {
             task: task,
             username: name,
-            team: team
+            team: localStorage.getItem("team")
         }
 
         try {

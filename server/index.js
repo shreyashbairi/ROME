@@ -155,8 +155,8 @@ app.get('/profile', (req, res) => {
             if(err) throw err;
             //grab latest info about user from db
             //send it back to client
-            const {userEmail, userUserName, _id, userTeamList} = await User.findById(userData.id);
-            res.json({userEmail, userUserName, _id, userTeamList}); 
+            const {userEmail, userUserName, _id} = await User.findById(userData.id);
+            res.json({userEmail, userUserName, _id}); 
         })
     } else {
         res.status(401).json('not authorized');
@@ -667,7 +667,7 @@ app.delete("/deletenotification/:id", async(req,res) => {
     console.log("should be deleting");
     console.log(req.params.id);
 
-    
+
     Notification.deleteOne({_id:req.params.id}, function(err) {
     });
 })
@@ -692,7 +692,7 @@ app.delete("/personaltaskdelete/:title/:user", async(req,res) => {
 
 app.post('/createtaskreminder', async (req,res)=>{
     // console.clear();
-    console.log(req.method, req.path);
+    // console.log(req.method, req.path);
     const {task, user} = req.body;
 
     const temp = await Notification.findOne(
@@ -724,7 +724,7 @@ app.post('/createtaskreminder', async (req,res)=>{
         res.status(422).json(e);
     }
     } else {
-        console.log("already exists");
+        //console.log("already exists");
     }
 })
 
@@ -750,10 +750,11 @@ app.post('/invitenotification', async (req, res) =>{
 
 
 app.post('/acceptmember', async (req, res) => {
-    const {username, teamname, manager} = req.body;
-    // console.log("acceptmember");
-    // console.log(username);
+    const {username, teamname, manager, notifid} = req.body;
+    console.log("acceptmember");
+    console.log(username);
     console.log(manager);
+    console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
         
@@ -777,8 +778,8 @@ app.post('/acceptmember', async (req, res) => {
                 teamName: teamname,
                 message: username + " has joined " + teamname,
                 show: false,
-            });
-
+        });
+        Notification.deleteOne({_id: notifid}, function(err) {});
         
        
         res.json(userDoc);
