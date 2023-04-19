@@ -96,9 +96,6 @@ function DefaultLayout () {
             }else{
                 setIsnotif(true);
             }
-            if(profile.notifjoin){
-
-            }
         });
         
 
@@ -168,6 +165,7 @@ function DefaultLayout () {
                     }
                     setNotif(newNotif);
                 })
+                
         } else if(pro.type === "Poke") {
         }
         // axios.delete(`/deletenotification/${id}`,{})
@@ -231,8 +229,13 @@ function DefaultLayout () {
                 <a class="navbar-brand" href="/main">
                     <img src="https://cdn-icons-png.flaticon.com/512/1235/1235814.png" alt="Logo" width="30" height="24" class="pic d-inline-block align-text-top" />
                     Rome
-                </a>                   
-                <div>  
+                </a>                 
+                {username}    
+
+
+                               
+                <div>
+                
                 <Popup class="addpoke" trigger={<button type="button" class="notif"><FaHandPointRight /></button>} open={poke}
                 onOpen={openPoke} position="right center" nested modal>
                     <div class="card">
