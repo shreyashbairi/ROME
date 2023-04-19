@@ -1044,12 +1044,24 @@ app.post('/completeteamtask', async (req, res) => {
             fromuser: fromuser,
             touser: manager,
             description: description,
-            type: "Task-Reminder",
+            type: "task-reminder",
             teamName: teamName,
-            message: fromuser + " has complete " + title,
+            message: fromuser + " has completed \"" + title+"\"",
             show: false,
         })
-        res.json(notification);
+
+        const teamTasksDoc = await TeamTask.findOneAndUpdate(
+            {title: title , description:description},
+            {
+            started:false,
+            complete:true,
+            workers:[]
+            });
+   
+        // console.log(newTitle);
+        // console.log(curusername)
+        // console.log(eventsDoc);
+        res.json(teamTasksDoc);
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: 'Internal server error' });

@@ -25,15 +25,15 @@ function PersonalTeamTodo() {
     async function edit_status(task){
         try {
             let username = user.userUserName;
-            await axios.post('/teamtaskedit', {
-                title:task.title,
-                description:task.description,
-                date:task.date,
-                started:false,
-                complete:true,
-                workers:[],
-                team:task.team
-            });
+            // await axios.post('/teamtaskedit', {
+            //     title:task.title,
+            //     description:task.description,
+            //     date:task.date,
+            //     started:false,
+            //     complete:true,
+            //     workers:[],
+            //     team:task.team
+            // });
             await axios.post('/completeteamtask', {
                 fromuser: username,
                 teamName: task.team,
