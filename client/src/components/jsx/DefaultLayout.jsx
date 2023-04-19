@@ -297,8 +297,8 @@ function DefaultLayout () {
                     return (
                         <div key={index}>
                             <div key={team.teamID}>
-                                {/* <a href={`/team/${team.team}`}>{team.team}</a> */}
-                                    <Link to={`/team/${team.team}`} onClick={()=>changeTeam(team)}>{team.team}</Link>
+                                <a href={`/team/${team.team}`}  onClick={()=>changeTeam(team)}>{team.team}</a>
+                                    {/* <Link to={`/team/${team.team}`} onClick={()=>changeTeam(team)}>{team.team}</Link> */}
                                     {/* <button onClick={switchTeam}>{team.team}</button> */}
                                     
                             </div>
