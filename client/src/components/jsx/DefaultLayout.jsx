@@ -90,7 +90,7 @@ function DefaultLayout () {
         axios.get(`/notifications/${username}`)
         .then (res => {
             setNotif(res.data);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.length == 0){
                 setIsnotif(false);
             }else{
@@ -265,15 +265,19 @@ function DefaultLayout () {
                                                 <div class="card-body">
                                                     {notiff.type}
                                                     <ColoredLine color="grey" />
-                                                    <div class="row">
+
+                                                    {notiff.type === "Poke"
+                                                    ? <div class="row">
                                                         <div class="col-sm-3">
                                                             <h class="mb-0">Team Name</h>
                                                         </div>
                                                         <div class="col-sm-9 text-secondary">
                                                             {notiff.teamName}
                                                         </div>
-                                                    </div> 
+                                                    </div> :null}
                                                     <ColoredLine color="grey" />
+                            
+
                                                     <div class="row">
                                                         <div class="col-sm-3">
                                                             <h class="mb-0">Description</h>
