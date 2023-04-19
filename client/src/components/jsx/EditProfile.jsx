@@ -18,6 +18,11 @@ function EditProfile (){
   const [cColor, setColor] =useState("");
   const [color,setcolor] = useState("");
   const {user, setUser} = useContext(UserContext);
+  const [join, setJoin] = useState(false);
+  const [poke, setPoke] = useState(false);
+  const [task, setTask] = useState(false);
+  const [leave, setLeave] = useState(false);
+  const [announce, setAnnounce] = useState(false);
 
 
   useEffect( () => {
@@ -29,12 +34,10 @@ function EditProfile (){
     axios.get(`/color/${username}`)
     .then (res => {
         setcolor(res.data);
+        setColor(res.data);
     })
   }, []);
   async function handleSubmit(e) {
-
-    
-    // console.log("i tried");
     e.preventDefault();
     const username = user.userUserName;
     try {
@@ -44,13 +47,34 @@ function EditProfile (){
         cphone,
         caddress,
         cnotification,
-        cColor
+        cColor,
+        join,
+        poke,
+        task,
+        leave,
+        announce,
       });
+      
       setRedirect(true);
     } catch (e) {
       alert("Profile Update Failed")
     }
 
+
+}
+
+const handlejoin = (event) => {
+  if(event.target.value === "join"){
+    setJoin(event.target.checked);
+  } else if(event.target.value === "poke"){
+    setPoke(event.target.checked);
+  } else if(event.target.value === "task"){
+    setTask(event.target.checked);
+  } else if(event.target.value === "leave"){
+    setLeave(event.target.checked);
+  } else if(event.target.value === "announce"){
+    setAnnounce(event.target.checked);
+  }
 
 }
 if (redirect) {
@@ -116,19 +140,6 @@ if (redirect) {
                       id="editprofile"
                       onSubmit={handleSubmit}
                   >
-                    {/* <div class="row">
-                        <div class="col-sm-3">
-                          <h class="mb-0">Full Name</h>
-                        </div>
-
-                          <div class="col-sm-9 text-secondary">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" />
-
-                          </div>
-
-                      </div>
-                      <ColoredLine color="grey" /> */}
-                      
                       <div class="row">
                         <div class="col-sm-3">
                           <h class="mb-0">Birthday</h>
@@ -144,19 +155,6 @@ if (redirect) {
                         </div>
                       </div>
                       <ColoredLine color="grey" />
-
-                      {/* <div class="row">
-                        <div class="col-sm-3">
-                          <h class="mb-0">Email</h>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-        
-                        </div>
-                      </div>
-                      <ColoredLine color="grey" /> */}
-
-
                       <div class="row">
                         <div class="col-sm-3">
                           <h class="mb-0">Preferred name</h>
@@ -192,24 +190,7 @@ if (redirect) {
                       <ColoredLine color="grey" />
 
 
-                        {/* <div class="row">
-                        <div class="col-sm-3">
-                          <h class="mb-0">Notification</h>
-                        
-                        </div>
-                        
-                        <div class="col-sm-9">
-                        <label>
-                        <input
-                          id="notification"
-                          type="checkbox"
-                          className="description-box"
-                          onChange={e => setcNotification(e.target.value)}
-                          value={notification}
-                      />                                       </label>
-                        </div>
-                      </div>
-                      <ColoredLine color="grey" />                   */}
+   
              
                       <div class="row">
                         <div class="col-sm-3">
@@ -217,21 +198,12 @@ if (redirect) {
                         </div>
                         <div class="col-sm-9 text-secondary">
                         <input type="color" id="head" name="head"
-                        value={color} onChange={e =>{ setColor(e.target.value); setcolor(e.target.value)}} />
-                        {/* <select style={{backgroundColor: color}} onChange={e => setColor(e.target.value)} >
-                              
-                          <option value="#0d6efd" style={{backgroundColor: "#0d6efd"}}>Blue</option>
-                          <option value="#ff00004d" style={{backgroundColor: "#ff00004d"}}>Pink</option>
-                          <option value="#91D5C1" style={{backgroundColor: "#91D5C1"}}>Green</option>
-                        </select> */}
-
+                        value={color} 
+                        onChange={e =>{ setColor(e.target.value); setcolor(e.target.value)}} />
                         </div>
                       </div>
                       <ColoredLine color="grey" />
                       
-
-
-
 
                       <div class="row">
                         <div class="col-sm-3">
@@ -241,41 +213,52 @@ if (redirect) {
                         <div class="col-sm-9 text-secondary">
                           <div>
                             Join message
-                            <label class="switch">
-                              <input type="checkbox" name="Join"/>
-                              <span class="slider round"></span>
-                            </label>
+                            <input type="checkbox" 
+                            
+                              onChange={handlejoin}
+                              checked={join}
+                              value="join"
+                              />
                           </div>
                           <div>
                             Poke
-                            <label class="switch">
-                              <input type="checkbox" name="Poke"/>
-                              <span class="slider round"></span>
-                            </label>
+                            <input type="checkbox" 
+                            
+                            onChange={handlejoin}
+                            checked={poke}
+                            value="poke"
+                            />
+
                           </div>
                           <div>
                             Task reminder
-                            <label class="switch">
-                              <input type="checkbox"/>
-                              <span class="slider round"></span>
-                            </label>
+                            <input type="checkbox" 
+                            
+                            onChange={handlejoin}
+                            checked={task}
+                            value="task"
+                            />
                           </div>
                           <div>
                             Leave
-                            <label class="switch">
-                              <input type="checkbox"/>
-                              <span class="slider round"></span>
-                            </label>
+                            <input type="checkbox" 
+                            
+                            onChange={handlejoin}
+                            checked={leave}
+                            value="leave"
+                            />
+
                           </div>
                           <div>
                             Annoucements
-                            <label class="switch">
-                              <input type="checkbox"/>
-                              <span class="slider round"></span>
-                            </label>
+                            <input type="checkbox" 
+                            
+                            onChange={handlejoin}
+                            checked={announce}
+                            value="announce"
+                            />
                           </div>
 
-  
                         </div>
                       </div>
                       <ColoredLine color="grey" />     

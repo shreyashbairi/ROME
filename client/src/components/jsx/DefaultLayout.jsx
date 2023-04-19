@@ -38,8 +38,9 @@ function DefaultLayout () {
     const [inviterName, setInviterName] = useState('');
     const [response, setResponse] = useState(0);
     const [responseTeam, setResponsTeam] = useState("");
-    const [poke, setAddPoke] = useState(false);
+    const [profile, setProfile] = useState({});
 
+    const [poke, setAddPoke] = useState(false);
     const [isnotif, setIsnotif] = useState(false);
     let username = "";
     try{
@@ -78,6 +79,10 @@ function DefaultLayout () {
             // console.log(res.data);
             setTeams(teamsGrabed);
         })
+        axios.get(`/profile/${username}`)
+        .then(res => {
+        setProfile(res.data);
+        })        
         axios.get(`/color/${username}`)
         .then (res => {
             setColor(res.data);
@@ -85,13 +90,17 @@ function DefaultLayout () {
         axios.get(`/notifications/${username}`)
         .then (res => {
             setNotif(res.data);
-            // console.log(res.data);
+            console.log(res.data);
             if(res.data.length == 0){
                 setIsnotif(false);
             }else{
                 setIsnotif(true);
             }
+            if(profile.notifjoin){
+
+            }
         });
+        
 
     }, [] );
 
@@ -236,48 +245,62 @@ function DefaultLayout () {
                 <Popup trigger={  <button type="button" class="btn "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {isnotif ? <AiFillBell/> : <AiOutlineBell/> } </button>  } contentStyle={{ width: '350px' } } > 
                         {notif.length !== 0 ? notif.map((notiff, index)=>{
-                            return (       
+                            return ( 
+                                      
                                 <div key={index}> 
-                                    <Popup trigger={<button class="notif"> {notiff.message} </button>} nested modal >
-                                        <div class="card">
-                                            <div class="card-body">
-                                                {notiff.type}
-                                                <ColoredLine color="grey" />
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <h class="mb-0">Team Name</h>
-                                                    </div>
-                                                    <div class="col-sm-9 text-secondary">
-                                                        {notiff.teamName}
-                                                    </div>
-                                                </div> 
-                                                <ColoredLine color="grey" />
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <h class="mb-0">Description</h>
-                                                    </div>
-                                                    <div class="col-sm-9 text-secondary">
-                                                        {notiff.description}
-                                                    </div>
-                                                </div> 
-                                                <ColoredLine color="grey" /> 
+                                    {(profile.notifjoin && (notiff.type === "Join")) || (profile.notifpoke && (notiff.type === "Poke")) ||
+                                    (profile.notiftask && (notiff.type === "Task-Reminder")) || (profile.notifleave && (notiff.type === "Leave")) ||
+                                    (profile.notifannounce && (notiff.type === "announcements")) || (notiff.type === "Invite") || (notiff.type === "Request")
+                                    
+                                    
+                         
+
+                                      
+                                     ?<div>
+                                        <Popup trigger={<button class="notif"> {notiff.message} </button>} nested modal >
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    {notiff.type}
+                                                    <ColoredLine color="grey" />
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <h class="mb-0">Team Name</h>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            {notiff.teamName}
+                                                        </div>
+                                                    </div> 
+                                                    <ColoredLine color="grey" />
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <h class="mb-0">Description</h>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            {notiff.description}
+                                                        </div>
+                                                    </div> 
+                                                    <ColoredLine color="grey" /> 
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Popup>
-                                    <div>
-                                        {notiff.show ? 
-                                            <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
-                                                <AiFillCheckCircle/> 
+                                        </Popup>
+                                        <div>
+                                            {notiff.show ? 
+                                                <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleInvite(notiff)}>
+                                                    <AiFillCheckCircle/> 
+                                                </button>  
+                                            : null}
+
+
+                                            <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
+                                                <AiFillCloseCircle/>                     
                                             </button>  
-                                        : null}
+                                        </div>
 
-
-                                        <button type="button" class="btn " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={()=> handleDecline(notiff)}>
-                                            <AiFillCloseCircle/>                     
-                                        </button>  
+                                        <ColoredLine color="grey" />
                                     </div>
+                                    : null} 
 
-                                    <ColoredLine color="grey" />
+
                                 </ div>
             
                             )

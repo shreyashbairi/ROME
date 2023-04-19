@@ -76,7 +76,7 @@ app.post('/annoucements', async (req, res) => {
                 {
                     fromuser: manager,
                     touser: usernameList[i],
-                    type: "annoucements",
+                    type: "announcements",
                     description: description,
                     teamName: teamname,
                     message: manager + " has posted new annoucements in "+ teamname,
@@ -110,9 +110,13 @@ app.post('/signup', async (req, res) => {
         userPhone: "",
         userAddress: "",
         userColor: "#0d6efd",
-        userNotification: false,
         userViewMode: 7,
-        userTeamList:[]
+        userTeamList:[],
+        notifjoin: true,
+        notifpoke: true,
+        notiftask: true,
+        notifleave: true,
+        notifannounce: true
       });
       const savedUser = await userDoc.save();
       res.status(201).json(savedUser);
@@ -539,7 +543,7 @@ app.get("/getUser/:username", async (req,res) => {
 });
 
 app.post("/editprofile", async (req,res) => {
-    const {username, cbirthday, cphone, caddress, cnotification,cColor,join} = req.body;
+    const {username, cbirthday, cphone, caddress, cnotification,cColor,join,poke,task,leave,announce} = req.body;
     console.log(join);
     try {
         const userDoc = await User.findOneAndUpdate(
@@ -580,6 +584,57 @@ app.post("/editprofile", async (req,res) => {
     } catch (e) {
         res.status(422).json(e); 
     }
+
+
+    try {
+        //console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                notifjoin: join,
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }    
+    try {
+        //console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                notifpoke: poke,
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }    
+    try {
+        //console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                notiftask: task,
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }    try {
+        //console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                notifleave: leave,
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }    try {
+        //console.log(req.body);
+        const userDoc = await User.findOneAndUpdate(
+            {userUserName: username},
+            {
+                notifannounce: announce,
+        });
+    } catch (e) {
+        res.status(422).json(e); 
+    }
+
 
 
 

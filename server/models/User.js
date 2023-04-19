@@ -34,9 +34,13 @@ const UserSchema = new Schema({
     userPhone: String,
     userAddress: String,
     userColor: String,
-    userNotification: Boolean,
     userViewMode: Number,
-    userTeamList: [String]
+    userTeamList: [String],
+    notifjoin: Boolean,
+    notifpoke: Boolean,
+    notiftask: Boolean,
+    notifleave: Boolean,
+    notifannounce: Boolean,
 });
 
 const UserModel = mongoose.model('User', UserSchema);
