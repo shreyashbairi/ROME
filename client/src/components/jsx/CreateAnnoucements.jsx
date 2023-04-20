@@ -19,10 +19,10 @@ function CreateAnnoucements(props) {
     })
 
     async function handleSubmit(e) {
-        console.log("HI");
+        // console.log("HI");
         e.preventDefault();
-        console.log(title);
-        console.log(description);
+        // console.log(title);
+        // console.log(description);
         const teamname = localStorage.getItem("team");
         try {
             await axios.post('/annoucements',{
@@ -30,12 +30,18 @@ function CreateAnnoucements(props) {
               teamname,
               description
             });
-            alert("Annoucement Created!");
+            alert("Announcement Created!");
           } catch (e){
-            alert('Annoucement Creation Failed')
+            alert('Announcement Creation Failed')
           }
-
+        const newAnouncment = {
+            title: title,
+            teamname: teamname,
+            description: description
+        }
+        console.log(newAnouncment);
         props.setTrigger(false);
+        props.updateAnnouncments(newAnouncment);
         setTitle("");
         setDescription("");
     }

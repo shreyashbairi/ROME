@@ -78,13 +78,26 @@ function TeamHome() {
         let teamname = localStorage.getItem('team');
 
         axios.delete(`/deleteannoucements/${id}`,{});
-        axios.get(`announcements/${teamname}`)
-        .then(res => {
-            const announ = res.data;
-            console.log(announ);
-            setAnnoucements(announ);
-        })
-      };
+        let newAnnoun = [];
+        for (let i = 0; i < announcements.length; i++) {
+            if (announcements[i]._id !== pro._id) {
+                newAnnoun.push(announcements[i])
+            }
+        }
+        setAnnoucements(newAnnoun);
+        // axios.get(`announcements/${teamname}`)
+        // .then(res => {
+        //     const announ = res.data;
+        //     console.log(announ);
+        //     setAnnoucements(announ);
+        // })
+    };
+    
+    const updateAnnouncments = (newAnnouncment) => {
+        const anoun = announcements;
+        anoun.push(newAnnouncment);
+        setAnnoucements(anoun);
+    }
     
     const closeAdd = () => {
         setAddTeam(false);
@@ -261,7 +274,7 @@ function TeamHome() {
         </div>
         <div class="teamchat">
             <div style={{backgroundColor: color}} className="top">
-                Announcement
+                Announcements
                 {managerBool ?                 
                 <Popup class="addevent" trigger={<button type="button" show={managerBool} class="btn btn-secondary">Add</button>} open={announcePop}
                         onOpen={openAnnouce} position="right center" nested modal>
@@ -269,8 +282,8 @@ function TeamHome() {
                             <CreateAnnoucements
                                     trigger={AddEvent}
                                     setTrigger={closeAnnouce}
+                                    updateAnnouncments={updateAnnouncments}
                                     // scheduleEvent={this.scheduleEvent}
-
                                 />     
                             </div>
                 </ Popup>
