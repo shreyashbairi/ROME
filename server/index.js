@@ -60,7 +60,6 @@ app.get('/test', (req, res) =>{
 
 app.post('/annoucements', async (req, res) => {    
     const {title, teamname, description} = req.body;
-    console.log("hi");
     try{
         const userDoc = await Annoucements.create({
             title: title,

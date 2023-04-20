@@ -252,7 +252,7 @@ function DefaultLayout () {
                                       
                                 <div key={index}> 
                                     {(profile.notifjoin && (notiff.type === "Join")) || (profile.notifpoke && (notiff.type === "Poke")) ||
-                                    (profile.notiftask && (notiff.type === "Task-Reminder")) || (profile.notifleave && (notiff.type === "Leave")) ||
+                                    (profile.notiftask && (notiff.type === "task-reminder")) || (profile.notifleave && (notiff.type === "Leave")) ||
                                     (profile.notifannounce && (notiff.type === "announcements")) || (notiff.type === "Invite") || (notiff.type === "Request")
                                     
                                     
