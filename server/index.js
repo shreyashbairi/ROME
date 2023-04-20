@@ -848,33 +848,33 @@ app.post('/acceptmember', async (req, res) => {
 app.post('/leaveteam', async (req,res) => {
     const {username, teamname} = req.body;
     try {
-        const user = await User.findOne({userUserName: username});
-        let newUserTeamList =[]
-        for (let i = 0; i < user.userTeamList.length; i++) {
-            if (user.userTeamList[i] !== teamname) {
-                newUserTeamList.push(user.userTeamList[i])
-            }
-        }
-        const userDoc = await User.findOneAndUpdate(
-            {userUserName: username},
-            {userTeamList: newUserTeamList}
-        );
         const team = await Team.findOne({team: teamname});
-        let newMemberList =[]
-        for (let i = 0; i < team.members.length; i++) {
-            if (team.members[i] !== username) {
-                newMemberList.push(team.members[i])
-            }
-        }
-        const teamDoc = await Team.findOneAndUpdate(
-            {team: teamname},
-            {members: newMemberList}
-        );
         const manager = team.managerid;
         if (manager === username) {
             console.error(e);
             res.status(422).json(e);
         } else {
+            const user = await User.findOne({userUserName: username});
+            let newUserTeamList =[]
+            for (let i = 0; i < user.userTeamList.length; i++) {
+                if (user.userTeamList[i] !== teamname) {
+                    newUserTeamList.push(user.userTeamList[i])
+                }
+            }
+            const userDoc = await User.findOneAndUpdate(
+                {userUserName: username},
+                {userTeamList: newUserTeamList}
+            );
+            let newMemberList =[]
+            for (let i = 0; i < team.members.length; i++) {
+                if (team.members[i] !== username) {
+                    newMemberList.push(team.members[i])
+                }
+            }
+            const teamDoc = await Team.findOneAndUpdate(
+                {team: teamname},
+                {members: newMemberList}
+            );
             const notification = await Notification.create(
                 {
                     fromuser: username,
