@@ -4,7 +4,7 @@ import EditProfile from "./EditProfile";
 import { useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./UserContext";
-
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 
 function Profile (){
   // const [email, setEmail] = useState("")
@@ -153,14 +153,7 @@ function Profile (){
                       </div>
                     </div>
                     <ColoredLine color="grey" />                   */}
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <h class="mb-0">Email Notification</h>
-                      </div>
-                      <div class="col-sm-9 text-secondary">
-                      </div>
-                    </div>
-                    <ColoredLine color="grey" />                  
+              
                     <div class="row">
                       <div class="col-sm-3">
                         <h class="mb-0">Theme</h>
@@ -171,6 +164,30 @@ function Profile (){
                       </div>
                     </div>
                     <ColoredLine color="grey" />
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h class="mb-0">Notifications</h>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        <div>
+                          Join message {userProfile.notifjoin ? <AiOutlineCheckCircle /> : <AiOutlineCloseCircle/>}
+                        </div>
+                        <div>
+                          Poke {userProfile.notifpoke ? <AiOutlineCheckCircle /> : <AiOutlineCloseCircle/>}
+                        </div>
+                        <div>
+                          Task reminder {userProfile.notiftask ? <AiOutlineCheckCircle /> : <AiOutlineCloseCircle/>}
+                        </div>
+                        <div>
+                          Leave message {userProfile.notifleave ? <AiOutlineCheckCircle /> : <AiOutlineCloseCircle/>}
+                        </div>
+                        <div>
+                          Announcements {userProfile.notifannounce ? <AiOutlineCheckCircle /> : <AiOutlineCloseCircle/>}
+                        </div>
+         
+                      </div>
+                    </div>
+                    <ColoredLine color="grey" />   
                     <div class="row ">
 
                       <div class="col-sm-12 ">

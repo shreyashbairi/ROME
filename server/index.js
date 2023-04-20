@@ -60,7 +60,6 @@ app.get('/test', (req, res) =>{
 
 app.post('/annoucements', async (req, res) => {    
     const {title, teamname, description} = req.body;
-    console.log("hi");
     try{
         const userDoc = await Annoucements.create({
             title: title,
@@ -544,7 +543,7 @@ app.get("/getUser/:username", async (req,res) => {
 
 app.post("/editprofile", async (req,res) => {
     const {username, cbirthday, cphone, caddress, cnotification,cColor,join,poke,task,leave,announce} = req.body;
-    console.log(join);
+    // console.log(join);
     try {
         const userDoc = await User.findOneAndUpdate(
             {userUserName: username},
@@ -719,8 +718,8 @@ app.delete("/teamtaskdelete", async(req,res) => {
 
 
 app.delete("/deletenotification/:id", async(req,res) => {
-    console.log("should be deleting");
-    console.log(req.params.id);
+    // console.log("should be deleting");
+    // console.log(req.params.id);
 
 
     Notification.deleteOne({_id:req.params.id}, function(err) {
@@ -806,10 +805,10 @@ app.post('/invitenotification', async (req, res) =>{
 
 app.post('/acceptmember', async (req, res) => {
     const {username, teamname, manager, notifid} = req.body;
-    console.log("acceptmember");
-    console.log(username);
-    console.log(manager);
-    console.log(teamname);
+    // console.log("acceptmember");
+    // console.log(username);
+    // console.log(manager);
+    // console.log(teamname);
     try {
         const user = await User.findOne({userUserName: username});
         

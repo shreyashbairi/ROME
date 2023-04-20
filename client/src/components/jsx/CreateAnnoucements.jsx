@@ -19,7 +19,6 @@ function CreateAnnoucements(props) {
     })
 
     async function handleSubmit(e) {
-        // console.log("HI");
         e.preventDefault();
         // console.log(title);
         // console.log(description);

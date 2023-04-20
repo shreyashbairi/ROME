@@ -240,7 +240,7 @@ if (redirect) {
                             />
                           </div>
                           <div>
-                            Leave
+                            Leave 
                             <input type="checkbox" 
                             
                             onChange={handlejoin}
