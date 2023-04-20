@@ -22,7 +22,7 @@ function CreateAnnoucements(props) {
         e.preventDefault();
         console.log(title);
         console.log(description);
-        const teamname = localStorage.getItem("teamname");
+        const teamname = localStorage.getItem("team");
         try {
             await axios.post('/annoucements',{
               title,

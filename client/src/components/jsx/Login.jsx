@@ -1,7 +1,7 @@
 import React from "react"
 import { UserContext } from "./UserContext";
 //import { Redirect } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import '../css/Login.css';
 import { Navigate } from "react-router-dom";
@@ -22,6 +22,12 @@ function Login() {
         //TODO: set the user context
         setRedirect(true); // Set the redirect state to true
        // setIsLoggedIn(true);
+       axios.get(`/tasks/${userUserName}`)
+       .then(res => {
+           const tasksGrabed = res.data;
+           checkDate(tasksGrabed)
+       })
+      
       } else {
         alert('User not found');
       }
@@ -29,6 +35,24 @@ function Login() {
       alert('Login Failed. Invalid Username or Password');
     }
   }
+
+
+async function checkDate(todos) {
+  //console.clear()
+  var date = new Date().toISOString().substring(0,10);
+  // console.log(date);
+
+  todos.forEach(async (task)=>{
+      const approaching_task = {
+          task: task,
+          user: userUserName
+      }
+      if ((task.date !== null && (task.date.split('T')[0] === date)) && task.reminder){
+          console.log(task)
+          await axios.post('/createtaskreminder', approaching_task);
+      }
+  })
+}
 
   // If redirect is true, render the Navigate component to redirect to the main page
   if (redirect) {

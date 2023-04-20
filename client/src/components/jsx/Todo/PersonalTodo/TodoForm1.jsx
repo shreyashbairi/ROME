@@ -26,6 +26,8 @@ export function TodoForm(props) {
         if (title !== "") {
             if ((reminder && Date.parse(input.date)) || !reminder) {
 
+                
+
         const newTask = {
             id: Math.floor(Math.random()*10000),
             title: title,
@@ -43,6 +45,17 @@ export function TodoForm(props) {
             await axios.post('/tasksave', 
                 newTask
             );
+            if (reminder){
+                var date = new Date().toISOString().substring(0,10);
+                if ((input.date.split('T')[0] === date)){
+                    console.log(input)
+                    const approaching_task = {
+                        task: input,
+                        user: user.userUserName
+                    }
+                    await axios.post('/createtaskreminder', approaching_task);
+                }
+            }
             alert('Task Saved');
         } catch (e) {
             alert('Task Failed to Save');
