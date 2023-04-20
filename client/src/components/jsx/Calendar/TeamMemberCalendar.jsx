@@ -332,6 +332,7 @@ export default function TeamMemberCalendar (props) {
                                 focusTeams={focusTeams}
                                 openEditform={openEditform}
                                 openDetails={openDetails}
+                                member={true}
                             />
                             <Popup open={showDetails} onClose={closeDetails}> 
                                 <EventDetails  

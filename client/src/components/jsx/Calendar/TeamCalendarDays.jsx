@@ -63,6 +63,7 @@ function CalendarDays(props) {
                 ) { //not is used as bandaid TODO fix
                 // console.log(props.events[j].date);
                 // console.log(hour.date);
+                console.log(props.events[j].teamName);
                 if (props.events[j].teamName === "Personal") {
                     hour.selected = true;
                     hour.color = "gray";
@@ -70,7 +71,7 @@ function CalendarDays(props) {
                         // hour.top = true;
                         hour.name = props.events[j].title;
                     }
-                } else if (props.events[j].type === "team") {
+                } else if (props.events[j].type === "team" && !props.member) {
                     hour.color = props.events[j].color;
                     hour.selected = true;
                     hour.name = props.events[j].title;
@@ -78,6 +79,23 @@ function CalendarDays(props) {
                         hour.top = true;
                         hour.name = props.events[j].title;
                     }
+                } else if (props.events[j].type === "team" && props.member &&
+                           props.events[j].teamName === localStorage.getItem("team")) {
+                    hour.color = props.events[j].color;
+                    hour.selected = true;
+                    hour.name = props.events[j].title;
+                    if (props.events[j].top) {
+                        hour.top = true;
+                        hour.name = props.events[j].title;
+                    }
+                } else if (props.events[j].type === "team" && props.member &&
+                           props.events[j].teamName !== localStorage.getItem("team")) {
+                    hour.selected = true;
+                    hour.color = "gray";
+                    if (props.events[j].top) {
+                        // hour.top = true;
+                        hour.name = props.events[j].title;
+                    } 
                 }
                
             }
