@@ -267,15 +267,17 @@ function DefaultLayout () {
                                                     <ColoredLine color="grey" />
 
                                                     {notiff.type === "Poke"
-                                                    ? <div class="row">
+                                                    ? null : <div class="row">
                                                         <div class="col-sm-3">
                                                             <h class="mb-0">Team Name</h>
                                                         </div>
                                                         <div class="col-sm-9 text-secondary">
                                                             {notiff.teamName}
                                                         </div>
-                                                    </div> :null}
+
+                                                    </div>}
                                                     <ColoredLine color="grey" />
+
                             
 
                                                     <div class="row">
