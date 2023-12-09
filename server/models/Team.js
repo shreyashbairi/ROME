@@ -10,6 +10,7 @@ const TeamSchema = new Schema({
     members: [String]
 });
 
+TeamSchema.index({team:1});
 const TeamModel = mongoose.model('Team', TeamSchema);
 
 module.exports = TeamModel;

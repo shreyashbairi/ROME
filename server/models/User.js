@@ -43,6 +43,7 @@ const UserSchema = new Schema({
     notifannounce: Boolean,
 });
 
+UserSchema.index({userUserName: 1});
 const UserModel = mongoose.model('User', UserSchema);
 
 module.exports = UserModel;

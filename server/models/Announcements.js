@@ -8,6 +8,7 @@ const AnnoucementsSchema = new Schema({
 
 });
 
+AnnoucementsSchema.index({teamName: 1});
 const EventModel = mongoose.model('Annoucements', AnnoucementsSchema);
 
 module.exports = EventModel;
